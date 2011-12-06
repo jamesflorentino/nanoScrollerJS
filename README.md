@@ -14,9 +14,11 @@ nanoScroller.js is a jQuery plugin that offers a simple way of implementing non-
     $("#myContent.nano").nanoScroller();
 
 Update the scrollbar's content:
+
     $("#myContent.nano").nanoScroller({update:true});
 
 To scroll at the bottom or top of the content:
+
     $("#myContent.nano").nanoScroller({scroll:'bottom'});
 
 ### Download & Instructions
