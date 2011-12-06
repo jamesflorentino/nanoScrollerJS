@@ -33,7 +33,7 @@
           return false;
         };
         this.handler.onWheel = function(e) {
-          me.sliderY += e.wheelDeltaY * .1 || e.wheelDelta || e.detail;
+          me.sliderY += e.wheelDeltaY * -.5 || e.wheelDelta || e.detail;
           me.scroll();
           e = $.event.fix(e);
           e.preventDefault();
