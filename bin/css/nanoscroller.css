@@ -1,0 +1,73 @@
+
+/** initial setup **/
+
+.nano {
+  position: relative;
+  width: 		100%;
+  height: 	100%;
+}
+
+.nano .content {
+  position: absolute;
+  top: 			0;
+  right: 		0;
+  bottom: 	0;
+  left: 		0;
+  overflow: hidden;
+}
+
+.nano .pane {
+  position: absolute;
+  width: 		8px;
+  right: 		0px;
+  top: 			0px;
+  bottom: 	0px;
+  visible: 	hidden;
+}
+.nano:hover .pane { visibility: visible; }
+.nano .pane .slider { position: relative;}
+
+
+/** eye candy / user-defined / animation **/
+
+
+.nano {
+}
+
+.nano .pane {
+  -webkit-transition: .2s;
+  -moz-transition: 		.2s;
+  opacity: .01;
+  border-radius: 5px;
+}
+
+.nano:hover .pane { 
+  opacity: 1;
+}
+
+.nano .pane .slider {
+  margin-left: 	1px;
+  margin-right: 1px;
+  border-radius: 3px;
+}
+
+/** user-defined, re-define your colors here **/
+.nano {
+}
+
+.nano .content {
+  padding: 10px;
+}
+
+.nano .pane {
+  background: rgba(0,0,0,.25);
+}
+
+.nano:hover .pane {
+}
+
+.nano .pane .slider {
+  background: rgba(0,0,0,.5);
+}
+
+

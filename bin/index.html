@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <title>nanoScroller - a simple jquery scrollbar </title>
+  <meta property="og:title" content="nanoScroller.js - An easy-to-use jQuery scrollbar that looks like Lion's."/>
+  <meta property="og:url" content="http://jamesflorentino.com/jquery.nanoscroller"/>
+  <meta property="og:description"
+        content="nanoScroller.js is a jQuery plugin that offers a simple way of implementing non-distracting scrollbars for your website. It also respects html markup and uses only two layers for scrolling content. It is aimed at providing scrollbar solutions for dynamic content such as from ajax's.
+                 "/>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href='http://fonts.googleapis.com/css?family=Maven+Pro' rel='stylesheet' type='text/css'>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/jquery.nanoscroller.js"></script>
+  <script type="text/javascript" src="javascripts/main.js"></script>
+
+
+  <h1>nanoScroller.js</h1>
+  <div id="main">
+    <div class="nano">
+      <div class="content">
+        <!-- put your ajax/static content her\bee -->
+    </div>
+  </div>
+
+
+  <a href="https://github.com/jamesflorentino/nanoScrollerJS"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/30f550e0d38ceb6ef5b81500c64d970b7fb0f028/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub"></a>
+
+<!-- stub/filler data -->
+<script type="text/template" id="stub">
+<h2>What's nanoScroller.js?</h2>
+<p>An easy-to-use jQuery plugin that mimics OSX Lion's thin scrollbar.</p>
+<h2>Mark up</h2>
+<pre>
+&lt;div id=&quot;myContent&quot; class=&quot;nano&quot;&gt;
+&lt;div class=&quot;content&quot;&gt; ... content here ...  &lt;/div&gt; 
+&lt;/div&gt;
+</pre>
+<ul>
+  <li><b>.nano</b> is the main container. It holds <b>.pane</b> &gt; <b>.slider</b> and <b>.content</b>.
+</ul>
+<h2>JavaScript</h2>
+<pre>
+$("#myContent.nano").nanoScroller();
+</pre>
+<ul>
+  <li>Update the scrollbar on new content
+</ul>
+<pre>
+$("#myContent.nano").nanoScroller({update:true}); 
+</pre>
+<ul>
+  <li>To scroll at the very bottom on new content
+</ul>
+<pre>
+$("#myContent.nano").nanoScroller({scroll:'bottom'});
+</pre>
+<h2>Download</h2>
+<ul>
+  <li>CSS Template: <br> <a href="css/nanoscroller.css">nanoscroller.css</a></li>
+  <li>jQuery plugin (production): 3.97KB <br ><a href="javascripts/jquery.nanoscroller.min.js">jquery.nanoscroller.min.js</a> </li>
+  <li>jQuery plugin (source): 3.09KB <br> <a href="javascripts/jquery.nanoscroller.js">jquery.nanoscroller.js</a></li>
+</ul>
+<h2>Notes</h2>
+<ul>
+  <li>- <b>.nano</b>'s style takes up 100% width/height of its parent layer. The parent layer must have a defined width and height either in px or %.
+  <li>- <b>.pane</b> is the track of the scrollbar.
+  <li>- <b>.thumb</b> is the slider.
+
+</ul>
+<footer>
+<h2>Credits</h2>
+<li>Written by: <a href="http://jamesflorentino.com">James Florentino</a> in <a href="http://coffeescript.org" target="_blank">CoffeeScript</a>
+<li>License: <a href="http://www.opensource.org/licenses/mit-license.php" target="_blank"> MIT License</a>
+<li>Last updated: Dec 7, 2011
+</footer>
+
+</script>

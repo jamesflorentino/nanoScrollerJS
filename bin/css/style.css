@@ -1,0 +1,58 @@
+@import url('nanoscroller.css');
+
+body 		{ color: #aaa; background: black url(../images/bg.png) top left; font-family: 'Maven Pro', sans-serif; cursor: default; }
+* 			{ margin: 0; padding: 0; border: 0; background: none; font-weight: normal; }
+h1      { background: url(../images/h1.png) no-repeat top left; width: 500px; height: 43px; text-indent: -9999px; margin: auto; position: relative; margin-top: 80px; margin-bottom: 20px; }
+h2 			{ font-size: 24px; margin-top: 10px; margin-bottom: 5px; color: #111; }
+p 			{ font-size: 14px; color: #222; line-height: 20px; margin-bottom: 10px; }
+pre 		{ font-size: 11px; font-family: Monaco, sans-serif;  color: #ee8; display: block;  background: black; padding: 15px; border-radius: 5px; margin-bottom: 15px;}
+
+#main   { width: 500px; height: 500px; margin: auto; border-radius: 5px; background: #bba; border-top: 1px rgba(255,255,255,.6) solid; }
+#main .nano { text-shadow: #eee 0 1px; }
+#main pre, #main ul li a   { text-shadow: black 0 -1px 1px; background: #222; border-bottom: 1px solid white; border-top: 1px solid black; box-shadow: black 0 1px 10px inset; }
+#main a, #main p.link     { text-shadow: none; }
+
+#main ul { display: block; }
+#main li { font-size: 12px; margin: 0; padding: 0; margin-bottom: 5px; color: #111; display: block; }
+#main li a { text-decoration: none; text-shadow: none; background: #222; display: inline-block; padding: 5px 8px 5px 8px; border-radius: 5px; margin-top: 5px; }
+#main li a { font-size: 12px; color: #cc0; }
+#main li a:hover { color: #ff5; }
+
+h1, #main { width: 600px;  }
+
+
+#main footer{
+  margin-top: 20px;
+  margin-bottom: 3\be0px;
+}
+#main footer li{
+  margin-bottom: 0;
+}
+
+#main footer a{
+  padding: 0;
+  background: none; color: inherit; text-shadow: inherit;
+  margin: 0;
+}
+
+#main footer a:hover {
+  color: #055;
+}
+
+#main footer h2{
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
+}
+
+ul li {
+  display: block;
+  color: #111;
+}
+
+b {
+  background: rgba(1,1,1,.1);
+  display: inline-block;
+  border-radius: 5px;
+  padding: 1px 3px 1px 3px;
+}
