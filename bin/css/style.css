@@ -6,6 +6,7 @@ h1      { background: url(../images/h1.png) no-repeat top left; width: 500px; he
 h2 			{ font-size: 24px; margin-top: 10px; margin-bottom: 5px; color: #111; }
 p 			{ font-size: 14px; color: #222; line-height: 20px; margin-bottom: 10px; }
 pre 		{ font-size: 11px; font-family: Monaco, sans-serif;  color: #ee8; display: block;  background: black; padding: 15px; border-radius: 5px; margin-bottom: 15px;}
+pre     { font-family: 'Anonymous Pro', sans-serif; }
 
 #main   { width: 500px; height: 500px; margin: auto; border-radius: 5px; background: #bba; border-top: 1px rgba(255,255,255,.6) solid; }
 #main .nano { text-shadow: #eee 0 1px; }

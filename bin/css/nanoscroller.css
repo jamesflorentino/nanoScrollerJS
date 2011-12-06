@@ -3,26 +3,26 @@
 
 .nano {
   position: relative;
-  width: 		100%;
-  height: 	100%;
+  width:    100%;
+  height:   100%;
 }
 
 .nano .content {
   position: absolute;
-  top: 			0;
-  right: 		0;
-  bottom: 	0;
-  left: 		0;
+  top:      0;
+  right:    0;
+  bottom:   0;
+  left:     0;
   overflow: hidden;
 }
 
 .nano .pane {
   position: absolute;
-  width: 		8px;
-  right: 		0px;
-  top: 			0px;
-  bottom: 	0px;
-  visible: 	hidden;
+  width:    8px;
+  right:    0;
+  top:      0;
+  bottom:   0;
+  visible:  hidden;
 }
 .nano:hover .pane { visibility: visible; }
 .nano .pane .slider { position: relative;}
@@ -36,9 +36,9 @@
 
 .nano .pane {
   -webkit-transition: .2s;
-  -moz-transition: 		.2s;
-  opacity: .01;
-  border-radius: 5px;
+  -moz-transition:    .2s;
+  opacity:            .01;
+  border-radius:      5px;
 }
 
 .nano:hover .pane { 
@@ -46,9 +46,9 @@
 }
 
 .nano .pane .slider {
-  margin-left: 	1px;
-  margin-right: 1px;
-  border-radius: 3px;
+  margin-left: 	    1px;
+  margin-right:     1px;
+  border-radius:    3px;
 }
 
 /** user-defined, re-define your colors here **/
