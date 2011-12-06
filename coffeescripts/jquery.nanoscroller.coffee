@@ -52,7 +52,7 @@ class NanoScroll
       me.scroll()
 
     @handler.onDragPane = (e) ->
-      me.sliderY  	= e.clientY - me.target.offset().top - me.offsetY - me.sliderHeight * .5
+      me.sliderY  	= e.clientY - me.target.offset().top - me.sliderHeight * .5
       me.scroll()
       me.handler.onDown e
 
