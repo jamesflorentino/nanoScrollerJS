@@ -1,59 +1,151 @@
 @import url('nanoscroller.css');
-
-body 		{ color: #aaa; background: black url(../images/bg.png) top left; font-family: 'Maven Pro', sans-serif; cursor: default; }
-* 			{ margin: 0; padding: 0; border: 0; background: none; font-weight: normal; }
-h1      { background: url(../images/h1.png) no-repeat top left; width: 500px; height: 43px; text-indent: -9999px; margin: auto; position: relative; margin-top: 80px; margin-bottom: 20px; }
-h2 			{ font-size: 24px; margin-top: 10px; margin-bottom: 5px; color: #111; }
-p 			{ font-size: 14px; color: #222; line-height: 20px; margin-bottom: 10px; }
-pre 		{ font-size: 11px; font-family: Monaco, sans-serif;  color: #ee8; display: block;  background: black; padding: 15px; border-radius: 5px; margin-bottom: 15px;}
-pre     { font-family: 'Monaco', 'Anonymous Pro', sans-serif; font-size: 11px; }
-
-#main   { width: 500px; height: 500px; margin: auto; border-radius: 5px; background: #bba; border-top: 1px rgba(255,255,255,.6) solid; }
-#main .nano { text-shadow: #eee 0 1px; }
-#main pre, #main ul li a   { text-shadow: black 0 -1px 1px; background: #222; border-bottom: 1px solid white; border-top: 1px solid black; box-shadow: black 0 1px 10px inset; }
-#main a, #main p.link     { text-shadow: none; }
-
-#main ul { display: block; }
-#main li { font-size: 12px; margin: 0; padding: 0; margin-bottom: 5px; color: #111; display: block; }
-#main li a { text-decoration: none; text-shadow: none; background: #222; display: inline-block; padding: 5px 8px 5px 8px; border-radius: 5px; margin-top: 5px; }
-#main li a { font-size: 12px; color: #cc0; }
-#main li a:hover { color: #ff5; }
-
-h1, #main { width: 600px;  }
-
-
-#main footer{
-  margin-top: 20px;
-  margin-bottom: 3\be0px;
+body
+{
+  background  : black url(../images/bg.png) top left;
+  color       : #aaa;
+  cursor      : default;
+  font-family : 'Maven Pro', sans-serif;
 }
-#main footer li{
+*
+{
+  background  : none;
+  border      : 0;
+  font-weight : normal;
+  margin      : 0;
+  padding     : 0;
+}
+h1
+{
+  background    : url(../images/h1.png) no-repeat top left;
+  height        : 43px;
+  margin        : auto;
+  margin-bottom : 20px;
+  margin-top    : 80px;
+  position      : relative;
+  text-indent   : -9999px;
+  width         : 500px;
+}
+h2
+{
+  color         : #111;
+  font-size     : 24px;
+  margin-bottom : 5px;
+  margin-top    : 10px;
+}
+p
+{
+  color         : #222;
+  font-size     : 14px;
+  line-height   : 20px;
+  margin-bottom : 10px;
+}
+pre
+{
+  background    : black;
+  border-radius : 5px;
+  color         : #ee8;
+  display       : block;
+  font-family   : Monaco, sans-serif;
+  font-size     : 11px;
+  margin-bottom : 15px;
+  padding       : 15px;
+}
+pre
+{
+  font-family : 'Monaco', 'Anonymous Pro', sans-serif;
+  font-size   : 11px;
+}
+#main
+{
+  background    : #bba;
+  border-radius : 5px;
+  border-top    : 1px rgba(255,255,255,.6) solid;
+  height        : 500px;
+  margin        : auto;
+  width         : 500px;
+}
+#main .nano
+{
+  text-shadow : #eee 0 1px;
+}
+#main pre, #main ul li a
+{
+  background    : #222;
+  border-bottom : 1px solid white;
+  border-top    : 1px solid black;
+  box-shadow    : black 0 1px 10px inset;
+  text-shadow   : black 0 -1px 1px;
+}
+#main a, #main p.link
+{
+  text-shadow: none;
+}
+#main ul
+{
+  display: block;
+}
+#main li
+{
+  color         : #111;
+  display       : block;
+  font-size     : 12px;
+  margin        : 0;
+  margin-bottom : 5px;
+  padding       : 0;
+}
+#main li a
+{
+  background      : #222;
+  border-radius   : 5px;
+  display         : inline-block;
+  margin-top      : 5px;
+  padding         : 5px 8px 5px 8px;
+  text-decoration : none;
+  text-shadow     : none;
+}
+#main li a
+{
+  color     : #cc0;
+  font-size : 12px;
+}
+#main li a:hover
+{
+  color : #ff5;
+}
+#main footer
+{
+}
+#main footer li
+{
   margin-bottom: 0;
 }
-
-#main footer a{
-  padding: 0;
-  background: none; color: inherit; text-shadow: inherit;
-  margin: 0;
+#main footer a
+{
+  background  : none;
+  color       : inherit;
+  margin      : 0;
+  padding     : 0;
+  text-shadow : inherit;
 }
-
-#main footer a:hover {
+#main footer a:hover
+{
   color: #055;
 }
-
-#main footer h2{
-  font-size: 18px;
-  margin: 0;
-  padding: 0;
+#main footer h2
+{
+  font-size : 18px;
+  margin    : 0;
+  padding   : 0;
 }
-
-ul li {
-  display: block;
-  color: #111;
+ul li
+{
+  color   : #111;
+  display : block;
 }
-
-b {
-  background: rgba(1,1,1,.1);
-  display: inline-block;
-  border-radius: 5px;
-  padding: 1px 3px 1px 3px;
+b
+{
+  background    : rgba(1,1,1,.1);
+  border-radius : 5px;
+  display       : inline-block;
+  padding       : 1px 3px 1px 3px;
 }
