@@ -8,7 +8,13 @@ To start using, you to do three basic things:
      <div class="content"> ... content here ...  </div> 
     </div>
 
-Copy the HTML mark-up. You may change `#about` if you want. In fact, you can remove that attribute as long as you have a parent div with an ID reference. e.g. `#parent .nano'
+Copy the HTML mark-up. Change `#about` into something related to your content. Though you can also remove that attribute as long as you have a parent div with an ID reference. e.g. `#parent .nano`
+
+### CSS
+    @import url('nanoscroller.css');
+    .nano .content      { padding: 10px; }
+    .nano .pane         { background: #444; }
+    .nano .pane .slider { background: #111; }
 
 ### JavaScript
     $("#about.nano").nanoScroller();
