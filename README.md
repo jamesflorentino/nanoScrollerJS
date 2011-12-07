@@ -1,29 +1,41 @@
 # nanoScroller.js
-[nanoScroller.js](http://jamesflorentino.com/jquery.nanoscroller) is a jQuery plugin that offers a simple way of implementing non-distracting scrollbars for your website. It also respects html markup and uses only two layers for scrolling content. It is aimed at providing scrollbar solutions for dynamic content such as from ajax's.
+[nanoScroller.js](http://jamesflorentino.com/jquery.nanoscroller) is a jQuery plugin that offers a simple way of implementing non-distracting scrollbars for your website. It also respects html markup and uses only two layers for scrolling content. The other scrollbar div elements `.pane` and `.slider` are added during run time to prevent clutter in templating. It is aimed at providing scrollbar solutions for dynamic content such as from ajax's.
 
-## Basic Usage
+To start using, you to do three basic things:
 
 ### Mark Up
-    <div id="myContent" class="nano">
-    <div class="content"> ... content here ...  </div> 
+    <div id="about" class="nano">
+     <div class="content"> ... content here ...  </div> 
     </div>
-    
-`.nano` is the main container. It holds `.pane > .slider` and `.content`.
+
+Copy the HTML mark-up. You may change `#about` if you want. In fact, you can remove that attribute as long as you have a parent div with an ID reference. e.g. `#parent .nano'
 
 ### JavaScript
-    $("#myContent.nano").nanoScroller();
+    $("#about.nano").nanoScroller();
 
-Update the scrollbar's content:
+### Additional Method
 
-    $("#myContent.nano").nanoScroller({update:true});
+To scroll at the top
 
-To scroll at the bottom or top of the content:
+    $("#about.nano").nanoScroller({update:true});
 
-    $("#myContent.nano").nanoScroller({scroll:'bottom'});
+To scroll at the bottom
 
-### Download & Instructions
-- Download nanoscroller.css for the initial CSS template.
-- Download jquery.nanoscroller.js plugin
+    $("#about.nano").nanoScroller({scroll:'bottom'});
+
+To stop the operation
+
+    #("#about.nano").nanoScroller({stop: true});
+
+Refresh the scrollbar
+
+    #("#about.nano").nanoScroller();
+
+### Features
+- Currently works in IE8+, FireFox, Chrome, Safari
+- For IE7 and below, it will fallback to the native scrollbar gadget of the OS.
+- Works with popular multi-touch mobile and tablet devices. But still not error free.
+- The current version v.02 weighs 3.65KB. I have yet to optimize the code. If you write CoffeeScript, feel free to Fork the project.
 
 #### Credits
 - Written by [James Florentino](http://jamesflorentino.com)
