@@ -13,6 +13,7 @@
       this.offsetY = 0;
       this.contentHeight = 0;
       this.contentY = 0;
+      this.isDragging = false;
       options = options || {};
       this.target = target;
       this.generateElements();
@@ -26,16 +27,11 @@
       me = this;
       this.handler = [];
       this.handler.onDown = function(e) {
+        me.isDragging = true;
         me.offsetY = e.clientY - me.slider.offset().top;
+        me.pane.addClass('active');
         $(document).bind('mousemove', me.handler.onDrag);
         $(document).bind('mouseup', me.handler.onUp);
-        return false;
-      };
-      this.handler.onWheel = function(e) {
-        e.preventDefault();
-        me.sliderY += e.wheelDeltaY || e.wheelDelta || e.detail;
-        me.scroll();
-        e = $.event.fix(e);
         return false;
       };
       this.handler.onDrag = function(e) {
@@ -44,6 +40,8 @@
         return false;
       };
       this.handler.onUp = function(e) {
+        me.isDragging = false;
+        me.pane.removeClass('active');
         $(document).unbind('mousemove', me.handler.onDrag);
         $(document).unbind('mouseup', me.handler.onUp);
         return false;
@@ -52,94 +50,91 @@
         me.reset();
         return me.scroll();
       };
-      return this.handler.onDragPane = function(e) {
+      this.handler.onDownPane = function(e) {
         me.sliderY = e.clientY - me.target.offset().top - me.sliderHeight * .5;
         me.scroll();
         return me.handler.onDown(e);
       };
-      /*
-          @handler.onTouchStart = (e) ->
-            touch       = e.touches[0] || e.touches
-            me.offsetY  = touch.clientY - me.slider.offset().top
-            me.target[0].removeEventListener 'touchstart', me.handler.onTouchStart
-            me.target[0].addEventListener 'touchmove', me.handler.onTouchMove
-            me.target[0].addEventListener 'touchend', me.handler.onTouchEnd
-          
-          @handler.onTouchMove = (e) ->
-            e.preventDefault()
-            touch = e.touches[0] || e.touches
-            me.sliderY  = touch.clientY -  me.target.offset().top - me.offsetY
-            me.scroll()
-      
-          @handler.onTouchEnd = (e) ->
-            me.target[0].addEventListener 'touchstart', me.handler.onTouchStart
-            me.target[0].removeEventListener 'touchmove', me.handler.onTouchMove
-            me.target[0].removeEventListener 'touchend', me.handler.onTouchEnd
-          */
+      return this.handler.onScroll = function(e) {
+        var top;
+        if (me.isDragging === true) {
+          return;
+        }
+        top = me.content[0].scrollTop / me.content[0].scrollHeight * (me.paneHeight + 5);
+        return me.slider.css({
+          top: Math.floor(top)
+        });
+      };
     };
     NanoScroll.prototype.assignListeners = function() {
-      var me;
-      me = this;
       $(window).bind('resize', this.handler.onResize);
       this.slider.bind('mousedown', this.handler.onDown);
-      this.pane.bind('mousedown', this.handler.onDragPane);
-      this.target[0].addEventListener('DOMMouseScroll', this.handler.onWheel, false);
-      this.target[0].addEventListener('mousewheel', this.handler.onWheel, false);
+      this.pane.bind('mousedown', this.handler.onDownPane);
+      return this.content.bind('scroll', this.handler.onScroll);
     };
     NanoScroll.prototype.removeEventListeners = function() {
       $(window).unbind('resize', this.handler.onResize);
       this.slider.unbind('mousedown', this.handler.onDown);
-      this.pane.unbind('mousedown', this.handler.onDragPane);
-      this.target[0].removeEventListener('DOMMouseScroll', this.handler.onWheel, false);
-      this.target[0].removeEventListener('mousewheel', this.handler.onWheel, false);
+      this.pane.unbind('mousedown', this.handler.onDownPane);
+      return this.content.unbind('scroll', this.handler.onScroll);
+    };
+    NanoScroll.prototype.getScrollbarWidth = function() {
+      var inner, noscrollWidth, outer, yesscrollWidth;
+      outer = document.createElement('div');
+      inner = document.createElement('div');
+      outer.style.position = 'absolute';
+      outer.style.width = '100px';
+      outer.style.height = '10px';
+      outer.style.overflow = 'hidden';
+      inner.style.width = '100%';
+      inner.style.height = '20px';
+      outer.appendChild(inner);
+      document.body.appendChild(outer);
+      noscrollWidth = inner.offsetWidth + 0;
+      outer.style.overflow = 'auto';
+      yesscrollWidth = inner.offsetWidth + 0;
+      document.body.removeChild(outer);
+      return noscrollWidth - yesscrollWidth;
     };
     NanoScroll.prototype.generateElements = function() {
       this.target.append('<div class="pane"><div class="slider"></div></div>');
       this.content = $(this.target.children()[0]);
       this.slider = this.target.find('.slider');
       this.pane = this.target.find('.pane');
+      this.scrollbarWidth = this.getScrollbarWidth();
+      if (this.scrollbarWidth === 0) {
+        this.scrollbarWidth = 0;
+      }
+      this.content.css({
+        right: -this.scrollbarWidth + 'px'
+      });
+      if ($.browser.msie != null) {
+        if (parseInt($.browser.version) < 8) {
+          this.pane.hide();
+        }
+      }
     };
     NanoScroll.prototype.reset = function() {
       this.contentHeight = this.content[0].scrollHeight;
-      this.paneHeight = this.pane.innerHeight();
-      this.sliderHeight = this.paneHeight / this.contentHeight;
-      this.sliderHeight *= this.paneHeight;
+      this.paneHeight = this.pane.height();
+      this.sliderHeight = this.paneHeight / this.contentHeight * this.paneHeight;
       this.scrollHeight = this.paneHeight - this.sliderHeight;
       this.slider.height(this.sliderHeight);
     };
     NanoScroll.prototype.scroll = function() {
-      var scrollValue, version;
+      var scrollValue;
       if (this.sliderY < 0) {
         this.sliderY = 0;
       }
       if (this.sliderY > this.scrollHeight) {
         this.sliderY = this.scrollHeight;
       }
-      scrollValue = this.paneHeight - this.contentHeight;
+      scrollValue = this.paneHeight - this.contentHeight + this.scrollbarWidth;
       scrollValue = scrollValue * this.sliderY / this.scrollHeight;
-      version = 'old';
-      switch (version) {
-        case 'old':
-          this.target.addClass('old');
-          this.content.scrollTop(-scrollValue);
-          this.slider.css({
-            top: this.sliderY
-          });
-          break;
-        default:
-          this.content.css({
-            '-webkit-transform': 'translateY(' + scrollValue + 'px)',
-            '-moz-transform': 'translateY(' + scrollValue + 'px)',
-            '-o-transform': 'translateY(' + scrollValue + 'px)',
-            '-transform': 'translateY(' + scrollValue + 'px)'
-          });
-          this.slider.css({
-            '-webkit-transform': 'translateY(' + this.sliderY + 'px)',
-            '-moz-transform': 'translateY(' + this.sliderY + 'px)',
-            '-o-transform': 'translateY(' + this.sliderY + 'px)',
-            '-transform': 'translateY(' + this.sliderY + 'px)'
-          });
-      }
+      this.content.scrollTop(-scrollValue);
+      return this.slider.css({
+        top: this.sliderY
+      });
     };
     NanoScroll.prototype.scrollBottom = function(offsetY) {
       this.reset();
@@ -150,6 +145,10 @@
       this.reset();
       this.sliderY = 0;
       this.scroll();
+    };
+    NanoScroll.prototype.stop = function() {
+      this.removeEventListeners();
+      return this.pane.hide();
     };
     return NanoScroll;
   })();
@@ -164,9 +163,7 @@
       });
       return;
     }
-    if (options.update === true) {
-      scrollbar.reset();
-    }
+    scrollbar.reset();
     if (options.scroll === 'bottom') {
       scrollbar.scrollBottom();
     }

@@ -15,6 +15,7 @@ class NanoScroll
     @offsetY       = 0
     @contentHeight = 0
     @contentY      = 0
+    @isDragging    = false
 
     options        = options || {}
     @target        = target
@@ -29,24 +30,21 @@ class NanoScroll
     me              = this
     @handler        = []
     @handler.onDown = (e) ->
+      me.isDragging = true
       me.offsetY 		= e.clientY - me.slider.offset().top
+      me.pane.addClass 'active'
       $(document).bind 'mousemove', me.handler.onDrag
       $(document).bind 'mouseup', 	me.handler.onUp
       return false
 
-    @handler.onWheel = (e) ->
-      e.preventDefault()
-      me.sliderY += e.wheelDeltaY || e.wheelDelta || e.detail
-      me.scroll()
-      e = $.event.fix e
-      return false
-
-    @handler.onDrag 	= (e) ->
-      me.sliderY  	= e.clientY - me.target.offset().top - me.offsetY
+    @handler.onDrag = (e) ->
+      me.sliderY = e.clientY - me.target.offset().top - me.offsetY
       me.scroll()
       return false
 
-    @handler.onUp 		= (e) ->
+    @handler.onUp = (e) ->
+      me.isDragging = false
+      me.pane.removeClass 'active'
       $(document).unbind 'mousemove', me.handler.onDrag
       $(document).unbind 'mouseup', 	me.handler.onUp
       return false
@@ -55,93 +53,82 @@ class NanoScroll
       me.reset()
       me.scroll()
 
-    @handler.onDragPane = (e) ->
-      me.sliderY  	= e.clientY - me.target.offset().top - me.sliderHeight * .5
+    @handler.onDownPane = (e) ->
+      me.sliderY = e.clientY - me.target.offset().top - me.sliderHeight * .5
       me.scroll()
       me.handler.onDown e
 
-    ###
-    @handler.onTouchStart = (e) ->
-      touch       = e.touches[0] || e.touches
-      me.offsetY  = touch.clientY - me.slider.offset().top
-      me.target[0].removeEventListener 'touchstart', me.handler.onTouchStart
-      me.target[0].addEventListener 'touchmove', me.handler.onTouchMove
-      me.target[0].addEventListener 'touchend', me.handler.onTouchEnd
-    
-    @handler.onTouchMove = (e) ->
-      e.preventDefault()
-      touch = e.touches[0] || e.touches
-      me.sliderY  = touch.clientY -  me.target.offset().top - me.offsetY
-      me.scroll()
-
-    @handler.onTouchEnd = (e) ->
-      me.target[0].addEventListener 'touchstart', me.handler.onTouchStart
-      me.target[0].removeEventListener 'touchmove', me.handler.onTouchMove
-      me.target[0].removeEventListener 'touchend', me.handler.onTouchEnd
-    ###
+    @handler.onScroll = (e) ->
+      return if me.isDragging is true
+      top = me.content[0].scrollTop / me.content[0].scrollHeight * (me.paneHeight+ 5)
+      me.slider.css
+        top: Math.floor top
 
   assignListeners: ->
-    me = this
-    $(window).bind 'resize', @handler.onResize
-    @slider.bind 'mousedown', @handler.onDown
-    @pane.bind 'mousedown', @handler.onDragPane
-    @target[0].addEventListener 'DOMMouseScroll', @handler.onWheel, false
-    @target[0].addEventListener 'mousewheel', @handler.onWheel, false
-    #@target[0].addEventListener 'touchstart',@handler.onTouchStart
-    #@target[0].addEventListener 'touchend', @handler.onTouchEnd
-    return
+    $(window).bind 'resize'  , @handler.onResize
+    @slider.bind 'mousedown' , @handler.onDown
+    @pane.bind 'mousedown'   , @handler.onDownPane
+    @content.bind 'scroll'   , @handler.onScroll
   
   removeEventListeners: ->
-    $(window).unbind 'resize', @handler.onResize
-    @slider.unbind 'mousedown', @handler.onDown
-    @pane.unbind 'mousedown', @handler.onDragPane
-    @target[0].removeEventListener 'DOMMouseScroll', @handler.onWheel, false
-    @target[0].removeEventListener 'mousewheel', @handler.onWheel, false
-    #@tqrget[0].removeEventListener 'touchstart',@handler.onTouchStart
-    #@target[0].removeEventListener 'touchend', @handler.onTouchEnd
-    return
+    $(window).unbind 'resize'  , @handler.onResize
+    @slider.unbind 'mousedown' , @handler.onDown
+    @pane.unbind 'mousedown'   , @handler.onDownPane
+    @content.unbind 'scroll'   , @handler.onScroll
+
+  getScrollbarWidth: ->
+    outer                = document.createElement 'div'
+    inner                = document.createElement 'div'
+    outer.style.position = 'absolute'
+    outer.style.width    = '100px'
+    outer.style.height   = '10px'
+    outer.style.overflow = 'hidden'
+    inner.style.width    = '100%'
+    inner.style.height   = '20px'
+
+    outer.appendChild inner
+    document.body.appendChild outer
+
+    noscrollWidth        = inner.offsetWidth + 0
+    outer.style.overflow = 'auto'
+    yesscrollWidth       = inner.offsetWidth + 0
+    document.body.removeChild outer
+
+    return noscrollWidth - yesscrollWidth
+
     
   generateElements: ->
     @target.append '<div class="pane"><div class="slider"></div></div>'
     @content = $ @target.children()[0]
-    @slider	= @target.find '.slider'
-    @pane = @target.find '.pane'
+    @slider  = @target.find '.slider'
+    @pane    = @target.find '.pane'
+
+    @scrollbarWidth = @getScrollbarWidth()
+    @scrollbarWidth = 0 if @scrollbarWidth is 0
+
+    @content.css
+      right  : -@scrollbarWidth + 'px'
+
+    if $.browser.msie?
+      @pane.hide() if parseInt($.browser.version) < 8
+    
     return
 
   reset: ->
-    @contentHeight = @content[0].scrollHeight
-    @paneHeight = @pane.innerHeight()
-    @sliderHeight = @paneHeight / @contentHeight
-    @sliderHeight *= @paneHeight
-    @scrollHeight = @paneHeight - @sliderHeight
+    @contentHeight  = @content[0].scrollHeight
+    @paneHeight     = @pane.height()
+    @sliderHeight   = @paneHeight / @contentHeight * @paneHeight
+    @scrollHeight   = @paneHeight - @sliderHeight
     @slider.height 	@sliderHeight
     return
 
   scroll: ->
     @sliderY    = 0 if @sliderY < 0
     @sliderY    = @scrollHeight if @sliderY > @scrollHeight
-    scrollValue = @paneHeight - @contentHeight
+    scrollValue = @paneHeight - @contentHeight + @scrollbarWidth
     scrollValue = scrollValue * @sliderY / @scrollHeight
-    version     = 'old'
-    #version     = 'new' if $.browser.webkit is true
-
-    switch version
-      when 'old'
-        @target.addClass 'old'
-        @content.scrollTop -scrollValue
-        @slider.css top: @sliderY
-      else
-        @content.css
-          '-webkit-transform': 'translateY(' + scrollValue  + 'px)'
-          '-moz-transform': 'translateY(' + scrollValue  + 'px)'
-          '-o-transform': 'translateY(' + scrollValue  + 'px)'
-          '-transform': 'translateY(' + scrollValue  + 'px)'
-        @slider.css
-          '-webkit-transform': 'translateY(' + @sliderY  + 'px)'
-          '-moz-transform': 'translateY(' + @sliderY  + 'px)'
-          '-o-transform': 'translateY(' + @sliderY  + 'px)'
-          '-transform': 'translateY(' + @sliderY  + 'px)'
-    return
+    @content.scrollTop -scrollValue
+    @slider.css top: @sliderY
 
   scrollBottom: (offsetY) ->
     @reset()
@@ -155,6 +142,10 @@ class NanoScroll
     @scroll()
     return
 
+  stop: ->
+    @removeEventListeners()
+    @pane.hide()
+
   
 $.fn.nanoScroller = (options) ->
   options = options || {}
@@ -163,7 +154,7 @@ $.fn.nanoScroller = (options) ->
     scrollbar = new NanoScroll this, options
     @data 'scrollbar': scrollbar
     return
-  scrollbar.reset() if options.update is true
+  scrollbar.reset()
   scrollbar.scrollBottom() if options.scroll is 'bottom'
   scrollbar.scrollTop() if options.scroll is 'top'
   scrollbar.stop() if options.stop is true

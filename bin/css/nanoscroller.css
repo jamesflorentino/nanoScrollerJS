@@ -5,74 +5,39 @@
   height   : 100%;
   overflow : hidden;
 }
-
 .nano .content {
-  position : absolute;
+  position      : absolute;
+  overflow      : auto;
+  top           : 0;
+  right         : 0;
+  bottom        : 0;
+  left          : 0;
 }
-
-.nano.old .content{
-  top    : 0;
-  right  : 0;
-  bottom : 0;
-  left   : 0;
-  overflow: hidden;
-}
-
-
 .nano .pane {
+  background: rgba(0,0,0,.25);
   position : absolute;
-  width    : 8px;
+  width    : 10px;
   right    : 0;
   top      : 0;
   bottom   : 0;
-  visible  : hidden;
-}
-.nano:hover .pane { 
-  visibility: visible;
 }
 .nano .pane .slider {
-  position: relative;
+  background: rgba(0,0,0,.5);
+  position      : relative;
+  margin        : 0 1px 0 1px;
+  border-radius : 3px;
 }
-
-
-/** eye candy / user-defined / animation **/
-
-.nano {
+.nano:hover .pane, .pane.active {
+  visibility: visible;
 }
-
 .nano .pane {
   -webkit-transition : .2s;
   -moz-transition    : .2s;
-  opacity            : .01;
+  transition         : .2s;
   border-radius      : 5px;
+  -moz-border-radius : 5px;
+  opacity            : .01;
 }
-
-.nano:hover .pane { 
-  opacity: 1;
+.nano:hover .pane, .pane.active {
+  opacity : 1;
 }
-
-.nano .pane .slider {
-  margin-left   : 1px;
-  margin-right  : 1px;
-  border-radius : 3px;
-}
-
-/** user-defined, re-define your colors here **/
-.nano {
-}
-
-.nano .content {
-  padding: 10px;
-}
-
-.nano .pane {
-  background: rgba(0,0,0,.25);
-}
-
-.nano:hover .pane {
-}
-
-.nano .pane .slider {
-  background: rgba(0,0,0,.5);
-}
-
