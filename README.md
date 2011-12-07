@@ -1,6 +1,8 @@
 # nanoScroller.js
 [nanoScroller.js](http://jamesflorentino.com/jquery.nanoscroller) is a jQuery plugin that offers a simple way of implementing non-distracting scrollbars for your website. It also respects html markup and uses only two layers for scrolling content. The other scrollbar div elements `.pane` and `.slider` are added during run time to prevent clutter in templating. It is aimed at providing scrollbar solutions for dynamic content such as from ajax's.
 
+Please visit the downloads section to get the js and css template file (.zip).
+
 To start using, you to do three basic things:
 
 ### Mark Up
