@@ -25,45 +25,46 @@
     NanoScroll.prototype.createEventHandlers = function() {
       var me;
       me = this;
-      this.handler = [];
-      this.handler.onDown = function(e) {
-        me.isDragging = true;
-        me.offsetY = e.clientY - me.slider.offset().top;
-        me.pane.addClass('active');
-        $(document).bind('mousemove', me.handler.onDrag);
-        $(document).bind('mouseup', me.handler.onUp);
-        return false;
-      };
-      this.handler.onDrag = function(e) {
-        me.sliderY = e.clientY - me.target.offset().top - me.offsetY;
-        me.scroll();
-        return false;
-      };
-      this.handler.onUp = function(e) {
-        me.isDragging = false;
-        me.pane.removeClass('active');
-        $(document).unbind('mousemove', me.handler.onDrag);
-        $(document).unbind('mouseup', me.handler.onUp);
-        return false;
-      };
-      this.handler.onResize = function(e) {
-        me.reset();
-        return me.scroll();
-      };
-      this.handler.onDownPane = function(e) {
-        me.sliderY = e.clientY - me.target.offset().top - me.sliderHeight * .5;
-        me.scroll();
-        return me.handler.onDown(e);
-      };
-      return this.handler.onScroll = function(e) {
-        var top;
-        if (me.isDragging === true) {
-          return;
+      return this.handler = {
+        onDown: function(e) {
+          me.isDragging = true;
+          me.offsetY = e.clientY - me.slider.offset().top;
+          me.pane.addClass('active');
+          $(document).bind('mousemove', me.handler.onDrag);
+          $(document).bind('mouseup', me.handler.onUp);
+          return false;
+        },
+        onDrag: function(e) {
+          me.sliderY = e.clientY - me.target.offset().top - me.offsetY;
+          me.scroll();
+          return false;
+        },
+        onUp: function(e) {
+          me.isDragging = false;
+          me.pane.removeClass('active');
+          $(document).unbind('mousemove', me.handler.onDrag);
+          $(document).unbind('mouseup', me.handler.onUp);
+          return false;
+        },
+        onResize: function(e) {
+          me.reset();
+          return me.scroll();
+        },
+        onDownPane: function(e) {
+          me.sliderY = e.clientY - me.target.offset().top - me.sliderHeight * .5;
+          me.scroll();
+          return me.handler.onDown(e);
+        },
+        onScroll: function(e) {
+          var top;
+          if (me.isDragging === true) {
+            return;
+          }
+          top = me.content[0].scrollTop / me.content[0].scrollHeight * (me.paneHeight + 5);
+          return me.slider.css({
+            top: Math.floor(top)
+          });
         }
-        top = me.content[0].scrollTop / me.content[0].scrollHeight * (me.paneHeight + 5);
-        return me.slider.css({
-          top: Math.floor(top)
-        });
       };
     };
     NanoScroll.prototype.assignListeners = function() {

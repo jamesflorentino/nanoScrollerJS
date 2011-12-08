@@ -28,41 +28,41 @@ class NanoScroll
   
   createEventHandlers: ->
     me              = this
-    @handler        = []
-    @handler.onDown = (e) ->
-      me.isDragging = true
-      me.offsetY 		= e.clientY - me.slider.offset().top
-      me.pane.addClass 'active'
-      $(document).bind 'mousemove', me.handler.onDrag
-      $(document).bind 'mouseup', 	me.handler.onUp
-      return false
+    @handler        =
+      onDown: (e) ->
+        me.isDragging = true
+        me.offsetY 		= e.clientY - me.slider.offset().top
+        me.pane.addClass 'active'
+        $(document).bind 'mousemove', me.handler.onDrag
+        $(document).bind 'mouseup', 	me.handler.onUp
+        return false
 
-    @handler.onDrag = (e) ->
-      me.sliderY = e.clientY - me.target.offset().top - me.offsetY
-      me.scroll()
-      return false
+      onDrag: (e) ->
+        me.sliderY = e.clientY - me.target.offset().top - me.offsetY
+        me.scroll()
+        return false
 
-    @handler.onUp = (e) ->
-      me.isDragging = false
-      me.pane.removeClass 'active'
-      $(document).unbind 'mousemove', me.handler.onDrag
-      $(document).unbind 'mouseup', 	me.handler.onUp
-      return false
+      onUp: (e) ->
+        me.isDragging = false
+        me.pane.removeClass 'active'
+        $(document).unbind 'mousemove', me.handler.onDrag
+        $(document).unbind 'mouseup', 	me.handler.onUp
+        return false
 
-    @handler.onResize = (e) ->
-      me.reset()
-      me.scroll()
+      onResize: (e) ->
+        me.reset()
+        me.scroll()
 
-    @handler.onDownPane = (e) ->
-      me.sliderY = e.clientY - me.target.offset().top - me.sliderHeight * .5
-      me.scroll()
-      me.handler.onDown e
+      onDownPane: (e) ->
+        me.sliderY = e.clientY - me.target.offset().top - me.sliderHeight * .5
+        me.scroll()
+        me.handler.onDown e
 
-    @handler.onScroll = (e) ->
-      return if me.isDragging is true
-      top = me.content[0].scrollTop / me.content[0].scrollHeight * (me.paneHeight+ 5)
-      me.slider.css
-        top: Math.floor top
+      onScroll: (e) ->
+        return if me.isDragging is true
+        top = me.content[0].scrollTop / me.content[0].scrollHeight * (me.paneHeight+ 5)
+        me.slider.css
+          top: Math.floor top
 
   assignListeners: ->
     console.log 'assign listeners'
