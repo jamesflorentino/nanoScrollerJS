@@ -8,6 +8,7 @@
 .nano .content {
   position      : absolute;
   overflow      : auto;
+  overflow-x    : hidden;
   top           : 0;
   right         : 0;
   bottom        : 0;
