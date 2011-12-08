@@ -81,17 +81,13 @@ class NanoScroll
     inner                = document.createElement 'div'
     outer.style.position = 'absolute'
     outer.style.width    = '100px'
-    outer.style.height   = '10px'
-    outer.style.overflow = 'hidden'
-    inner.style.width    = '100%'
-    inner.style.height   = '20px'
-
-    outer.appendChild inner
+    outer.style.height   = '50px'
+    outer.style.overflow = 'scroll'
     document.body.appendChild outer
 
-    noscrollWidth        = inner.offsetWidth + 0
-    outer.style.overflow = 'auto'
-    yesscrollWidth       = inner.offsetWidth + 0
+    noscrollWidth  = outer.offsetWidth
+    yesscrollWidth = outer.scrollWidth
+
     document.body.removeChild outer
 
     return noscrollWidth - yesscrollWidth
