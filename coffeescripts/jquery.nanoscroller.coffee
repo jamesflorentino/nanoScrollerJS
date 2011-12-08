@@ -4,78 +4,76 @@ class NanoScroll
 
   constructor: (target, options) ->
 
-    # initial properties
-    @slider        = null
-    @pane          = null
-    @content       = null
-    @scrollHeight  = 0
-    @sliderHeight  = 0
-    @paneHeight    = 0
-    @sliderY       = 0
-    @offsetY       = 0
-    @contentHeight = 0
-    @contentY      = 0
-    @isDragging    = false
+    @slider   = null
+    @pane     = null
+    @content  = null
+    @scrollH  = 0
+    @sliderH  = 0
+    @paneH    = 0
+    @sliderY  = 0
+    @offsetY  = 0
+    @contentH = 0
+    @contentY = 0
+    @isDrag   = false
 
-    options        = options || {}
-    @target        = target
+    options   = options || {}
+    @target   = target
 
-    @generateElements()
-    @createEventHandlers()
-    @assignListeners()
+    @generate()
+    @createEvents()
+    @assignEvents()
     @reset()
     return
   
-  createEventHandlers: ->
-    me              = this
-    @handler        =
-      onDown: (e) ->
-        me.isDragging = true
-        me.offsetY 		= e.clientY - me.slider.offset().top
+  createEvents: ->
+    me  = this
+    @handler =
+      down: (e) ->
+        me.isDrag  = true
+        me.offsetY = e.clientY - me.slider.offset().top
         me.pane.addClass 'active'
-        $(document).bind 'mousemove', me.handler.onDrag
-        $(document).bind 'mouseup', 	me.handler.onUp
+        $(document).bind 'mousemove', me.handler.drag
+        $(document).bind 'mouseup', 	me.handler.up
         return false
 
-      onDrag: (e) ->
+      drag: (e) ->
         me.sliderY = e.clientY - me.target.offset().top - me.offsetY
         me.scroll()
         return false
 
-      onUp: (e) ->
-        me.isDragging = false
+      up: (e) ->
+        me.isDrag = false
         me.pane.removeClass 'active'
-        $(document).unbind 'mousemove', me.handler.onDrag
-        $(document).unbind 'mouseup', 	me.handler.onUp
+        $(document).unbind 'mousemove', me.handler.drag
+        $(document).unbind 'mouseup', 	me.handler.up
         return false
 
-      onResize: (e) ->
+      resize: (e) ->
         me.reset()
         me.scroll()
 
-      onDownPane: (e) ->
-        me.sliderY = e.clientY - me.target.offset().top - me.sliderHeight * .5
+      panedown: (e) ->
+        me.sliderY = e.clientY - me.target.offset().top - me.sliderH * .5
         me.scroll()
-        me.handler.onDown e
+        me.handler.down e
 
-      onScroll: (e) ->
-        return if me.isDragging is true
-        top = me.content[0].scrollTop / me.content[0].scrollHeight * (me.paneHeight+ 5)
+      scroll: (e) ->
+        return if me.isDrag is true
+        top = me.content[0].scrollTop / me.content[0].scrollHeight * (me.paneH+ 5)
         me.slider.css
           top: Math.floor top
 
-  assignListeners: ->
-    console.log 'assign listeners'
-    $(window).bind 'resize'  , @handler.onResize
-    @slider.bind 'mousedown' , @handler.onDown
-    @pane.bind 'mousedown'   , @handler.onDownPane
-    @content.bind 'scroll'   , @handler.onScroll
+  assignEvents: ->
+    $(window).bind 'resize'  , @handler.resize
+    @slider.bind 'mousedown' , @handler.down
+    @pane.bind 'mousedown'   , @handler.panedown
+    @content.bind 'scroll'   , @handler.scroll
   
   removeEventListeners: ->
-    $(window).unbind 'resize'  , @handler.onResize
-    @slider.unbind 'mousedown' , @handler.onDown
-    @pane.unbind 'mousedown'   , @handler.onDownPane
-    @content.unbind 'scroll'   , @handler.onScroll
+    $(window).unbind 'resize'  , @handler.resize
+    @slider.unbind 'mousedown' , @handler.down
+    @pane.unbind 'mousedown'   , @handler.panedown
+    @content.unbind 'scroll'   , @handler.scroll
 
   getScrollbarWidth: ->
     outer                = document.createElement 'div'
@@ -84,57 +82,51 @@ class NanoScroll
     outer.style.height   = '100px'
     outer.style.overflow = 'scroll'
     document.body.appendChild outer
-
     noscrollWidth  = outer.offsetWidth
     yesscrollWidth = outer.scrollWidth
-
     document.body.removeChild outer
-
     return noscrollWidth - yesscrollWidth
 
     
-  generateElements: ->
+  generate: ->
     @target.append '<div class="pane"><div class="slider"></div></div>'
     @content = $ @target.children()[0]
     @slider  = @target.find '.slider'
     @pane    = @target.find '.pane'
-
-    @scrollbarWidth = @getScrollbarWidth()
-    @scrollbarWidth = 0 if @scrollbarWidth is 0
-
+    @scrollW = @getScrollbarWidth()
+    @scrollW = 0 if @scrollbarWidth is 0
     @content.css
-      right  : -@scrollbarWidth + 'px'
+      right  : -@scrollW + 'px'
 
+    # scumbag IE7
     if $.browser.msie?
       @pane.hide() if parseInt($.browser.version) < 8
-    
     return
 
   reset: ->
-    if @isStopped is true
-      @isStopped = false
+    if @isDead is true
+      @isDead = false
       @pane.show()
-      @assignListeners()
+      @assignEvents()
 
-
-    @contentHeight  = @content[0].scrollHeight
-    @paneHeight     = @pane.height()
-    @sliderHeight   = @paneHeight / @contentHeight * @paneHeight
-    @scrollHeight   = @paneHeight - @sliderHeight
-    @slider.height 	@sliderHeight
+    @contentH  = @content[0].scrollHeight
+    @paneH     = @pane.height()
+    @sliderH   = @paneH / @contentH * @paneH
+    @scrollH   = @paneH - @sliderH
+    @slider.height 	@sliderH
     return
 
   scroll: ->
     @sliderY    = 0 if @sliderY < 0
-    @sliderY    = @scrollHeight if @sliderY > @scrollHeight
-    scrollValue = @paneHeight - @contentHeight + @scrollbarWidth
-    scrollValue = scrollValue * @sliderY / @scrollHeight
+    @sliderY    = @scrollH if @sliderY > @scrollH
+    scrollValue = @paneH - @contentH + @scrollW
+    scrollValue = scrollValue * @sliderY / @scrollH
     @content.scrollTop -scrollValue
     @slider.css top: @sliderY
 
   scrollBottom: (offsetY) ->
     @reset()
-    @sliderY = @scrollHeight
+    @sliderY = @scrollH
     @scroll()
     return
 
@@ -145,20 +137,21 @@ class NanoScroll
     return
 
   stop: ->
-    @isStopped = true
+    @isDead = true
     @removeEventListeners()
     @pane.hide()
+    return
 
   
 $.fn.nanoScroller = (options) ->
-  options = options || {}
+  options   = options || {}
   scrollbar = @data 'scrollbar'
   if scrollbar is undefined
     scrollbar = new NanoScroll this, options
     @data 'scrollbar': scrollbar
     return
-  scrollbar.reset()
-  scrollbar.scrollBottom() if options.scroll is 'bottom'
-  scrollbar.scrollTop() if options.scroll is 'top'
-  scrollbar.stop() if options.stop is true
-  return false
+
+  return scrollbar.scrollBottom() if options.scroll is 'bottom'
+  return scrollbar.scrollTop()    if options.scroll is 'top'
+  return scrollbar.stop()         if options.stop is true
+  return scrollbar.reset()
