@@ -65,6 +65,7 @@ class NanoScroll
         top: Math.floor top
 
   assignListeners: ->
+    console.log 'assign listeners'
     $(window).bind 'resize'  , @handler.onResize
     @slider.bind 'mousedown' , @handler.onDown
     @pane.bind 'mousedown'   , @handler.onDownPane
@@ -110,6 +111,12 @@ class NanoScroll
     return
 
   reset: ->
+    if @isStopped is true
+      @isStopped = false
+      @pane.show()
+      @assignListeners()
+
+
     @contentHeight  = @content[0].scrollHeight
     @paneHeight     = @pane.height()
     @sliderHeight   = @paneHeight / @contentHeight * @paneHeight
@@ -138,6 +145,7 @@ class NanoScroll
     return
 
   stop: ->
+    @isStopped = true
     @removeEventListeners()
     @pane.hide()
 

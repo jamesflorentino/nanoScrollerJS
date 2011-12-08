@@ -67,6 +67,7 @@
       };
     };
     NanoScroll.prototype.assignListeners = function() {
+      console.log('assign listeners');
       $(window).bind('resize', this.handler.onResize);
       this.slider.bind('mousedown', this.handler.onDown);
       this.pane.bind('mousedown', this.handler.onDownPane);
@@ -110,6 +111,11 @@
       }
     };
     NanoScroll.prototype.reset = function() {
+      if (this.isStopped === true) {
+        this.isStopped = false;
+        this.pane.show();
+        this.assignListeners();
+      }
       this.contentHeight = this.content[0].scrollHeight;
       this.paneHeight = this.pane.height();
       this.sliderHeight = this.paneHeight / this.contentHeight * this.paneHeight;
@@ -142,6 +148,7 @@
       this.scroll();
     };
     NanoScroll.prototype.stop = function() {
+      this.isStopped = true;
       this.removeEventListeners();
       return this.pane.hide();
     };
