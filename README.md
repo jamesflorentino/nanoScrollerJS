@@ -1,29 +1,28 @@
 # nanoScroller.js
-[nanoScroller.js](http://jamesflorentino.com/jquery.nanoscroller) is a jQuery plugin that offers a simplistic way of implementing non-distracting/minimalistic scrollbars for your website.
-It uses minimal HTML markup being `.nano > .content`. The other scrollbar div elements `.pane` and `.slider` are added during run time to prevent clutter in templating.
-It is aimed at providing graphic solutions for dynamic content such as from ajax's. The latest version utilizes native scrolling and works with the iPad, iPhone, and Android Tablets.
+[nanoScroller.js](http://jamesflorentino.com/jquery.nanoscroller) is a jQuery plugin that offers a simplistic way of implementing Lion-styled scrollbars for your website.
+It uses minimal HTML markup being `.nano > .content`. The other scrollbar div elements `.pane` and `.slider` are added during run time to prevent clutter in templating. The latest version utilizes native scrolling and works with the iPad, iPhone, and some Android Tablets.
 
 Please visit the downloads section to get the js and css template file (.zip).
 
 To start using, you to do three basic things:
 
-### Mark Up
+### 1. Mark Up
     <div id="about" class="nano">
      <div class="content"> ... content here ...  </div> 
     </div>
 
 Copy the HTML mark-up. Change `#about` into something related to your content. Though you can also remove that attribute as long as you have a parent div with an ID reference. e.g. `#parent .nano`
 
-### CSS
+### 2. CSS
     @import url('nanoscroller.css');
     .nano .content      { padding: 10px; }
     .nano .pane         { background: #444; }
     .nano .pane .slider { background: #111; }
 
-### JavaScript
+### 3. JavaScript
     $("#about.nano").nanoScroller();
 
-### Additional Method
+### Additional Methods
 
 To scroll at the top
 
