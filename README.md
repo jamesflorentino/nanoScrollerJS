@@ -1,5 +1,7 @@
 # nanoScroller.js
-[nanoScroller.js](http://jamesflorentino.com/jquery.nanoscroller) is a jQuery plugin that offers a simple way of implementing non-distracting scrollbars for your website. It also respects html markup and uses only two layers for scrolling content. The other scrollbar div elements `.pane` and `.slider` are added during run time to prevent clutter in templating. It is aimed at providing scrollbar solutions for dynamic content such as from ajax's.
+[nanoScroller.js](http://jamesflorentino.com/jquery.nanoscroller) is a jQuery plugin that offers a simplistic way of implementing non-distracting/minimalistic scrollbars for your website.
+It uses minimal HTML markup being `.nano > .content`. The other scrollbar div elements `.pane` and `.slider` are added during run time to prevent clutter in templating.
+It is aimed at providing graphic solutions for dynamic content such as from ajax's. The latest version utilizes native scrolling and works with the iPad, iPhone, and Android Tablets.
 
 Please visit the downloads section to get the js and css template file (.zip).
 
@@ -25,7 +27,7 @@ Copy the HTML mark-up. Change `#about` into something related to your content. T
 
 To scroll at the top
 
-    $("#about.nano").nanoScroller({update:true});
+    $("#about.nano").nanoScroller({scroll:'top'});
 
 To scroll at the bottom
 
@@ -40,11 +42,11 @@ Refresh the scrollbar
     #("#about.nano").nanoScroller();
 
 ### Features
-- Currently works in IE8+, FireFox, Chrome, Safari
+- Currently works in IE8+, FireFox, Chrome, Safari. But I haven't fully tested in all versions. If you find a bug, please report here at the [issues section](https://github.com/jamesflorentino/nanoScrollerJS/issues)
 - For IE7 and below, it will fallback to the native scrollbar gadget of the OS.
-- Works with popular multi-touch mobile and tablet devices. But still not error free.
+- It currently works with iOS5 (iPhone, iPad and iPod Touch)
 - The current version v.02 weighs 3.65KB. I have yet to optimize the code. If you write CoffeeScript, feel free to Fork the project.
 
 #### Credits
-- Written by [James Florentino](http://jamesflorentino.com)
+- Written by [James Florentino](http://jamesflorentino.com) in [CoffeeScript](http://coffeescript.org)
 - Released under [MIT License](http://www.opensource.org/licenses/mit-license.php)
