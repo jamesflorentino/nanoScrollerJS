@@ -13,4 +13,3 @@ task "build", "Build everything and minify", (options) ->
                 fs.writeFile "bin/javascripts/jquery.nanoscroller.min.js", code, (errWriting) ->
                     throw errWriting if errWriting
                     console.log "Success!"
-                    invoke "zip"
