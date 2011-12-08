@@ -83,7 +83,7 @@
       outer = document.createElement('div');
       outer.style.position = 'absolute';
       outer.style.width = '100px';
-      outer.style.height = '50px';
+      outer.style.height = '100px';
       outer.style.overflow = 'scroll';
       document.body.appendChild(outer);
       noscrollWidth = outer.offsetWidth;
