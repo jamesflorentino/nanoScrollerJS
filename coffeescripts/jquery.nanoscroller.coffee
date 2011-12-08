@@ -17,7 +17,7 @@ class NanoScroll
     @contentY      = 0
     @isDragging    = false
 
-    options        = options || {}
+    options      or= {}
     @target        = target
 
     @generateElements()
@@ -27,41 +27,40 @@ class NanoScroll
     return
   
   createEventHandlers: ->
-    me              = this
     @handler        = []
-    @handler.onDown = (e) ->
-      me.isDragging = true
-      me.offsetY 		= e.clientY - me.slider.offset().top
-      me.pane.addClass 'active'
-      $(document).bind 'mousemove', me.handler.onDrag
-      $(document).bind 'mouseup', 	me.handler.onUp
-      return false
+    @handler.onDown = (e) =>
+      @isDragging = true
+      @offsetY    = e.clientY - @slider.offset().top
+      @pane.addClass 'active'
+      $(document).bind 'mousemove', @handler.onDrag
+      $(document).bind 'mouseup', 	@handler.onUp
+      false
 
-    @handler.onDrag = (e) ->
-      me.sliderY = e.clientY - me.target.offset().top - me.offsetY
-      me.scroll()
-      return false
+    @handler.onDrag = (e) =>
+      @sliderY = e.clientY - @target.offset().top - @offsetY
+      @scroll()
+      false
 
-    @handler.onUp = (e) ->
-      me.isDragging = false
-      me.pane.removeClass 'active'
-      $(document).unbind 'mousemove', me.handler.onDrag
-      $(document).unbind 'mouseup', 	me.handler.onUp
-      return false
+    @handler.onUp = (e) =>
+      @isDragging = false
+      @pane.removeClass 'active'
+      $(document).unbind 'mousemove', @handler.onDrag
+      $(document).unbind 'mouseup', 	@handler.onUp
+      false
 
-    @handler.onResize = (e) ->
-      me.reset()
-      me.scroll()
+    @handler.onResize = (e) =>
+      @reset()
+      @scroll()
 
-    @handler.onDownPane = (e) ->
-      me.sliderY = e.clientY - me.target.offset().top - me.sliderHeight * .5
-      me.scroll()
-      me.handler.onDown e
+    @handler.onDownPane = (e) =>
+      @sliderY = e.clientY - @target.offset().top - @sliderHeight * .5
+      @scroll()
+      @handler.onDown e
 
-    @handler.onScroll = (e) ->
-      return if me.isDragging is true
-      top = me.content[0].scrollTop / me.content[0].scrollHeight * (me.paneHeight+ 5)
-      me.slider.css
+    @handler.onScroll = (e) =>
+      return if @isDragging is true
+      top = @content[0].scrollTop / @content[0].scrollHeight * (@paneHeight+ 5)
+      @slider.css
         top: Math.floor top
 
   assignListeners: ->
@@ -94,9 +93,8 @@ class NanoScroll
     yesscrollWidth       = inner.offsetWidth + 0
     document.body.removeChild outer
 
-    return noscrollWidth - yesscrollWidth
+    noscrollWidth - yesscrollWidth
 
-    
   generateElements: ->
     @target.append '<div class="pane"><div class="slider"></div></div>'
     @content = $ @target.children()[0]
@@ -146,9 +144,8 @@ class NanoScroll
     @removeEventListeners()
     @pane.hide()
 
-  
 $.fn.nanoScroller = (options) ->
-  options = options || {}
+  options or= {}
   scrollbar = @data 'scrollbar'
   if scrollbar is undefined
     scrollbar = new NanoScroll this, options
@@ -158,4 +155,4 @@ $.fn.nanoScroller = (options) ->
   scrollbar.scrollBottom() if options.scroll is 'bottom'
   scrollbar.scrollTop() if options.scroll is 'top'
   scrollbar.stop() if options.stop is true
-  return false
+  false
