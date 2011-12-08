@@ -45,7 +45,7 @@ Refresh the scrollbar
 - Currently works in IE8+, FireFox, Chrome, Safari. But I haven't fully tested in all versions. If you find a bug, please report here at the [issues section](https://github.com/jamesflorentino/nanoScrollerJS/issues)
 - For IE7 and below, it will fallback to the native scrollbar gadget of the OS.
 - It currently works with iOS5 (iPhone, iPad and iPod Touch)
-- The current version v.02 weighs 3.65KB. I have yet to optimize the code. If you write CoffeeScript, feel free to Fork the project.
+- The current version v.0.3.1 weighs 3.55KB. I have yet to optimize the code. If you write CoffeeScript, feel free to Fork the project.
 
 #### Credits
 - Written by [James Florentino](http://jamesflorentino.com) in [CoffeeScript](http://coffeescript.org)
