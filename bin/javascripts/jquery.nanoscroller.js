@@ -79,9 +79,8 @@
       return this.content.unbind('scroll', this.handler.onScroll);
     };
     NanoScroll.prototype.getScrollbarWidth = function() {
-      var inner, noscrollWidth, outer, yesscrollWidth;
+      var noscrollWidth, outer, yesscrollWidth;
       outer = document.createElement('div');
-      inner = document.createElement('div');
       outer.style.position = 'absolute';
       outer.style.width = '100px';
       outer.style.height = '50px';

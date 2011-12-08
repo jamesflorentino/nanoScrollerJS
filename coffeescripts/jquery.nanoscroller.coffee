@@ -78,7 +78,6 @@ class NanoScroll
 
   getScrollbarWidth: ->
     outer                = document.createElement 'div'
-    inner                = document.createElement 'div'
     outer.style.position = 'absolute'
     outer.style.width    = '100px'
     outer.style.height   = '50px'
