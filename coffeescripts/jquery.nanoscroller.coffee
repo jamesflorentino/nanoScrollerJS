@@ -2,8 +2,8 @@ $ = @jQuery
 
 class NanoScroll
 
-  constructor: (target, options) ->
-
+  constructor: (el, options) ->
+    ### Probably not necessarry to define this for filesize reasons
     @slider   = null
     @pane     = null
     @content  = null
@@ -15,36 +15,39 @@ class NanoScroll
     @contentH = 0
     @contentY = 0
     @isDrag   = false
+    ###
 
     options or= {}
-    @target   = target
-
+    @el   = target
     @generate()
     @createEvents()
-    @assignEvents()
+    @addEvents()
     @reset()
     return
   
   createEvents: ->
-    @handler =
+    ## filesize reasons
+    mousemove = 'mousemove'
+    mouseup   = 'mouseup'
+    @events =
       down: (e) =>
         @isDrag  = true
         @offsetY = e.clientY - @slider.offset().top
         @pane.addClass 'active'
-        $(document).bind 'mousemove', @handler.drag
-        $(document).bind 'mouseup', 	@handler.up
+        $(document).bind mousemove, @events.drag
+        $(document).bind mouseup, 	@events.up
         false
 
       drag: (e) =>
-        @sliderY = e.clientY - @target.offset().top - @offsetY
+        @sliderY = e.clientY - @el.offset().top - @offsetY
         @scroll()
         false
 
       up: (e) =>
         @isDrag = false
         @pane.removeClass 'active'
-        $(document).unbind 'mousemove', @handler.drag
-        $(document).unbind 'mouseup', 	@handler.up
+        $(document).unbind mousemove, @events.drag
+        $(document).unbind mouseup, 	@events.up
         false
 
       resize: (e) =>
@@ -52,9 +55,9 @@ class NanoScroll
         @scroll()
 
       panedown: (e) =>
-        @sliderY = e.clientY - @target.offset().top - @sliderH * .5
+        @sliderY = e.clientY - @el.offset().top - @sliderH * .5
         @scroll()
-        @handler.down e
+        @events.down e
 
       scroll: (e) =>
         return if @isDrag is true
@@ -62,17 +65,17 @@ class NanoScroll
         @slider.css
           top: Math.floor top
 
-  assignEvents: ->
-    $(window).bind 'resize'  , @handler.resize
-    @slider.bind 'mousedown' , @handler.down
-    @pane.bind 'mousedown'   , @handler.panedown
-    @content.bind 'scroll'   , @handler.scroll
+  addEvents: ->
+    $(window).bind 'resize'  , @events.resize
+    @slider.bind 'mousedown' , @events.down
+    @pane.bind 'mousedown'   , @events.panedown
+    @content.bind 'scroll'   , @events.scroll
   
-  removeEventListeners: ->
-    $(window).unbind 'resize'  , @handler.resize
-    @slider.unbind 'mousedown' , @handler.down
-    @pane.unbind 'mousedown'   , @handler.panedown
-    @content.unbind 'scroll'   , @handler.scroll
+  removeEvents: ->
+    $(window).unbind 'resize'  , @events.resize
+    @slider.unbind 'mousedown' , @events.down
+    @pane.unbind 'mousedown'   , @events.panedown
+    @content.unbind 'scroll'   , @events.scroll
 
   getScrollbarWidth: ->
     outer                = document.createElement 'div'
@@ -88,10 +91,10 @@ class NanoScroll
 
     
   generate: ->
-    @target.append '<div class="pane"><div class="slider"></div></div>'
-    @content = $ @target.children()[0]
-    @slider  = @target.find '.slider'
-    @pane    = @target.find '.pane'
+    @el.append '<div class="pane"><div class="slider"></div></div>'
+    @content = $ @el.children()[0]
+    @slider  = @el.find '.slider'
+    @pane    = @el.find '.pane'
     @scrollW = @getScrollbarWidth()
     @scrollW = 0 if @scrollbarWidth is 0
     @content.css
@@ -106,7 +109,7 @@ class NanoScroll
     if @isDead is true
       @isDead = false
       @pane.show()
-      @assignEvents()
+      @addEvents()
 
     @contentH  = @content[0].scrollHeight
     @paneH     = @pane.height()
@@ -137,7 +140,7 @@ class NanoScroll
 
   stop: ->
     @isDead = true
-    @removeEventListeners()
+    @removeEvents()
     @pane.hide()
     return
 
