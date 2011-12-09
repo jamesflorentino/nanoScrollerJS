@@ -4,6 +4,7 @@
   $ = this.jQuery;
   NanoScroll = (function() {
     function NanoScroll(el, options) {
+      this.el = el;
       /* Probably not necessarry to define this for filesize reasons
       @slider   = null
       @pane     = null
@@ -16,8 +17,8 @@
       @contentH = 0
       @contentY = 0
       @isDrag   = false
-      */      options || (options = {});
-      this.el = target;
+      */
+      options || (options = {});
       this.generate();
       this.createEvents();
       this.addEvents();
