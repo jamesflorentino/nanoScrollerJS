@@ -2,7 +2,7 @@ $ = @jQuery
 
 class NanoScroll
 
-  constructor: (el, options) ->
+  constructor: (@el, options) ->
     ### Probably not necessarry to define this for filesize reasons
     @slider   = null
     @pane     = null
@@ -18,7 +18,6 @@ class NanoScroll
     ###
 
     options or= {}
-    @el   = target
     @generate()
     @createEvents()
     @addEvents()
