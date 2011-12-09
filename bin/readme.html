@@ -1,0 +1,72 @@
+<h1>nanoScroller.js</h1>
+
+<p><a href="http://jamesflorentino.com/jquery.nanoscroller">nanoScroller.js</a> is a jQuery plugin that offers a simplistic way of implementing Lion-styled scrollbars for your website.
+It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other scrollbar div elements <code>.pane &gt; .slider</code> are added during run time to prevent clutter in templating. The latest version utilizes native scrolling and works with the iPad, iPhone, and some Android Tablets.</p>
+
+<p>Please visit the downloads section to get the js and css template file (.zip).</p>
+
+<p>To start using, you to do three basic things:</p>
+
+<h3>1. Mark Up</h3>
+
+<pre><code>&lt;div id=&quot;about&quot; class=&quot;nano&quot;&gt;
+ &lt;div class=&quot;content&quot;&gt; ... content here ...  &lt;&#47;div&gt; 
+&lt;&#47;div&gt;
+</code></pre>
+
+<p>Copy the HTML mark-up. Change <code>#about</code> into something related to your content. Though you can also remove that attribute as long as you have a parent div with an ID reference. e.g. <code>#parent &gt; .nano</code></p>
+
+<h3>2. CSS</h3>
+
+<pre><code>@import url(&#39;nanoscroller.css&#39;);
+.nano .content      { padding: 10px; }
+.nano .pane         { background: #444; }
+.nano .pane .slider { background: #111; }
+</code></pre>
+
+<h3>3. JavaScript</h3>
+
+<pre><code>$(&quot;#about.nano&quot;).nanoScroller();
+</code></pre>
+
+<h3>Additional Methods</h3>
+
+<p>To scroll at the top</p>
+
+<pre><code>$(&quot;#about.nano&quot;).nanoScroller({scroll:&#39;top&#39;});
+</code></pre>
+
+<p>To scroll at the bottom</p>
+
+<pre><code>$(&quot;#about.nano&quot;).nanoScroller({scroll:&#39;bottom&#39;});
+</code></pre>
+
+<p>To stop the operation</p>
+
+<pre><code>#(&quot;#about.nano&quot;).nanoScroller({stop: true});
+</code></pre>
+
+<p>Refresh the scrollbar</p>
+
+<pre><code>#(&quot;#about.nano&quot;).nanoScroller();
+</code></pre>
+
+<h3>Features</h3>
+
+<ul>
+<li>Currently works in IE8+, FireFox, Chrome, Safari. But I haven&#39;t fully tested in all versions. If you find a bug, please report here at the <a href="https://github.com/jamesflorentino/nanoScrollerJS/issues">issues section</a></li>
+<li>For IE7 and below, it will fallback to the native scrollbar gadget of the OS.</li>
+<li>It currently works with iOS5 (iPhone, iPad and iPod Touch). If you see it&#39;s broken on other tablets and mobile devices, please file a ticket in the git repo. Along with model name, and OS of the device.</li>
+</ul>
+
+<h3>From the author</h3>
+
+<p>I wrote this plugin out of necessity for a JavaScript project with designers and front-end developers in mind. Please also note that I will not be reliable to fix your problem just in case you plan to use this commercially and some unforseen event arises. However, I will do what I can to immediately patch a solution.</p>
+
+<h3>Credits</h3>
+
+<ul>
+<li>Written by <a href="http://jamesflorentino.com">James Florentino</a> in <a href="http://coffeescript.org">CoffeeScript</a></li>
+<li>Released under <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a></li>
+<li>If you write CoffeeScript and you wish to improve the code, please feel free to fork the project.</li>
+</ul>
