@@ -12,7 +12,7 @@ pre                   { font-family: 'Monaco', 'Anonymous Pro', sans-serif; font
 #main ul li           { margin-left: 20px; font-size: 13px; }
 b                     { background: rgba(1,1,1,.1); border-radius: 5px; display: inline-block; padding: 1px 3px 1px 3px; }
 #main .content h1     { display: block; margin: 0; padding: 0; color: #111; text-indent: 0; background: none; display: none; }
-#main a               { color: #255; text-decoration: underline; text-shadow: none; }
-#main a:hover         { color: #553; text-decoration: none; }
+#main a               { color: #066; text-decoration: none; text-shadow: none; }
+#main a:hover         { text-decoration: underline;  }
 #main code            { font-family: Monaco, 'Anonymous Pro'; }
 #main p code          { color: #111; background: #222; display: inline-block; border-radius:5px; font-family: Monaco, 'Anonymous Pro'; font-size: 11px; text-shadow: none; color: #ee8; padding: 0 3px 0 3px; border-bottom: 1px solid #eee; box-shadow: #000 0 2px 3px inset; text-shadow: black 0 -1px 1px; } 
