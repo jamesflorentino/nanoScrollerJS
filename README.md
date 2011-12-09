@@ -49,5 +49,5 @@ Refresh the scrollbar
 I created this plugin out of necessity for a JavaScript project. I've designed the plugin with designers and front-end developers in mind. Please also note that I will not be reliable to fix your problem just in case you plan to use this commercially and some unforseen event arises. However, I will do what I can to immediately patch a solution.
 
 #### Credits
-- Written by [James Florentino](http://jamesflorentino.com) in [CoffeeScript](http://coffeescript.org)
+- Written by [James Florentino](http://jamesflorentino.com), [@jamesflorentino](http://twitter.com/jamesflorentino) in [CoffeeScript](http://coffeescript.org)
 - Released under [MIT License](http://www.opensource.org/licenses/mit-license.php)
