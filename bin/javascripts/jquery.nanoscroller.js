@@ -70,7 +70,7 @@
           });
         }, this),
         wheel: __bind(function(e) {
-          this.sliderY += e.detail;
+          this.sliderY += -e.wheelDeltaY || -e.delta;
           this.scroll();
           return false;
         }, this)

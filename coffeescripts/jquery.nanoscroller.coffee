@@ -65,7 +65,7 @@ class NanoScroll
           top: Math.floor top
 
       wheel: (e) =>
-        @sliderY += e.detail
+        @sliderY +=  -e.wheelDeltaY || -e.delta
         @scroll()
         return false
 
