@@ -64,17 +64,31 @@ class NanoScroll
         @slider.css
           top: Math.floor top
 
+      wheel: (e) =>
+        @sliderY += e.detail
+        @scroll()
+        return false
+
+
   addEvents: ->
     $(window).bind 'resize'  , @events.resize
     @slider.bind 'mousedown' , @events.down
     @pane.bind 'mousedown'   , @events.panedown
     @content.bind 'scroll'   , @events.scroll
-  
+
+    if window.addEventListener
+      @pane[0].addEventListener 'mousewheel'     , @events.wheel
+      @pane[0].addEventListener 'DOMMouseScroll' , @events.wheel
+
   removeEvents: ->
     $(window).unbind 'resize'  , @events.resize
     @slider.unbind 'mousedown' , @events.down
     @pane.unbind 'mousedown'   , @events.panedown
     @content.unbind 'scroll'   , @events.scroll
+
+    if window.addEventListener
+      @pane[0].removeEventListener 'mousewheel'     , @events.wheel
+      @pane[0].removeEventListener 'DOMMouseScroll' , @events.wheel
 
   getScrollbarWidth: ->
     outer                = document.createElement 'div'
@@ -118,8 +132,8 @@ class NanoScroll
     return
 
   scroll: ->
-    @sliderY    = 0 if @sliderY < 0
-    @sliderY    = @scrollH if @sliderY > @scrollH
+    @sliderY    = Math.max 0, @sliderY
+    @sliderY    = Math.min @scrollH, @sliderY
     scrollValue = @paneH - @contentH + @scrollW
     scrollValue = scrollValue * @sliderY / @scrollH
     @content.scrollTop -scrollValue

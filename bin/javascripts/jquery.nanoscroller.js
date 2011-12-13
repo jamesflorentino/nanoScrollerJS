@@ -68,6 +68,11 @@
           return this.slider.css({
             top: Math.floor(top)
           });
+        }, this),
+        wheel: __bind(function(e) {
+          this.sliderY += e.detail;
+          this.scroll();
+          return false;
         }, this)
       };
     };
@@ -75,13 +80,21 @@
       $(window).bind('resize', this.events.resize);
       this.slider.bind('mousedown', this.events.down);
       this.pane.bind('mousedown', this.events.panedown);
-      return this.content.bind('scroll', this.events.scroll);
+      this.content.bind('scroll', this.events.scroll);
+      if (window.addEventListener) {
+        this.pane[0].addEventListener('mousewheel', this.events.wheel);
+        return this.pane[0].addEventListener('DOMMouseScroll', this.events.wheel);
+      }
     };
     NanoScroll.prototype.removeEvents = function() {
       $(window).unbind('resize', this.events.resize);
       this.slider.unbind('mousedown', this.events.down);
       this.pane.unbind('mousedown', this.events.panedown);
-      return this.content.unbind('scroll', this.events.scroll);
+      this.content.unbind('scroll', this.events.scroll);
+      if (window.addEventListener) {
+        this.pane[0].removeEventListener('mousewheel', this.events.wheel);
+        return this.pane[0].removeEventListener('DOMMouseScroll', this.events.wheel);
+      }
     };
     NanoScroll.prototype.getScrollbarWidth = function() {
       var noscrollWidth, outer, yesscrollWidth;
@@ -128,12 +141,8 @@
     };
     NanoScroll.prototype.scroll = function() {
       var scrollValue;
-      if (this.sliderY < 0) {
-        this.sliderY = 0;
-      }
-      if (this.sliderY > this.scrollH) {
-        this.sliderY = this.scrollH;
-      }
+      this.sliderY = Math.max(0, this.sliderY);
+      this.sliderY = Math.min(this.scrollH, this.sliderY);
       scrollValue = this.paneH - this.contentH + this.scrollW;
       scrollValue = scrollValue * this.sliderY / this.scrollH;
       this.content.scrollTop(-scrollValue);
