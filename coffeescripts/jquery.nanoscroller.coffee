@@ -60,9 +60,8 @@ class NanoScroll
 
       scroll: (e) =>
         return if @isDrag is true
-        top = @content[0].scrollTop / @content[0].scrollHeight * (@paneH + 5)
-        @slider.css
-          top: Math.floor top
+        top = @content[0].scrollTop / (@content[0].scrollHeight - @content[0].clientHeight) * (@paneH - @sliderH)
+        @slider.css top: top + 'px'
 
       wheel: (e) =>
         @sliderY +=  -e.wheelDeltaY || -e.delta
@@ -137,6 +136,7 @@ class NanoScroll
     @sliderY    = Math.min @scrollH, @sliderY
     scrollValue = @paneH - @contentH + @scrollW
     scrollValue = scrollValue * @sliderY / @scrollH
+    # scrollvalue = (paneh - ch + sw) * sy / sw
     @content.scrollTop -scrollValue
     @slider.css top: @sliderY
 

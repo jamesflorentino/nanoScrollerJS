@@ -64,9 +64,9 @@
           if (this.isDrag === true) {
             return;
           }
-          top = this.content[0].scrollTop / this.content[0].scrollHeight * (this.paneH + 5);
+          top = this.content[0].scrollTop / (this.content[0].scrollHeight - this.content[0].clientHeight) * (this.paneH - this.sliderH);
           return this.slider.css({
-            top: Math.floor(top)
+            top: top + 'px'
           });
         }, this),
         wheel: __bind(function(e) {
