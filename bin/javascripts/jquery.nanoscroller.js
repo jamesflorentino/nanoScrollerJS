@@ -133,9 +133,10 @@
         this.pane.show();
         this.addEvents();
       }
-      this.contentH = this.content[0].scrollHeight;
-      this.paneH = this.pane.height();
+      this.contentH = this.content[0].scrollHeight + this.scrollW;
+      this.paneH = this.pane.outerHeight();
       this.sliderH = this.paneH / this.contentH * this.paneH;
+      this.sliderH = Math.round(this.sliderH);
       this.scrollH = this.paneH - this.sliderH;
       this.slider.height(this.sliderH);
     };

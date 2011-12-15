@@ -60,7 +60,7 @@ class NanoScroll
 
       scroll: (e) =>
         return if @isDrag is true
-        top = @content[0].scrollTop / @content[0].scrollHeight * (@paneH+ 5)
+        top = @content[0].scrollTop / @content[0].scrollHeight * (@paneH + 5)
         @slider.css
           top: Math.floor top
 
@@ -124,9 +124,10 @@ class NanoScroll
       @pane.show()
       @addEvents()
 
-    @contentH  = @content[0].scrollHeight
-    @paneH     = @pane.height()
+    @contentH  = @content[0].scrollHeight + @scrollW
+    @paneH     = @pane.outerHeight()
     @sliderH   = @paneH / @contentH * @paneH
+    @sliderH   = Math.round @sliderH
     @scrollH   = @paneH - @sliderH
     @slider.height 	@sliderH
     return
