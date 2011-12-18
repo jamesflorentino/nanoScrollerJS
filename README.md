@@ -47,13 +47,13 @@ $("#about.nano").nanoScroller({scroll:'bottom'});
 To stop the operation
 
 ```javascript
-#("#about.nano").nanoScroller({stop: true});
+$("#about.nano").nanoScroller({stop: true});
 ```
 
 Refresh the scrollbar
 
 ```javascript
-#("#about.nano").nanoScroller();
+$("#about.nano").nanoScroller();
 ```
 
 ### Features
