@@ -7,38 +7,54 @@ Please visit the [downloads](https://github.com/jamesflorentino/nanoScrollerJS/d
 To start using, you to do three basic things:
 
 ### 1. Mark Up
-    <div id="about" class="nano">
-     <div class="content"> ... content here ...  </div> 
-    </div>
+```html
+<div id="about" class="nano">
+ <div class="content"> ... content here ...  </div> 
+</div>
+```
 
 Copy the HTML mark-up. Change `#about` into something related to your content. Though you can also remove that attribute as long as you have a parent div with an ID reference. e.g. `#parent > .nano`
 
 ### 2. CSS
-    @import url('nanoscroller.css');
-    .nano .content      { padding: 10px; }
-    .nano .pane         { background: #444; }
-    .nano .pane .slider { background: #111; }
+
+```css
+@import url('nanoscroller.css');
+.nano .content      { padding: 10px; }
+.nano .pane         { background: #444; }
+.nano .pane .slider { background: #111; }
+```
 
 ### 3. JavaScript
-    $("#about.nano").nanoScroller();
+
+```javascript
+$("#about.nano").nanoScroller();
+```
 
 ### Additional Methods
 
 To scroll at the top
 
-    $("#about.nano").nanoScroller({scroll:'top'});
+```javascript
+$("#about.nano").nanoScroller({scroll:'top'});
+```
 
 To scroll at the bottom
 
-    $("#about.nano").nanoScroller({scroll:'bottom'});
+```javascript
+$("#about.nano").nanoScroller({scroll:'bottom'});
+```
 
 To stop the operation
 
-    #("#about.nano").nanoScroller({stop: true});
+```javascript
+#("#about.nano").nanoScroller({stop: true});
+```
 
 Refresh the scrollbar
 
-    #("#about.nano").nanoScroller();
+```javascript
+#("#about.nano").nanoScroller();
+```
 
 ### Features
 - Currently works in IE8+, FireFox, Chrome, Safari. But I haven't fully tested in all versions. If you find a bug, please report here at the [issues section](https://github.com/jamesflorentino/nanoScrollerJS/issues)
