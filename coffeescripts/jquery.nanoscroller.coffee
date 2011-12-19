@@ -129,6 +129,12 @@ class NanoScroll
     @sliderH   = Math.round @sliderH
     @scrollH   = @paneH - @sliderH
     @slider.height 	@sliderH
+
+    if @paneH >= @contentH
+      @pane.hide()
+    else
+      @pane.show()
+
     return
 
   scroll: ->
