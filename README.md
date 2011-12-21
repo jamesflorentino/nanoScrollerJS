@@ -43,6 +43,17 @@ Refresh the scrollbar
 
     $("#about.nano").nanoScroller();
 
+
+### Advanced methods
+
+To scroll at the top with an offset value:
+
+    $("#about.nano").nanoScroller({scrollTop:value});
+
+To scroll at the bottom with an offset value:
+
+    $("#about.nano").nanoScroller({scrollBottom:value});
+
 ### Features
 - Currently works in IE8+, FireFox, Chrome, Safari. But I haven't fully tested in all versions. If you find a bug, please report here at the [issues section](https://github.com/jamesflorentino/nanoScrollerJS/issues)
 - For IE7 and below, it will fallback to the native scrollbar gadget of the OS.
