@@ -148,16 +148,16 @@ class NanoScroll
 
   scrollBottom: (offsetY) ->
     @reset()
-    @sliderY = @scrollH
+    @sliderY = @scrollH - offsetY
     @scroll()
     return
 
   scrollTop: (offsetY) ->
     @reset()
-    @sliderY = 0
+    @sliderY = 0 + offsetY
     @scroll()
     return
-
+  
   stop: ->
     @isDead = true
     @removeEvents()
@@ -173,7 +173,9 @@ $.fn.nanoScroller = (options) ->
     @data 'scrollbar': scrollbar
     return
 
-  return scrollbar.scrollBottom() if options.scroll is 'bottom'
-  return scrollbar.scrollTop()    if options.scroll is 'top'
-  return scrollbar.stop()         if options.stop   is true
+  return scrollbar.scrollBottom(options.scrollBottom) if options.scrollBottom
+  return scrollbar.scrollTop(options.scrollTop)       if options.scrollTop
+  return scrollbar.scrollBottom(0)                    if options.scroll is 'bottom'
+  return scrollbar.scrollTop(0)                       if options.scroll is 'top'
+  return scrollbar.stop()                             if options.stop   is true
   return scrollbar.reset()

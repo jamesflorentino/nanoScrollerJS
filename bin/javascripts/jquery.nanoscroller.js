@@ -158,12 +158,12 @@
     };
     NanoScroll.prototype.scrollBottom = function(offsetY) {
       this.reset();
-      this.sliderY = this.scrollH;
+      this.sliderY = this.scrollH - offsetY;
       this.scroll();
     };
     NanoScroll.prototype.scrollTop = function(offsetY) {
       this.reset();
-      this.sliderY = 0;
+      this.sliderY = 0 + offsetY;
       this.scroll();
     };
     NanoScroll.prototype.stop = function() {
@@ -184,11 +184,17 @@
       });
       return;
     }
+    if (options.scrollBottom) {
+      return scrollbar.scrollBottom(options.scrollBottom);
+    }
+    if (options.scrollTop) {
+      return scrollbar.scrollTop(options.scrollTop);
+    }
     if (options.scroll === 'bottom') {
-      return scrollbar.scrollBottom();
+      return scrollbar.scrollBottom(0);
     }
     if (options.scroll === 'top') {
-      return scrollbar.scrollTop();
+      return scrollbar.scrollTop(0);
     }
     if (options.stop === true) {
       return scrollbar.stop();
