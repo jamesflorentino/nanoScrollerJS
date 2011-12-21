@@ -51,8 +51,7 @@
           return false;
         }, this),
         resize: __bind(function(e) {
-          this.reset();
-          return this.scroll();
+          return this.reset();
         }, this),
         panedown: __bind(function(e) {
           this.sliderY = e.clientY - this.el.offset().top - this.sliderH * .5;
@@ -158,13 +157,11 @@
     };
     NanoScroll.prototype.scrollBottom = function(offsetY) {
       this.reset();
-      this.sliderY = this.scrollH - offsetY;
-      this.scroll();
+      this.content.scrollTop(this.contentH - this.content.height() - offsetY);
     };
     NanoScroll.prototype.scrollTop = function(offsetY) {
       this.reset();
-      this.sliderY = 0 + offsetY;
-      this.scroll();
+      this.content.scrollTop(offsetY + 0);
     };
     NanoScroll.prototype.stop = function() {
       this.isDead = true;

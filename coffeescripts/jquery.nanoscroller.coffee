@@ -51,7 +51,7 @@ class NanoScroll
 
       resize: (e) =>
         @reset()
-        @scroll()
+        #@scroll()
 
       panedown: (e) =>
         @sliderY = e.clientY - @el.offset().top - @sliderH * .5
@@ -134,7 +134,6 @@ class NanoScroll
       @pane.hide()
     else
       @pane.show()
-
     return
 
   scroll: ->
@@ -148,14 +147,12 @@ class NanoScroll
 
   scrollBottom: (offsetY) ->
     @reset()
-    @sliderY = @scrollH - offsetY
-    @scroll()
+    @content.scrollTop @contentH - @content.height() - offsetY
     return
 
   scrollTop: (offsetY) ->
     @reset()
-    @sliderY = 0 + offsetY
-    @scroll()
+    @content.scrollTop offsetY + 0
     return
   
   stop: ->
