@@ -1,9 +1,9 @@
 (function() {
-  var $, DOMSCROLL, DOWN, DRAG, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, UP, WHEEL, getScrollbarWidth;
+  var $, DOMSCROLL, DOWN, DRAG, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, UP, WHEEL, getScrollbarWidth, xasd;
 
   $ = this.jQuery;
 
-  SCROLLBAR = 'scrollbar';
+  xasd = 'scrollbar';
 
   SCROLL = 'scroll';
 
@@ -201,11 +201,11 @@
   $.fn.nanoScroller = function(options) {
     var scrollbar;
     options || (options = {});
-    scrollbar = this.data(SCROLLBAR);
+    scrollbar = this.data(xasd);
     if (scrollbar === void 0) {
       scrollbar = new NanoScroll(this);
       this.data({
-        SCROLLBAR: scrollbar
+        xasd: scrollbar
       });
       return;
     }

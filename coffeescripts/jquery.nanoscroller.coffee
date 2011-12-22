@@ -1,23 +1,34 @@
 $ = @jQuery
 
+SCROLLBAR  = 'scrollbar'
+SCROLL     = 'scroll'
+MOUSEDOWN  = 'mousedown'
+MOUSEMOVE  = 'mousemove'
+MOUSEWHEEL = 'mousewheel'
+MOUSEUP    = 'mouseup'
+RESIZE     = 'resize'
+DRAG       = 'drag'
+UP         = 'up'
+PANEDOWN   = 'panedown'
+DOMSCROLL  = 'DOMMouseScroll'
+DOWN       = 'down'
+WHEEL      = 'wheel'
+
+getScrollbarWidth = ->
+  outer                = document.createElement 'div'
+  outer.style.position = 'absolute'
+  outer.style.width    = '100px'
+  outer.style.height   = '100px'
+  outer.style.overflow = 'scroll'
+  document.body.appendChild outer
+  noscrollWidth  = outer.offsetWidth
+  yesscrollWidth = outer.scrollWidth
+  document.body.removeChild outer
+  noscrollWidth - yesscrollWidth
+
 class NanoScroll
 
-  constructor: (@el, options) ->
-    ### Probably not necessarry to define this for filesize reasons
-    @slider   = null
-    @pane     = null
-    @content  = null
-    @scrollH  = 0
-    @sliderH  = 0
-    @paneH    = 0
-    @sliderY  = 0
-    @offsetY  = 0
-    @contentH = 0
-    @contentY = 0
-    @isDrag   = false
-    ###
-
-    options or= {}
+  constructor: (@el) ->
     @generate()
     @createEvents()
     @addEvents()
@@ -26,15 +37,13 @@ class NanoScroll
   
   createEvents: ->
     ## filesize reasons
-    mousemove = 'mousemove'
-    mouseup   = 'mouseup'
     @events =
       down: (e) =>
         @isDrag  = true
         @offsetY = e.clientY - @slider.offset().top
         @pane.addClass 'active'
-        $(document).bind mousemove, @events.drag
-        $(document).bind mouseup, 	@events.up
+        $(document).bind MOUSEMOVE, @events.drag
+        $(document).bind MOUSEUP, 	@events.up
         false
 
       drag: (e) =>
@@ -45,23 +54,26 @@ class NanoScroll
       up: (e) =>
         @isDrag = false
         @pane.removeClass 'active'
-        $(document).unbind mousemove, @events.drag
-        $(document).unbind mouseup, 	@events.up
+        $(document).unbind MOUSEMOVE, @events.drag
+        $(document).unbind MOUSEUP, 	@events.up
         false
 
       resize: (e) =>
         @reset()
-        #@scroll()
+        return
 
       panedown: (e) =>
         @sliderY = e.clientY - @el.offset().top - @sliderH * .5
         @scroll()
         @events.down e
+        return
 
       scroll: (e) =>
+        content = @content[0]
         return if @isDrag is true
-        top = @content[0].scrollTop / (@content[0].scrollHeight - @content[0].clientHeight) * (@paneH - @sliderH)
+        top = content.scrollTop / (content.scrollHeight - content.clientHeight) * (@paneH - @sliderH)
         @slider.css top: top + 'px'
+        return
 
       wheel: (e) =>
         @sliderY +=  -e.wheelDeltaY || -e.delta
@@ -70,44 +82,39 @@ class NanoScroll
 
 
   addEvents: ->
-    $(window).bind 'resize'  , @events.resize
-    @slider.bind 'mousedown' , @events.down
-    @pane.bind 'mousedown'   , @events.panedown
-    @content.bind 'scroll'   , @events.scroll
+    events = @events
+    pane = @pane
+    $(window).bind RESIZE  , events[RESIZE]
+    @slider.bind MOUSEDOWN , events[DOWN]
+    pane.bind MOUSEDOWN   , events[PANEDOWN]
+    @content.bind SCROLL   , events[SCROLL]
 
     if window.addEventListener
-      @pane[0].addEventListener 'mousewheel'     , @events.wheel
-      @pane[0].addEventListener 'DOMMouseScroll' , @events.wheel
+      pane = pane[0]
+      pane.addEventListener MOUSEWHEEL , events[WHEEL]
+      pane.addEventListener DOMSCROLL  , events[WHEEL]
+    return
 
   removeEvents: ->
-    $(window).unbind 'resize'  , @events.resize
-    @slider.unbind 'mousedown' , @events.down
-    @pane.unbind 'mousedown'   , @events.panedown
-    @content.unbind 'scroll'   , @events.scroll
+    events = @events
+    pane = @pane
+    $(window).unbind RESIZE  , events[RESIZE]
+    @slider.unbind MOUSEDOWN , events[DOWN]
+    pane.unbind MOUSEDOWN    , events[PANEDOWN]
+    @content.unbind SCROLL   , events[SCROLL]
 
     if window.addEventListener
-      @pane[0].removeEventListener 'mousewheel'     , @events.wheel
-      @pane[0].removeEventListener 'DOMMouseScroll' , @events.wheel
-
-  getScrollbarWidth: ->
-    outer                = document.createElement 'div'
-    outer.style.position = 'absolute'
-    outer.style.width    = '100px'
-    outer.style.height   = '100px'
-    outer.style.overflow = 'scroll'
-    document.body.appendChild outer
-    noscrollWidth  = outer.offsetWidth
-    yesscrollWidth = outer.scrollWidth
-    document.body.removeChild outer
-    noscrollWidth - yesscrollWidth
-
+      pane = pane[0]
+      pane.removeEventListener MOUSEWHEEL , events[WHEEL]
+      pane.removeEventListener DOMSCROLL  , events[WHEEL]
+    return
     
   generate: ->
     @el.append '<div class="pane"><div class="slider"></div></div>'
     @content = $ @el.children()[0]
     @slider  = @el.find '.slider'
     @pane    = @el.find '.pane'
-    @scrollW = @getScrollbarWidth()
+    @scrollW = getScrollbarWidth()
     @scrollW = 0 if @scrollbarWidth is 0
     @content.css
       right  : -@scrollW + 'px'
@@ -164,10 +171,10 @@ class NanoScroll
   
 $.fn.nanoScroller = (options) ->
   options or= {}
-  scrollbar = @data 'scrollbar'
+  scrollbar = @data SCROLLBAR
   if scrollbar is undefined
-    scrollbar = new NanoScroll this, options
-    @data 'scrollbar': scrollbar
+    scrollbar = new NanoScroll this
+    @data SCROLLBAR: scrollbar
     return
 
   return scrollbar.scrollBottom(options.scrollBottom) if options.scrollBottom
