@@ -130,7 +130,7 @@ class NanoScroll
     @scrollH   = @paneH - @sliderH
     @slider.height 	@sliderH
 
-    if @paneH >= @contentH
+    if @paneH >= @content[0].scrollHeight
       @pane.hide()
     else
       @pane.show()

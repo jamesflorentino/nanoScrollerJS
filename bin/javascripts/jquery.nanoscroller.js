@@ -138,7 +138,7 @@
       this.sliderH = Math.round(this.sliderH);
       this.scrollH = this.paneH - this.sliderH;
       this.slider.height(this.sliderH);
-      if (this.paneH >= this.contentH) {
+      if (this.paneH >= this.content[0].scrollHeight) {
         this.pane.hide();
       } else {
         this.pane.show();
