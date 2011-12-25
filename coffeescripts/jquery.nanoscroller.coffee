@@ -63,7 +63,7 @@ class NanoScroll
         return
 
       panedown: (e) =>
-        @sliderY = e.clientY - @el.offset().top - @sliderH * .5
+        @sliderY = e.clientY - @el.offset().top - @sliderH * 0.5
         @scroll()
         @events.down e
         return
@@ -79,7 +79,7 @@ class NanoScroll
         @sliderY +=  -e.wheelDeltaY || -e.delta
         @scroll()
         return false
-
+    return
 
   addEvents: ->
     events = @events
@@ -121,7 +121,7 @@ class NanoScroll
 
     # scumbag IE7
     if $.browser.msie?
-      @pane.hide() if parseInt($.browser.version) < 8
+      @pane.hide() if parseInt($.browser.version, 10) < 8
     return
 
   reset: ->
