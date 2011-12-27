@@ -1,4 +1,7 @@
 /** initial setup **/
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
 .nano {
   position : relative;
   width    : 100%;
