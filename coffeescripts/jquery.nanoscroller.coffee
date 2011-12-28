@@ -171,7 +171,7 @@
   $.fn.nanoScroller = (options) ->
     options or= {}
     scrollbar = @data SCROLLBAR
-    if scrollbar is undefined
+    if !scrollbar
       scrollbar = new NanoScroll this
       @data SCROLLBAR: scrollbar
 

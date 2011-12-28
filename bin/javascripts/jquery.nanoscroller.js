@@ -184,7 +184,7 @@
     var scrollbar;
     options || (options = {});
     scrollbar = this.data(SCROLLBAR);
-    if (scrollbar === void 0) {
+    if (!scrollbar) {
       scrollbar = new NanoScroll(this);
       this.data({
         SCROLLBAR: scrollbar
