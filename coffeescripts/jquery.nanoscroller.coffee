@@ -90,8 +90,8 @@
 
       if window.addEventListener
         pane = pane[0]
-        pane.addEventListener MOUSEWHEEL , events[WHEEL]
-        pane.addEventListener DOMSCROLL  , events[WHEEL]
+        pane.addEventListener MOUSEWHEEL , events[WHEEL] , false
+        pane.addEventListener DOMSCROLL  , events[WHEEL] , false
       return
 
     removeEvents: ->
@@ -104,8 +104,8 @@
 
       if window.addEventListener
         pane = pane[0]
-        pane.removeEventListener MOUSEWHEEL , events[WHEEL]
-        pane.removeEventListener DOMSCROLL  , events[WHEEL]
+        pane.removeEventListener MOUSEWHEEL , events[WHEEL] , false
+        pane.removeEventListener DOMSCROLL  , events[WHEEL] , false
       return
 
     generate: ->
