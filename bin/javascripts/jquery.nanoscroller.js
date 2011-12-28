@@ -189,7 +189,6 @@
       this.data({
         SCROLLBAR: scrollbar
       });
-      return;
     }
     if (options.scrollBottom) return scrollbar.scrollBottom(options.scrollBottom);
     if (options.scrollTop) return scrollbar.scrollTop(options.scrollTop);

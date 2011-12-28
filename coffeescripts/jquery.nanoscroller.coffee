@@ -174,7 +174,6 @@
     if scrollbar is undefined
       scrollbar = new NanoScroll this
       @data SCROLLBAR: scrollbar
-      return
 
     return scrollbar.scrollBottom(options.scrollBottom) if options.scrollBottom
     return scrollbar.scrollTop(options.scrollTop)       if options.scrollTop
