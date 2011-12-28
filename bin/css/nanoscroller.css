@@ -14,6 +14,9 @@
   bottom        : 0;
   left          : 0;
 }
+.nano .content::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
 .nano .pane {
   background: rgba(0,0,0,.25);
   position : absolute;
@@ -24,21 +27,24 @@
 }
 .nano .pane .slider {
   background: rgba(0,0,0,.5);
-  position      : relative;
-  margin        : 0 1px 0 1px;
-  border-radius : 3px;
+  position              : relative;
+  margin                : 0 1px 0 1px;
+  -moz-border-radius    : 3px;
+  -webkit-border-radius : 3px;  
+  border-radius         : 3px;
 }
 .nano:hover .pane, .pane.active {
   visibility: visible;
 }
 .nano .pane {
-  -webkit-transition : .2s;
-  -moz-transition    : .2s;
-  -o-transition      : .2s;
-  transition         : .2s;
-  border-radius      : 5px;
-  -moz-border-radius : 5px;
-  opacity            : .01;
+  -webkit-transition    : .2s;
+  -moz-transition       : .2s;
+  -o-transition         : .2s;
+  transition            : .2s;
+  -moz-border-radius    : 5px;
+  -webkit-border-radius : 5px;  
+  border-radius         : 5px;
+  opacity               : .01;
 }
 .nano:hover .pane, .pane.active {
   opacity : 1;
