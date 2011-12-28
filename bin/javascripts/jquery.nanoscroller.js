@@ -44,8 +44,8 @@
           _this.isDrag = true;
           _this.offsetY = e.clientY - _this.slider.offset().top;
           _this.pane.addClass('active');
-          $(document).bind(MOUSEMOVE, _this.events.drag);
-          $(document).bind(MOUSEUP, _this.events.up);
+          $(document).bind(MOUSEMOVE, _this.events[DRAG]);
+          $(document).bind(MOUSEUP, _this.events[UP]);
           return false;
         },
         drag: function(e) {
@@ -56,8 +56,8 @@
         up: function(e) {
           _this.isDrag = false;
           _this.pane.removeClass('active');
-          $(document).unbind(MOUSEMOVE, _this.events.drag);
-          $(document).unbind(MOUSEUP, _this.events.up);
+          $(document).unbind(MOUSEMOVE, _this.events[DRAG]);
+          $(document).unbind(MOUSEUP, _this.events[UP]);
           return false;
         },
         resize: function(e) {
@@ -180,21 +180,19 @@
     return NanoScroll;
 
   })();
-  $.fn.nanoScroller = function(options) {
+  return $.fn.nanoScroller = function(options) {
     var scrollbar;
     options || (options = {});
     scrollbar = this.data(SCROLLBAR);
-    if (!scrollbar) {
+    if (scrollbar === void 0) {
       scrollbar = new NanoScroll(this);
-      this.data({
-        SCROLLBAR: scrollbar
-      });
+      this.data(SCROLLBAR, scrollbar);
     }
     if (options.scrollBottom) return scrollbar.scrollBottom(options.scrollBottom);
     if (options.scrollTop) return scrollbar.scrollTop(options.scrollTop);
     if (options.scroll === 'bottom') return scrollbar.scrollBottom(0);
     if (options.scroll === 'top') return scrollbar.scrollTop(0);
-    if (options.stop === true) return scrollbar.stop();
-    return scrollbar.reset();
+    if (options.stop) return scrollbar.stop();
+    scrollbar.reset();
   };
 })(jQuery, window, document);

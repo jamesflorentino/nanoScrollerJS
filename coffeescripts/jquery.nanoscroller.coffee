@@ -41,8 +41,8 @@
           @isDrag  = true
           @offsetY = e.clientY - @slider.offset().top
           @pane.addClass 'active'
-          $(document).bind MOUSEMOVE, @events.drag
-          $(document).bind MOUSEUP, 	@events.up
+          $(document).bind MOUSEMOVE, @events[DRAG]
+          $(document).bind MOUSEUP, 	@events[UP]
           false
 
         drag: (e) =>
@@ -53,8 +53,8 @@
         up: (e) =>
           @isDrag = false
           @pane.removeClass 'active'
-          $(document).unbind MOUSEMOVE, @events.drag
-          $(document).unbind MOUSEUP, 	@events.up
+          $(document).unbind MOUSEMOVE, @events[DRAG]
+          $(document).unbind MOUSEUP, 	@events[UP]
           false
 
         resize: (e) =>
@@ -171,16 +171,16 @@
   $.fn.nanoScroller = (options) ->
     options or= {}
     scrollbar = @data SCROLLBAR
-    if !scrollbar
+    if scrollbar is undefined
       scrollbar = new NanoScroll this
-      @data SCROLLBAR: scrollbar
+      @data SCROLLBAR, scrollbar
 
     return scrollbar.scrollBottom(options.scrollBottom) if options.scrollBottom
     return scrollbar.scrollTop(options.scrollTop)       if options.scrollTop
     return scrollbar.scrollBottom(0)                    if options.scroll is 'bottom'
     return scrollbar.scrollTop(0)                       if options.scroll is 'top'
-    return scrollbar.stop()                             if options.stop   is true
-    return scrollbar.reset()
+    return scrollbar.stop()                             if options.stop
+    scrollbar.reset()
+    return
 
-  return
 )(jQuery, window, document)
