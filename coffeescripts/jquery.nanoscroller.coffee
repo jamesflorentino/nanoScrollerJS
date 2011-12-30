@@ -117,10 +117,6 @@
       @scrollW = 0 if @scrollbarWidth is 0
       @content.css
         right  : -@scrollW + 'px'
-
-      # scumbag IE7
-      if $.browser.msie?
-        @pane.hide() if parseInt($.browser.version, 10) < 8
       return
 
     reset: ->
@@ -170,17 +166,20 @@
 
   $.fn.nanoScroller = (options) ->
     options or= {}
-    scrollbar = @data SCROLLBAR
-    if scrollbar is undefined
-      scrollbar = new NanoScroll this
-      @data SCROLLBAR, scrollbar
+    # scumbag IE7
+    if not ($.browser.msie and parseInt($.browser.version, 10) < 8)
+      scrollbar = @data SCROLLBAR
+      if scrollbar is undefined
+        scrollbar = new NanoScroll this
+        @data SCROLLBAR, scrollbar
 
-    return scrollbar.scrollBottom(options.scrollBottom) if options.scrollBottom
-    return scrollbar.scrollTop(options.scrollTop)       if options.scrollTop
-    return scrollbar.scrollBottom(0)                    if options.scroll is 'bottom'
-    return scrollbar.scrollTop(0)                       if options.scroll is 'top'
-    return scrollbar.stop()                             if options.stop
-    scrollbar.reset()
+      return scrollbar.scrollBottom(options.scrollBottom) if options.scrollBottom
+      return scrollbar.scrollTop(options.scrollTop)       if options.scrollTop
+      return scrollbar.scrollBottom(0)                    if options.scroll is 'bottom'
+      return scrollbar.scrollTop(0)                       if options.scroll is 'top'
+      return scrollbar.stop()                             if options.stop
+      scrollbar.reset()
     return
+  return  
 
 )(jQuery, window, document)

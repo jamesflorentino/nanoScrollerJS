@@ -125,9 +125,6 @@
       this.content.css({
         right: -this.scrollW + 'px'
       });
-      if ($.browser.msie != null) {
-        if (parseInt($.browser.version, 10) < 8) this.pane.hide();
-      }
     };
 
     NanoScroll.prototype.reset = function() {
@@ -180,19 +177,23 @@
     return NanoScroll;
 
   })();
-  return $.fn.nanoScroller = function(options) {
+  $.fn.nanoScroller = function(options) {
     var scrollbar;
     options || (options = {});
-    scrollbar = this.data(SCROLLBAR);
-    if (scrollbar === void 0) {
-      scrollbar = new NanoScroll(this);
-      this.data(SCROLLBAR, scrollbar);
+    if (!($.browser.msie && parseInt($.browser.version, 10) < 8)) {
+      scrollbar = this.data(SCROLLBAR);
+      if (scrollbar === void 0) {
+        scrollbar = new NanoScroll(this);
+        this.data(SCROLLBAR, scrollbar);
+      }
+      if (options.scrollBottom) {
+        return scrollbar.scrollBottom(options.scrollBottom);
+      }
+      if (options.scrollTop) return scrollbar.scrollTop(options.scrollTop);
+      if (options.scroll === 'bottom') return scrollbar.scrollBottom(0);
+      if (options.scroll === 'top') return scrollbar.scrollTop(0);
+      if (options.stop) return scrollbar.stop();
+      scrollbar.reset();
     }
-    if (options.scrollBottom) return scrollbar.scrollBottom(options.scrollBottom);
-    if (options.scrollTop) return scrollbar.scrollTop(options.scrollTop);
-    if (options.scroll === 'bottom') return scrollbar.scrollBottom(0);
-    if (options.scroll === 'top') return scrollbar.scrollTop(0);
-    if (options.stop) return scrollbar.stop();
-    scrollbar.reset();
   };
 })(jQuery, window, document);
