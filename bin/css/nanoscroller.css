@@ -24,11 +24,12 @@
   right    : 0;
   top      : 0;
   bottom   : 0;
+  visibility: hidden;
 }
 .nano .pane .slider {
   background: rgba(0,0,0,.5);
   position              : relative;
-  margin                : 0 1px 0 1px;
+  margin                : 0 1px;
   -moz-border-radius    : 3px;
   -webkit-border-radius : 3px;  
   border-radius         : 3px;
