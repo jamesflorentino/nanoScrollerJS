@@ -17,7 +17,7 @@
 .nano .content::-webkit-scrollbar {
   -webkit-appearance: none;
 }
-.nano .pane {
+.nano > .pane {
   background: rgba(0,0,0,.25);
   position : absolute;
   width    : 10px;
@@ -26,7 +26,7 @@
   bottom   : 0;
   visibility: hidden;
 }
-.nano .pane .slider {
+.nano > .pane > .slider {
   background: rgba(0,0,0,.5);
   position              : relative;
   margin                : 0 1px;
@@ -34,10 +34,10 @@
   -webkit-border-radius : 3px;  
   border-radius         : 3px;
 }
-.nano:hover .pane, .pane.active {
+.nano:hover > .pane, .pane.active {
   visibility: visible;
 }
-.nano .pane {
+.nano > .pane {
   -webkit-transition    : .2s;
   -moz-transition       : .2s;
   -ms-transition        : .2s;
@@ -48,6 +48,6 @@
   border-radius         : 5px;
   opacity               : .01;
 }
-.nano:hover .pane, .pane.active {
+.nano:hover > .pane, .pane.active {
   opacity : 1;
 }
