@@ -128,22 +128,22 @@
     };
 
     NanoScroll.prototype.reset = function() {
+      var content;
       if (this.isDead === true) {
         this.isDead = false;
         this.pane.show();
         this.addEvents();
       }
-      this.contentH = this.content[0].scrollHeight + this.scrollW;
+      content = this.content[0];
+      this.contentH = content.scrollHeight + this.scrollW;
       this.paneH = this.pane.outerHeight();
       this.sliderH = this.paneH / this.contentH * this.paneH;
       this.sliderH = Math.round(this.sliderH);
       this.scrollH = this.paneH - this.sliderH;
       this.slider.height(this.sliderH);
-      if (this.paneH >= this.content[0].scrollHeight) {
-        this.pane.hide();
-      } else {
-        this.pane.show();
-      }
+      this.diffH = content.scrollHeight - content.clientHeight;
+      this.pane.show();
+      if (this.paneH >= this.content[0].scrollHeight) this.pane.hide();
     };
 
     NanoScroll.prototype.scroll = function() {
@@ -159,7 +159,11 @@
     };
 
     NanoScroll.prototype.scrollBottom = function(offsetY) {
+      var diffH, scrollTop;
+      diffH = this.diffH;
+      scrollTop = this.content[0].scrollTop;
       this.reset();
+      if (scrollTop < diffH && scrollTop !== 0) return;
       this.content.scrollTop(this.contentH - this.content.height() - offsetY);
     };
 

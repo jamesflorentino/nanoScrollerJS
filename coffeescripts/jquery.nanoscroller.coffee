@@ -125,17 +125,18 @@
         @pane.show()
         @addEvents()
 
-      @contentH  = @content[0].scrollHeight + @scrollW
+      content = @content[0]
+      @contentH  = content.scrollHeight + @scrollW
       @paneH     = @pane.outerHeight()
       @sliderH   = @paneH / @contentH * @paneH
       @sliderH   = Math.round @sliderH
       @scrollH   = @paneH - @sliderH
       @slider.height 	@sliderH
+      @diffH = content.scrollHeight - content.clientHeight
 
+      @pane.show()
       if @paneH >= @content[0].scrollHeight
         @pane.hide()
-      else
-        @pane.show()
       return
 
     scroll: ->
@@ -148,7 +149,10 @@
       @slider.css top: @sliderY
 
     scrollBottom: (offsetY) ->
+      diffH = @diffH
+      scrollTop = @content[0].scrollTop
       @reset()
+      return if scrollTop < diffH and scrollTop isnt 0
       @content.scrollTop @contentH - @content.height() - offsetY
       return
 
@@ -180,6 +184,6 @@
       return scrollbar.stop()                             if options.stop
       scrollbar.reset()
     return
-  return  
+  return
 
 )(jQuery, window, document)
