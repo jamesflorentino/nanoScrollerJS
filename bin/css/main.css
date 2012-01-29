@@ -16,3 +16,5 @@ b                     { background: rgba(1,1,1,.1); border-radius: 5px; display:
 #main a:hover         { text-decoration: underline;  }
 #main code            { font-family: Monaco, 'Anonymous Pro'; }
 #main p code          { color: #111; background: #222; display: inline-block; border-radius:5px; font-family: Monaco, 'Anonymous Pro'; font-size: 11px; text-shadow: none; color: #ee8; padding: 0 3px 0 3px; border-bottom: 1px solid #eee; box-shadow: #000 0 2px 3px inset; text-shadow: black 0 -1px 1px; } 
+
+.small.nano           { background: #ffa; height: 100px; margin-top: 10px; border-radius: 5px; }

@@ -1,10 +1,10 @@
 $(function(){
 
-  $('#main .nano').nanoScroller();
+  $('.nano').nanoScroller();
 
-  $("#main .nano .content").load("readme.html", function(){
+  $("#main .content.description").load("readme.html", function(){
 
-    $('#main .nano').nanoScroller();
+    $('.nano').nanoScroller();
 
   });
 

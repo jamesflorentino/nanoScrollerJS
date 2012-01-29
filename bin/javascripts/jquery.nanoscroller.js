@@ -70,14 +70,16 @@
         },
         scroll: function(e) {
           var content, top;
-          content = _this.content[0];
           if (_this.isDrag === true) return;
+          content = _this.content[0];
           top = content.scrollTop / (content.scrollHeight - content.clientHeight) * (_this.paneH - _this.sliderH);
           _this.slider.css({
             top: top + 'px'
           });
         },
         wheel: function(e) {
+          var content;
+          content = _this.content[0];
           _this.sliderY += -e.wheelDeltaY || -e.delta;
           _this.scroll();
           return false;
@@ -117,6 +119,7 @@
 
     NanoScroll.prototype.generate = function() {
       this.el.append('<div class="pane"><div class="slider"></div></div>');
+      console.log(this.el.children()[0]);
       this.content = $(this.el.children()[0]);
       this.slider = this.el.find('.slider');
       this.pane = this.el.find('.pane');
@@ -182,22 +185,25 @@
 
   })();
   $.fn.nanoScroller = function(options) {
-    var scrollbar;
     options || (options = {});
     if (!($.browser.msie && parseInt($.browser.version, 10) < 8)) {
-      scrollbar = this.data(SCROLLBAR);
-      if (scrollbar === void 0) {
-        scrollbar = new NanoScroll(this);
-        this.data(SCROLLBAR, scrollbar);
-      }
-      if (options.scrollBottom) {
-        return scrollbar.scrollBottom(options.scrollBottom);
-      }
-      if (options.scrollTop) return scrollbar.scrollTop(options.scrollTop);
-      if (options.scroll === 'bottom') return scrollbar.scrollBottom(0);
-      if (options.scroll === 'top') return scrollbar.scrollTop(0);
-      if (options.stop) return scrollbar.stop();
-      scrollbar.reset();
+      this.each(function() {
+        var me, scrollbar;
+        me = $(this);
+        scrollbar = me.data(SCROLLBAR);
+        if (scrollbar === void 0) {
+          scrollbar = new NanoScroll(me);
+          me.data(SCROLLBAR, scrollbar);
+        }
+        if (options.scrollBottom) {
+          return scrollbar.scrollBottom(options.scrollBottom);
+        }
+        if (options.scrollTop) return scrollbar.scrollTop(options.scrollTop);
+        if (options.scroll === 'bottom') return scrollbar.scrollBottom(0);
+        if (options.scroll === 'top') return scrollbar.scrollTop(0);
+        if (options.stop) return scrollbar.stop();
+        return scrollbar.reset();
+      });
     }
   };
 })(jQuery, window, document);

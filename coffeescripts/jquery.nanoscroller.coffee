@@ -68,13 +68,14 @@
           return
 
         scroll: (e) =>
-          content = @content[0]
           return if @isDrag is true
+          content = @content[0]
           top = content.scrollTop / (content.scrollHeight - content.clientHeight) * (@paneH - @sliderH)
           @slider.css top: top + 'px'
           return
 
         wheel: (e) =>
+          content = @content[0]
           @sliderY +=  -e.wheelDeltaY || -e.delta
           @scroll()
           return false
@@ -85,7 +86,7 @@
       pane = @pane
       $(window).bind RESIZE  , events[RESIZE]
       @slider.bind MOUSEDOWN , events[DOWN]
-      pane.bind MOUSEDOWN   , events[PANEDOWN]
+      pane.bind MOUSEDOWN    , events[PANEDOWN]
       @content.bind SCROLL   , events[SCROLL]
 
       if window.addEventListener
@@ -110,6 +111,7 @@
 
     generate: ->
       @el.append '<div class="pane"><div class="slider"></div></div>'
+      console.log @el.children()[0]
       @content = $ @el.children()[0]
       @slider  = @el.find '.slider'
       @pane    = @el.find '.pane'
@@ -172,17 +174,19 @@
     options or= {}
     # scumbag IE7
     if not ($.browser.msie and parseInt($.browser.version, 10) < 8)
-      scrollbar = @data SCROLLBAR
-      if scrollbar is undefined
-        scrollbar = new NanoScroll this
-        @data SCROLLBAR, scrollbar
+      @each ->
+        me = $ this
+        scrollbar = me.data SCROLLBAR
+        if scrollbar is undefined
+          scrollbar = new NanoScroll me
+          me.data SCROLLBAR, scrollbar
 
-      return scrollbar.scrollBottom(options.scrollBottom) if options.scrollBottom
-      return scrollbar.scrollTop(options.scrollTop)       if options.scrollTop
-      return scrollbar.scrollBottom(0)                    if options.scroll is 'bottom'
-      return scrollbar.scrollTop(0)                       if options.scroll is 'top'
-      return scrollbar.stop()                             if options.stop
-      scrollbar.reset()
+        return scrollbar.scrollBottom(options.scrollBottom) if options.scrollBottom
+        return scrollbar.scrollTop(options.scrollTop)       if options.scrollTop
+        return scrollbar.scrollBottom(0)                    if options.scroll is 'bottom'
+        return scrollbar.scrollTop(0)                       if options.scroll is 'top'
+        return scrollbar.stop()                             if options.stop
+        scrollbar.reset()
     return
   return
 
