@@ -119,7 +119,6 @@
 
     NanoScroll.prototype.generate = function() {
       this.el.append('<div class="pane"><div class="slider"></div></div>');
-      console.log(this.el.children()[0]);
       this.content = $(this.el.children()[0]);
       this.slider = this.el.find('.slider');
       this.pane = this.el.find('.pane');
