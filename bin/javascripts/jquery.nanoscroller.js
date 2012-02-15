@@ -131,6 +131,10 @@
 
     NanoScroll.prototype.reset = function() {
       var content;
+      if (this.el.find('.pane').length === 0) {
+        this.generate();
+        this.stop();
+      }
       if (this.isDead === true) {
         this.isDead = false;
         this.pane.show();

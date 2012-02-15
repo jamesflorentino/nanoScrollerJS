@@ -42,7 +42,7 @@
           @offsetY = e.clientY - @slider.offset().top
           @pane.addClass 'active'
           $(document).bind MOUSEMOVE, @events[DRAG]
-          $(document).bind MOUSEUP, 	@events[UP]
+          $(document).bind MOUSEUP,   @events[UP]
           false
 
         drag: (e) =>
@@ -54,7 +54,7 @@
           @isDrag = false
           @pane.removeClass 'active'
           $(document).unbind MOUSEMOVE, @events[DRAG]
-          $(document).unbind MOUSEUP, 	@events[UP]
+          $(document).unbind MOUSEUP,   @events[UP]
           false
 
         resize: (e) =>
@@ -121,6 +121,9 @@
       return
 
     reset: ->
+      if @el.find('.pane').length is 0
+        @generate()
+        @stop()
       if @isDead is true
         @isDead = false
         @pane.show()
@@ -132,7 +135,7 @@
       @sliderH   = @paneH / @contentH * @paneH
       @sliderH   = Math.round @sliderH
       @scrollH   = @paneH - @sliderH
-      @slider.height 	@sliderH
+      @slider.height  @sliderH
       @diffH = content.scrollHeight - content.clientHeight
 
       @pane.show()
