@@ -75,7 +75,6 @@
           return
 
         wheel: (e) =>
-          content = @content[0]
           @sliderY +=  -e.wheelDeltaY || -e.delta
           @scroll()
           return false
@@ -111,7 +110,7 @@
 
     generate: ->
       @el.append '<div class="pane"><div class="slider"></div></div>'
-      @content = $ @el.children()[0]
+      @content = $ @el.children('.content')[0]
       @slider  = @el.find '.slider'
       @pane    = @el.find '.pane'
       @scrollW = getScrollbarWidth()

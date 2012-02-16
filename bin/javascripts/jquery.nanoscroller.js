@@ -78,8 +78,6 @@
           });
         },
         wheel: function(e) {
-          var content;
-          content = _this.content[0];
           _this.sliderY += -e.wheelDeltaY || -e.delta;
           _this.scroll();
           return false;
@@ -119,7 +117,7 @@
 
     NanoScroll.prototype.generate = function() {
       this.el.append('<div class="pane"><div class="slider"></div></div>');
-      this.content = $(this.el.children()[0]);
+      this.content = $(this.el.children('.content')[0]);
       this.slider = this.el.find('.slider');
       this.pane = this.el.find('.pane');
       this.scrollW = getScrollbarWidth();
