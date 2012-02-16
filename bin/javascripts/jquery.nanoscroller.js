@@ -119,7 +119,7 @@
 
     NanoScroll.prototype.generate = function() {
       this.el.append('<div class="pane"><div class="slider"></div></div>');
-      this.content = $(this.el.children()[0]);
+      this.content = $(this.el.children('.content')[0]);
       this.slider = this.el.find('.slider');
       this.pane = this.el.find('.pane');
       this.scrollW = getScrollbarWidth();

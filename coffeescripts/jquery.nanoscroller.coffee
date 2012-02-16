@@ -111,7 +111,7 @@
 
     generate: ->
       @el.append '<div class="pane"><div class="slider"></div></div>'
-      @content = $ @el.children()[0]
+      @content = $ @el.children('.content')[0]
       @slider  = @el.find '.slider'
       @pane    = @el.find '.pane'
       @scrollW = getScrollbarWidth()
