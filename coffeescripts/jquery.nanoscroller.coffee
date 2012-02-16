@@ -75,7 +75,6 @@
           return
 
         wheel: (e) =>
-          content = @content[0]
           @sliderY +=  -e.wheelDeltaY || -e.delta
           @scroll()
           return false

@@ -78,8 +78,6 @@
           });
         },
         wheel: function(e) {
-          var content;
-          content = _this.content[0];
           _this.sliderY += -e.wheelDeltaY || -e.delta;
           _this.scroll();
           return false;
