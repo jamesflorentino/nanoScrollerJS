@@ -161,7 +161,7 @@
 
     scrollTop: (offsetY) ->
       @reset()
-      @content.scrollTop offsetY + 0
+      @content.scrollTop +offsetY
       return
 
     stop: ->
