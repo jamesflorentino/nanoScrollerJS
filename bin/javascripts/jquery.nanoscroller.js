@@ -173,7 +173,7 @@
 
     NanoScroll.prototype.scrollTop = function(offsetY) {
       this.reset();
-      this.content.scrollTop(offsetY + 0);
+      this.content.scrollTop(+offsetY);
     };
 
     NanoScroll.prototype.stop = function() {
