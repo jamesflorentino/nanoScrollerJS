@@ -55,7 +55,7 @@ To scroll at the bottom with an offset value:
     $("#about.nano").nanoScroller({scrollBottom:value});
 
 ### Features
-- Currently works in IE8+, FireFox, Chrome, Safari. But I haven't fully tested in all versions. If you find a bug, please report here at the [issues section](https://github.com/jamesflorentino/nanoScrollerJS/issues)
+- It has been tested to work in the following desktop browsers: IE8+, Firefox 3+, Chrome, Safari 4+ and Opera 11.60+. If you find a bug, please report here at the [issues section](https://github.com/jamesflorentino/nanoScrollerJS/issues)
 - For IE7 and below, it will fallback to the native scrollbar gadget of the OS.
 - It currently works with iOS5 (iPhone, iPad and iPod Touch). If you see it's broken on other tablets and mobile devices, please file a ticket in the git repo. Along with model name, and OS of the device.
 
