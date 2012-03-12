@@ -59,6 +59,10 @@ To scroll at the bottom with an offset value:
 - For IE7 and below, it will fallback to the native scrollbar gadget of the OS.
 - It currently works with iOS5 (iPhone, iPad and iPod Touch). If you see it's broken on other tablets and mobile devices, please file a ticket in the git repo. Along with model name, and OS of the device.
 
+### Contributors
+- @jamesflorentino
+- @kristerkari
+
 ### From the author
 I wrote this plugin out of necessity for a JavaScript project with designers and front-end developers in mind. Please also note that I will not be liable to fix your problem just in case you plan to use this commercially and some unforseen event arises. However, I will do what I can to immediately patch a solution.
 
