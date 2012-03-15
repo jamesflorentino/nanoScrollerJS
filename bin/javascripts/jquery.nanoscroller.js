@@ -141,14 +141,21 @@
       }
       content = this.content[0];
       this.contentH = content.scrollHeight + this.scrollW;
+
+      var paneTop = parseInt(this.pane.css('top'));
+      var paneBottom = parseInt(this.pane.css('bottom'));
+
       this.paneH = this.pane.outerHeight();
+      this.paneOuterH = this.paneH + paneTop + paneBottom;
+
       this.sliderH = this.paneH / this.contentH * this.paneH;
+
       this.sliderH = Math.round(this.sliderH);
       this.scrollH = this.paneH - this.sliderH;
       this.slider.height(this.sliderH);
       this.diffH = content.scrollHeight - content.clientHeight;
       this.pane.show();
-      if (this.paneH >= this.content[0].scrollHeight) this.pane.hide();
+      if (this.paneOuterH >= this.content[0].scrollHeight) this.pane.hide();
     };
 
     NanoScroll.prototype.scroll = function() {
@@ -189,8 +196,8 @@
   $.fn.nanoScroller = function(options) {
     var scrollbar;
     settings = $.extend({}, defaults, options);
-    console.log(settings);
-    if (!($.browser.msie && parseInt($.browser.version, 10) < 8)) {
+
+    if (!($.browser.msie && $.browser.version < 7)) {
         this.each(function() // allow multiple pane on page
 		{
             var _this = $(this);
