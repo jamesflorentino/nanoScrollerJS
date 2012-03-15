@@ -1,6 +1,6 @@
 
 (function($, window, document) {
-  var DOMSCROLL, DOWN, DRAG, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, UP, WHEEL, getScrollbarWidth;
+  var DOMSCROLL, DOWN, DRAG, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, UP, WHEEL, getScrollbarWidth, defaults, settings;
   SCROLLBAR = 'scrollbar';
   SCROLL = 'scroll';
   MOUSEDOWN = 'mousedown';
@@ -14,6 +14,11 @@
   DOMSCROLL = 'DOMMouseScroll';
   DOWN = 'down';
   WHEEL = 'wheel';
+  defaults = {
+    classPane: 'pane',
+    classSlider: 'slider',
+    contentSelector: 'div.content'
+  };
   getScrollbarWidth = function() {
     var noscrollWidth, outer, yesscrollWidth;
     outer = document.createElement('div');
@@ -116,10 +121,10 @@
     };
 
     NanoScroll.prototype.generate = function() {
-      this.el.append('<div class="pane"><div class="slider"></div></div>');
-      this.content = $(this.el.children()[0]);
-      this.slider = this.el.find('.slider');
-      this.pane = this.el.find('.pane');
+      this.el.append('<div class="'+settings.classPane+'"><div class="'+settings.classSlider+'"></div></div>');
+      this.content =$(this.el.find(settings.contentSelector)[0]);
+      this.slider = this.el.find('.'+settings.classSlider);
+      this.pane = this.el.find('.'+settings.classPane);
       this.scrollW = getScrollbarWidth();
       if (this.scrollbarWidth === 0) this.scrollW = 0;
       this.content.css({
@@ -183,7 +188,8 @@
   })();
   $.fn.nanoScroller = function(options) {
     var scrollbar;
-    options || (options = {});
+    settings = $.extend({}, defaults, options);
+    console.log(settings);
     if (!($.browser.msie && parseInt($.browser.version, 10) < 8)) {
         this.each(function() // allow multiple pane on page
 		{
@@ -193,13 +199,13 @@
 				scrollbar = new NanoScroll(_this);
 				_this.data(SCROLLBAR, scrollbar);
             }
-            if (options.scrollBottom) {
-                return scrollbar.scrollBottom(options.scrollBottom);
+            if (settings.scrollBottom) {
+                return scrollbar.scrollBottom(settings.scrollBottom);
             }
-            if (options.scrollTop) return scrollbar.scrollTop(options.scrollTop);
-            if (options.scroll === 'bottom') return scrollbar.scrollBottom(0);
-            if (options.scroll === 'top') return scrollbar.scrollTop(0);
-            if (options.stop) return scrollbar.stop();
+            if (settings.scrollTop) return scrollbar.scrollTop(settings.scrollTop);
+            if (settings.scroll === 'bottom') return scrollbar.scrollBottom(0);
+            if (settings.scroll === 'top') return scrollbar.scrollTop(0);
+            if (settings.stop) return scrollbar.stop();
             scrollbar.reset();
 		});
     }
