@@ -13,6 +13,10 @@
   DOMSCROLL  = 'DOMMouseScroll'
   DOWN       = 'down'
   WHEEL      = 'wheel'
+  defaults =
+    paneClass: 'pane'
+    sliderClass: 'slider'
+    contentClass: 'content'
 
   getScrollbarWidth = ->
     outer                = document.createElement 'div'
@@ -28,7 +32,7 @@
 
   class NanoScroll
 
-    constructor: (el) ->
+    constructor: (el, @options) ->
       @el = $(el)
       @document = $(document)
       @generate()
@@ -109,17 +113,18 @@
       return
 
     generate: ->
-      @el.append '<div class="pane"><div class="slider"></div></div>'
-      @content = $ @el.children('.content')[0]
-      @slider  = @el.find '.slider'
-      @pane    = @el.find '.pane'
+      options = @options
+      @el.append '<div class="' + options.paneClass + '"><div class="' + options.sliderClass + '" /></div>'
+      @content = $ @el.children(".#{options.contentClass}")[0]
+      @slider  = @el.find ".#{options.sliderClass}"
+      @pane    = @el.find ".#{options.paneClass}"
       @scrollW = getScrollbarWidth()
       @content.css
         right  : -@scrollW + 'px'
       return
 
     reset: ->
-      if @el.find('.pane').length is 0
+      if not @el.find(".#{@options.paneClass}").length
         @generate()
         @stop()
       if @isDead is true
@@ -170,15 +175,15 @@
       return
 
 
-  $.fn.nanoScroller = (options) ->
-    options or= {}
+  $.fn.nanoScroller = (settings) ->
+    options = $.extend({}, defaults, settings)
     # scumbag IE7
     if not ($.browser.msie and parseInt($.browser.version, 10) < 8)
       @each ->
         me = this
         scrollbar = $.data me, SCROLLBAR
         if not scrollbar
-          scrollbar = new NanoScroll me
+          scrollbar = new NanoScroll me, options
           $.data me, SCROLLBAR, scrollbar
 
         return scrollbar.scrollBottom(options.scrollBottom) if options.scrollBottom

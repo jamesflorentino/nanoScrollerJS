@@ -1,6 +1,6 @@
 
 (function($, window, document) {
-  var DOMSCROLL, DOWN, DRAG, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, UP, WHEEL, getScrollbarWidth;
+  var DOMSCROLL, DOWN, DRAG, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, UP, WHEEL, defaults, getScrollbarWidth;
   SCROLLBAR = 'scrollbar';
   SCROLL = 'scroll';
   MOUSEDOWN = 'mousedown';
@@ -14,6 +14,11 @@
   DOMSCROLL = 'DOMMouseScroll';
   DOWN = 'down';
   WHEEL = 'wheel';
+  defaults = {
+    paneClass: 'pane',
+    sliderClass: 'slider',
+    contentClass: 'content'
+  };
   getScrollbarWidth = function() {
     var noscrollWidth, outer, yesscrollWidth;
     outer = document.createElement('div');
@@ -29,7 +34,8 @@
   };
   NanoScroll = (function() {
 
-    function NanoScroll(el) {
+    function NanoScroll(el, options) {
+      this.options = options;
       this.el = $(el);
       this.document = $(document);
       this.generate();
@@ -115,10 +121,12 @@
     };
 
     NanoScroll.prototype.generate = function() {
-      this.el.append('<div class="pane"><div class="slider"></div></div>');
-      this.content = $(this.el.children('.content')[0]);
-      this.slider = this.el.find('.slider');
-      this.pane = this.el.find('.pane');
+      var options;
+      options = this.options;
+      this.el.append('<div class="' + options.paneClass + '"><div class="' + options.sliderClass + '" /></div>');
+      this.content = $(this.el.children("." + options.contentClass)[0]);
+      this.slider = this.el.find("." + options.sliderClass);
+      this.pane = this.el.find("." + options.paneClass);
       this.scrollW = getScrollbarWidth();
       this.content.css({
         right: -this.scrollW + 'px'
@@ -127,7 +135,7 @@
 
     NanoScroll.prototype.reset = function() {
       var content;
-      if (this.el.find('.pane').length === 0) {
+      if (!this.el.find("." + this.options.paneClass).length) {
         this.generate();
         this.stop();
       }
@@ -183,15 +191,16 @@
     return NanoScroll;
 
   })();
-  $.fn.nanoScroller = function(options) {
-    options || (options = {});
+  $.fn.nanoScroller = function(settings) {
+    var options;
+    options = $.extend({}, defaults, settings);
     if (!($.browser.msie && parseInt($.browser.version, 10) < 8)) {
       this.each(function() {
         var me, scrollbar;
         me = this;
         scrollbar = $.data(me, SCROLLBAR);
         if (!scrollbar) {
-          scrollbar = new NanoScroll(me);
+          scrollbar = new NanoScroll(me, options);
           $.data(me, SCROLLBAR, scrollbar);
         }
         if (options.scrollBottom) {
