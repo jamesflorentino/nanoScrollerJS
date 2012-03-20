@@ -31,6 +31,7 @@
 
     function NanoScroll(el) {
       this.el = $(el);
+      this.document = $(document);
       this.generate();
       this.createEvents();
       this.addEvents();
@@ -44,8 +45,7 @@
           _this.isDrag = true;
           _this.offsetY = e.clientY - _this.slider.offset().top;
           _this.pane.addClass('active');
-          $(document).bind(MOUSEMOVE, _this.events[DRAG]);
-          $(document).bind(MOUSEUP, _this.events[UP]);
+          _this.document.bind(MOUSEMOVE, _this.events[DRAG]).bind(MOUSEUP, _this.events[UP]);
           return false;
         },
         drag: function(e) {
@@ -56,8 +56,7 @@
         up: function(e) {
           _this.isDrag = false;
           _this.pane.removeClass('active');
-          $(document).unbind(MOUSEMOVE, _this.events[DRAG]);
-          $(document).unbind(MOUSEUP, _this.events[UP]);
+          _this.document.unbind(MOUSEMOVE, _this.events[DRAG]).unbind(MOUSEUP, _this.events[UP]);
           return false;
         },
         resize: function(e) {

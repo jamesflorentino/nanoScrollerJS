@@ -30,6 +30,7 @@
 
     constructor: (el) ->
       @el = $(el)
+      @document = $(document)
       @generate()
       @createEvents()
       @addEvents()
@@ -42,8 +43,7 @@
           @isDrag  = true
           @offsetY = e.clientY - @slider.offset().top
           @pane.addClass 'active'
-          $(document).bind MOUSEMOVE, @events[DRAG]
-          $(document).bind MOUSEUP,   @events[UP]
+          @document.bind(MOUSEMOVE, @events[DRAG]).bind MOUSEUP, @events[UP]
           false
 
         drag: (e) =>
@@ -54,8 +54,7 @@
         up: (e) =>
           @isDrag = false
           @pane.removeClass 'active'
-          $(document).unbind MOUSEMOVE, @events[DRAG]
-          $(document).unbind MOUSEUP,   @events[UP]
+          @document.unbind(MOUSEMOVE, @events[DRAG]).unbind MOUSEUP, @events[UP]
           false
 
         resize: (e) =>
