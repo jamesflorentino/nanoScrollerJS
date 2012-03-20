@@ -28,7 +28,8 @@
 
   class NanoScroll
 
-    constructor: (@el) ->
+    constructor: (el) ->
+      @el = $(el)
       @generate()
       @createEvents()
       @addEvents()
@@ -176,11 +177,11 @@
     # scumbag IE7
     if not ($.browser.msie and parseInt($.browser.version, 10) < 8)
       @each ->
-        me = $ this
-        scrollbar = me.data SCROLLBAR
-        if scrollbar is undefined
+        me = this
+        scrollbar = $.data me, SCROLLBAR
+        if not scrollbar
           scrollbar = new NanoScroll me
-          me.data SCROLLBAR, scrollbar
+          $.data me, SCROLLBAR, scrollbar
 
         return scrollbar.scrollBottom(options.scrollBottom) if options.scrollBottom
         return scrollbar.scrollTop(options.scrollTop)       if options.scrollTop

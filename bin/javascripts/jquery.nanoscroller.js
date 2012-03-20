@@ -30,7 +30,7 @@
   NanoScroll = (function() {
 
     function NanoScroll(el) {
-      this.el = el;
+      this.el = $(el);
       this.generate();
       this.createEvents();
       this.addEvents();
@@ -190,11 +190,11 @@
     if (!($.browser.msie && parseInt($.browser.version, 10) < 8)) {
       this.each(function() {
         var me, scrollbar;
-        me = $(this);
-        scrollbar = me.data(SCROLLBAR);
-        if (scrollbar === void 0) {
+        me = this;
+        scrollbar = $.data(me, SCROLLBAR);
+        if (!scrollbar) {
           scrollbar = new NanoScroll(me);
-          me.data(SCROLLBAR, scrollbar);
+          $.data(me, SCROLLBAR, scrollbar);
         }
         if (options.scrollBottom) {
           return scrollbar.scrollBottom(options.scrollBottom);
