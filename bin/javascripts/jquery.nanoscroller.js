@@ -121,7 +121,6 @@
       this.slider = this.el.find('.slider');
       this.pane = this.el.find('.pane');
       this.scrollW = getScrollbarWidth();
-      if (this.scrollbarWidth === 0) this.scrollW = 0;
       this.content.css({
         right: -this.scrollW + 'px'
       });

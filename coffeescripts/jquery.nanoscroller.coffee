@@ -115,7 +115,6 @@
       @slider  = @el.find '.slider'
       @pane    = @el.find '.pane'
       @scrollW = getScrollbarWidth()
-      @scrollW = 0 if @scrollbarWidth is 0
       @content.css
         right  : -@scrollW + 'px'
       return
