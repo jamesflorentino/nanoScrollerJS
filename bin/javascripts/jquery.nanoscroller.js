@@ -38,7 +38,8 @@
     function NanoScroll(el, options) {
       this.options = options;
       this.el = $(el);
-      this.document = $(document);
+      this.doc = $(document);
+      this.win = $(window);
       this.generate();
       this.createEvents();
       this.addEvents();
@@ -52,7 +53,7 @@
           _this.isDrag = true;
           _this.offsetY = e.clientY - _this.slider.offset().top;
           _this.pane.addClass('active');
-          _this.document.bind(MOUSEMOVE, _this.events[DRAG]).bind(MOUSEUP, _this.events[UP]);
+          _this.doc.bind(MOUSEMOVE, _this.events[DRAG]).bind(MOUSEUP, _this.events[UP]);
           return false;
         },
         drag: function(e) {
@@ -63,7 +64,7 @@
         up: function(e) {
           _this.isDrag = false;
           _this.pane.removeClass('active');
-          _this.document.unbind(MOUSEMOVE, _this.events[DRAG]).unbind(MOUSEUP, _this.events[UP]);
+          _this.doc.unbind(MOUSEMOVE, _this.events[DRAG]).unbind(MOUSEUP, _this.events[UP]);
           return false;
         },
         resize: function(e) {
@@ -95,7 +96,7 @@
       var events, pane;
       events = this.events;
       pane = this.pane;
-      $(window).bind(RESIZE, events[RESIZE]);
+      this.win.bind(RESIZE, events[RESIZE]);
       this.slider.bind(MOUSEDOWN, events[DOWN]);
       pane.bind(MOUSEDOWN, events[PANEDOWN]);
       this.content.bind(SCROLL, events[SCROLL]);
@@ -110,7 +111,7 @@
       var events, pane;
       events = this.events;
       pane = this.pane;
-      $(window).unbind(RESIZE, events[RESIZE]);
+      this.win.unbind(RESIZE, events[RESIZE]);
       this.slider.unbind(MOUSEDOWN, events[DOWN]);
       pane.unbind(MOUSEDOWN, events[PANEDOWN]);
       this.content.unbind(SCROLL, events[SCROLL]);

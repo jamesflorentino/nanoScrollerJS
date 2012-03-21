@@ -35,7 +35,8 @@
 
     constructor: (el, @options) ->
       @el = $(el)
-      @document = $(document)
+      @doc = $(document)
+      @win = $(window)
       @generate()
       @createEvents()
       @addEvents()
@@ -48,7 +49,7 @@
           @isDrag  = true
           @offsetY = e.clientY - @slider.offset().top
           @pane.addClass 'active'
-          @document.bind(MOUSEMOVE, @events[DRAG]).bind MOUSEUP, @events[UP]
+          @doc.bind(MOUSEMOVE, @events[DRAG]).bind MOUSEUP, @events[UP]
           false
 
         drag: (e) =>
@@ -59,7 +60,7 @@
         up: (e) =>
           @isDrag = false
           @pane.removeClass 'active'
-          @document.unbind(MOUSEMOVE, @events[DRAG]).unbind MOUSEUP, @events[UP]
+          @doc.unbind(MOUSEMOVE, @events[DRAG]).unbind MOUSEUP, @events[UP]
           false
 
         resize: (e) =>
@@ -88,7 +89,7 @@
     addEvents: ->
       events = @events
       pane = @pane
-      $(window).bind RESIZE  , events[RESIZE]
+      @win.bind RESIZE  , events[RESIZE]
       @slider.bind MOUSEDOWN , events[DOWN]
       pane.bind MOUSEDOWN    , events[PANEDOWN]
       @content.bind SCROLL   , events[SCROLL]
@@ -102,7 +103,7 @@
     removeEvents: ->
       events = @events
       pane = @pane
-      $(window).unbind RESIZE  , events[RESIZE]
+      @win.unbind RESIZE  , events[RESIZE]
       @slider.unbind MOUSEDOWN , events[DOWN]
       pane.unbind MOUSEDOWN    , events[PANEDOWN]
       @content.unbind SCROLL   , events[SCROLL]
