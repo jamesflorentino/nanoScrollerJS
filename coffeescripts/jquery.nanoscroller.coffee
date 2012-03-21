@@ -202,7 +202,7 @@
       return scrollbar.scrollTo(options.scrollTo)         if options.scrollTo
       return scrollbar.scrollBottom(0)                    if options.scroll is 'bottom'
       return scrollbar.scrollTop(0)                       if options.scroll is 'top'
-      return scrollbar.scrollTo(options.scroll)           if options.scroll instanceof jQuery
+      return scrollbar.scrollTo(options.scroll)           if options.scroll instanceof $
       return scrollbar.stop()                             if options.stop
       scrollbar.reset()
     return

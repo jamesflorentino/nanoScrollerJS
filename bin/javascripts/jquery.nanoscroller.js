@@ -226,9 +226,7 @@
       if (options.scrollTo) return scrollbar.scrollTo(options.scrollTo);
       if (options.scroll === 'bottom') return scrollbar.scrollBottom(0);
       if (options.scroll === 'top') return scrollbar.scrollTop(0);
-      if (options.scroll instanceof jQuery) {
-        return scrollbar.scrollTo(options.scroll);
-      }
+      if (options.scroll instanceof $) return scrollbar.scrollTo(options.scroll);
       if (options.stop) return scrollbar.stop();
       return scrollbar.reset();
     });
