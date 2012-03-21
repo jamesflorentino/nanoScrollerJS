@@ -137,8 +137,7 @@
         @content.css height: @content.height()
       @contentH  = content.scrollHeight + @scrollW
       @paneH     = @pane.outerHeight()
-      @sliderH   = @paneH / @contentH * @paneH
-      @sliderH   = Math.round @sliderH
+      @sliderH   = Math.round @paneH / @contentH * @paneH
       @scrollH   = @paneH - @sliderH
       @slider.height  @sliderH
       @diffH = content.scrollHeight - content.clientHeight

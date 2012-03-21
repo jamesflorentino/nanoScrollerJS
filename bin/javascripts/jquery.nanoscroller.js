@@ -152,8 +152,7 @@
       }
       this.contentH = content.scrollHeight + this.scrollW;
       this.paneH = this.pane.outerHeight();
-      this.sliderH = this.paneH / this.contentH * this.paneH;
-      this.sliderH = Math.round(this.sliderH);
+      this.sliderH = Math.round(this.paneH / this.contentH * this.paneH);
       this.scrollH = this.paneH - this.sliderH;
       this.slider.height(this.sliderH);
       this.diffH = content.scrollHeight - content.clientHeight;
