@@ -199,24 +199,22 @@
   $.fn.nanoScroller = function(settings) {
     var options;
     options = $.extend({}, defaults, settings);
-    if (!($.browser.msie && parseInt($.browser.version, 10) < 7)) {
-      this.each(function() {
-        var me, scrollbar;
-        me = this;
-        scrollbar = $.data(me, SCROLLBAR);
-        if (!scrollbar) {
-          scrollbar = new NanoScroll(me, options);
-          $.data(me, SCROLLBAR, scrollbar);
-        }
-        if (options.scrollBottom) {
-          return scrollbar.scrollBottom(options.scrollBottom);
-        }
-        if (options.scrollTop) return scrollbar.scrollTop(options.scrollTop);
-        if (options.scroll === 'bottom') return scrollbar.scrollBottom(0);
-        if (options.scroll === 'top') return scrollbar.scrollTop(0);
-        if (options.stop) return scrollbar.stop();
-        return scrollbar.reset();
-      });
-    }
+    this.each(function() {
+      var me, scrollbar;
+      me = this;
+      scrollbar = $.data(me, SCROLLBAR);
+      if (!scrollbar) {
+        scrollbar = new NanoScroll(me, options);
+        $.data(me, SCROLLBAR, scrollbar);
+      }
+      if (options.scrollBottom) {
+        return scrollbar.scrollBottom(options.scrollBottom);
+      }
+      if (options.scrollTop) return scrollbar.scrollTop(options.scrollTop);
+      if (options.scroll === 'bottom') return scrollbar.scrollBottom(0);
+      if (options.scroll === 'top') return scrollbar.scrollTop(0);
+      if (options.stop) return scrollbar.stop();
+      return scrollbar.reset();
+    });
   };
 })(jQuery, window, document);

@@ -179,20 +179,19 @@
 
   $.fn.nanoScroller = (settings) ->
     options = $.extend({}, defaults, settings)
-    if not ($.browser.msie and parseInt($.browser.version, 10) < 7)
-      @each ->
-        me = this
-        scrollbar = $.data me, SCROLLBAR
-        if not scrollbar
-          scrollbar = new NanoScroll me, options
-          $.data me, SCROLLBAR, scrollbar
+    @each ->
+      me = this
+      scrollbar = $.data me, SCROLLBAR
+      if not scrollbar
+        scrollbar = new NanoScroll me, options
+        $.data me, SCROLLBAR, scrollbar
 
-        return scrollbar.scrollBottom(options.scrollBottom) if options.scrollBottom
-        return scrollbar.scrollTop(options.scrollTop)       if options.scrollTop
-        return scrollbar.scrollBottom(0)                    if options.scroll is 'bottom'
-        return scrollbar.scrollTop(0)                       if options.scroll is 'top'
-        return scrollbar.stop()                             if options.stop
-        scrollbar.reset()
+      return scrollbar.scrollBottom(options.scrollBottom) if options.scrollBottom
+      return scrollbar.scrollTop(options.scrollTop)       if options.scrollTop
+      return scrollbar.scrollBottom(0)                    if options.scroll is 'bottom'
+      return scrollbar.scrollTop(0)                       if options.scroll is 'top'
+      return scrollbar.stop()                             if options.stop
+      scrollbar.reset()
     return
   return
 
