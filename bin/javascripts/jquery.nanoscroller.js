@@ -167,7 +167,7 @@
       this.sliderY = Math.min(this.scrollH, this.sliderY);
       scrollValue = (this.paneH - this.contentH + this.scrollW) * this.sliderY / this.scrollH;
       this.content.scrollTop(-scrollValue);
-      return this.slider.css({
+      this.slider.css({
         top: this.sliderY
       });
     };

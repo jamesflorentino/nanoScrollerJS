@@ -155,6 +155,7 @@
       # scrollvalue = (paneh - ch + sw) * sy / sw
       @content.scrollTop -scrollValue
       @slider.css top: @sliderY
+      return
 
     scrollBottom: (offsetY) ->
       diffH = @diffH
