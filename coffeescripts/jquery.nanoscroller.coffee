@@ -133,6 +133,8 @@
         @addEvents()
 
       content = @content[0]
+      if ($.browser.msie and parseInt($.browser.version, 10) is 7)
+        @content.css({ height: @content.height() })
       @contentH  = content.scrollHeight + @scrollW
       @paneH     = @pane.outerHeight()
       @sliderH   = @paneH / @contentH * @paneH
@@ -177,8 +179,7 @@
 
   $.fn.nanoScroller = (settings) ->
     options = $.extend({}, defaults, settings)
-    # scumbag IE7
-    if not ($.browser.msie and parseInt($.browser.version, 10) < 8)
+    if not ($.browser.msie and parseInt($.browser.version, 10) < 7)
       @each ->
         me = this
         scrollbar = $.data me, SCROLLBAR

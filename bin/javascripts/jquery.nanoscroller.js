@@ -145,6 +145,11 @@
         this.addEvents();
       }
       content = this.content[0];
+      if ($.browser.msie && parseInt($.browser.version, 10) === 7) {
+        this.content.css({
+          height: this.content.height()
+        });
+      }
       this.contentH = content.scrollHeight + this.scrollW;
       this.paneH = this.pane.outerHeight();
       this.sliderH = this.paneH / this.contentH * this.paneH;
@@ -194,7 +199,7 @@
   $.fn.nanoScroller = function(settings) {
     var options;
     options = $.extend({}, defaults, settings);
-    if (!($.browser.msie && parseInt($.browser.version, 10) < 8)) {
+    if (!($.browser.msie && parseInt($.browser.version, 10) < 7)) {
       this.each(function() {
         var me, scrollbar;
         me = this;
