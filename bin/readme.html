@@ -41,6 +41,11 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 <pre><code>$(&quot;#about.nano&quot;).nanoScroller({scroll:&#39;bottom&#39;});
 </code></pre>
 
+<p>To scroll to an element in the nanoScroller</p>
+
+<pre><code>$(&quot;#about.nano&quot;).nanoScroller({scroll:$(&#39;#a_node&#39;)});
+</code></pre>
+
 <p>To stop the operation</p>
 
 <pre><code>$(&quot;#about.nano&quot;).nanoScroller({stop: true});

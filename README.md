@@ -35,6 +35,10 @@ To scroll at the bottom
 
     $("#about.nano").nanoScroller({scroll:'bottom'});
 
+To scroll to an element in the nanoScroller
+
+    $("#about.nano").nanoScroller({scroll:$('#a_node')});
+
 To stop the operation
 
     $("#about.nano").nanoScroller({stop: true});

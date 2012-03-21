@@ -187,6 +187,18 @@
       this.content.scrollTop(+offsetY);
     };
 
+    NanoScroll.prototype.scrollTo = function(node) {
+      var fraction, new_slider, offset;
+      this.reset();
+      offset = $(node).offset().top;
+      if (offset > this.scrollH) {
+        fraction = offset / this.contentH;
+        new_slider = this.scrollH * fraction;
+        this.sliderY = new_slider;
+        this.scroll();
+      }
+    };
+
     NanoScroll.prototype.stop = function() {
       this.isDead = true;
       this.removeEvents();
@@ -211,8 +223,12 @@
         return scrollbar.scrollBottom(options.scrollBottom);
       }
       if (options.scrollTop) return scrollbar.scrollTop(options.scrollTop);
+      if (options.scrollTo) return scrollbar.scrollTo(options.scrollTo);
       if (options.scroll === 'bottom') return scrollbar.scrollBottom(0);
       if (options.scroll === 'top') return scrollbar.scrollTop(0);
+      if (options.scroll instanceof jQuery) {
+        return scrollbar.scrollTo(options.scroll);
+      }
       if (options.stop) return scrollbar.stop();
       return scrollbar.reset();
     });
