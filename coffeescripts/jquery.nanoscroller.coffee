@@ -134,7 +134,7 @@
 
       content = @content[0]
       if ($.browser.msie and parseInt($.browser.version, 10) is 7)
-        @content.css({ height: @content.height() })
+        @content.css height: @content.height()
       @contentH  = content.scrollHeight + @scrollW
       @paneH     = @pane.outerHeight()
       @sliderH   = @paneH / @contentH * @paneH
