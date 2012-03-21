@@ -151,8 +151,7 @@
     scroll: ->
       @sliderY    = Math.max 0, @sliderY
       @sliderY    = Math.min @scrollH, @sliderY
-      scrollValue = @paneH - @contentH + @scrollW
-      scrollValue = scrollValue * @sliderY / @scrollH
+      scrollValue = (@paneH - @contentH + @scrollW) * @sliderY / @scrollH
       # scrollvalue = (paneh - ch + sw) * sy / sw
       @content.scrollTop -scrollValue
       @slider.css top: @sliderY
