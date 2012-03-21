@@ -20,17 +20,18 @@
     contentClass: 'content'
   };
   getScrollbarWidth = function() {
-    var noscrollWidth, outer, yesscrollWidth;
+    var outer, outerStyle, scrollbarWidth;
     outer = document.createElement('div');
-    outer.style.position = 'absolute';
-    outer.style.width = '100px';
-    outer.style.height = '100px';
-    outer.style.overflow = 'scroll';
+    outerStyle = outer.style;
+    outerStyle.position = 'absolute';
+    outerStyle.width = '100px';
+    outerStyle.height = '100px';
+    outerStyle.overflow = 'scroll';
+    outerStyle.top = '-9999px';
     document.body.appendChild(outer);
-    noscrollWidth = outer.offsetWidth;
-    yesscrollWidth = outer.scrollWidth;
+    scrollbarWidth = outer.offsetWidth - outer.clientWidth;
     document.body.removeChild(outer);
-    return noscrollWidth - yesscrollWidth;
+    return scrollbarWidth;
   };
   NanoScroll = (function() {
 
