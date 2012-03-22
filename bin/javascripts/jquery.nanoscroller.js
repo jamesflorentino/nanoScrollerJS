@@ -26,7 +26,7 @@
     outerStyle.position = 'absolute';
     outerStyle.width = '100px';
     outerStyle.height = '100px';
-    outerStyle.overflow = 'scroll';
+    outerStyle.overflow = SCROLL;
     outerStyle.top = '-9999px';
     document.body.appendChild(outer);
     scrollbarWidth = outer.offsetWidth - outer.clientWidth;
@@ -136,7 +136,7 @@
     };
 
     NanoScroll.prototype.reset = function() {
-      var content;
+      var content, contentStyle, contentStyleOverflowY;
       if (!this.el.find("." + this.options.paneClass).length) {
         this.generate();
         this.stop();
@@ -147,6 +147,8 @@
         this.addEvents();
       }
       content = this.content[0];
+      contentStyle = content.style;
+      contentStyleOverflowY = contentStyle.overflowY;
       if ($.browser.msie && parseInt($.browser.version, 10) === 7) {
         this.content.css({
           height: this.content.height()
@@ -155,11 +157,20 @@
       this.contentH = content.scrollHeight + this.scrollW;
       this.paneH = this.pane.outerHeight();
       this.sliderH = Math.round(this.paneH / this.contentH * this.paneH);
+      if (contentStyleOverflowY === SCROLL && contentStyle.overflowX !== SCROLL) {
+        this.sliderH += this.scrollW;
+      }
       this.scrollH = this.paneH - this.sliderH;
       this.slider.height(this.sliderH);
       this.diffH = content.scrollHeight - content.clientHeight;
       this.pane.show();
-      if (this.paneH >= this.content[0].scrollHeight) this.pane.hide();
+      if (this.paneH >= content.scrollHeight && contentStyleOverflowY !== SCROLL) {
+        this.pane.hide();
+      } else if (this.el.height() === content.scrollHeight && contentStyleOverflowY === SCROLL) {
+        this.slider.hide();
+      } else {
+        this.slider.show();
+      }
     };
 
     NanoScroll.prototype.scroll = function() {

@@ -24,7 +24,7 @@
     outerStyle.position = 'absolute'
     outerStyle.width    = '100px'
     outerStyle.height   = '100px'
-    outerStyle.overflow = 'scroll'
+    outerStyle.overflow = SCROLL
     outerStyle.top      = '-9999px'
     document.body.appendChild outer
     scrollbarWidth = outer.offsetWidth - outer.clientWidth
@@ -135,18 +135,25 @@
         @addEvents()
 
       content = @content[0]
+      contentStyle = content.style
+      contentStyleOverflowY = contentStyle.overflowY
       if ($.browser.msie and parseInt($.browser.version, 10) is 7)
         @content.css height: @content.height()
       @contentH  = content.scrollHeight + @scrollW
       @paneH     = @pane.outerHeight()
       @sliderH   = Math.round @paneH / @contentH * @paneH
+      @sliderH  += @scrollW if contentStyleOverflowY is SCROLL and contentStyle.overflowX isnt SCROLL
       @scrollH   = @paneH - @sliderH
       @slider.height  @sliderH
       @diffH = content.scrollHeight - content.clientHeight
 
       @pane.show()
-      if @paneH >= @content[0].scrollHeight
-        @pane.hide()
+      if @paneH >= content.scrollHeight and contentStyleOverflowY isnt SCROLL
+        @pane.hide() 
+      else if @el.height() is content.scrollHeight and contentStyleOverflowY is SCROLL
+        @slider.hide()
+      else
+        @slider.show() 
       return
 
     scroll: ->
