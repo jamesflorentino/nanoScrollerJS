@@ -157,6 +157,7 @@
       this.contentH = content.scrollHeight + this.scrollW;
       this.paneH = this.pane.outerHeight();
       this.sliderH = Math.round(this.paneH / this.contentH * this.paneH);
+      this.sliderH = this.sliderH > 20 ? this.sliderH : 20;
       if (contentStyleOverflowY === SCROLL && contentStyle.overflowX !== SCROLL) {
         this.sliderH += this.scrollW;
       }
