@@ -1,6 +1,13 @@
-@import url('main.css');
+.nano .content { 
+	padding: 20px;
+}
 
-@import url('nanoscroller.css');
-.nano .content      { padding: 20px; }
-.nano .pane         { background: #555; width: 8px; right:1px; }
-.nano .pane .slider { background: #111; }
+.nano .pane {
+	background: #555;
+	width: 8px;
+	right: 1px;
+}
+
+.nano .slider {
+	background: #111;
+}

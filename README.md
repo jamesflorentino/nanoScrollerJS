@@ -1,5 +1,5 @@
 # nanoScroller.js
-[nanoScroller.js](http://jamesflorentino.com/jquery.nanoscroller) is a jQuery plugin that offers a simplistic way of implementing Lion-styled scrollbars for your website.
+[nanoScroller.js](http://jamesflorentino.com/jquery.nanoscroller) is a jQuery plugin that offers a simplistic way of implementing Mac OS X Lion-styled scrollbars for your website.
 It uses minimal HTML markup being `.nano > .content`. The other scrollbar div elements `.pane > .slider` are added during run time to prevent clutter in templating. The latest version utilizes native scrolling and works with the iPad, iPhone, and some Android Tablets.
 
 Please visit the [downloads](https://github.com/jamesflorentino/nanoScrollerJS/downloads) section to get the js and css template file (.zip).
@@ -16,47 +16,66 @@ Copy the HTML mark-up. Change `#about` into something related to your content. T
 
 ### 2. CSS
 
-    @import url('nanoscroller.css');
-    .nano .content      { padding: 10px; }
-    .nano .pane         { background: #444; }
-    .nano .pane .slider { background: #111; }
+Link to the `nanoscroller.css` file inside your page's `<head>` section (...or copy the contents from it to your page's main stylesheet file).
+
+    <link rel="stylesheet" href="nanoscroller.css"> 
+
+You should specify a width and a height to your container, and apply some custom styling for your scrollbar. Here's an example:
+
+    .nano { background: #bba; width: 500px; height: 500px; }
+    .nano .content { padding: 10px; }
+    .nano .pane   { background: #888; }
+    .nano .slider { background: #111; }
 
 ### 3. JavaScript
 
-    $("#about.nano").nanoScroller();
+    $("#about").nanoScroller();
 
 ### Additional Methods
 
-To scroll at the top
 
-    $("#about.nano").nanoScroller({scroll:'top'});
+#### scroll:
 
-To scroll at the bottom
+To scroll at the top:
 
-    $("#about.nano").nanoScroller({scroll:'bottom'});
+    $("#about").nanoScroller({ scroll: 'top' });
 
-To scroll to an element in the nanoScroller
+To scroll at the bottom:
 
-    $("#about.nano").nanoScroller({scroll:$('#a_node')});
+    $("#about").nanoScroller({ scroll: 'bottom' });
 
-To stop the operation
+To scroll to an element:
 
-    $("#about.nano").nanoScroller({stop: true});
+    $("#about").nanoScroller({ scroll: $('#a_node') });
 
-Refresh the scrollbar
 
-    $("#about.nano").nanoScroller();
+#### stop:
+
+To stop the operation:
+
+    $("#about").nanoScroller({ stop: true });
+
+
+#### nanoScroller();    
+
+Refresh the scrollbar:
+
+    $("#about").nanoScroller();
 
 
 ### Advanced methods
 
 To scroll at the top with an offset value:
 
-    $("#about.nano").nanoScroller({scrollTop:value});
+    $("#about").nanoScroller({ scrollTop: value });
 
 To scroll at the bottom with an offset value:
 
-    $("#about.nano").nanoScroller({scrollBottom:value});
+    $("#about").nanoScroller({ scrollBottom: value });
+
+To scroll to an element:
+
+    $("#about").nanoScroller({ scrollTo: $('#a_node') });    
 
 ### Features
 - It has been tested to work in the following desktop browsers: IE7+ (_does not work in IE6_), Firefox 3+, Chrome, Safari 4+ and Opera 11.60+. If you find a bug, please report here at the [issues section](https://github.com/jamesflorentino/nanoScrollerJS/issues)

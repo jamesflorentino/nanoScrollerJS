@@ -1,6 +1,6 @@
 <h1>nanoScroller.js</h1>
 
-<p><a href="http://jamesflorentino.com/jquery.nanoscroller">nanoScroller.js</a> is a jQuery plugin that offers a simplistic way of implementing Lion-styled scrollbars for your website.
+<p><a href="http://jamesflorentino.com/jquery.nanoscroller">nanoScroller.js</a> is a jQuery plugin that offers a simplistic way of implementing Mac OS X Lion-styled scrollbars for your website.
 It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other scrollbar div elements <code>.pane &gt; .slider</code> are added during run time to prevent clutter in templating. The latest version utilizes native scrolling and works with the iPad, iPhone, and some Android Tablets.</p>
 
 <p>Please visit the <a href="https://github.com/jamesflorentino/nanoScrollerJS/downloads">downloads</a> section to get the js and css template file (.zip).</p>
@@ -18,54 +18,72 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 
 <h3>2. CSS</h3>
 
-<pre><code>@import url(&#39;nanoscroller.css&#39;);
-.nano .content      { padding: 10px; }
-.nano .pane         { background: #444; }
-.nano .pane .slider { background: #111; }
+<p>Link to the <code>nanoscroller.css</code> file inside your page&#39;s <code>&lt;head&gt;</code> section (...or copy the contents from it to your page&#39;s main stylesheet file).</p>
+
+<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;nanoscroller.css&quot;&gt; 
+</code></pre>
+
+<p>You should specify a width and a height to your container, and apply some custom styling for your scrollbar. Here&#39;s an example:</p>
+
+<pre><code>.nano { background: #bba; width: 500px; height: 500px; }
+.nano .content { padding: 10px; }
+.nano .pane   { background: #888; }
+.nano .slider { background: #111; }
 </code></pre>
 
 <h3>3. JavaScript</h3>
 
-<pre><code>$(&quot;#about.nano&quot;).nanoScroller();
+<pre><code>$(&quot;#about&quot;).nanoScroller();
 </code></pre>
 
 <h3>Additional Methods</h3>
 
-<p>To scroll at the top</p>
+<h4>scroll:</h4>
 
-<pre><code>$(&quot;#about.nano&quot;).nanoScroller({scroll:&#39;top&#39;});
+<p>To scroll at the top:</p>
+
+<pre><code>$(&quot;#about&quot;).nanoScroller({ scroll: &#39;top&#39; });
 </code></pre>
 
-<p>To scroll at the bottom</p>
+<p>To scroll at the bottom:</p>
 
-<pre><code>$(&quot;#about.nano&quot;).nanoScroller({scroll:&#39;bottom&#39;});
+<pre><code>$(&quot;#about&quot;).nanoScroller({ scroll: &#39;bottom&#39; });
 </code></pre>
 
-<p>To scroll to an element in the nanoScroller</p>
+<p>To scroll to an element:</p>
 
-<pre><code>$(&quot;#about.nano&quot;).nanoScroller({scroll:$(&#39;#a_node&#39;)});
+<pre><code>$(&quot;#about&quot;).nanoScroller({ scroll: $(&#39;#a_node&#39;) });
 </code></pre>
 
-<p>To stop the operation</p>
+<h4>stop:</h4>
 
-<pre><code>$(&quot;#about.nano&quot;).nanoScroller({stop: true});
+<p>To stop the operation:</p>
+
+<pre><code>$(&quot;#about&quot;).nanoScroller({ stop: true });
 </code></pre>
 
-<p>Refresh the scrollbar</p>
+<h4>nanoScroller();</h4>
 
-<pre><code>$(&quot;#about.nano&quot;).nanoScroller();
+<p>Refresh the scrollbar:</p>
+
+<pre><code>$(&quot;#about&quot;).nanoScroller();
 </code></pre>
 
 <h3>Advanced methods</h3>
 
 <p>To scroll at the top with an offset value:</p>
 
-<pre><code>$(&quot;#about.nano&quot;).nanoScroller({scrollTop:value});
+<pre><code>$(&quot;#about&quot;).nanoScroller({ scrollTop: value });
 </code></pre>
 
 <p>To scroll at the bottom with an offset value:</p>
 
-<pre><code>$(&quot;#about.nano&quot;).nanoScroller({scrollBottom:value});
+<pre><code>$(&quot;#about&quot;).nanoScroller({ scrollBottom: value });
+</code></pre>
+
+<p>To scroll to an element:</p>
+
+<pre><code>$(&quot;#about&quot;).nanoScroller({ scrollTo: $(&#39;#a_node&#39;) });    
 </code></pre>
 
 <h3>Features</h3>
