@@ -1,5 +1,6 @@
 
 (function($, window, document) {
+  "use strict";
   var DOMSCROLL, DOWN, DRAG, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, UP, WHEEL, defaults, getScrollbarWidth;
   SCROLLBAR = 'scrollbar';
   SCROLL = 'scroll';

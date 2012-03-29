@@ -1,4 +1,5 @@
 (($, window, document) ->
+  "use strict"
 
   SCROLLBAR  = 'scrollbar'
   SCROLL     = 'scroll'
