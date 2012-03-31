@@ -86,11 +86,12 @@ pre {
 	text-shadow: black 0 -1px 1px;
 }
 
-#main ul {
+#main ul, #main ol {
 	display: block;
+	margin: 10px 0;
 }
 
-#main ul li {
+#main ul li, #main ol li {
 	margin-left: 20px;
 	font-size: 13px;
 }

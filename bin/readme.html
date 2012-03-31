@@ -83,8 +83,33 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 
 <p>To scroll to an element:</p>
 
-<pre><code>$(&quot;#about&quot;).nanoScroller({ scrollTo: $(&#39;#a_node&#39;) });    
+<pre><code>$(&quot;#about&quot;).nanoScroller({ scrollTo: $(&#39;#a_node&#39;) });
 </code></pre>
+
+<h3>Development</h3>
+
+<p>To build nanoScroller from source you need the following libraries installed:</p>
+
+<ul>
+<li>Node.js and npm: <a href="http://nodejs.org/">homepage / download</a></li>
+<li>Coffeescript: <a href="http://coffeescript.org/">homepage</a> | <code>npm install -g coffee-script</code></li>
+</ul>
+
+<p>To allow the build process to convert the README file to HTML you also need:</p>
+
+<ul>
+<li>Ruby (pre-installed in OS X): <a href="http://www.ruby-lang.org/en/">homepage</a> | <a href="http://www.ruby-lang.org/en/downloads/">download</a></li>
+<li>GCC: <a href="http://gcc.gnu.org/">homepage</a> | <a href="https://github.com/kennethreitz/osx-gcc-installer">download for OS X</a></li>
+<li>Redcarpet: <a href="https://github.com/tanoku/redcarpet">homepage</a> | <code>gem install redcarpet</code> (add <code>sudo</code> if needed)</li>
+</ul>
+
+<h4>How to build &amp; contribute</h4>
+
+<ol>
+<li>Make all JS changes in Coffeescript file(s), CSS changes in CSS file(s).</li>
+<li>In terminal move to nanoscroller folder and run <code>cake build</code></li>
+<li>Make sure that all changes are valid and open a pull request.</li>
+</ol>
 
 <h3>Features</h3>
 

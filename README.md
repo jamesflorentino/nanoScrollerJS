@@ -75,7 +75,26 @@ To scroll at the bottom with an offset value:
 
 To scroll to an element:
 
-    $("#about").nanoScroller({ scrollTo: $('#a_node') });    
+    $("#about").nanoScroller({ scrollTo: $('#a_node') });
+
+### Development
+
+To build nanoScroller from source you need the following libraries installed:
+
+* Node.js and npm: [homepage / download](http://nodejs.org/)
+* Coffeescript: [homepage](http://coffeescript.org/) | `npm install -g coffee-script`
+
+To allow the build process to convert the README file to HTML you also need:
+
+* Ruby (pre-installed in OS X): [homepage](http://www.ruby-lang.org/en/) | [download](http://www.ruby-lang.org/en/downloads/)
+* GCC: [homepage](http://gcc.gnu.org/) | [download for OS X](https://github.com/kennethreitz/osx-gcc-installer)
+* Redcarpet: [homepage](https://github.com/tanoku/redcarpet) | `gem install redcarpet` (add `sudo` if needed)
+
+#### How to build & contribute
+
+1. Make all JS changes in Coffeescript file(s), CSS changes in CSS file(s).
+2. In terminal move to nanoscroller folder and run `cake build`
+3. Make sure that all changes are valid and open a pull request.
 
 ### Features
 - It has been tested to work in the following desktop browsers: IE7+ (_does not work in IE6_), Firefox 3+, Chrome, Safari 4+ and Opera 11.60+. If you find a bug, please report here at the [issues section](https://github.com/jamesflorentino/nanoScrollerJS/issues)
