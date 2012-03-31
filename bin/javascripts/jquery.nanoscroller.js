@@ -150,7 +150,7 @@
       content = this.content[0];
       contentStyle = content.style;
       contentStyleOverflowY = contentStyle.overflowY;
-      if ($.browser.msie && parseInt($.browser.version, 10) === 7) {
+      if (window.navigator.appName === 'Microsoft Internet Explorer' && /msie 7./i.test(window.navigator.appVersion) && window.ActiveXObject) {
         this.content.css({
           height: this.content.height()
         });

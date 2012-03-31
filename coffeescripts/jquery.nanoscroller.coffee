@@ -138,7 +138,9 @@
       content = @content[0]
       contentStyle = content.style
       contentStyleOverflowY = contentStyle.overflowY
-      if ($.browser.msie and parseInt($.browser.version, 10) is 7)
+      # try to detect IE7 and IE7 compatibility mode.
+      # this sniffing is done to fix a IE7 related bug.
+      if window.navigator.appName is 'Microsoft Internet Explorer' and (/msie 7./i).test(window.navigator.appVersion) and window.ActiveXObject
         @content.css height: @content.height()
       @contentH  = content.scrollHeight + @scrollW
       @paneH     = @pane.outerHeight()
