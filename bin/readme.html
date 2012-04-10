@@ -36,6 +36,34 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 <pre><code>$(&quot;#about&quot;).nanoScroller();
 </code></pre>
 
+<h3>Plugin Options</h3>
+
+<p>There are a few options that you can change when running nanoScroller, e.g. <code>$(&quot;#about&quot;).nanoScroller({ paneClass: &#39;myclass&#39; });</code></p>
+
+<h4>iOSNativeScrolling</h4>
+
+<p>Set to true if you want to use native scrolling in iOS 5+. This will disable your custom nanoScroller scrollbar in iOS 5+ and use the native one instead. While the native iOS scrollbar usually works much better, <a href="http://jquerymobile.com/test/docs/pages/touchoverflow.html">there could possibly be bugs</a> in certain situations.</p>
+
+<p><strong>Default:</strong> false</p>
+
+<h4>paneClass</h4>
+
+<p>A classname for scrollbar track element. If you change this setting, you also have to change it in the plugin&#39;s CSS file.</p>
+
+<p><strong>Default:</strong> &#39;pane&#39;</p>
+
+<h4>sliderClass</h4>
+
+<p>A classname for scrollbar thumb element. If you change this setting, you also have to change it in the plugin&#39;s CSS file.</p>
+
+<p><strong>Default:</strong> &#39;slider&#39;</p>
+
+<h4>contentClass</h4>
+
+<p>A classname for your content div. If you change this setting, you also have to change it in the plugin&#39;s CSS file.</p>
+
+<p><strong>Default:</strong> &#39;content&#39;</p>
+
 <h3>Additional Methods</h3>
 
 <h4>scroll:</h4>

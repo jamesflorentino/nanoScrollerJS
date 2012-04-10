@@ -14,10 +14,12 @@
   DOMSCROLL  = 'DOMMouseScroll'
   DOWN       = 'down'
   WHEEL      = 'wheel'
+
   defaults =
     paneClass: 'pane'
     sliderClass: 'slider'
     contentClass: 'content'
+    iOSNativeScrolling: false
 
   getScrollbarWidth = ->
     outer                = document.createElement 'div'
@@ -124,8 +126,15 @@
       @slider  = @el.find ".#{options.sliderClass}"
       @pane    = @el.find ".#{options.paneClass}"
       @scrollW = getScrollbarWidth()
-      @content.css
-        right  : -@scrollW + 'px'
+
+      if options.iOSNativeScrolling
+        @content.css
+          right  : -@scrollW + 'px'
+          WebkitOverflowScrolling: 'touch'
+      else
+        @content.css
+          right  : -@scrollW + 'px'
+
       return
 
     reset: ->

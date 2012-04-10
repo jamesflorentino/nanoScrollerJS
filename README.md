@@ -31,6 +31,34 @@ You should specify a width and a height to your container, and apply some custom
 
     $("#about").nanoScroller();
 
+### Plugin Options
+
+There are a few options that you can change when running nanoScroller, e.g. `$("#about").nanoScroller({ paneClass: 'myclass' });`
+
+#### iOSNativeScrolling
+
+Set to true if you want to use native scrolling in iOS 5+. This will disable your custom nanoScroller scrollbar in iOS 5+ and use the native one instead. While the native iOS scrollbar usually works much better, [there could possibly be bugs](http://jquerymobile.com/test/docs/pages/touchoverflow.html) in certain situations.
+
+__Default:__ false
+
+#### paneClass
+
+A classname for scrollbar track element. If you change this setting, you also have to change it in the plugin's CSS file.
+
+__Default:__ 'pane'
+
+#### sliderClass
+
+A classname for scrollbar thumb element. If you change this setting, you also have to change it in the plugin's CSS file.
+
+__Default:__ 'slider'
+
+#### contentClass
+
+A classname for your content div. If you change this setting, you also have to change it in the plugin's CSS file.
+
+__Default:__ 'content'
+
 ### Additional Methods
 
 
