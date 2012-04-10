@@ -81,6 +81,7 @@
           if (_this.isDrag === true) return;
           content = _this.content[0];
           top = content.scrollTop / (content.scrollHeight - content.clientHeight) * (_this.paneH - _this.sliderH);
+          if (top + _this.sliderH === _this.paneH) _this.el.trigger('scrollend');
           _this.slider.css({
             top: top + 'px'
           });

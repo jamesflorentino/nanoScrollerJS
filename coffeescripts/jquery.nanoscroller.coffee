@@ -78,6 +78,8 @@
           return if @isDrag is true
           content = @content[0]
           top = content.scrollTop / (content.scrollHeight - content.clientHeight) * (@paneH - @sliderH)
+          if top + @sliderH is @paneH
+            @el.trigger('scrollend')
           @slider.css top: top + 'px'
           return
 

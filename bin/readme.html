@@ -86,6 +86,17 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 <pre><code>$(&quot;#about&quot;).nanoScroller({ scrollTo: $(&#39;#a_node&#39;) });
 </code></pre>
 
+<h3>Custom events</h3>
+
+<h4>&#39;scrollend&#39;</h4>
+
+<p>A custom &#39;scrollend&#39; event is triggered on the element every time the user has scrolled to the end of the content. Some browsers trigger this event more than once each time, so to listen to the custom event, instead of using jQuery&#39;s normal <code>.bind</code> or <code>.on</code>, you most likely want to use <a href="https://github.com/diaspora/jquery-debounce">this tiny jQuery debounce plugin</a> to prevent browsers from firing your function more than once every 100ms.</p>
+
+<pre><code>$(&quot;#about&quot;).debounce(&quot;scrollend&quot;, function() {
+  alert(&quot;The end&quot;);
+}, 100);
+</code></pre>
+
 <h3>Development</h3>
 
 <p>To build nanoScroller from source you need the following libraries installed:</p>

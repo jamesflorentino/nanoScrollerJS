@@ -77,6 +77,16 @@ To scroll to an element:
 
     $("#about").nanoScroller({ scrollTo: $('#a_node') });
 
+### Custom events
+
+#### 'scrollend'
+
+A custom 'scrollend' event is triggered on the element every time the user has scrolled to the end of the content. Some browsers trigger this event more than once each time, so to listen to the custom event, instead of using jQuery's normal `.bind` or `.on`, you most likely want to use [this tiny jQuery debounce plugin](https://github.com/diaspora/jquery-debounce) to prevent browsers from firing your function more than once every 100ms.
+
+    $("#about").debounce("scrollend", function() {
+      alert("The end");
+    }, 100);
+
 ### Development
 
 To build nanoScroller from source you need the following libraries installed:
