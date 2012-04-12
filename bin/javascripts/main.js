@@ -1,10 +1,10 @@
 $(function(){
 
-  $('.nano').nanoScroller();
+    $('.overthrow').nanoScroller({ contentClass: 'overthrow-content' });
 
   $("#main").find('.description').load("readme.html", function(){
 
-    $('.nano').nanoScroller();
+    $('.overthrow').nanoScroller();
 
   });
 
