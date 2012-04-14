@@ -150,12 +150,44 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 <li>Make sure that all changes are valid and open a pull request.</li>
 </ol>
 
-<h3>Features</h3>
+<h3>Browser compatibility</h3>
+
+<p><strong>Tested desktop browsers:</strong></p>
 
 <ul>
-<li>It has been tested to work in the following desktop browsers: IE7+ (<em>does not work in IE6</em>), Firefox 3+, Chrome, Safari 4+ and Opera 11.60+. If you find a bug, please report here at the <a href="https://github.com/jamesflorentino/nanoScrollerJS/issues">issues section</a></li>
-<li>It currently works with iOS5 (iPhone, iPad and iPod Touch). If you see it&#39;s broken on other tablets and mobile devices, please file a ticket in the git repo. Along with model name, and OS of the device.</li>
+<li>IE7+</li>
+<li>Firefox 3+</li>
+<li>Chrome</li>
+<li>Safari 4+</li>
+<li>Opera 11.60+</li>
 </ul>
+
+<p><strong>Mobile support:</strong></p>
+
+<ul>
+<li>iOS 5+ (iPhone, iPad and iPod Touch)</li>
+<li>iOS 4 (<em>with a polyfill</em>)</li>
+<li>Android 2.3+ (<em>with a polyfill</em>)</li>
+<li>If you see it&#39;s broken on other tablets and mobile devices, please file a ticket in the git repo. Along with model name, and OS of the device.</li>
+</ul>
+
+<p>If you find a bug, please report here at the <a href="https://github.com/jamesflorentino/nanoScrollerJS/issues">issues section</a>.</p>
+
+<h3>Using a polyfill for better mobile browser support</h3>
+
+<p>You can use <a href="https://github.com/filamentgroup/Overthrow/">overthrow.js</a> polyfill (~1.5kb minified and gzipped) to make nanoScoller work on many mobile devices. It emulates CSS overflow (overflow: auto;/overflow: scroll;) in devices that are lacking it.</p>
+
+<p>To use overthrow, link to the javascript file in your HTML document...</p>
+
+<pre><code>&lt;script src=&quot;overthrow.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+
+<p>...and add an <code>overthrow</code> class to your <code>content</code> div. </p>
+
+<pre><code>&lt;div id=&quot;about&quot; class=&quot;nano&quot;&gt;
+ &lt;div class=&quot;overthrow content&quot;&gt; ... content here ...  &lt;/div&gt; 
+&lt;/div&gt;
+</code></pre>
 
 <h3>Contributors</h3>
 

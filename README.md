@@ -134,9 +134,39 @@ To allow the build process to convert the README file to HTML you also need:
 2. In terminal move to nanoscroller folder and run `cake build`
 3. Make sure that all changes are valid and open a pull request.
 
-### Features
-- It has been tested to work in the following desktop browsers: IE7+ (_does not work in IE6_), Firefox 3+, Chrome, Safari 4+ and Opera 11.60+. If you find a bug, please report here at the [issues section](https://github.com/jamesflorentino/nanoScrollerJS/issues)
-- It currently works with iOS5 (iPhone, iPad and iPod Touch). If you see it's broken on other tablets and mobile devices, please file a ticket in the git repo. Along with model name, and OS of the device.
+### Browser compatibility
+
+__Tested desktop browsers:__
+
+* IE7+
+* Firefox 3+
+* Chrome
+* Safari 4+
+* Opera 11.60+
+
+__Mobile support:__
+
+* iOS 5+ (iPhone, iPad and iPod Touch)
+* iOS 4 (_with a polyfill_)
+* Android 2.3+ (_with a polyfill_)
+* If you see it's broken on other tablets and mobile devices, please file a ticket in the git repo. Along with model name, and OS of the device.
+
+If you find a bug, please report here at the [issues section](https://github.com/jamesflorentino/nanoScrollerJS/issues).
+
+### Using a polyfill for better mobile browser support
+
+You can use [overthrow.js](https://github.com/filamentgroup/Overthrow/) polyfill (~1.5kb minified and gzipped) to make nanoScoller work on many mobile devices. It emulates CSS overflow (overflow: auto;/overflow: scroll;) in devices that are lacking it.
+
+To use overthrow, link to the javascript file in your HTML document...
+
+    <script src="overthrow.js"></script>
+
+
+...and add an `overthrow` class to your `content` div. 
+
+    <div id="about" class="nano">
+     <div class="overthrow content"> ... content here ...  </div> 
+    </div>
 
 ### Contributors
 - @jamesflorentino
