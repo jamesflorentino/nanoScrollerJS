@@ -148,7 +148,8 @@ __Mobile support:__
 
 * iOS 5+ (iPhone, iPad and iPod Touch)
 * iOS 4 (_with a polyfill_)
-* Android 2.3+ (_with a polyfill_)
+* Android Firefox
+* Android 2.2/2.3 native browser, Opera 11.6 (_with a polyfill_)
 * If you see it's broken on other tablets and mobile devices, please file a ticket in the git repo. Along with model name, and OS of the device.
 
 If you find a bug, please report here at the [issues section](https://github.com/jamesflorentino/nanoScrollerJS/issues).
