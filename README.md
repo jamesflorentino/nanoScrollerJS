@@ -59,6 +59,12 @@ A classname for your content div. If you change this setting, you also have to c
 
 __Default:__ 'content'
 
+#### sliderMinHeight
+
+Sets the minimum height of the slider element.
+
+__Default:__ 20
+
 ### Additional Methods
 
 
