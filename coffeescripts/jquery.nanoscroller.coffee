@@ -17,6 +17,7 @@
   defaults =
     paneClass: 'pane'
     sliderClass: 'slider'
+    sliderMinHeight: 20
     contentClass: 'content'
     iOSNativeScrolling: false
 
@@ -155,7 +156,7 @@
       @contentH  = content.scrollHeight + @scrollW
       @paneH     = @pane.outerHeight()
       @sliderH   = Math.round @paneH / @contentH * @paneH
-      @sliderH   = if @sliderH > 20 then @sliderH else 20 # set min height of 20px
+      @sliderH   = if @sliderH > @options.sliderMinHeight then @sliderH else @options.sliderMinHeight # set min height
       @sliderH  += @scrollW if contentStyleOverflowY is SCROLL and contentStyle.overflowX isnt SCROLL
       @scrollH   = @paneH - @sliderH
       @slider.height  @sliderH
