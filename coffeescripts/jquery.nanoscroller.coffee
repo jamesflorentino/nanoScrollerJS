@@ -17,6 +17,7 @@
   defaults =
     paneClass: 'pane'
     sliderClass: 'slider'
+    sliderMinHeight: 20
     contentClass: 'content'
     iOSNativeScrolling: false
 
