@@ -18,6 +18,7 @@
   defaults = {
     paneClass: 'pane',
     sliderClass: 'slider',
+    sliderMinHeight: 20,
     contentClass: 'content',
     iOSNativeScrolling: false
   };
@@ -173,7 +174,7 @@
       this.contentH = content.scrollHeight + this.scrollW;
       this.paneH = this.pane.outerHeight();
       this.sliderH = Math.round(this.paneH / this.contentH * this.paneH);
-      this.sliderH = this.sliderH > 20 ? this.sliderH : 20;
+      this.sliderH = this.sliderH > this.options.sliderMinHeight ? this.sliderH : this.options.sliderMinHeight;
       if (contentStyleOverflowY === SCROLL && contentStyle.overflowX !== SCROLL) {
         this.sliderH += this.scrollW;
       }
