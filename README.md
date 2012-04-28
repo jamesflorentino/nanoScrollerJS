@@ -6,13 +6,15 @@ Please visit the [downloads](https://github.com/jamesflorentino/nanoScrollerJS/d
 
 To start using, you to do three basic things:
 
-### 1. Mark Up
+### 1. Markup
+
+The following type of markup structure is needed to make the plugin work:
 
     <div id="about" class="nano">
      <div class="content"> ... content here ...  </div> 
     </div>
 
-Copy the HTML mark-up. Change `#about` into something related to your content. Though you can also remove that attribute as long as you have a parent div with an ID reference. e.g. `#parent > .nano`
+Copy the HTML markup. Change `#about` into something related to your content. Though you can also remove that attribute as long as you have a parent div with an ID reference. e.g. `#parent > .nano`. `nano` and `content` classnames can be customized via plugin options (_in that case you must rename them inside the plugin's CSS file as well_).
 
 ### 2. CSS
 
