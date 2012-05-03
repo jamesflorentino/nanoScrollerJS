@@ -39,7 +39,7 @@ There are a few options that you can change when running nanoScroller, e.g. `$("
 
 #### iOSNativeScrolling
 
-Set to true if you want to use native scrolling in iOS 5+. This will disable your custom nanoScroller scrollbar in iOS 5+ and use the native one instead. While the native iOS scrollbar usually works much better, [there could possibly be bugs](http://jquerymobile.com/test/docs/pages/touchoverflow.html) in certain situations.
+Set to true if you want to use native scrolling in iOS 5+. This will disable your custom nanoScroller scrollbar in iOS 5+ and use the native one instead. While the native iOS scrollbar usually works much better, [there could possibly be bugs](http://github.com/scottjehl/Device-Bugs/issues) in certain situations.
 
 __Default:__ false
 
