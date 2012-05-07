@@ -7,14 +7,16 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 
 <p>To start using, you to do three basic things:</p>
 
-<h3>1. Mark Up</h3>
+<h3>1. Markup</h3>
+
+<p>The following type of markup structure is needed to make the plugin work:</p>
 
 <pre><code>&lt;div id=&quot;about&quot; class=&quot;nano&quot;&gt;
  &lt;div class=&quot;content&quot;&gt; ... content here ...  &lt;/div&gt; 
 &lt;/div&gt;
 </code></pre>
 
-<p>Copy the HTML mark-up. Change <code>#about</code> into something related to your content. Though you can also remove that attribute as long as you have a parent div with an ID reference. e.g. <code>#parent &gt; .nano</code></p>
+<p>Copy the HTML markup. Change <code>#about</code> into something related to your content. Though you can also remove that attribute as long as you have a parent div with an ID reference. e.g. <code>#parent &gt; .nano</code>. <code>nano</code> and <code>content</code> classnames can be customized via plugin options (<em>in that case you must rename them inside the plugin&#39;s CSS file as well</em>).</p>
 
 <h3>2. CSS</h3>
 
