@@ -153,7 +153,7 @@
     };
 
     NanoScroll.prototype.reset = function() {
-      var content, contentStyle, contentStyleOverflowY;
+      var content, contentStyle, contentStyleOverflowY, paneBottom, paneTop;
       if (!this.el.find("." + this.options.paneClass).length) {
         this.generate();
         this.stop();
@@ -173,16 +173,19 @@
       }
       this.contentH = content.scrollHeight + this.scrollW;
       this.paneH = this.pane.outerHeight();
-      this.sliderH = Math.round(this.paneH / this.contentH * this.paneH);
+      paneTop = parseInt(this.pane.css('top'), 10);
+      paneBottom = parseInt(this.pane.css('bottom'), 10);
+      this.paneOuterH = this.paneH + paneTop + paneBottom;
+      this.sliderH = Math.round(this.paneOuterH / this.contentH * this.paneOuterH);
       this.sliderH = this.sliderH > this.options.sliderMinHeight ? this.sliderH : this.options.sliderMinHeight;
       if (contentStyleOverflowY === SCROLL && contentStyle.overflowX !== SCROLL) {
         this.sliderH += this.scrollW;
       }
-      this.scrollH = this.paneH - this.sliderH;
+      this.scrollH = this.paneOuterH - this.sliderH;
       this.slider.height(this.sliderH);
       this.diffH = content.scrollHeight - content.clientHeight;
       this.pane.show();
-      if (this.paneH >= content.scrollHeight && contentStyleOverflowY !== SCROLL) {
+      if (this.paneOuterH >= content.scrollHeight && contentStyleOverflowY !== SCROLL) {
         this.pane.hide();
       } else if (this.el.height() === content.scrollHeight && contentStyleOverflowY === SCROLL) {
         this.slider.hide();

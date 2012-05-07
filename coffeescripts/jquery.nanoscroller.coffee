@@ -155,15 +155,18 @@
         @content.css height: @content.height()
       @contentH  = content.scrollHeight + @scrollW
       @paneH     = @pane.outerHeight()
-      @sliderH   = Math.round @paneH / @contentH * @paneH
+      paneTop    = parseInt(@pane.css('top'), 10)
+      paneBottom = parseInt(@pane.css('bottom'), 10)
+      @paneOuterH = @paneH + paneTop + paneBottom
+      @sliderH   = Math.round @paneOuterH / @contentH * @paneOuterH
       @sliderH   = if @sliderH > @options.sliderMinHeight then @sliderH else @options.sliderMinHeight # set min height
       @sliderH  += @scrollW if contentStyleOverflowY is SCROLL and contentStyle.overflowX isnt SCROLL
-      @scrollH   = @paneH - @sliderH
+      @scrollH   = @paneOuterH - @sliderH
       @slider.height  @sliderH
       @diffH = content.scrollHeight - content.clientHeight
 
       @pane.show()
-      if @paneH >= content.scrollHeight and contentStyleOverflowY isnt SCROLL
+      if @paneOuterH >= content.scrollHeight and contentStyleOverflowY isnt SCROLL
         @pane.hide() 
       else if @el.height() is content.scrollHeight and contentStyleOverflowY is SCROLL
         @slider.hide()
