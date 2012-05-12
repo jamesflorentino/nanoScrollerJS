@@ -189,8 +189,21 @@ To use overthrow, link to the javascript file in your HTML document...
     </div>
 
 ### Contributors
-- @jamesflorentino
-- @kristerkari
+
+- [jamesflorentino](https://github.com/jamesflorentino)
+- [kristerkari](https://github.com/kristerkari)
+
+Other people who have contributed code:
+
+- [johanbaath](https://github.com/johanbaath) #42
+- [marcelombc](https://github.com/marcelombc) #40
+- [zacstewart](https://github.com/zacstewart) #30
+- [michael-lefebvre](https://github.com/michael-lefebvre) #22, #29
+- [AlicanC](https://github.com/AlicanC) #28
+- [camerond](https://github.com/camerond) #26
+- [jesstelford](https://github.com/jesstelford) #23
+- [lluchs](https://github.com/lluchs) #7, #8
+- [Dlom](https://github.com/Dlom)
 
 ### From the author
 I wrote this plugin out of necessity for a JavaScript project with designers and front-end developers in mind. Please also note that I will not be liable to fix your problem just in case you plan to use this commercially and some unforseen event arises. However, I will do what I can to immediately patch a solution.
