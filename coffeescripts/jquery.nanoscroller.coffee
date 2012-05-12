@@ -20,6 +20,7 @@
     sliderMinHeight: 20
     contentClass: 'content'
     iOSNativeScrolling: false
+    preventPageScrolling: false
 
   getScrollbarWidth = ->
     outer                = document.createElement 'div'
@@ -44,6 +45,15 @@
       @createEvents()
       @addEvents()
       @reset()
+
+    preventScrolling: (e, direction) ->
+      switch e.type
+        when DOMSCROLL # Gecko
+          if direction is DOWN and e.originalEvent.detail > 0 then e.preventDefault()
+          if direction is UP and e.originalEvent.detail < 0 then e.preventDefault()
+        when MOUSEWHEEL # WebKit
+          if direction is DOWN and e.originalEvent.wheelDelta < 0 then e.preventDefault()
+          if direction is UP and e.originalEvent.wheelDelta > 0 then e.preventDefault()
 
     createEvents: ->
       ## filesize reasons
@@ -80,8 +90,16 @@
           return if @isDrag is true
           content = @content[0]
           top = content.scrollTop / (content.scrollHeight - content.clientHeight) * (@paneH - @sliderH)
+
           if top + @sliderH is @paneH
+            if @options.preventPageScrolling 
+              @preventScrolling(e, DOWN)
             @el.trigger('scrollend')
+          else if top is 0
+            if @options.preventPageScrolling
+              @preventScrolling(e, UP)
+            @el.trigger('scrolltop')
+
           @slider.css top: top + 'px'
           return
 
@@ -94,10 +112,11 @@
     addEvents: ->
       events = @events
       pane = @pane
-      @win.bind RESIZE  , events[RESIZE]
-      @slider.bind MOUSEDOWN , events[DOWN]
-      pane.bind MOUSEDOWN    , events[PANEDOWN]
-      @content.bind SCROLL   , events[SCROLL]
+      @win.bind RESIZE         , events[RESIZE]
+      @slider.bind MOUSEDOWN   , events[DOWN]
+      pane.bind MOUSEDOWN      , events[PANEDOWN]
+      @content.bind MOUSEWHEEL , events[SCROLL]
+      @content.bind DOMSCROLL  , events[SCROLL]
 
       if window.addEventListener
         pane = pane[0]
@@ -108,10 +127,11 @@
     removeEvents: ->
       events = @events
       pane = @pane
-      @win.unbind RESIZE  , events[RESIZE]
-      @slider.unbind MOUSEDOWN , events[DOWN]
-      pane.unbind MOUSEDOWN    , events[PANEDOWN]
-      @content.unbind SCROLL   , events[SCROLL]
+      @win.unbind RESIZE         , events[RESIZE]
+      @slider.unbind MOUSEDOWN   , events[DOWN]
+      pane.unbind MOUSEDOWN      , events[PANEDOWN]
+      @content.unbind MOUSEWHEEL , events[SCROLL]
+      @content.unbind DOMSCROLL  , events[SCROLL]      
 
       if window.addEventListener
         pane = pane[0]
