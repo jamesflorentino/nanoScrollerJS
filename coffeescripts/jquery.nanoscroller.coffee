@@ -20,7 +20,7 @@
     sliderMinHeight: 20
     contentClass: 'content'
     iOSNativeScrolling: false
-    preventPageScrolling: true
+    preventPageScrolling: false
 
   getScrollbarWidth = ->
     outer                = document.createElement 'div'
