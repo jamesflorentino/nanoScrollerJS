@@ -69,7 +69,7 @@ __Default:__ 20
 
 #### preventPageScrolling
 
-Set to true to prevent page scrolling when top or bottom inside a div is reached.
+Set to true to prevent page scrolling when top or bottom inside the content div is reached.
 
 __Default:__ false
 
