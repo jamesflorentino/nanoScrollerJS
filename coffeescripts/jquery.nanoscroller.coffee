@@ -131,6 +131,7 @@
       @slider.unbind MOUSEDOWN   , events[DOWN]
       pane.unbind MOUSEDOWN      , events[PANEDOWN]
       @content.unbind MOUSEWHEEL , events[SCROLL]
+      @content.unbind DOMSCROLL  , events[SCROLL]      
 
       if window.addEventListener
         pane = pane[0]

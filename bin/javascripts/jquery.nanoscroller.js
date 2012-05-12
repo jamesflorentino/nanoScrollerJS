@@ -155,6 +155,7 @@
       this.slider.unbind(MOUSEDOWN, events[DOWN]);
       pane.unbind(MOUSEDOWN, events[PANEDOWN]);
       this.content.unbind(MOUSEWHEEL, events[SCROLL]);
+      this.content.unbind(DOMSCROLL, events[SCROLL]);
       if (window.addEventListener) {
         pane = pane[0];
         pane.removeEventListener(MOUSEWHEEL, events[WHEEL], false);
