@@ -20,7 +20,8 @@
     sliderClass: 'slider',
     sliderMinHeight: 20,
     contentClass: 'content',
-    iOSNativeScrolling: false
+    iOSNativeScrolling: false,
+    preventPageScrolling: false
   };
   getScrollbarWidth = function() {
     var outer, outerStyle, scrollbarWidth;
@@ -50,6 +51,26 @@
       this.addEvents();
       this.reset();
     }
+
+    NanoScroll.prototype.preventScrolling = function(e, direction) {
+      switch (e.type) {
+        case DOMSCROLL:
+          if (direction === DOWN && e.originalEvent.detail > 0) {
+            e.preventDefault();
+          }
+          if (direction === UP && e.originalEvent.detail < 0) {
+            return e.preventDefault();
+          }
+          break;
+        case MOUSEWHEEL:
+          if (direction === DOWN && e.originalEvent.wheelDelta < 0) {
+            e.preventDefault();
+          }
+          if (direction === UP && e.originalEvent.wheelDelta > 0) {
+            return e.preventDefault();
+          }
+      }
+    };
 
     NanoScroll.prototype.createEvents = function() {
       var _this = this;
@@ -88,7 +109,15 @@
           content = _this.content[0];
           top = content.scrollTop / (content.scrollHeight - content.clientHeight) * (_this.paneH - _this.sliderH);
           if (top + _this.sliderH === _this.paneH) {
+            if (_this.options.preventPageScrolling) {
+              _this.preventScrolling(e, DOWN);
+            }
             _this.el.trigger('scrollend');
+          } else if (top === 0) {
+            if (_this.options.preventPageScrolling) {
+              _this.preventScrolling(e, UP);
+            }
+            _this.el.trigger('scrolltop');
           }
           _this.slider.css({
             top: top + 'px'
@@ -109,7 +138,8 @@
       this.win.bind(RESIZE, events[RESIZE]);
       this.slider.bind(MOUSEDOWN, events[DOWN]);
       pane.bind(MOUSEDOWN, events[PANEDOWN]);
-      this.content.bind(SCROLL, events[SCROLL]);
+      this.content.bind(MOUSEWHEEL, events[SCROLL]);
+      this.content.bind(DOMSCROLL, events[SCROLL]);
       if (window.addEventListener) {
         pane = pane[0];
         pane.addEventListener(MOUSEWHEEL, events[WHEEL], false);
@@ -124,7 +154,8 @@
       this.win.unbind(RESIZE, events[RESIZE]);
       this.slider.unbind(MOUSEDOWN, events[DOWN]);
       pane.unbind(MOUSEDOWN, events[PANEDOWN]);
-      this.content.unbind(SCROLL, events[SCROLL]);
+      this.content.unbind(MOUSEWHEEL, events[SCROLL]);
+      this.content.unbind(DOMSCROLL, events[SCROLL]);
       if (window.addEventListener) {
         pane = pane[0];
         pane.removeEventListener(MOUSEWHEEL, events[WHEEL], false);
