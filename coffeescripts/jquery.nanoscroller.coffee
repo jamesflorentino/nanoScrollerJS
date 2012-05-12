@@ -20,6 +20,7 @@
     sliderMinHeight: 20
     contentClass: 'content'
     iOSNativeScrolling: false
+    preventPageScrolling: true
 
   getScrollbarWidth = ->
     outer                = document.createElement 'div'
@@ -80,9 +81,16 @@
           return if @isDrag is true
           content = @content[0]
           top = content.scrollTop / (content.scrollHeight - content.clientHeight) * (@paneH - @sliderH)
+
           if top + @sliderH is @paneH
+            if @options.preventPageScrolling and e.originalEvent.wheelDelta < 0 then e.preventDefault()
             @el.trigger('scrollend')
+          else if top is 0
+            if @options.preventPageScrolling and e.originalEvent.wheelDelta > 0 then e.preventDefault()
+            @el.trigger('scrolltop')
+
           @slider.css top: top + 'px'
+          
           return
 
         wheel: (e) =>
@@ -94,10 +102,10 @@
     addEvents: ->
       events = @events
       pane = @pane
-      @win.bind RESIZE  , events[RESIZE]
-      @slider.bind MOUSEDOWN , events[DOWN]
-      pane.bind MOUSEDOWN    , events[PANEDOWN]
-      @content.bind SCROLL   , events[SCROLL]
+      @win.bind RESIZE         , events[RESIZE]
+      @slider.bind MOUSEDOWN   , events[DOWN]
+      pane.bind MOUSEDOWN      , events[PANEDOWN]
+      @content.bind MOUSEWHEEL , events[SCROLL]
 
       if window.addEventListener
         pane = pane[0]
