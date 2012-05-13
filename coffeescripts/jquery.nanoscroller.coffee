@@ -49,11 +49,12 @@
     preventScrolling: (e, direction) ->
       switch e.type
         when DOMSCROLL # Gecko
-          if direction is DOWN and e.originalEvent.detail > 0 then e.preventDefault()
-          if direction is UP and e.originalEvent.detail < 0 then e.preventDefault()
-        when MOUSEWHEEL # WebKit
-          if direction is DOWN and e.originalEvent.wheelDelta < 0 then e.preventDefault()
-          if direction is UP and e.originalEvent.wheelDelta > 0 then e.preventDefault()
+          if direction is DOWN and e.originalEvent.detail > 0 or direction is UP and e.originalEvent.detail < 0 
+            e.preventDefault()
+        when MOUSEWHEEL # WebKit, Trident and Presto
+          if direction is DOWN and e.originalEvent.wheelDelta < 0 or direction is UP and e.originalEvent.wheelDelta > 0
+            e.preventDefault()
+      return
 
     createEvents: ->
       ## filesize reasons
@@ -112,31 +113,27 @@
     addEvents: ->
       events = @events
       pane = @pane
+      content = @content
       @win.bind RESIZE         , events[RESIZE]
       @slider.bind MOUSEDOWN   , events[DOWN]
       pane.bind MOUSEDOWN      , events[PANEDOWN]
-      @content.bind MOUSEWHEEL , events[SCROLL]
-      @content.bind DOMSCROLL  , events[SCROLL]
-
-      if window.addEventListener
-        pane = pane[0]
-        pane.addEventListener MOUSEWHEEL , events[WHEEL] , false
-        pane.addEventListener DOMSCROLL  , events[WHEEL] , false
+      pane.bind MOUSEWHEEL     , events[WHEEL]
+      pane.bind DOMSCROLL      , events[WHEEL]
+      content.bind MOUSEWHEEL  , events[SCROLL]
+      content.bind DOMSCROLL   , events[SCROLL]
       return
 
     removeEvents: ->
       events = @events
       pane = @pane
+      content = @content
       @win.unbind RESIZE         , events[RESIZE]
       @slider.unbind MOUSEDOWN   , events[DOWN]
       pane.unbind MOUSEDOWN      , events[PANEDOWN]
-      @content.unbind MOUSEWHEEL , events[SCROLL]
-      @content.unbind DOMSCROLL  , events[SCROLL]      
-
-      if window.addEventListener
-        pane = pane[0]
-        pane.removeEventListener MOUSEWHEEL , events[WHEEL] , false
-        pane.removeEventListener DOMSCROLL  , events[WHEEL] , false
+      pane.unbind MOUSEWHEEL     , events[WHEEL]
+      pane.unbind DOMSCROLL      , events[WHEEL]
+      content.unbind MOUSEWHEEL  , events[SCROLL]
+      content.unbind DOMSCROLL   , events[SCROLL]
       return
 
     generate: ->

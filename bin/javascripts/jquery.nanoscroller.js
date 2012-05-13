@@ -55,19 +55,13 @@
     NanoScroll.prototype.preventScrolling = function(e, direction) {
       switch (e.type) {
         case DOMSCROLL:
-          if (direction === DOWN && e.originalEvent.detail > 0) {
+          if (direction === DOWN && e.originalEvent.detail > 0 || direction === UP && e.originalEvent.detail < 0) {
             e.preventDefault();
-          }
-          if (direction === UP && e.originalEvent.detail < 0) {
-            return e.preventDefault();
           }
           break;
         case MOUSEWHEEL:
-          if (direction === DOWN && e.originalEvent.wheelDelta < 0) {
+          if (direction === DOWN && e.originalEvent.wheelDelta < 0 || direction === UP && e.originalEvent.wheelDelta > 0) {
             e.preventDefault();
-          }
-          if (direction === UP && e.originalEvent.wheelDelta > 0) {
-            return e.preventDefault();
           }
       }
     };
@@ -132,35 +126,31 @@
     };
 
     NanoScroll.prototype.addEvents = function() {
-      var events, pane;
+      var content, events, pane;
       events = this.events;
       pane = this.pane;
+      content = this.content;
       this.win.bind(RESIZE, events[RESIZE]);
       this.slider.bind(MOUSEDOWN, events[DOWN]);
       pane.bind(MOUSEDOWN, events[PANEDOWN]);
-      this.content.bind(MOUSEWHEEL, events[SCROLL]);
-      this.content.bind(DOMSCROLL, events[SCROLL]);
-      if (window.addEventListener) {
-        pane = pane[0];
-        pane.addEventListener(MOUSEWHEEL, events[WHEEL], false);
-        pane.addEventListener(DOMSCROLL, events[WHEEL], false);
-      }
+      pane.bind(MOUSEWHEEL, events[WHEEL]);
+      pane.bind(DOMSCROLL, events[WHEEL]);
+      content.bind(MOUSEWHEEL, events[SCROLL]);
+      content.bind(DOMSCROLL, events[SCROLL]);
     };
 
     NanoScroll.prototype.removeEvents = function() {
-      var events, pane;
+      var content, events, pane;
       events = this.events;
       pane = this.pane;
+      content = this.content;
       this.win.unbind(RESIZE, events[RESIZE]);
       this.slider.unbind(MOUSEDOWN, events[DOWN]);
       pane.unbind(MOUSEDOWN, events[PANEDOWN]);
-      this.content.unbind(MOUSEWHEEL, events[SCROLL]);
-      this.content.unbind(DOMSCROLL, events[SCROLL]);
-      if (window.addEventListener) {
-        pane = pane[0];
-        pane.removeEventListener(MOUSEWHEEL, events[WHEEL], false);
-        pane.removeEventListener(DOMSCROLL, events[WHEEL], false);
-      }
+      pane.unbind(MOUSEWHEEL, events[WHEEL]);
+      pane.unbind(DOMSCROLL, events[WHEEL]);
+      content.unbind(MOUSEWHEEL, events[SCROLL]);
+      content.unbind(DOMSCROLL, events[SCROLL]);
     };
 
     NanoScroll.prototype.generate = function() {
