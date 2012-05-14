@@ -13,6 +13,7 @@
   DOMSCROLL  = 'DOMMouseScroll'
   DOWN       = 'down'
   WHEEL      = 'wheel'
+  TOUCHMOVE  = 'touchmove'
 
   defaults =
     paneClass: 'pane'
@@ -121,6 +122,7 @@
       pane.bind DOMSCROLL      , events[WHEEL]
       content.bind MOUSEWHEEL  , events[SCROLL]
       content.bind DOMSCROLL   , events[SCROLL]
+      content.bind TOUCHMOVE   , events[SCROLL]
       return
 
     removeEvents: ->
@@ -134,6 +136,7 @@
       pane.unbind DOMSCROLL      , events[WHEEL]
       content.unbind MOUSEWHEEL  , events[SCROLL]
       content.unbind DOMSCROLL   , events[SCROLL]
+      content.unbind TOUCHMOVE   , events[SCROLL]
       return
 
     generate: ->
