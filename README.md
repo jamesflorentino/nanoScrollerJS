@@ -73,6 +73,12 @@ Set to true to prevent page scrolling when top or bottom inside the content div 
 
 __Default:__ false
 
+#### disableResize
+
+Set to true to disable the resize from nanoscroller. Useful if you want total control of the resize event. If you set this option to true remember to call the reset method so that the scroll don't have strange behavior.
+
+__Default:__ false
+
 ### Additional Methods
 
 
