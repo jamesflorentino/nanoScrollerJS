@@ -23,6 +23,7 @@
     contentClass: 'content'
     iOSNativeScrolling: false
     preventPageScrolling: false
+    disableResize: false
 
   getScrollbarWidth = ->
     outer                = document.createElement 'div'
@@ -116,7 +117,8 @@
       events = @events
       pane = @pane
       content = @content
-      @win.bind RESIZE         , events[RESIZE]
+      if !@options.disableResize
+        @win.bind RESIZE         , events[RESIZE]
       @slider.bind MOUSEDOWN   , events[DOWN]
       pane.bind MOUSEDOWN      , events[PANEDOWN]
       pane.bind MOUSEWHEEL     , events[WHEEL]
@@ -130,7 +132,8 @@
       events = @events
       pane = @pane
       content = @content
-      @win.unbind RESIZE         , events[RESIZE]
+      if !@options.disableResize
+        @win.unbind RESIZE         , events[RESIZE]
       @slider.unbind MOUSEDOWN   , events[DOWN]
       pane.unbind MOUSEDOWN      , events[PANEDOWN]
       pane.unbind MOUSEWHEEL     , events[WHEEL]
