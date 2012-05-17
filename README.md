@@ -202,7 +202,7 @@ To use overthrow, link to the javascript file in your HTML document...
 Other people who have contributed code:
 
 - [johanbaath](https://github.com/johanbaath) #42
-- [marcelombc](https://github.com/marcelombc) #40
+- [marcelombc](https://github.com/marcelombc) #40, #46
 - [zacstewart](https://github.com/zacstewart) #30
 - [michael-lefebvre](https://github.com/michael-lefebvre) #22, #29
 - [AlicanC](https://github.com/AlicanC) #28
