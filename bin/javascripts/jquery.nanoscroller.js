@@ -242,12 +242,12 @@
       if (scrollTop < diffH && scrollTop !== 0) {
         return;
       }
-      this.content.scrollTop(this.contentH - this.content.height() - offsetY);
+      this.content.scrollTop(this.contentH - this.content.height() - offsetY).trigger(MOUSEWHEEL);
     };
 
     NanoScroll.prototype.scrollTop = function(offsetY) {
       this.reset();
-      this.content.scrollTop(+offsetY);
+      this.content.scrollTop(+offsetY).trigger(MOUSEWHEEL);
     };
 
     NanoScroll.prototype.scrollTo = function(node) {

@@ -212,12 +212,12 @@
       scrollTop = @content[0].scrollTop
       @reset()
       return if scrollTop < diffH and scrollTop isnt 0
-      @content.scrollTop @contentH - @content.height() - offsetY
+      @content.scrollTop(@contentH - @content.height() - offsetY).trigger(MOUSEWHEEL) # Update scrollbar position by triggering one of the scroll events
       return
 
     scrollTop: (offsetY) ->
       @reset()
-      @content.scrollTop +offsetY
+      @content.scrollTop(+offsetY).trigger(MOUSEWHEEL) # Update scrollbar position by triggering one of the scroll events
       return
 
     scrollTo: (node) ->
