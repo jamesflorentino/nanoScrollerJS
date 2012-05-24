@@ -75,7 +75,6 @@
         down: function(e) {
           _this.isBeingDragged = true;
           _this.offsetY = e.clientY - _this.slider.offset().top;
-          console.log(_this.offsetY);
           _this.pane.addClass('active');
           _this.doc.on(MOUSEMOVE, _this.events[DRAG]).on(MOUSEUP, _this.events[UP]);
           return false;

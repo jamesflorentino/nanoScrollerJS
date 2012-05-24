@@ -68,7 +68,6 @@
         down: (e) =>
           @isBeingDragged  = true
           @offsetY = e.clientY - @slider.offset().top
-          console.log @offsetY
           @pane.addClass 'active'
           @doc.on(MOUSEMOVE, @events[DRAG]).on(MOUSEUP, @events[UP])
           false
