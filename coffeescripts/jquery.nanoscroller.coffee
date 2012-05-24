@@ -1,7 +1,6 @@
 (($, window, document) ->
   "use strict"
 
-
   defaults =
     paneClass: 'pane'
     sliderClass: 'slider'
@@ -69,7 +68,7 @@
           @isBeingDragged  = true
           @offsetY = e.clientY - @slider.offset().top
           @pane.addClass 'active'
-          @doc.on(MOUSEMOVE, @events[DRAG]).on(MOUSEUP, @events[UP])
+          @doc.bind(MOUSEMOVE, @events[DRAG]).bind(MOUSEUP, @events[UP])
           false
 
         drag: (e) =>
@@ -80,7 +79,7 @@
         up: (e) =>
           @isBeingDragged = false
           @pane.removeClass 'active'
-          @doc.off(MOUSEMOVE, @events[DRAG]).off(MOUSEUP, @events[UP])
+          @doc.unbind(MOUSEMOVE, @events[DRAG]).unbind(MOUSEUP, @events[UP])
           false
 
         resize: (e) =>
@@ -124,26 +123,26 @@
 
     addEvents: ->
       events = @events
-      @win.on RESIZE, events[RESIZE] if not @options.disableResize
-      @slider.on MOUSEDOWN, events[DOWN]
-      @pane.on(MOUSEDOWN, events[PANEDOWN])
-        .on(MOUSEWHEEL, events[WHEEL])
-        .on(DOMSCROLL, events[WHEEL])
-      @content.on(MOUSEWHEEL, events[SCROLL])
-        .on(DOMSCROLL, events[SCROLL])
-        .on(TOUCHMOVE, events[SCROLL])
+      @win.bind RESIZE, events[RESIZE] if not @options.disableResize
+      @slider.bind MOUSEDOWN, events[DOWN]
+      @pane.bind(MOUSEDOWN, events[PANEDOWN])
+        .bind(MOUSEWHEEL, events[WHEEL])
+        .bind(DOMSCROLL, events[WHEEL])
+      @content.bind(MOUSEWHEEL, events[SCROLL])
+        .bind(DOMSCROLL, events[SCROLL])
+        .bind(TOUCHMOVE, events[SCROLL])
       return
 
     removeEvents: ->
       events = @events
-      @win.off(RESIZE, events[RESIZE]) if not @options.disableResize
-      @slider.off MOUSEDOWN, events[DOWN]
-      @pane.off(MOUSEDOWN, events[PANEDOWN])
-        .off(MOUSEWHEEL, events[WHEEL])
-        .off(DOMSCROLL, events[WHEEL])
-      @content.off(MOUSEWHEEL, events[SCROLL])
-        .off(DOMSCROLL, events[SCROLL])
-        .off(TOUCHMOVE, events[SCROLL])
+      @win.unbind(RESIZE, events[RESIZE]) if not @options.disableResize
+      @slider.unbind MOUSEDOWN, events[DOWN]
+      @pane.unbind(MOUSEDOWN, events[PANEDOWN])
+        .unbind(MOUSEWHEEL, events[WHEEL])
+        .unbind(DOMSCROLL, events[WHEEL])
+      @content.unbind(MOUSEWHEEL, events[SCROLL])
+        .unbind(DOMSCROLL, events[SCROLL])
+        .unbind(TOUCHMOVE, events[SCROLL])
       return
 
     generate: ->
@@ -151,7 +150,7 @@
       # http://msdn.microsoft.com/en-us/library/windows/desktop/bb787527(v=vs.85).aspx#parts_of_scroll_bar
       options = @options
       {paneClass, sliderClass, contentClass} = options
-      @el.append '<div class="' + paneClass + '"><div class="' + sliderClass + '" /></div>'
+      @el.append """<div class="#{paneClass}"><div class="#{sliderClass}" /></div>"""
       @content = $ @el.children(".#{contentClass}")[0]
       # slider is the name for the  scrollbox or thumb of the scrollbar gadget
       @slider  = @el.find ".#{sliderClass}"

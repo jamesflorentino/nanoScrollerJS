@@ -76,7 +76,7 @@
           _this.isBeingDragged = true;
           _this.offsetY = e.clientY - _this.slider.offset().top;
           _this.pane.addClass('active');
-          _this.doc.on(MOUSEMOVE, _this.events[DRAG]).on(MOUSEUP, _this.events[UP]);
+          _this.doc.bind(MOUSEMOVE, _this.events[DRAG]).bind(MOUSEUP, _this.events[UP]);
           return false;
         },
         drag: function(e) {
@@ -87,7 +87,7 @@
         up: function(e) {
           _this.isBeingDragged = false;
           _this.pane.removeClass('active');
-          _this.doc.off(MOUSEMOVE, _this.events[DRAG]).off(MOUSEUP, _this.events[UP]);
+          _this.doc.unbind(MOUSEMOVE, _this.events[DRAG]).unbind(MOUSEUP, _this.events[UP]);
           return false;
         },
         resize: function(e) {
@@ -130,26 +130,26 @@
     NanoScroll.prototype.addEvents = function() {
       var events;
       events = this.events;
-      if (!this.options.disableResize) this.win.on(RESIZE, events[RESIZE]);
-      this.slider.on(MOUSEDOWN, events[DOWN]);
-      this.pane.on(MOUSEDOWN, events[PANEDOWN]).on(MOUSEWHEEL, events[WHEEL]).on(DOMSCROLL, events[WHEEL]);
-      this.content.on(MOUSEWHEEL, events[SCROLL]).on(DOMSCROLL, events[SCROLL]).on(TOUCHMOVE, events[SCROLL]);
+      if (!this.options.disableResize) this.win.bind(RESIZE, events[RESIZE]);
+      this.slider.bind(MOUSEDOWN, events[DOWN]);
+      this.pane.bind(MOUSEDOWN, events[PANEDOWN]).bind(MOUSEWHEEL, events[WHEEL]).bind(DOMSCROLL, events[WHEEL]);
+      this.content.bind(MOUSEWHEEL, events[SCROLL]).bind(DOMSCROLL, events[SCROLL]).bind(TOUCHMOVE, events[SCROLL]);
     };
 
     NanoScroll.prototype.removeEvents = function() {
       var events;
       events = this.events;
-      if (!this.options.disableResize) this.win.off(RESIZE, events[RESIZE]);
-      this.slider.off(MOUSEDOWN, events[DOWN]);
-      this.pane.off(MOUSEDOWN, events[PANEDOWN]).off(MOUSEWHEEL, events[WHEEL]).off(DOMSCROLL, events[WHEEL]);
-      this.content.off(MOUSEWHEEL, events[SCROLL]).off(DOMSCROLL, events[SCROLL]).off(TOUCHMOVE, events[SCROLL]);
+      if (!this.options.disableResize) this.win.unbind(RESIZE, events[RESIZE]);
+      this.slider.unbind(MOUSEDOWN, events[DOWN]);
+      this.pane.unbind(MOUSEDOWN, events[PANEDOWN]).unbind(MOUSEWHEEL, events[WHEEL]).unbind(DOMSCROLL, events[WHEEL]);
+      this.content.unbind(MOUSEWHEEL, events[SCROLL]).unbind(DOMSCROLL, events[SCROLL]).unbind(TOUCHMOVE, events[SCROLL]);
     };
 
     NanoScroll.prototype.generate = function() {
       var contentClass, cssRule, options, paneClass, sliderClass;
       options = this.options;
       paneClass = options.paneClass, sliderClass = options.sliderClass, contentClass = options.contentClass;
-      this.el.append('<div class="' + paneClass + '"><div class="' + sliderClass + '" /></div>');
+      this.el.append("<div class=\"" + paneClass + "\"><div class=\"" + sliderClass + "\" /></div>");
       this.content = $(this.el.children("." + contentClass)[0]);
       this.slider = this.el.find("." + sliderClass);
       this.pane = this.el.find("." + paneClass);
