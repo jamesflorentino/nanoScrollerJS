@@ -101,7 +101,7 @@
         },
         scroll: function(e) {
           var maxScrollTop, maxSliderTop, scrollTop, sliderTop;
-          if (_this.isBeingDragged === true) return;
+          if (_this.isBeingDragged) return;
           maxScrollTop = _this.content[0].scrollHeight - _this.content[0].clientHeight;
           scrollTop = _this.content[0].scrollTop;
           maxSliderTop = _this.paneHeight - _this.sliderHeight;
@@ -174,11 +174,11 @@
     NanoScroll.prototype.reset = function() {
       var content, contentHeight, contentStyle, contentStyleOverflowY, maxSliderTop, paneBottom, paneHeight, paneOuterHeight, paneTop, sliderHeight, sliderMinHeight;
       if (!this.elementsExist()) this.generate().stop();
-      if (this.stopped === true) this.restore();
+      if (this.stopped) this.restore();
       content = this.content[0];
       contentStyle = content.style;
       contentStyleOverflowY = contentStyle.overflowY;
-      if (BROWSER_IS_IE7 === true) {
+      if (BROWSER_IS_IE7) {
         this.content.css({
           height: this.content.height()
         });

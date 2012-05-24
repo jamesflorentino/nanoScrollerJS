@@ -95,7 +95,7 @@
         scroll: (e) =>
           # don't operate if there is a dragging mechanism going on
           # invoked when a user presses and moves the slider or pane
-          return if @isBeingDragged is true
+          return if @isBeingDragged
           # formula/ratio
           # scrollTop / maxScrollTop = sliderTop / maxSliderTop
           maxScrollTop = @content[0].scrollHeight - @content[0].clientHeight
@@ -171,13 +171,13 @@
 
     reset: ->
       @generate().stop() if not @elementsExist()
-      @restore() if @stopped is true
+      @restore() if @stopped
       content = @content[0]
       contentStyle = content.style
       contentStyleOverflowY = contentStyle.overflowY
       # try to detect IE7 and IE7 compatibility mode.
       # this sniffing is done to fix a IE7 related bug.
-      @content.css height: @content.height() if BROWSER_IS_IE7 is true
+      @content.css height: @content.height() if BROWSER_IS_IE7
       # set the scrollbar UI's height
       # the target content
       contentHeight = content.scrollHeight + BROWSER_SCROLLBAR_WIDTH
