@@ -1,6 +1,17 @@
 (($, window, document) ->
   "use strict"
 
+
+  defaults =
+    paneClass: 'pane'
+    sliderClass: 'slider'
+    sliderMinHeight: 20
+    contentClass: 'content'
+    iOSNativeScrolling: false
+    preventPageScrolling: false
+    disableResize: false
+
+  # constants
   SCROLLBAR  = 'scrollbar'
   SCROLL     = 'scroll'
   MOUSEDOWN  = 'mousedown'
@@ -15,32 +26,25 @@
   DOWN       = 'down'
   WHEEL      = 'wheel'
   TOUCHMOVE  = 'touchmove'
+  BROWSER_IS_IE7 = window.navigator.appName is 'Microsoft Internet Explorer' and (/msie 7./i).test(window.navigator.appVersion) and window.ActiveXObject
+  BROWSER_SCROLLBAR_WIDTH = null
 
-  defaults =
-    paneClass: 'pane'
-    sliderClass: 'slider'
-    sliderMinHeight: 20
-    contentClass: 'content'
-    iOSNativeScrolling: false
-    preventPageScrolling: false
-    disableResize: false
-
-  getScrollbarWidth = ->
-    outer                = document.createElement 'div'
+  getBrowserScrollbarWidth = ->
+    outer = document.createElement 'div'
     outerStyle = outer.style
     outerStyle.position = 'absolute'
-    outerStyle.width    = '100px'
-    outerStyle.height   = '100px'
+    outerStyle.width = '100px'
+    outerStyle.height = '100px'
     outerStyle.overflow = SCROLL
-    outerStyle.top      = '-9999px'
+    outerStyle.top = '-9999px'
     document.body.appendChild outer
     scrollbarWidth = outer.offsetWidth - outer.clientWidth
     document.body.removeChild outer
     scrollbarWidth
 
   class NanoScroll
-
     constructor: (el, @options) ->
+      BROWSER_SCROLLBAR_WIDTH or= getBrowserScrollbarWidth()
       @el = $(el)
       @doc = $(document)
       @win = $(window)
@@ -60,13 +64,13 @@
       return
 
     createEvents: ->
-      ## filesize reasons
       @events =
         down: (e) =>
-          @isDrag  = true
+          @isBeingDragged  = true
           @offsetY = e.clientY - @slider.offset().top
+          console.log @offsetY
           @pane.addClass 'active'
-          @doc.bind(MOUSEMOVE, @events[DRAG]).bind MOUSEUP, @events[UP]
+          @doc.on(MOUSEMOVE, @events[DRAG]).on(MOUSEUP, @events[UP])
           false
 
         drag: (e) =>
@@ -75,9 +79,9 @@
           false
 
         up: (e) =>
-          @isDrag = false
+          @isBeingDragged = false
           @pane.removeClass 'active'
-          @doc.unbind(MOUSEMOVE, @events[DRAG]).unbind MOUSEUP, @events[UP]
+          @doc.off(MOUSEMOVE, @events[DRAG]).off(MOUSEUP, @events[UP])
           false
 
         resize: (e) =>
@@ -85,158 +89,161 @@
           return
 
         panedown: (e) =>
-          @sliderY = e.clientY - @el.offset().top - @sliderH * 0.5
+          @sliderY = e.offsetY - (@sliderHeight * 0.5)
           @scroll()
           @events.down e
-          return
+          false
 
         scroll: (e) =>
-          return if @isDrag is true
-          content = @content[0]
-          top = content.scrollTop / (content.scrollHeight - content.clientHeight) * (@paneH - @sliderH)
-
-          if top + @sliderH is @paneH
-            if @options.preventPageScrolling 
-              @preventScrolling(e, DOWN)
+          # don't operate if there is a dragging mechanism going on
+          # invoked when a user presses and moves the slider or pane
+          return if @isBeingDragged is true
+          # formula/ratio
+          # scrollTop / maxScrollTop = sliderTop / maxSliderTop
+          maxScrollTop = @content[0].scrollHeight - @content[0].clientHeight
+          scrollTop = @content[0].scrollTop
+          maxSliderTop = @paneHeight - @sliderHeight
+          #sliderTop = scrollTop / maxScrollTop * maxSliderTop
+          sliderTop = scrollTop * maxSliderTop / maxScrollTop
+          # update the slider position
+          @slider.css top: sliderTop
+          # if it reaches the maxmimum and minimum scrolling point
+          # we dispatch an event
+          if scrollTop >= maxScrollTop
+            @preventScrolling(e, DOWN) if @options.preventPageScrolling
             @el.trigger('scrollend')
-          else if top is 0
-            if @options.preventPageScrolling
-              @preventScrolling(e, UP)
+          else if scrollTop is 0
+            @preventScrolling(e, UP) if @options.preventPageScrolling
             @el.trigger('scrolltop')
-
-          @slider.css top: top + 'px'
           return
 
         wheel: (e) =>
-          @sliderY +=  -e.wheelDeltaY || -e.delta
+          @sliderY +=  -e.wheelDeltaY or -e.delta
           @scroll()
-          return false
+          false
       return
 
     addEvents: ->
       events = @events
-      pane = @pane
-      content = @content
-      if !@options.disableResize
-        @win.bind RESIZE         , events[RESIZE]
-      @slider.bind MOUSEDOWN   , events[DOWN]
-      pane.bind MOUSEDOWN      , events[PANEDOWN]
-      pane.bind MOUSEWHEEL     , events[WHEEL]
-      pane.bind DOMSCROLL      , events[WHEEL]
-      content.bind MOUSEWHEEL  , events[SCROLL]
-      content.bind DOMSCROLL   , events[SCROLL]
-      content.bind TOUCHMOVE   , events[SCROLL]
+      @win.on RESIZE, events[RESIZE] if not @options.disableResize
+      @slider.on MOUSEDOWN, events[DOWN]
+      @pane.on(MOUSEDOWN, events[PANEDOWN])
+        .on(MOUSEWHEEL, events[WHEEL])
+        .on(DOMSCROLL, events[WHEEL])
+      @content.on(MOUSEWHEEL, events[SCROLL])
+        .on(DOMSCROLL, events[SCROLL])
+        .on(TOUCHMOVE, events[SCROLL])
       return
 
     removeEvents: ->
       events = @events
-      pane = @pane
-      content = @content
-      if !@options.disableResize
-        @win.unbind RESIZE         , events[RESIZE]
-      @slider.unbind MOUSEDOWN   , events[DOWN]
-      pane.unbind MOUSEDOWN      , events[PANEDOWN]
-      pane.unbind MOUSEWHEEL     , events[WHEEL]
-      pane.unbind DOMSCROLL      , events[WHEEL]
-      content.unbind MOUSEWHEEL  , events[SCROLL]
-      content.unbind DOMSCROLL   , events[SCROLL]
-      content.unbind TOUCHMOVE   , events[SCROLL]
+      @win.off(RESIZE, events[RESIZE]) if not @options.disableResize
+      @slider.off MOUSEDOWN, events[DOWN]
+      @pane.off(MOUSEDOWN, events[PANEDOWN])
+        .off(MOUSEWHEEL, events[WHEEL])
+        .off(DOMSCROLL, events[WHEEL])
+      @content.off(MOUSEWHEEL, events[SCROLL])
+        .off(DOMSCROLL, events[SCROLL])
+        .off(TOUCHMOVE, events[SCROLL])
       return
 
     generate: ->
+      # For reference:
+      # http://msdn.microsoft.com/en-us/library/windows/desktop/bb787527(v=vs.85).aspx#parts_of_scroll_bar
       options = @options
-      @el.append '<div class="' + options.paneClass + '"><div class="' + options.sliderClass + '" /></div>'
-      @content = $ @el.children(".#{options.contentClass}")[0]
-      @slider  = @el.find ".#{options.sliderClass}"
-      @pane    = @el.find ".#{options.paneClass}"
-      @scrollW = getScrollbarWidth()
+      {paneClass, sliderClass, contentClass} = options
+      @el.append '<div class="' + paneClass + '"><div class="' + sliderClass + '" /></div>'
+      @content = $ @el.children(".#{contentClass}")[0]
+      # slider is the name for the  scrollbox or thumb of the scrollbar gadget
+      @slider  = @el.find ".#{sliderClass}"
+      # pane is the name for the actual scrollbar.
+      @pane    = @el.find ".#{paneClass}"
+      cssRule = right: -BROWSER_SCROLLBAR_WIDTH
+      cssRule.WebkitOverflowScrolling = 'touch' if options.iOSNativeScrolling
+      @content.css cssRule
+      this
 
-      if options.iOSNativeScrolling
-        @content.css
-          right  : -@scrollW + 'px'
-          WebkitOverflowScrolling: 'touch'
-      else
-        @content.css
-          right  : -@scrollW + 'px'
+    elementsExist: ->
+      @el.find(".#{@options.paneClass}").length
 
-      return
+    restore: ->
+      @stopped = false
+      @pane.show()
+      @addEvents()
 
     reset: ->
-      if not @el.find(".#{@options.paneClass}").length
-        @generate()
-        @stop()
-      if @isDead is true
-        @isDead = false
-        @pane.show()
-        @addEvents()
-
+      @generate().stop() if not @elementsExist()
+      @restore() if @stopped is true
       content = @content[0]
       contentStyle = content.style
       contentStyleOverflowY = contentStyle.overflowY
       # try to detect IE7 and IE7 compatibility mode.
       # this sniffing is done to fix a IE7 related bug.
-      if window.navigator.appName is 'Microsoft Internet Explorer' and (/msie 7./i).test(window.navigator.appVersion) and window.ActiveXObject
-        @content.css height: @content.height()
-      @contentH  = content.scrollHeight + @scrollW
-      @paneH     = @pane.outerHeight()
-      paneTop    = parseInt(@pane.css('top'), 10)
+      @content.css height: @content.height() if BROWSER_IS_IE7 is true
+      # set the scrollbar UI's height
+      # the target content
+      contentHeight = content.scrollHeight + BROWSER_SCROLLBAR_WIDTH
+      # set the pane's height.
+      paneHeight = @pane.outerHeight()
+      paneTop = parseInt(@pane.css('top'), 10)
       paneBottom = parseInt(@pane.css('bottom'), 10)
-      @paneOuterH = @paneH + paneTop + paneBottom
-      @sliderH   = Math.round @paneOuterH / @contentH * @paneOuterH
-      @sliderH   = if @sliderH > @options.sliderMinHeight then @sliderH else @options.sliderMinHeight # set min height
-      @sliderH  += @scrollW if contentStyleOverflowY is SCROLL and contentStyle.overflowX isnt SCROLL
-      @scrollH   = @paneOuterH - @sliderH
-      @slider.height  @sliderH
-      @diffH = content.scrollHeight - content.clientHeight
-
+      paneOuterHeight = paneHeight + paneTop + paneBottom
+      # set the slider's height
+      sliderMinHeight = @options.sliderMinHeight
+      sliderHeight = Math.round paneOuterHeight / contentHeight * paneOuterHeight
+      sliderHeight = if sliderHeight > @options.sliderMinHeight then sliderHeight else @options.sliderMinHeight # set min height
+      sliderHeight += BROWSER_SCROLLBAR_WIDTH if contentStyleOverflowY is SCROLL and contentStyle.overflowX isnt SCROLL
+      # the maximum top value for the slider
+      maxSliderTop = paneOuterHeight - sliderHeight
+      # set into properties for further use
+      @contentHeight = contentHeight
+      @paneHeight = paneHeight
+      @paneOuterHeight = paneOuterHeight
+      @sliderHeight = sliderHeight
+      @maxSliderTop = maxSliderTop
+      # set the values to the gadget
+      @slider.height sliderHeight
       @pane.show()
-      if @paneOuterH >= content.scrollHeight and contentStyleOverflowY isnt SCROLL
-        @pane.hide() 
+      if @paneOuterHeight >= content.scrollHeight and contentStyleOverflowY isnt SCROLL
+        @pane.hide()
       else if @el.height() is content.scrollHeight and contentStyleOverflowY is SCROLL
         @slider.hide()
       else
-        @slider.show() 
-      return
+        @slider.show()
+      this
 
     scroll: ->
-      @sliderY    = Math.max 0, @sliderY
-      @sliderY    = Math.min @scrollH, @sliderY
-      scrollValue = (@paneH - @contentH + @scrollW) * @sliderY / @scrollH
-      # scrollvalue = (paneh - ch + sw) * sy / sw
-      @content.scrollTop -scrollValue
+      @sliderY = Math.max 0, @sliderY
+      @sliderY = Math.min @maxSliderTop, @sliderY
+      @content.scrollTop (@paneHeight - @contentHeight + BROWSER_SCROLLBAR_WIDTH) * @sliderY / @maxSliderTop * -1
       @slider.css top: @sliderY
-      return
+      this
 
     scrollBottom: (offsetY) ->
-      diffH = @diffH
-      scrollTop = @content[0].scrollTop
       @reset()
-      return if scrollTop < diffH and scrollTop isnt 0
-      @content.scrollTop(@contentH - @content.height() - offsetY).trigger(MOUSEWHEEL) # Update scrollbar position by triggering one of the scroll events
-      return
+      @content.scrollTop(@contentHeight - @content.height() - offsetY).trigger(MOUSEWHEEL) # Update scrollbar position by triggering one of the scroll events
+      this
 
     scrollTop: (offsetY) ->
       @reset()
       @content.scrollTop(+offsetY).trigger(MOUSEWHEEL) # Update scrollbar position by triggering one of the scroll events
-      return
+      this
 
     scrollTo: (node) ->
       @reset()
       offset = $(node).offset().top
-
-      if offset > @scrollH
-        fraction = offset / @contentH
-        new_slider = @scrollH * fraction
+      if offset > @maxSliderTop
+        fraction = offset / @contentHeight
+        new_slider = @maxSliderTop * fraction
         @sliderY = new_slider
         @scroll()
-      return
+      this
 
     stop: ->
-      @isDead = true
+      @stopped = true
       @removeEvents()
       @pane.hide()
-      return
-
+      this
 
   $.fn.nanoScroller = (settings) ->
     options = $.extend({}, defaults, settings)
@@ -246,14 +253,14 @@
       if not scrollbar
         scrollbar = new NanoScroll me, options
         $.data me, SCROLLBAR, scrollbar
-
-      return scrollbar.scrollBottom(options.scrollBottom) if options.scrollBottom
-      return scrollbar.scrollTop(options.scrollTop)       if options.scrollTop
-      return scrollbar.scrollTo(options.scrollTo)         if options.scrollTo
-      return scrollbar.scrollBottom(0)                    if options.scroll is 'bottom'
-      return scrollbar.scrollTop(0)                       if options.scroll is 'top'
-      return scrollbar.scrollTo(options.scroll)           if options.scroll instanceof $
-      return scrollbar.stop()                             if options.stop
+      {scrollBottom, scrollTop, scrollTo, scroll, stop} = options
+      return scrollbar.scrollBottom(scrollBottom) if scrollBottom
+      return scrollbar.scrollTop(scrollTop) if scrollTop
+      return scrollbar.scrollTo(scrollTo) if scrollTo
+      return scrollbar.scrollBottom(0) if scroll is 'bottom'
+      return scrollbar.scrollTop(0) if scroll is 'top'
+      return scrollbar.scrollTo(scroll) if scroll instanceof $
+      return scrollbar.stop() if stop
       scrollbar.reset()
     return
   return
