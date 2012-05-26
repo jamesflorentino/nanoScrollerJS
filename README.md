@@ -35,56 +35,10 @@ Running this script will apply the nanoScroller plugin to all DOM elements with 
 
     $(".nano").nanoScroller();
 
-### Plugin Options
 
-There are a few options that you can change when running nanoScroller, e.g. `$(".nano").nanoScroller({ paneClass: 'myclass' });`
+### Advanced methods
 
-#### iOSNativeScrolling
-
-Set to true if you want to use native scrolling in iOS 5+. This will disable your custom nanoScroller scrollbar in iOS 5+ and use the native one instead. While the native iOS scrollbar usually works much better, [there could possibly be bugs](http://github.com/scottjehl/Device-Bugs/issues) in certain situations.
-
-__Default:__ false
-
-#### paneClass
-
-A classname for scrollbar track element. If you change this setting, you also have to change it in the plugin's CSS file.
-
-__Default:__ 'pane'
-
-#### sliderClass
-
-A classname for scrollbar thumb element. If you change this setting, you also have to change it in the plugin's CSS file.
-
-__Default:__ 'slider'
-
-#### contentClass
-
-A classname for your content div. If you change this setting, you also have to change it in the plugin's CSS file.
-
-__Default:__ 'content'
-
-#### sliderMinHeight
-
-Sets the minimum height of the slider element.
-
-__Default:__ 20
-
-#### preventPageScrolling
-
-Set to true to prevent page scrolling when top or bottom inside the content div is reached.
-
-__Default:__ false
-
-#### disableResize
-
-Set to true to disable the resize from nanoscroller. Useful if you want total control of the resize event. If you set this option to true remember to call the reset method so that the scroll don't have strange behavior.
-
-__Default:__ false
-
-### Additional Methods
-
-
-#### scroll:
+### scroll
 
 To scroll at the top:
 
@@ -93,27 +47,6 @@ To scroll at the top:
 To scroll at the bottom:
 
     $(".nano").nanoScroller({ scroll: 'bottom' });
-
-To scroll to an element:
-
-    $(".nano").nanoScroller({ scroll: $('#a_node') });
-
-
-#### stop:
-
-To stop the operation:
-
-    $(".nano").nanoScroller({ stop: true });
-
-
-#### nanoScroller();    
-
-Refresh the scrollbar:
-
-    $(".nano").nanoScroller();
-
-
-### Advanced methods
 
 To scroll at the top with an offset value:
 
@@ -127,11 +60,29 @@ To scroll to an element:
 
     $(".nano").nanoScroller({ scrollTo: $('#a_node') });
 
+#### stop:
+
+To stop the operation. This option will tell the plugin to disable all event bindings and hide the gadget scrollbar from the UI.
+
+    $(".nano").nanoScroller({ stop: true });
+
+#### nanoScroller();    
+
+Refresh the scrollbar. This simply re-calculates the position and height of the scrollbar gadget.
+
+    $(".nano").nanoScroller();
+
 ### Custom events
 
 #### 'scrollend'
 
-A custom `'scrollend'` event is triggered on the element every time the user has scrolled to the end of the content element. Some browsers trigger this event more than once each time, so to listen to the custom event, instead of using jQuery's normal `.bind` or `.on`, you most likely want to use [this tiny jQuery debounce plugin](https://github.com/diaspora/jquery-debounce) to prevent browsers from firing your function more than once every 100ms.
+A custom `'scrollend'` event is triggered on the element every time the user has scrolled to the end of the content element.
+
+    $(".nano").bind("scrollend", function(e){
+      console.log("current HTMLDivElement", e.currentTarget);
+    });
+
+Some browsers trigger this event more than once each time, so to listen to the custom event, instead of using jQuery's normal `.bind` or `.on`, you most likely want to use [this tiny jQuery debounce plugin](https://github.com/diaspora/jquery-debounce) to prevent browsers from firing your function more than once every 100ms.
 
     $(".nano").debounce("scrollend", function() {
       alert("The end");
@@ -140,6 +91,70 @@ A custom `'scrollend'` event is triggered on the element every time the user has
 #### 'scrolltop'
 
 Same as the `'scrollend'` event, but it is triggered every time the user has scrolled to the top of the content element.
+
+### Plugin Options
+
+There are a few options that you can change when running nanoScroller, e.g. `$(".nano").nanoScroller({ paneClass: 'myclass' });`
+
+#### iOSNativeScrolling
+
+Set to true if you want to use native scrolling in iOS 5+. This will disable your custom nanoScroller scrollbar in iOS 5+ and use the native one instead. While the native iOS scrollbar usually works much better, [there could possibly be bugs](http://github.com/scottjehl/Device-Bugs/issues) in certain situations.
+
+__Default:__ false
+
+    $(".nano").nanoScroller({ iOSNativeScrolling: true });
+
+#### sliderMinHeight
+
+Sets the minimum height of the slider element.
+
+__Default:__ 20
+
+    $(".nano").nanoScroller({ sliderMinHeight: 40 });
+
+#### preventPageScrolling
+
+Set to true to prevent page scrolling when top or bottom inside the content div is reached.
+
+__Default:__ false
+
+    $(".nano").nanoScroller({ preventPageScrolling: true });
+
+#### disableResize
+
+Set to true to disable the resize from nanoscroller. Useful if you want total control of the resize event. If you set this option to true remember to call the reset method so that the scroll don't have strange behavior.
+
+__Default:__ false
+
+    $(".nano").nanoScroller({ disableResize: true });
+
+#### paneClass
+
+A classname for scrollbar track element. If you change this setting, you also have to change it in the plugin's CSS file.
+
+__Default:__ 'pane'
+
+    $(".nano").nanoScroller({ paneClass: 'scrollPane' });
+
+#### sliderClass
+
+A classname for scrollbar thumb element. If you change this setting, you also have to change it in the plugin's CSS file.
+
+__Default:__ 'slider'
+
+    $(".nano").nanoScroller({ sliderClass: 'scrollSlider' });
+
+#### contentClass
+
+A classname for your content div. If you change this setting, you also have to change it in the plugin's CSS file.
+
+__Default:__ 'content'
+
+    $(".nano").nanoScroller({ contentClass: 'sliderContent' });
+
+## How it works
+
+The plugin works basically by creating a scrollbar gadget (with pre-defined css for styling) and then subscribing DOM events to it. In doing so, you still retain the native scrolling mechanism thesystem OS provides. The native scrollbars are hidden from the viewport and replacing it with a stylized version. This solution is applicable for web content that has multiple items on a single page. An example would be a chat site (which is how nanoScroller's necessity came to be). The plugin offers minimal mark-up and a non-obstructive UI replacement. As of May 2012, it still does not support horizontal scrolling. You are free to create a pull request if you wish to contribute that feature.
 
 ### Development
 
