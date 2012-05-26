@@ -14,7 +14,7 @@ The following type of markup structure is needed to make the plugin work:
      <div class="content"> ... content here ...  </div> 
     </div>
 
-Copy the HTML markup. Change `#about` into something related to your content. Though you can also remove that attribute as long as you have a parent div with an ID reference. e.g. `#parent > .nano`. `nano` and `content` classnames can be customized via plugin options (_in that case you must rename them inside the plugin's CSS file as well_).
+Copy the HTML markup. Change `.nano` into something related to your content. Though you can also remove that attribute as long as you have a parent div with an ID reference. e.g. `#parent > .nano`. `nano` and `content` classnames can be customized via plugin options (_in that case you must rename them inside the plugin's CSS file as well_).
 
 ### 2. CSS
 
@@ -31,11 +31,13 @@ You should specify a width and a height to your container, and apply some custom
 
 ### 3. JavaScript
 
-    $("#about").nanoScroller();
+Running this script will apply the nanoScroller plugin to all DOM elements with a `.nano` className.
+
+    $(".nano").nanoScroller();
 
 ### Plugin Options
 
-There are a few options that you can change when running nanoScroller, e.g. `$("#about").nanoScroller({ paneClass: 'myclass' });`
+There are a few options that you can change when running nanoScroller, e.g. `$(".nano").nanoScroller({ paneClass: 'myclass' });`
 
 #### iOSNativeScrolling
 
@@ -86,44 +88,44 @@ __Default:__ false
 
 To scroll at the top:
 
-    $("#about").nanoScroller({ scroll: 'top' });
+    $(".nano").nanoScroller({ scroll: 'top' });
 
 To scroll at the bottom:
 
-    $("#about").nanoScroller({ scroll: 'bottom' });
+    $(".nano").nanoScroller({ scroll: 'bottom' });
 
 To scroll to an element:
 
-    $("#about").nanoScroller({ scroll: $('#a_node') });
+    $(".nano").nanoScroller({ scroll: $('#a_node') });
 
 
 #### stop:
 
 To stop the operation:
 
-    $("#about").nanoScroller({ stop: true });
+    $(".nano").nanoScroller({ stop: true });
 
 
 #### nanoScroller();    
 
 Refresh the scrollbar:
 
-    $("#about").nanoScroller();
+    $(".nano").nanoScroller();
 
 
 ### Advanced methods
 
 To scroll at the top with an offset value:
 
-    $("#about").nanoScroller({ scrollTop: value });
+    $(".nano").nanoScroller({ scrollTop: value });
 
 To scroll at the bottom with an offset value:
 
-    $("#about").nanoScroller({ scrollBottom: value });
+    $(".nano").nanoScroller({ scrollBottom: value });
 
 To scroll to an element:
 
-    $("#about").nanoScroller({ scrollTo: $('#a_node') });
+    $(".nano").nanoScroller({ scrollTo: $('#a_node') });
 
 ### Custom events
 
@@ -131,7 +133,7 @@ To scroll to an element:
 
 A custom `'scrollend'` event is triggered on the element every time the user has scrolled to the end of the content element. Some browsers trigger this event more than once each time, so to listen to the custom event, instead of using jQuery's normal `.bind` or `.on`, you most likely want to use [this tiny jQuery debounce plugin](https://github.com/diaspora/jquery-debounce) to prevent browsers from firing your function more than once every 100ms.
 
-    $("#about").debounce("scrollend", function() {
+    $(".nano").debounce("scrollend", function() {
       alert("The end");
     }, 100);
 
@@ -156,7 +158,7 @@ To allow the build process to convert the README file to HTML you also need:
 
 1. Make all JS changes in Coffeescript file(s), CSS changes in CSS file(s).
 2. In terminal move to nanoscroller folder and run `cake build`
-3. Make sure that all changes are valid and open a pull request.
+4. Make sure that all changes are valid and open a pull request.
 
 ### Browser compatibility
 
@@ -181,7 +183,7 @@ If you find a bug, please report here at the [issues section](https://github.com
 
 ### Using a polyfill for better mobile browser support
 
-You can use [overthrow.js](https://github.com/filamentgroup/Overthrow/) polyfill (~1.5kb minified and gzipped) to make nanoScoller work on many mobile devices. It emulates CSS overflow (overflow: auto;/overflow: scroll;) in devices that are lacking it.
+You can use [overthrow.js](https://github.com/filamentgroup/Overthrow/) polyfill (~1.5kb minified and gzipped) to make nanoScroller work on many mobile devices. It emulates CSS overflow (overflow: auto;/overflow: scroll;) in devices that are lacking it.
 
 To use overthrow, link to the javascript file in your HTML document...
 
@@ -193,6 +195,12 @@ To use overthrow, link to the javascript file in your HTML document...
     <div id="about" class="nano">
      <div class="overthrow content"> ... content here ...  </div> 
     </div>
+
+## Sites that use nanoScroller
+
+If you wish to include your site in this list, you can do so by tweeting the link on Twitter with a `#nanoScroller` hashtag.
+
+- [makechat.com](http://makechat.com)
 
 ### Contributors
 
@@ -211,10 +219,6 @@ Other people who have contributed code:
 - [lluchs](https://github.com/lluchs) #7, #8
 - [Dlom](https://github.com/Dlom)
 
-### From the author
-I wrote this plugin out of necessity for a JavaScript project with designers and front-end developers in mind. Please also note that I will not be liable to fix your problem just in case you plan to use this commercially and some unforseen event arises. However, I will do what I can to immediately patch a solution.
-
 ### Credits
 - Initially written by [James Florentino](http://jamesflorentino.com) in [CoffeeScript](http://coffeescript.org)
 - Released under [MIT License](http://www.opensource.org/licenses/mit-license.php)
-- If you write CoffeeScript and you wish to improve the code, please feel free to fork the project.

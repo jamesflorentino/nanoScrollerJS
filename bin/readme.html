@@ -16,7 +16,7 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 &lt;/div&gt;
 </code></pre>
 
-<p>Copy the HTML markup. Change <code>#about</code> into something related to your content. Though you can also remove that attribute as long as you have a parent div with an ID reference. e.g. <code>#parent &gt; .nano</code>. <code>nano</code> and <code>content</code> classnames can be customized via plugin options (<em>in that case you must rename them inside the plugin&#39;s CSS file as well</em>).</p>
+<p>Copy the HTML markup. Change <code>.nano</code> into something related to your content. Though you can also remove that attribute as long as you have a parent div with an ID reference. e.g. <code>#parent &gt; .nano</code>. <code>nano</code> and <code>content</code> classnames can be customized via plugin options (<em>in that case you must rename them inside the plugin&#39;s CSS file as well</em>).</p>
 
 <h3>2. CSS</h3>
 
@@ -35,12 +35,14 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 
 <h3>3. JavaScript</h3>
 
-<pre><code>$(&quot;#about&quot;).nanoScroller();
+<p>Running this script will apply the nanoScroller plugin to all DOM elements with a <code>.nano</code> className.</p>
+
+<pre><code>$(&quot;.nano&quot;).nanoScroller();
 </code></pre>
 
 <h3>Plugin Options</h3>
 
-<p>There are a few options that you can change when running nanoScroller, e.g. <code>$(&quot;#about&quot;).nanoScroller({ paneClass: &#39;myclass&#39; });</code></p>
+<p>There are a few options that you can change when running nanoScroller, e.g. <code>$(&quot;.nano&quot;).nanoScroller({ paneClass: &#39;myclass&#39; });</code></p>
 
 <h4>iOSNativeScrolling</h4>
 
@@ -90,48 +92,48 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 
 <p>To scroll at the top:</p>
 
-<pre><code>$(&quot;#about&quot;).nanoScroller({ scroll: &#39;top&#39; });
+<pre><code>$(&quot;.nano&quot;).nanoScroller({ scroll: &#39;top&#39; });
 </code></pre>
 
 <p>To scroll at the bottom:</p>
 
-<pre><code>$(&quot;#about&quot;).nanoScroller({ scroll: &#39;bottom&#39; });
+<pre><code>$(&quot;.nano&quot;).nanoScroller({ scroll: &#39;bottom&#39; });
 </code></pre>
 
 <p>To scroll to an element:</p>
 
-<pre><code>$(&quot;#about&quot;).nanoScroller({ scroll: $(&#39;#a_node&#39;) });
+<pre><code>$(&quot;.nano&quot;).nanoScroller({ scroll: $(&#39;#a_node&#39;) });
 </code></pre>
 
 <h4>stop:</h4>
 
 <p>To stop the operation:</p>
 
-<pre><code>$(&quot;#about&quot;).nanoScroller({ stop: true });
+<pre><code>$(&quot;.nano&quot;).nanoScroller({ stop: true });
 </code></pre>
 
 <h4>nanoScroller();</h4>
 
 <p>Refresh the scrollbar:</p>
 
-<pre><code>$(&quot;#about&quot;).nanoScroller();
+<pre><code>$(&quot;.nano&quot;).nanoScroller();
 </code></pre>
 
 <h3>Advanced methods</h3>
 
 <p>To scroll at the top with an offset value:</p>
 
-<pre><code>$(&quot;#about&quot;).nanoScroller({ scrollTop: value });
+<pre><code>$(&quot;.nano&quot;).nanoScroller({ scrollTop: value });
 </code></pre>
 
 <p>To scroll at the bottom with an offset value:</p>
 
-<pre><code>$(&quot;#about&quot;).nanoScroller({ scrollBottom: value });
+<pre><code>$(&quot;.nano&quot;).nanoScroller({ scrollBottom: value });
 </code></pre>
 
 <p>To scroll to an element:</p>
 
-<pre><code>$(&quot;#about&quot;).nanoScroller({ scrollTo: $(&#39;#a_node&#39;) });
+<pre><code>$(&quot;.nano&quot;).nanoScroller({ scrollTo: $(&#39;#a_node&#39;) });
 </code></pre>
 
 <h3>Custom events</h3>
@@ -140,7 +142,7 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 
 <p>A custom <code>&#39;scrollend&#39;</code> event is triggered on the element every time the user has scrolled to the end of the content element. Some browsers trigger this event more than once each time, so to listen to the custom event, instead of using jQuery&#39;s normal <code>.bind</code> or <code>.on</code>, you most likely want to use <a href="https://github.com/diaspora/jquery-debounce">this tiny jQuery debounce plugin</a> to prevent browsers from firing your function more than once every 100ms.</p>
 
-<pre><code>$(&quot;#about&quot;).debounce(&quot;scrollend&quot;, function() {
+<pre><code>$(&quot;.nano&quot;).debounce(&quot;scrollend&quot;, function() {
   alert(&quot;The end&quot;);
 }, 100);
 </code></pre>
@@ -201,7 +203,7 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 
 <h3>Using a polyfill for better mobile browser support</h3>
 
-<p>You can use <a href="https://github.com/filamentgroup/Overthrow/">overthrow.js</a> polyfill (~1.5kb minified and gzipped) to make nanoScoller work on many mobile devices. It emulates CSS overflow (overflow: auto;/overflow: scroll;) in devices that are lacking it.</p>
+<p>You can use <a href="https://github.com/filamentgroup/Overthrow/">overthrow.js</a> polyfill (~1.5kb minified and gzipped) to make nanoScroller work on many mobile devices. It emulates CSS overflow (overflow: auto;/overflow: scroll;) in devices that are lacking it.</p>
 
 <p>To use overthrow, link to the javascript file in your HTML document...</p>
 
@@ -214,6 +216,14 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
  &lt;div class=&quot;overthrow content&quot;&gt; ... content here ...  &lt;/div&gt; 
 &lt;/div&gt;
 </code></pre>
+
+<h2>Sites that use nanoScroller</h2>
+
+<p>If you wish to include your site in this list, you can do so by tweeting the link on Twitter with a <code>#nanoScroller</code> hashtag.</p>
+
+<ul>
+<li><a href="http://makechat.com">makechat.com</a></li>
+</ul>
 
 <h3>Contributors</h3>
 
@@ -236,14 +246,9 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 <li><a href="https://github.com/Dlom">Dlom</a></li>
 </ul>
 
-<h3>From the author</h3>
-
-<p>I wrote this plugin out of necessity for a JavaScript project with designers and front-end developers in mind. Please also note that I will not be liable to fix your problem just in case you plan to use this commercially and some unforseen event arises. However, I will do what I can to immediately patch a solution.</p>
-
 <h3>Credits</h3>
 
 <ul>
 <li>Initially written by <a href="http://jamesflorentino.com">James Florentino</a> in <a href="http://coffeescript.org">CoffeeScript</a></li>
 <li>Released under <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a></li>
-<li>If you write CoffeeScript and you wish to improve the code, please feel free to fork the project.</li>
 </ul>
