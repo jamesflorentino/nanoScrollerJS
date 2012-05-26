@@ -63,6 +63,8 @@
           }
           break;
         case MOUSEWHEEL:
+          if (!e.originalEvent) return;
+          if (!e.originalEvent.wheelDelta) return;
           if (direction === DOWN && e.originalEvent.wheelDelta < 0 || direction === UP && e.originalEvent.wheelDelta > 0) {
             e.preventDefault();
           }
@@ -109,6 +111,7 @@
           _this.slider.css({
             top: sliderTop
           });
+          if (e == null) return;
           if (scrollTop >= maxScrollTop) {
             if (_this.options.preventPageScrolling) {
               _this.preventScrolling(e, DOWN);
@@ -120,6 +123,7 @@
           }
         },
         wheel: function(e) {
+          if (e == null) return;
           _this.sliderY += -e.wheelDeltaY || -e.delta;
           _this.scroll();
           return false;
@@ -201,6 +205,7 @@
       this.sliderHeight = sliderHeight;
       this.maxSliderTop = maxSliderTop;
       this.slider.height(sliderHeight);
+      this.events.scroll();
       this.pane.show();
       if (this.paneOuterHeight >= content.scrollHeight && contentStyleOverflowY !== SCROLL) {
         this.pane.hide();
@@ -258,17 +263,21 @@
 
   })();
   $.fn.nanoScroller = function(settings) {
-    var options;
+    var options, scroll, scrollBottom, scrollTo, scrollTop, stop;
+    if (settings != null) {
+      scrollBottom = settings.scrollBottom, scrollTop = settings.scrollTop, scrollTo = settings.scrollTo, scroll = settings.scroll, stop = settings.stop;
+    }
     options = $.extend({}, defaults, settings);
     this.each(function() {
-      var me, scroll, scrollBottom, scrollTo, scrollTop, scrollbar, stop;
+      var me, scrollbar;
       me = this;
       scrollbar = $.data(me, SCROLLBAR);
       if (!scrollbar) {
         scrollbar = new NanoScroll(me, options);
         $.data(me, SCROLLBAR, scrollbar);
+      } else {
+        $.extend(scrollbar.options, settings);
       }
-      scrollBottom = options.scrollBottom, scrollTop = options.scrollTop, scrollTo = options.scrollTo, scroll = options.scroll, stop = options.stop;
       if (scrollBottom) return scrollbar.scrollBottom(scrollBottom);
       if (scrollTop) return scrollbar.scrollTop(scrollTop);
       if (scrollTo) return scrollbar.scrollTo(scrollTo);

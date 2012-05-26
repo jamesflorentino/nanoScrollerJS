@@ -58,6 +58,8 @@
           if direction is DOWN and e.originalEvent.detail > 0 or direction is UP and e.originalEvent.detail < 0 
             e.preventDefault()
         when MOUSEWHEEL # WebKit, Trident and Presto
+          return if not e.originalEvent
+          return if not e.originalEvent.wheelDelta
           if direction is DOWN and e.originalEvent.wheelDelta < 0 or direction is UP and e.originalEvent.wheelDelta > 0
             e.preventDefault()
       return
@@ -93,20 +95,23 @@
           false
 
         scroll: (e) =>
-          # don't operate if there is a dragging mechanism going on
-          # invoked when a user presses and moves the slider or pane
+          # Don't operate if there is a dragging mechanism going on.
+          # This is invoked when a user presses and moves the slider or pane
           return if @isBeingDragged
-          # formula/ratio
-          # scrollTop / maxScrollTop = sliderTop / maxSliderTop
+          # Formula/ratio
+          # `scrollTop / maxScrollTop = sliderTop / maxSliderTop`
           maxScrollTop = @content[0].scrollHeight - @content[0].clientHeight
           scrollTop = @content[0].scrollTop
           maxSliderTop = @paneHeight - @sliderHeight
-          #sliderTop = scrollTop / maxScrollTop * maxSliderTop
+          # `sliderTop = scrollTop / maxScrollTop * maxSliderTop`
           sliderTop = scrollTop * maxSliderTop / maxScrollTop
           # update the slider position
           @slider.css top: sliderTop
-          # if it reaches the maxmimum and minimum scrolling point
-          # we dispatch an event
+          # the succeeding code should be ignored if @events.scroll() wasn't
+          # invoked by a DOM event. (refer to @reset)
+          return unless e?
+          # if it reaches the maximum and minimum scrolling point,
+          # we dispatch an event.
           if scrollTop >= maxScrollTop
             @preventScrolling(e, DOWN) if @options.preventPageScrolling
             @el.trigger('scrollend')
@@ -116,6 +121,7 @@
           return
 
         wheel: (e) =>
+          return unless e?
           @sliderY +=  -e.wheelDeltaY or -e.delta
           @scroll()
           false
@@ -201,6 +207,8 @@
       @maxSliderTop = maxSliderTop
       # set the values to the gadget
       @slider.height sliderHeight
+      # scroll sets the position of the @slider
+      @events.scroll()
       @pane.show()
       if @paneOuterHeight >= content.scrollHeight and contentStyleOverflowY isnt SCROLL
         @pane.hide()
@@ -244,6 +252,7 @@
       this
 
   $.fn.nanoScroller = (settings) ->
+    {scrollBottom, scrollTop, scrollTo, scroll, stop} = settings if settings?
     options = $.extend({}, defaults, settings)
     @each ->
       me = this
@@ -251,7 +260,9 @@
       if not scrollbar
         scrollbar = new NanoScroll me, options
         $.data me, SCROLLBAR, scrollbar
-      {scrollBottom, scrollTop, scrollTo, scroll, stop} = options
+      else
+        # if the developer wishes to apply the settings on a later phase.
+        $.extend scrollbar.options, settings
       return scrollbar.scrollBottom(scrollBottom) if scrollBottom
       return scrollbar.scrollTop(scrollTop) if scrollTop
       return scrollbar.scrollTo(scrollTo) if scrollTo
