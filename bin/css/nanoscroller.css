@@ -15,7 +15,7 @@
   left          : 0;
 }
 .nano .content::-webkit-scrollbar {
-  -webkit-appearance: none;
+  visibility: hidden;
 }
 .nano > .pane {
   background : rgba(0,0,0,.25);
