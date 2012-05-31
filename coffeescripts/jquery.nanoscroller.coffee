@@ -162,9 +162,13 @@
       @slider  = @el.find ".#{sliderClass}"
       # pane is the name for the actual scrollbar.
       @pane    = @el.find ".#{paneClass}"
-      cssRule = right: -BROWSER_SCROLLBAR_WIDTH
-      cssRule.WebkitOverflowScrolling = 'touch' if options.iOSNativeScrolling
-      @content.css cssRule
+      if BROWSER_SCROLLBAR_WIDTH
+        cssRule = right: -BROWSER_SCROLLBAR_WIDTH
+        @el.addClass('has-scrollbar')
+      if options.iOSNativeScrolling
+        cssRule ?= {}
+        cssRule.WebkitOverflowScrolling = 'touch' 
+      @content.css cssRule if cssRule?
       this
 
     elementsExist: ->
