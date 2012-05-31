@@ -14,6 +14,12 @@
   bottom        : 0;
   left          : 0;
 }
+.nano .content::-webkit-scrollbar {
+  visibility: hidden;
+}
+.has-scrollbar .content::-webkit-scrollbar {
+  visibility: visible;
+}
 .nano > .pane {
   background : rgba(0,0,0,.25);
   position   : absolute;
@@ -43,11 +49,4 @@
 .nano:hover > .pane, .pane.active {
   visibility : visible\9; /* Target only IE7 and IE8 with this hack */
   opacity    : 1;
-}
-.nano .content::-webkit-scrollbar {
-  visibility: hidden;
-}
-.has-scrollbar .content::-webkit-scrollbar {
-  -webkit-appearance: none;
-  visibility: visible;
 }
