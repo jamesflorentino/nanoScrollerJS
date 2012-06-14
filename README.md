@@ -152,6 +152,10 @@ __Default:__ 'content'
 
     $(".nano").nanoScroller({ contentClass: 'sliderContent' });
 
+#### Need to keep your scrollbar always visible instead of auto-hiding it?
+
+Remove lines `visibility : hidden\9;` and `opacity: .01;` from the `nanoscroller.css` file and the scrollbar won't get hidden with CSS.
+
 ## How it works
 
 The plugin works basically by creating a scrollbar gadget (with pre-defined css for styling) and then subscribing DOM events to it. In doing so, you still retain the native scrolling mechanism thesystem OS provides. The native scrollbars are hidden from the viewport and replacing it with a stylized version. This solution is applicable for web content that has multiple items on a single page. An example would be a chat site (which is how nanoScroller's necessity came to be). The plugin offers minimal mark-up and a non-obstructive UI replacement. As of May 2012, it still does not support horizontal scrolling. You are free to create a pull request if you wish to contribute that feature.
