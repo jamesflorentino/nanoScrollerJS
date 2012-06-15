@@ -9,6 +9,7 @@
     iOSNativeScrolling: false
     preventPageScrolling: false
     disableResize: false
+    alwaysVisible: false
 
   # constants
   SCROLLBAR  = 'scrollbar'
@@ -169,6 +170,7 @@
         cssRule ?= {}
         cssRule.WebkitOverflowScrolling = 'touch' 
       @content.css cssRule if cssRule?
+      @pane.css opacity: 1, visibility: 'visible' if options.alwaysVisible
       this
 
     elementsExist: ->

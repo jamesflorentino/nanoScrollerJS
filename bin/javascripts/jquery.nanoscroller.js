@@ -11,7 +11,8 @@
     contentClass: 'content',
     iOSNativeScrolling: false,
     preventPageScrolling: false,
-    disableResize: false
+    disableResize: false,
+    alwaysVisible: false
   };
   SCROLLBAR = 'scrollbar';
   SCROLL = 'scroll';
@@ -189,6 +190,12 @@
       }
       if (cssRule != null) {
         this.content.css(cssRule);
+      }
+      if (options.alwaysVisible) {
+        this.pane.css({
+          opacity: 1,
+          visibility: 'visible'
+        });
       }
       return this;
     };

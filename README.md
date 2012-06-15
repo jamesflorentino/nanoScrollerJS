@@ -128,6 +128,14 @@ __Default:__ false
 
     $(".nano").nanoScroller({ disableResize: true });
 
+#### alwaysVisible
+
+Set to true to stop the scrollbar from auto-hiding itself.
+
+__Default:__ false
+
+    $(".nano").nanoScroller({ alwaysVisible: true });
+
 #### paneClass
 
 A classname for scrollbar track element. If you change this setting, you also have to change it in the plugin's CSS file.
@@ -151,10 +159,6 @@ A classname for your content div. If you change this setting, you also have to c
 __Default:__ 'content'
 
     $(".nano").nanoScroller({ contentClass: 'sliderContent' });
-
-#### Need to keep your scrollbar always visible instead of auto-hiding it?
-
-Remove lines `visibility : hidden\9;` and `opacity: .01;` from the `nanoscroller.css` file and the scrollbar won't get hidden with CSS.
 
 ## How it works
 
