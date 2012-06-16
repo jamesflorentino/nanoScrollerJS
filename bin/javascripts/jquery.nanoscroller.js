@@ -3,7 +3,7 @@
 (function($, window, document) {
   "use strict";
 
-  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, defaults, getBrowserScrollbarWidth;
+  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, KEYDOWN, KEYUP, KEYS, defaults, getBrowserScrollbarWidth;
   defaults = {
     paneClass: 'pane',
     sliderClass: 'slider',
@@ -27,7 +27,10 @@
   DOMSCROLL = 'DOMMouseScroll';
   DOWN = 'down';
   WHEEL = 'wheel';
+  KEYDOWN = 'keydown';
+  KEYUP = 'keyup';
   TOUCHMOVE = 'touchmove';
+  KEYS = {up: 38, down: 40, pgup: 33, pgdown: 34}
   BROWSER_IS_IE7 = window.navigator.appName === 'Microsoft Internet Explorer' && /msie 7./i.test(window.navigator.appVersion) && window.ActiveXObject;
   BROWSER_SCROLLBAR_WIDTH = null;
   getBrowserScrollbarWidth = function() {
@@ -142,6 +145,33 @@
           _this.sliderY += -e.wheelDeltaY || -e.delta;
           _this.scroll();
           return false;
+        },
+        keydown: function(e) {
+          if (e == null) {
+            return;
+          }
+          var key = e.keyCode || e.which;
+          if (key == KEYS.up || key == KEYS.pgup || key == KEYS.down || key == KEYS.pgdown)
+          {
+            _this.sliderY = (isNaN(_this.sliderY)) ? _this.maxSliderTop : _this.sliderY;
+            _this.scrollHeight = _this.content.scrollTop();
+          }
+        },
+        keyup: function(e) {
+          if (e == null) {
+            return;
+          }
+          var key = e.keyCode || e.which;
+          if (key == KEYS.up || key == KEYS.pgup)
+          {
+            _this.sliderY = _this.sliderY - (_this.scrollHeight - _this.content.scrollTop());
+            _this.scroll();
+          }
+          else if (key == KEYS.down || key == KEYS.pgdown)
+          {
+            _this.sliderY = _this.sliderY + (_this.content.scrollTop() - _this.scrollHeight);
+            _this.scroll();
+          }
         }
       };
     };
@@ -154,7 +184,7 @@
       }
       this.slider.bind(MOUSEDOWN, events[DOWN]);
       this.pane.bind(MOUSEDOWN, events[PANEDOWN]).bind(MOUSEWHEEL, events[WHEEL]).bind(DOMSCROLL, events[WHEEL]);
-      this.content.bind(MOUSEWHEEL, events[SCROLL]).bind(DOMSCROLL, events[SCROLL]).bind(TOUCHMOVE, events[SCROLL]);
+      this.content.bind(MOUSEWHEEL, events[SCROLL]).bind(DOMSCROLL, events[SCROLL]).bind(TOUCHMOVE, events[SCROLL]).attr('tabindex', 0).bind(KEYDOWN, events[KEYDOWN]).bind(KEYUP, events[KEYUP]);
     };
 
     NanoScroll.prototype.removeEvents = function() {
