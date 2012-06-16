@@ -164,14 +164,21 @@
           var key = e.keyCode || e.which;
           if (key == KEYS.up || key == KEYS.pgup)
           {
-            _this.sliderY = _this.sliderY - (_this.scrollHeight - _this.content.scrollTop());
+            var percentage = (_this.scrollHeight - _this.content.scrollTop()) / (_this.contentHeight - _this.paneHeight) * 100,
+                sliderY = (percentage * _this.maxSliderTop) / 100;
+
+            _this.sliderY = _this.sliderY - sliderY;
             _this.scroll();
           }
           else if (key == KEYS.down || key == KEYS.pgdown)
           {
-            _this.sliderY = _this.sliderY + (_this.content.scrollTop() - _this.scrollHeight);
+            var percentage = (_this.content.scrollTop() - _this.scrollHeight) / (_this.contentHeight - _this.paneHeight) * 100,
+                sliderY = (percentage * _this.maxSliderTop) / 100;
+
+            _this.sliderY = _this.sliderY + sliderY;
             _this.scroll();
           }
+        }
         }
       };
     };
