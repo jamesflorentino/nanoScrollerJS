@@ -150,7 +150,7 @@
           if (e == null) {
             return;
           }
-          var key = e.keyCode || e.which;
+          var key = e.which;
           if (key == KEYS.up || key == KEYS.pgup || key == KEYS.down || key == KEYS.pgdown)
           {
             _this.sliderY = (isNaN(_this.sliderY)) ? _this.maxSliderTop : _this.sliderY;
@@ -161,7 +161,7 @@
           if (e == null) {
             return;
           }
-          var key = e.keyCode || e.which;
+          var key = e.which;
           if (key == KEYS.up || key == KEYS.pgup)
           {
             var percentage = (_this.scrollHeight - _this.content.scrollTop()) / (_this.contentHeight - _this.paneHeight) * 100,
