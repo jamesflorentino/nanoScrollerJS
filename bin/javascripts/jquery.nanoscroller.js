@@ -30,7 +30,7 @@
   KEYDOWN = 'keydown';
   KEYUP = 'keyup';
   TOUCHMOVE = 'touchmove';
-  KEYS = {up: 38, down: 40, pgup: 33, pgdown: 34}
+  KEYS = {up: 38, down: 40, pgup: 33, pgdown: 34, home: 36, end: 35};
   BROWSER_IS_IE7 = window.navigator.appName === 'Microsoft Internet Explorer' && /msie 7./i.test(window.navigator.appVersion) && window.ActiveXObject;
   BROWSER_SCROLLBAR_WIDTH = null;
   getBrowserScrollbarWidth = function() {
@@ -178,7 +178,16 @@
             _this.sliderY = _this.sliderY + sliderY;
             _this.scroll();
           }
-        }
+          else if (key == KEYS.home)
+          {
+            _this.sliderY = 0;
+            _this.scroll();
+          }
+          else if (key == KEYS.end)
+          {
+            _this.sliderY = _this.maxSliderTop;
+            _this.scroll();
+          }
         }
       };
     };
