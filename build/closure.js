@@ -6,7 +6,7 @@
 /// Compress javascript with Node.js using the Closure Compiler
 /// Service.
 
-var sys = require('sys');
+var sys = require('util');
 
 exports.compile = compile;
 

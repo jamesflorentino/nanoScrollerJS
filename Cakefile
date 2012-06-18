@@ -15,6 +15,15 @@ task "build", "Build everything and minify", (options) ->
           throw errWriting if errWriting
           console.log "Success!"
 
+task "size", "Check how nanoScroller size has changed compared to last Cake build", ->
+  exec "gzip -c bin/javascripts/jquery.nanoscroller.min.js > bin/javascripts/jquery.nanoscroller.min.js.gz", (err, stdout, stderr) ->
+    throw err if err
+    exec "wc -c bin/javascripts/jquery.nanoscroller.js bin/javascripts/jquery.nanoscroller.min.js bin/javascripts/jquery.nanoscroller.min.js.gz | node build/sizer.js", (err, stdout, stderr) ->
+      throw err if err
+      console.log(stdout)
+      exec "rm bin/javascripts/jquery.nanoscroller.min.js.gz", (err, stdout, stderr) ->
+        throw err if err
+
 task "server", "Run a simple http server in Python for testing", (options) ->
   console.log "Running a python server in http://localhost:8100"
   exec "python -m SimpleHTTPServer 8100", (o) ->

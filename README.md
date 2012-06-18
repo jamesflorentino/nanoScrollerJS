@@ -181,7 +181,10 @@ To allow the build process to convert the README file to HTML you also need:
 
 1. Make all JS changes in Coffeescript file(s), CSS changes in CSS file(s).
 2. In terminal move to nanoscroller folder and run `cake build`
+3. If you want to check how much the plugin size has changed compared to last build, run `cake size` *
 4. Make sure that all changes are valid and open a pull request.
+
+\* Uses `sizer.js` from [jQuery project](https://github.com/jquery/jquery/pull/511)
 
 ### Browser compatibility
 
