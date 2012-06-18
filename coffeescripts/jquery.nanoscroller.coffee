@@ -65,18 +65,35 @@
             e.preventDefault()
       return
 
+    updateScrollValues: ->
+      content = @content[0]
+      # Formula/ratio
+      # `scrollTop / maxScrollTop = sliderTop / maxSliderTop`
+      @maxScrollTop = content.scrollHeight - content.clientHeight
+      @scrollTop = content.scrollTop
+      @maxSliderTop = @paneHeight - @sliderHeight
+      # `sliderTop = scrollTop / maxScrollTop * maxSliderTop
+      @sliderTop = @scrollTop * @maxSliderTop / @maxScrollTop
+      return
+
+
     createEvents: ->
       @events =
         down: (e) =>
           @isBeingDragged  = true
-          @offsetY = e.clientY - @slider.offset().top
+          @offsetY = e.pageY - @slider.offset().top
           @pane.addClass 'active'
           @doc.bind(MOUSEMOVE, @events[DRAG]).bind(MOUSEUP, @events[UP])
           false
 
         drag: (e) =>
-          @sliderY = e.clientY - @el.offset().top - @offsetY
+          @sliderY = e.pageY - @el.offset().top - @offsetY
           @scroll()
+          @updateScrollValues()
+          if @scrollTop >= @maxScrollTop
+            @el.trigger('scrollend')
+          else if @scrollTop is 0
+            @el.trigger('scrolltop')
           false
 
         up: (e) =>
@@ -99,24 +116,18 @@
           # Don't operate if there is a dragging mechanism going on.
           # This is invoked when a user presses and moves the slider or pane
           return if @isBeingDragged
-          # Formula/ratio
-          # `scrollTop / maxScrollTop = sliderTop / maxSliderTop`
-          maxScrollTop = @content[0].scrollHeight - @content[0].clientHeight
-          scrollTop = @content[0].scrollTop
-          maxSliderTop = @paneHeight - @sliderHeight
-          # `sliderTop = scrollTop / maxScrollTop * maxSliderTop`
-          sliderTop = scrollTop * maxSliderTop / maxScrollTop
+          @updateScrollValues()
           # update the slider position
-          @slider.css top: sliderTop
+          @slider.css top: @sliderTop
           # the succeeding code should be ignored if @events.scroll() wasn't
           # invoked by a DOM event. (refer to @reset)
           return unless e?
           # if it reaches the maximum and minimum scrolling point,
           # we dispatch an event.
-          if scrollTop >= maxScrollTop
+          if @scrollTop >= @maxScrollTop
             @preventScrolling(e, DOWN) if @options.preventPageScrolling
             @el.trigger('scrollend')
-          else if scrollTop is 0
+          else if @scrollTop is 0
             @preventScrolling(e, UP) if @options.preventPageScrolling
             @el.trigger('scrolltop')
           return

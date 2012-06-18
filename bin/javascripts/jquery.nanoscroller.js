@@ -78,19 +78,34 @@
       }
     };
 
+    NanoScroll.prototype.updateScrollValues = function() {
+      var content;
+      content = this.content[0];
+      this.maxScrollTop = content.scrollHeight - content.clientHeight;
+      this.scrollTop = content.scrollTop;
+      this.maxSliderTop = this.paneHeight - this.sliderHeight;
+      this.sliderTop = this.scrollTop * this.maxSliderTop / this.maxScrollTop;
+    };
+
     NanoScroll.prototype.createEvents = function() {
       var _this = this;
       this.events = {
         down: function(e) {
           _this.isBeingDragged = true;
-          _this.offsetY = e.clientY - _this.slider.offset().top;
+          _this.offsetY = e.pageY - _this.slider.offset().top;
           _this.pane.addClass('active');
           _this.doc.bind(MOUSEMOVE, _this.events[DRAG]).bind(MOUSEUP, _this.events[UP]);
           return false;
         },
         drag: function(e) {
-          _this.sliderY = e.clientY - _this.el.offset().top - _this.offsetY;
+          _this.sliderY = e.pageY - _this.el.offset().top - _this.offsetY;
           _this.scroll();
+          _this.updateScrollValues();
+          if (_this.scrollTop >= _this.maxScrollTop) {
+            _this.el.trigger('scrollend');
+          } else if (_this.scrollTop === 0) {
+            _this.el.trigger('scrolltop');
+          }
           return false;
         },
         up: function(e) {
@@ -109,26 +124,22 @@
           return false;
         },
         scroll: function(e) {
-          var maxScrollTop, maxSliderTop, scrollTop, sliderTop;
           if (_this.isBeingDragged) {
             return;
           }
-          maxScrollTop = _this.content[0].scrollHeight - _this.content[0].clientHeight;
-          scrollTop = _this.content[0].scrollTop;
-          maxSliderTop = _this.paneHeight - _this.sliderHeight;
-          sliderTop = scrollTop * maxSliderTop / maxScrollTop;
+          _this.updateScrollValues();
           _this.slider.css({
-            top: sliderTop
+            top: _this.sliderTop
           });
           if (e == null) {
             return;
           }
-          if (scrollTop >= maxScrollTop) {
+          if (_this.scrollTop >= _this.maxScrollTop) {
             if (_this.options.preventPageScrolling) {
               _this.preventScrolling(e, DOWN);
             }
             _this.el.trigger('scrollend');
-          } else if (scrollTop === 0) {
+          } else if (_this.scrollTop === 0) {
             if (_this.options.preventPageScrolling) {
               _this.preventScrolling(e, UP);
             }
