@@ -66,10 +66,7 @@
           }
           break;
         case MOUSEWHEEL:
-          if (!e.originalEvent) {
-            return;
-          }
-          if (!e.originalEvent.wheelDelta) {
+          if (!e.originalEvent || !e.originalEvent.wheelDelta) {
             return;
           }
           if (direction === DOWN && e.originalEvent.wheelDelta < 0 || direction === UP && e.originalEvent.wheelDelta > 0) {

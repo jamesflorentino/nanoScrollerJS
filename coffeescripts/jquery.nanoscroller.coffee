@@ -59,8 +59,7 @@
           if direction is DOWN and e.originalEvent.detail > 0 or direction is UP and e.originalEvent.detail < 0 
             e.preventDefault()
         when MOUSEWHEEL # WebKit, Trident and Presto
-          return if not e.originalEvent
-          return if not e.originalEvent.wheelDelta
+          return if not e.originalEvent or not e.originalEvent.wheelDelta
           if direction is DOWN and e.originalEvent.wheelDelta < 0 or direction is UP and e.originalEvent.wheelDelta > 0
             e.preventDefault()
       return
