@@ -3,7 +3,7 @@
 (function($, window, document) {
   "use strict";
 
-  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, KEYDOWN, KEYUP, KEYS, defaults, getBrowserScrollbarWidth;
+  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, KEYDOWN, KEYUP, KEYS, KEYSTATES, defaults, getBrowserScrollbarWidth;
   defaults = {
     paneClass: 'pane',
     sliderClass: 'slider',
@@ -31,6 +31,7 @@
   KEYUP = 'keyup';
   TOUCHMOVE = 'touchmove';
   KEYS = {up: 38, down: 40, pgup: 33, pgdown: 34, home: 36, end: 35};
+  KEYSTATES = {};
   BROWSER_IS_IE7 = window.navigator.appName === 'Microsoft Internet Explorer' && /msie 7./i.test(window.navigator.appVersion) && window.ActiveXObject;
   BROWSER_SCROLLBAR_WIDTH = null;
   getBrowserScrollbarWidth = function() {
@@ -151,10 +152,14 @@
             return;
           }
           var key = e.which;
-          if (key == KEYS.up || key == KEYS.pgup || key == KEYS.down || key == KEYS.pgdown)
-          {
-            _this.sliderY = (isNaN(_this.sliderY)) ? _this.maxSliderTop : _this.sliderY;
-            _this.scrollHeight = _this.content.scrollTop();
+          if (key == KEYS.up || key == KEYS.pgup || key == KEYS.down || key == KEYS.pgdown || key == KEYS.home || key == KEYS.end) {
+            KEYSTATES[key] = {};
+            KEYSTATES[key].down = true;
+            KEYSTATES[key].timeout = setTimeout(function() {
+              _this.handleKeyPress(key);
+            }, 100);
+            
+            e.preventDefault();
           }
         },
         keyup: function(e) {
@@ -162,31 +167,10 @@
             return;
           }
           var key = e.which;
-          if (key == KEYS.up || key == KEYS.pgup)
-          {
-            var percentage = (_this.scrollHeight - _this.content.scrollTop()) / (_this.contentHeight - _this.paneHeight) * 100,
-                sliderY = (percentage * _this.maxSliderTop) / 100;
-
-            _this.sliderY = _this.sliderY - sliderY;
-            _this.scroll();
-          }
-          else if (key == KEYS.down || key == KEYS.pgdown)
-          {
-            var percentage = (_this.content.scrollTop() - _this.scrollHeight) / (_this.contentHeight - _this.paneHeight) * 100,
-                sliderY = (percentage * _this.maxSliderTop) / 100;
-
-            _this.sliderY = _this.sliderY + sliderY;
-            _this.scroll();
-          }
-          else if (key == KEYS.home)
-          {
-            _this.sliderY = 0;
-            _this.scroll();
-          }
-          else if (key == KEYS.end)
-          {
-            _this.sliderY = _this.maxSliderTop;
-            _this.scroll();
+          _this.handleKeyPress(key);
+          if (KEYSTATES[key] != undefined) {
+            clearInterval(KEYSTATES[key].timeout);
+            delete KEYSTATES[key];
           }
         }
       };
@@ -200,7 +184,7 @@
       }
       this.slider.bind(MOUSEDOWN, events[DOWN]);
       this.pane.bind(MOUSEDOWN, events[PANEDOWN]).bind(MOUSEWHEEL, events[WHEEL]).bind(DOMSCROLL, events[WHEEL]);
-      this.content.bind(MOUSEWHEEL, events[SCROLL]).bind(DOMSCROLL, events[SCROLL]).bind(TOUCHMOVE, events[SCROLL]).attr('tabindex', 0).bind(KEYDOWN, events[KEYDOWN]).bind(KEYUP, events[KEYUP]);
+      this.content.bind(MOUSEWHEEL, events[SCROLL]).bind(DOMSCROLL, events[SCROLL]).bind(TOUCHMOVE, events[SCROLL]).bind(KEYDOWN, events[KEYDOWN]).bind(KEYUP, events[KEYUP]);
     };
 
     NanoScroll.prototype.removeEvents = function() {
@@ -220,6 +204,7 @@
       paneClass = options.paneClass, sliderClass = options.sliderClass, contentClass = options.contentClass;
       this.el.append("<div class=\"" + paneClass + "\"><div class=\"" + sliderClass + "\" /></div>");
       this.content = $(this.el.children("." + contentClass)[0]);
+      this.content.attr('tabindex', 0);
       this.slider = this.el.find("." + sliderClass);
       this.pane = this.el.find("." + paneClass);
       if (BROWSER_SCROLLBAR_WIDTH) {
@@ -332,6 +317,34 @@
         fraction = offset / this.contentHeight;
         new_slider = this.maxSliderTop * fraction;
         this.sliderY = new_slider;
+        this.scroll();
+      }
+      return this;
+    };
+    
+    NanoScroll.prototype.handleKeyPress = function(key) {
+      if (key == KEYS.up || key == KEYS.pgup) {
+        var scrollLength = (key == KEYS.up) ? 40 : 490,
+            percentage = (scrollLength) / (this.contentHeight - this.paneHeight) * 100,
+            sliderY = (percentage * this.maxSliderTop) / 100;
+
+        this.sliderY = this.sliderY - sliderY;
+        this.scroll();
+      }
+      else if (key == KEYS.down || key == KEYS.pgdown) {
+        var scrollLength = (key == KEYS.down) ? 40 : 490,
+            percentage = (scrollLength) / (this.contentHeight - this.paneHeight) * 100,
+            sliderY = (percentage * this.maxSliderTop) / 100;
+
+        this.sliderY = this.sliderY + sliderY;
+        this.scroll();
+      }
+      else if (key == KEYS.home) {
+        this.sliderY = 0;
+        this.scroll();
+      }
+      else if (key == KEYS.end) {
+        this.sliderY =_this.maxSliderTop;
         this.scroll();
       }
       return this;
