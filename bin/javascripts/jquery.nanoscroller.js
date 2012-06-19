@@ -80,7 +80,7 @@
       content = this.content[0];
       this.maxScrollTop = content.scrollHeight - content.clientHeight;
       this.scrollTop = content.scrollTop;
-      this.maxSliderTop = this.paneHeight - this.sliderHeight;
+      this.maxSliderTop = this.paneOuterHeight - this.sliderHeight;
       this.sliderTop = this.scrollTop * this.maxSliderTop / this.maxScrollTop;
     };
 
@@ -219,7 +219,7 @@
     };
 
     NanoScroll.prototype.reset = function() {
-      var content, contentHeight, contentStyle, contentStyleOverflowY, maxSliderTop, paneBottom, paneHeight, paneOuterHeight, paneTop, sliderHeight, sliderMinHeight;
+      var content, contentHeight, contentStyle, contentStyleOverflowY, paneBottom, paneHeight, paneOuterHeight, paneTop, sliderHeight, sliderMinHeight;
       if (!this.elementsExist()) {
         this.generate().stop();
       }
@@ -245,12 +245,11 @@
       if (contentStyleOverflowY === SCROLL && contentStyle.overflowX !== SCROLL) {
         sliderHeight += BROWSER_SCROLLBAR_WIDTH;
       }
-      maxSliderTop = paneOuterHeight - sliderHeight;
+      this.maxSliderTop = paneOuterHeight - sliderHeight;
       this.contentHeight = contentHeight;
       this.paneHeight = paneHeight;
       this.paneOuterHeight = paneOuterHeight;
       this.sliderHeight = sliderHeight;
-      this.maxSliderTop = maxSliderTop;
       this.slider.height(sliderHeight);
       this.events.scroll();
       this.pane.show();

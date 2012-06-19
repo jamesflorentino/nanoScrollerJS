@@ -70,7 +70,7 @@
       # `scrollTop / maxScrollTop = sliderTop / maxSliderTop`
       @maxScrollTop = content.scrollHeight - content.clientHeight
       @scrollTop = content.scrollTop
-      @maxSliderTop = @paneHeight - @sliderHeight
+      @maxSliderTop = @paneOuterHeight - @sliderHeight
       # `sliderTop = scrollTop / maxScrollTop * maxSliderTop
       @sliderTop = @scrollTop * @maxSliderTop / @maxScrollTop
       return
@@ -214,13 +214,12 @@
       sliderHeight = if sliderHeight > @options.sliderMinHeight then sliderHeight else @options.sliderMinHeight # set min height
       sliderHeight += BROWSER_SCROLLBAR_WIDTH if contentStyleOverflowY is SCROLL and contentStyle.overflowX isnt SCROLL
       # the maximum top value for the slider
-      maxSliderTop = paneOuterHeight - sliderHeight
+      @maxSliderTop = paneOuterHeight - sliderHeight
       # set into properties for further use
       @contentHeight = contentHeight
       @paneHeight = paneHeight
       @paneOuterHeight = paneOuterHeight
       @sliderHeight = sliderHeight
-      @maxSliderTop = maxSliderTop
       # set the values to the gadget
       @slider.height sliderHeight
       # scroll sets the position of the @slider
