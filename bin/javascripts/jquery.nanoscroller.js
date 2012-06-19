@@ -153,6 +153,7 @@
           }
           var key = e.which;
           if (key == KEYS.up || key == KEYS.pgup || key == KEYS.down || key == KEYS.pgdown || key == KEYS.home || key == KEYS.end) {
+            _this.sliderY = (isNaN(_this.sliderY)) ? 0 : _this.sliderY;
             KEYSTATES[key] = {};
             KEYSTATES[key].down = true;
             KEYSTATES[key].timeout = setTimeout(function() {
@@ -195,7 +196,7 @@
       }
       this.slider.unbind(MOUSEDOWN, events[DOWN]);
       this.pane.unbind(MOUSEDOWN, events[PANEDOWN]).unbind(MOUSEWHEEL, events[WHEEL]).unbind(DOMSCROLL, events[WHEEL]);
-      this.content.unbind(MOUSEWHEEL, events[SCROLL]).unbind(DOMSCROLL, events[SCROLL]).unbind(TOUCHMOVE, events[SCROLL]);
+      this.content.unbind(MOUSEWHEEL, events[SCROLL]).unbind(DOMSCROLL, events[SCROLL]).unbind(TOUCHMOVE, events[SCROLL]).unbind(KEYDOWN, events[KEYDOWN]).unbind(KEYUP, events[KEYUP]);
     };
 
     NanoScroll.prototype.generate = function() {
