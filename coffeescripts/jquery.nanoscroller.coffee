@@ -25,9 +25,19 @@
   DOMSCROLL  = 'DOMMouseScroll'
   DOWN       = 'down'
   WHEEL      = 'wheel'
+  KEYDOWN    = 'keydown'
+  KEYUP      = 'keyup'
   TOUCHMOVE  = 'touchmove'
   BROWSER_IS_IE7 = window.navigator.appName is 'Microsoft Internet Explorer' and (/msie 7./i).test(window.navigator.appVersion) and window.ActiveXObject
   BROWSER_SCROLLBAR_WIDTH = null
+  KEYSTATES = {}
+  KEYS =
+    up: 38
+    down: 40
+    pgup: 33
+    pgdown: 34
+    home: 36
+    end: 35
 
   getBrowserScrollbarWidth = ->
     outer = document.createElement 'div'
@@ -75,6 +85,17 @@
       @sliderTop = @scrollTop * @maxSliderTop / @maxScrollTop
       return
 
+    handleKeyPress: (key) ->
+      if key is KEYS.up or key is KEYS.pgup or key is KEYS.down or key is KEYS.pgdown
+        scrollLength = if key is KEYS.up or key is KEYS.down then 40 else 490
+        percentage = scrollLength / (@contentHeight - @paneHeight) * 100
+        sliderY = (percentage * @maxSliderTop) / 100
+        @sliderY = if key is KEYS.up or key is KEYS.pgup then @sliderY - sliderY else @sliderY + sliderY
+        @scroll()
+      else if key is KEYS.home or key is KEYS.end
+        @sliderY = if key is KEYS.home then 0 else @maxSliderTop
+        @scroll()
+      return
 
     createEvents: ->
       @events =
@@ -136,6 +157,26 @@
           @sliderY +=  -e.wheelDeltaY or -e.delta
           @scroll()
           false
+
+        keydown: (e) =>
+          return unless e?
+          key = e.which
+          if key is KEYS.up or key is KEYS.pgup or key is KEYS.down or key is KEYS.pgdown or key is KEYS.home or key is KEYS.end
+            @sliderY = if isNaN(@sliderY) then 0 else @sliderY
+            KEYSTATES[key] = setTimeout =>
+              @handleKeyPress(key)
+              return
+            , 100
+            e.preventDefault()
+          return
+
+        keyup: (e) =>
+          return unless e?
+          key = e.which
+          @handleKeyPress(key)
+          clearTimeout KEYSTATES[key] if KEYSTATES[key]?
+          return
+
       return
 
     addEvents: ->
@@ -148,6 +189,8 @@
       @content.bind(MOUSEWHEEL, events[SCROLL])
         .bind(DOMSCROLL, events[SCROLL])
         .bind(TOUCHMOVE, events[SCROLL])
+        .bind(KEYDOWN, events[KEYDOWN])
+        .bind(KEYUP, events[KEYUP])
       return
 
     removeEvents: ->
@@ -160,6 +203,8 @@
       @content.unbind(MOUSEWHEEL, events[SCROLL])
         .unbind(DOMSCROLL, events[SCROLL])
         .unbind(TOUCHMOVE, events[SCROLL])
+        .unbind(KEYDOWN, events[KEYDOWN])
+        .unbind(KEYUP, events[KEYUP])
       return
 
     generate: ->
@@ -169,6 +214,7 @@
       {paneClass, sliderClass, contentClass} = options
       @el.append """<div class="#{paneClass}"><div class="#{sliderClass}" /></div>"""
       @content = $ @el.children(".#{contentClass}")[0]
+      @content.attr 'tabindex', 0
       # slider is the name for the  scrollbox or thumb of the scrollbar gadget
       @slider  = @el.find ".#{sliderClass}"
       # pane is the name for the actual scrollbar.

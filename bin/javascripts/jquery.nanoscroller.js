@@ -3,7 +3,7 @@
 (function($, window, document) {
   "use strict";
 
-  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, defaults, getBrowserScrollbarWidth;
+  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYS, KEYSTATES, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, defaults, getBrowserScrollbarWidth;
   defaults = {
     paneClass: 'pane',
     sliderClass: 'slider',
@@ -27,9 +27,20 @@
   DOMSCROLL = 'DOMMouseScroll';
   DOWN = 'down';
   WHEEL = 'wheel';
+  KEYDOWN = 'keydown';
+  KEYUP = 'keyup';
   TOUCHMOVE = 'touchmove';
   BROWSER_IS_IE7 = window.navigator.appName === 'Microsoft Internet Explorer' && /msie 7./i.test(window.navigator.appVersion) && window.ActiveXObject;
   BROWSER_SCROLLBAR_WIDTH = null;
+  KEYSTATES = {};
+  KEYS = {
+    up: 38,
+    down: 40,
+    pgup: 33,
+    pgdown: 34,
+    home: 36,
+    end: 35
+  };
   getBrowserScrollbarWidth = function() {
     var outer, outerStyle, scrollbarWidth;
     outer = document.createElement('div');
@@ -82,6 +93,20 @@
       this.scrollTop = content.scrollTop;
       this.maxSliderTop = this.paneOuterHeight - this.sliderHeight;
       this.sliderTop = this.scrollTop * this.maxSliderTop / this.maxScrollTop;
+    };
+
+    NanoScroll.prototype.handleKeyPress = function(key) {
+      var percentage, scrollLength, sliderY;
+      if (key === KEYS.up || key === KEYS.pgup || key === KEYS.down || key === KEYS.pgdown) {
+        scrollLength = key === KEYS.up || key === KEYS.down ? 40 : 490;
+        percentage = scrollLength / (this.contentHeight - this.paneHeight) * 100;
+        sliderY = (percentage * this.maxSliderTop) / 100;
+        this.sliderY = key === KEYS.up || key === KEYS.pgup ? this.sliderY - sliderY : this.sliderY + sliderY;
+        this.scroll();
+      } else if (key === KEYS.home || key === KEYS.end) {
+        this.sliderY = key === KEYS.home ? 0 : this.maxSliderTop;
+        this.scroll();
+      }
     };
 
     NanoScroll.prototype.createEvents = function() {
@@ -150,6 +175,31 @@
           _this.sliderY += -e.wheelDeltaY || -e.delta;
           _this.scroll();
           return false;
+        },
+        keydown: function(e) {
+          var key;
+          if (e == null) {
+            return;
+          }
+          key = e.which;
+          if (key === KEYS.up || key === KEYS.pgup || key === KEYS.down || key === KEYS.pgdown || key === KEYS.home || key === KEYS.end) {
+            _this.sliderY = isNaN(_this.sliderY) ? 0 : _this.sliderY;
+            KEYSTATES[key] = setTimeout(function() {
+              _this.handleKeyPress(key);
+            }, 100);
+            e.preventDefault();
+          }
+        },
+        keyup: function(e) {
+          var key;
+          if (e == null) {
+            return;
+          }
+          key = e.which;
+          _this.handleKeyPress(key);
+          if (KEYSTATES[key] != null) {
+            clearTimeout(KEYSTATES[key]);
+          }
         }
       };
     };
@@ -162,7 +212,7 @@
       }
       this.slider.bind(MOUSEDOWN, events[DOWN]);
       this.pane.bind(MOUSEDOWN, events[PANEDOWN]).bind(MOUSEWHEEL, events[WHEEL]).bind(DOMSCROLL, events[WHEEL]);
-      this.content.bind(MOUSEWHEEL, events[SCROLL]).bind(DOMSCROLL, events[SCROLL]).bind(TOUCHMOVE, events[SCROLL]);
+      this.content.bind(MOUSEWHEEL, events[SCROLL]).bind(DOMSCROLL, events[SCROLL]).bind(TOUCHMOVE, events[SCROLL]).bind(KEYDOWN, events[KEYDOWN]).bind(KEYUP, events[KEYUP]);
     };
 
     NanoScroll.prototype.removeEvents = function() {
@@ -173,7 +223,7 @@
       }
       this.slider.unbind(MOUSEDOWN, events[DOWN]);
       this.pane.unbind(MOUSEDOWN, events[PANEDOWN]).unbind(MOUSEWHEEL, events[WHEEL]).unbind(DOMSCROLL, events[WHEEL]);
-      this.content.unbind(MOUSEWHEEL, events[SCROLL]).unbind(DOMSCROLL, events[SCROLL]).unbind(TOUCHMOVE, events[SCROLL]);
+      this.content.unbind(MOUSEWHEEL, events[SCROLL]).unbind(DOMSCROLL, events[SCROLL]).unbind(TOUCHMOVE, events[SCROLL]).unbind(KEYDOWN, events[KEYDOWN]).unbind(KEYUP, events[KEYUP]);
     };
 
     NanoScroll.prototype.generate = function() {
@@ -182,6 +232,7 @@
       paneClass = options.paneClass, sliderClass = options.sliderClass, contentClass = options.contentClass;
       this.el.append("<div class=\"" + paneClass + "\"><div class=\"" + sliderClass + "\" /></div>");
       this.content = $(this.el.children("." + contentClass)[0]);
+      this.content.attr('tabindex', 0);
       this.slider = this.el.find("." + sliderClass);
       this.pane = this.el.find("." + paneClass);
       if (BROWSER_SCROLLBAR_WIDTH) {
