@@ -322,31 +322,18 @@
       return this;
     };
     
-    NanoScroll.prototype.scrollDirection = function(direction, key) {
-      var scrollLength = (key == KEYS[direction]) ? 40 : 490,
-      percentage = (scrollLength) / (this.contentHeight - this.paneHeight) * 100,
-      sliderY = (percentage * this.maxSliderTop) / 100;
-
-      this.sliderY = (direction == UP) ? this.sliderY - sliderY : this.sliderY + sliderY;
-      this.scroll();
-    };
-
     NanoScroll.prototype.handleKeyPress = function(key) {
-      if (key == KEYS.up || key == KEYS.pgup) {
-        this.scrollDirection(UP, key)
-      }
-      else if (key == KEYS.down || key == KEYS.pgdown) {
-        this.scrollDirection(DOWN, key);
-      }
-      else if (key == KEYS.home) {
-        this.sliderY = 0;
+      if (key == KEYS.up || key == KEYS.pgup || key == KEYS.down || key == KEYS.pgdown) {
+        var scrollLength = (key == KEYS.up || key == KEYS.down) ? 40 : 490,
+            percentage = (scrollLength) / (this.contentHeight - this.paneHeight) * 100,
+            sliderY = (percentage * this.maxSliderTop) / 100;
+        if (key == KEYS.up || key == KEYS.pgup) {
+           this.sliderY = this.sliderY - sliderY;
+        } else {
+           this.sliderY = this.sliderY + sliderY;
+        }
         this.scroll();
       }
-      else if (key == KEYS.end) {
-        this.sliderY = this.maxSliderTop;
-        this.scroll();
-      }
-      return this;
     };
 
     NanoScroll.prototype.stop = function() {
