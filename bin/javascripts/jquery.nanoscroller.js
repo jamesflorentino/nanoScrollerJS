@@ -328,10 +328,13 @@
             percentage = (scrollLength) / (this.contentHeight - this.paneHeight) * 100,
             sliderY = (percentage * this.maxSliderTop) / 100;
         if (key == KEYS.up || key == KEYS.pgup) {
-           this.sliderY = this.sliderY - sliderY;
+          this.sliderY = this.sliderY - sliderY;
         } else {
-           this.sliderY = this.sliderY + sliderY;
+          this.sliderY = this.sliderY + sliderY;
         }
+        this.scroll();
+      } else if (key == KEYS.home || key == KEYS.end) {
+        this.sliderY = (key == KEYS.home) ? 0 : this.maxSliderTop;
         this.scroll();
       }
     };
