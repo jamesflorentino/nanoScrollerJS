@@ -154,9 +154,7 @@
           var key = e.which;
           if (key == KEYS.up || key == KEYS.pgup || key == KEYS.down || key == KEYS.pgdown || key == KEYS.home || key == KEYS.end) {
             _this.sliderY = (isNaN(_this.sliderY)) ? 0 : _this.sliderY;
-            KEYSTATES[key] = {};
-            KEYSTATES[key].down = true;
-            KEYSTATES[key].timeout = setTimeout(function() {
+            KEYSTATES[key] = setTimeout(function() {
               _this.handleKeyPress(key);
             }, 100);
             
@@ -170,8 +168,7 @@
           var key = e.which;
           _this.handleKeyPress(key);
           if (KEYSTATES[key] != undefined) {
-            clearInterval(KEYSTATES[key].timeout);
-            delete KEYSTATES[key];
+            clearTimeout(KEYSTATES[key]);
           }
         }
       };
