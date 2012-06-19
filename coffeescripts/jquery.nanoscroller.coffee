@@ -138,6 +138,7 @@
           return if @isBeingDragged
           @updateScrollValues()
           # update the slider position
+          @sliderY = @sliderTop
           @slider.css top: @sliderTop
           # the succeeding code should be ignored if @events.scroll() wasn't
           # invoked by a DOM event. (refer to @reset)

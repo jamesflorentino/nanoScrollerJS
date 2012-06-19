@@ -150,6 +150,7 @@
             return;
           }
           _this.updateScrollValues();
+          _this.sliderY = _this.sliderTop;
           _this.slider.css({
             top: _this.sliderTop
           });
