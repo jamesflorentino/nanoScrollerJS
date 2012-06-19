@@ -64,14 +64,13 @@
       @reset()
 
     preventScrolling: (e, direction) ->
-      switch e.type
-        when DOMSCROLL # Gecko
-          if direction is DOWN and e.originalEvent.detail > 0 or direction is UP and e.originalEvent.detail < 0 
-            e.preventDefault()
-        when MOUSEWHEEL # WebKit, Trident and Presto
-          return if not e.originalEvent or not e.originalEvent.wheelDelta
-          if direction is DOWN and e.originalEvent.wheelDelta < 0 or direction is UP and e.originalEvent.wheelDelta > 0
-            e.preventDefault()
+      if e.type is DOMSCROLL # Gecko
+        if direction is DOWN and e.originalEvent.detail > 0 or direction is UP and e.originalEvent.detail < 0 
+          e.preventDefault()
+      else if e.type is MOUSEWHEEL # WebKit, Trident and Presto
+        return if not e.originalEvent or not e.originalEvent.wheelDelta
+        if direction is DOWN and e.originalEvent.wheelDelta < 0 or direction is UP and e.originalEvent.wheelDelta > 0
+          e.preventDefault()
       return
 
     updateScrollValues: ->
