@@ -235,6 +235,7 @@ If you wish to include your site in this list, you can do so by tweeting the lin
 
 Other people who have contributed code:
 
+- [tahajahangir](https://github.com/tahajahangir) #60
 - [n0valyfe](https://github.com/n0valyfe) #57
 - [johanbaath](https://github.com/johanbaath) #42
 - [marcelombc](https://github.com/marcelombc) #40, #46
