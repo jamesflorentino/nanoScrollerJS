@@ -86,7 +86,7 @@
 
     handleKeyPress: (key) ->
       if key is KEYS.up or key is KEYS.pgup or key is KEYS.down or key is KEYS.pgdown
-        scrollLength = if key is KEYS.up or key is KEYS.down then 40 else 490
+        scrollLength = if key is KEYS.up or key is KEYS.down then 40 else @paneHeight * 0.9
         percentage = scrollLength / (@contentHeight - @paneHeight) * 100
         sliderY = (percentage * @maxSliderTop) / 100
         @sliderY = if key is KEYS.up or key is KEYS.pgup then @sliderY - sliderY else @sliderY + sliderY

@@ -96,7 +96,7 @@
     NanoScroll.prototype.handleKeyPress = function(key) {
       var percentage, scrollLength, sliderY;
       if (key === KEYS.up || key === KEYS.pgup || key === KEYS.down || key === KEYS.pgdown) {
-        scrollLength = key === KEYS.up || key === KEYS.down ? 40 : 490;
+        scrollLength = key === KEYS.up || key === KEYS.down ? 40 : this.paneHeight * 0.9;
         percentage = scrollLength / (this.contentHeight - this.paneHeight) * 100;
         sliderY = (percentage * this.maxSliderTop) / 100;
         this.sliderY = key === KEYS.up || key === KEYS.pgup ? this.sliderY - sliderY : this.sliderY + sliderY;
