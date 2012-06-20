@@ -78,10 +78,10 @@
       # Formula/ratio
       # `scrollTop / maxScrollTop = sliderTop / maxSliderTop`
       @maxScrollTop = content.scrollHeight - content.clientHeight
-      @scrollTop = content.scrollTop
+      @contentScrollTop = content.scrollTop
       @maxSliderTop = @paneOuterHeight - @sliderHeight
       # `sliderTop = scrollTop / maxScrollTop * maxSliderTop
-      @sliderTop = @scrollTop * @maxSliderTop / @maxScrollTop
+      @sliderTop = @contentScrollTop * @maxSliderTop / @maxScrollTop
       return
 
     handleKeyPress: (key) ->
@@ -109,9 +109,9 @@
           @sliderY = e.pageY - @el.offset().top - @offsetY
           @scroll()
           @updateScrollValues()
-          if @scrollTop >= @maxScrollTop
+          if @contentScrollTop >= @maxScrollTop
             @el.trigger('scrollend')
-          else if @scrollTop is 0
+          else if @contentScrollTop is 0
             @el.trigger('scrolltop')
           false
 
@@ -144,10 +144,10 @@
           return unless e?
           # if it reaches the maximum and minimum scrolling point,
           # we dispatch an event.
-          if @scrollTop >= @maxScrollTop
+          if @contentScrollTop >= @maxScrollTop
             @preventScrolling(e, DOWN) if @options.preventPageScrolling
             @el.trigger('scrollend')
-          else if @scrollTop is 0
+          else if @contentScrollTop is 0
             @preventScrolling(e, UP) if @options.preventPageScrolling
             @el.trigger('scrolltop')
           return

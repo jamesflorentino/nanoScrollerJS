@@ -88,9 +88,9 @@
       var content;
       content = this.content[0];
       this.maxScrollTop = content.scrollHeight - content.clientHeight;
-      this.scrollTop = content.scrollTop;
+      this.contentScrollTop = content.scrollTop;
       this.maxSliderTop = this.paneOuterHeight - this.sliderHeight;
-      this.sliderTop = this.scrollTop * this.maxSliderTop / this.maxScrollTop;
+      this.sliderTop = this.contentScrollTop * this.maxSliderTop / this.maxScrollTop;
     };
 
     NanoScroll.prototype.handleKeyPress = function(key) {
@@ -121,9 +121,9 @@
           _this.sliderY = e.pageY - _this.el.offset().top - _this.offsetY;
           _this.scroll();
           _this.updateScrollValues();
-          if (_this.scrollTop >= _this.maxScrollTop) {
+          if (_this.contentScrollTop >= _this.maxScrollTop) {
             _this.el.trigger('scrollend');
-          } else if (_this.scrollTop === 0) {
+          } else if (_this.contentScrollTop === 0) {
             _this.el.trigger('scrolltop');
           }
           return false;
@@ -155,12 +155,12 @@
           if (e == null) {
             return;
           }
-          if (_this.scrollTop >= _this.maxScrollTop) {
+          if (_this.contentScrollTop >= _this.maxScrollTop) {
             if (_this.options.preventPageScrolling) {
               _this.preventScrolling(e, DOWN);
             }
             _this.el.trigger('scrollend');
-          } else if (_this.scrollTop === 0) {
+          } else if (_this.contentScrollTop === 0) {
             if (_this.options.preventPageScrolling) {
               _this.preventScrolling(e, UP);
             }
