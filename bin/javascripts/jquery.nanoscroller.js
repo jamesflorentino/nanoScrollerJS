@@ -258,10 +258,6 @@
       return this;
     };
 
-    NanoScroll.prototype.elementsExist = function() {
-      return this.el.find("." + this.options.paneClass).length;
-    };
-
     NanoScroll.prototype.restore = function() {
       this.stopped = false;
       this.pane.show();
@@ -270,7 +266,7 @@
 
     NanoScroll.prototype.reset = function() {
       var content, contentHeight, contentStyle, contentStyleOverflowY, paneBottom, paneHeight, paneOuterHeight, paneTop, sliderHeight, sliderMinHeight;
-      if (!this.elementsExist()) {
+      if (!this.el.find("." + this.options.paneClass).length) {
         this.generate().stop();
       }
       if (this.stopped) {

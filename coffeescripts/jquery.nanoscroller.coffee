@@ -229,16 +229,13 @@
       @pane.css opacity: 1, visibility: 'visible' if options.alwaysVisible
       this
 
-    elementsExist: ->
-      @el.find(".#{@options.paneClass}").length
-
     restore: ->
       @stopped = false
       @pane.show()
       @addEvents()
 
     reset: ->
-      @generate().stop() if not @elementsExist()
+      @generate().stop() if not @el.find(".#{@options.paneClass}").length
       @restore() if @stopped
       content = @content[0]
       contentStyle = content.style
