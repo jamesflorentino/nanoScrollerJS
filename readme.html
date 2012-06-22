@@ -145,6 +145,15 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 <pre><code>$(&quot;.nano&quot;).nanoScroller({ disableResize: true });
 </code></pre>
 
+<h4>alwaysVisible</h4>
+
+<p>Set to true to stop the scrollbar from auto-hiding itself.</p>
+
+<p><strong>Default:</strong> false</p>
+
+<pre><code>$(&quot;.nano&quot;).nanoScroller({ alwaysVisible: true });
+</code></pre>
+
 <h4>paneClass</h4>
 
 <p>A classname for scrollbar track element. If you change this setting, you also have to change it in the plugin&#39;s CSS file.</p>
@@ -198,8 +207,11 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 <ol>
 <li>Make all JS changes in Coffeescript file(s), CSS changes in CSS file(s).</li>
 <li>In terminal move to nanoscroller folder and run <code>cake build</code></li>
+<li>If you want to check how much the plugin size has changed compared to last build, run <code>cake size</code> *</li>
 <li>Make sure that all changes are valid and open a pull request.</li>
 </ol>
+
+<p>* Uses <code>sizer.js</code> from <a href="https://github.com/jquery/jquery/pull/511">jQuery project</a></p>
 
 <h3>Browser compatibility</h3>
 
@@ -260,6 +272,8 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 <p>Other people who have contributed code:</p>
 
 <ul>
+<li><a href="https://github.com/tahajahangir">tahajahangir</a> #60</li>
+<li><a href="https://github.com/n0valyfe">n0valyfe</a> #57</li>
 <li><a href="https://github.com/johanbaath">johanbaath</a> #42</li>
 <li><a href="https://github.com/marcelombc">marcelombc</a> #40, #46</li>
 <li><a href="https://github.com/zacstewart">zacstewart</a> #30</li>
