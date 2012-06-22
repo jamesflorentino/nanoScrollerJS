@@ -126,7 +126,7 @@
           return
 
         panedown: (e) =>
-          @sliderY = e.offsetY - (@sliderHeight * 0.5)
+          @sliderY = (e.offsetY or e.originalEvent.layerY) - (@sliderHeight * 0.5)
           @scroll()
           @events.down e
           false
