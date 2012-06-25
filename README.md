@@ -66,6 +66,12 @@ To stop the operation. This option will tell the plugin to disable all event bin
 
     $(".nano").nanoScroller({ stop: true });
 
+#### flash:
+
+To flash the scrollbar gadget for 1.5 seconds. Usefull, if you want to show the user (e.g. on pageload) that there is more content waiting for him.
+
+    $(".nano").nanoScroller({ flash: true });
+
 #### nanoScroller();    
 
 Refresh the scrollbar. This simply re-calculates the position and height of the scrollbar gadget.
