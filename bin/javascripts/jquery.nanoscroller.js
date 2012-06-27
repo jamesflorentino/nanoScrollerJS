@@ -230,7 +230,7 @@
       options = this.options;
       paneClass = options.paneClass, sliderClass = options.sliderClass, contentClass = options.contentClass;
       this.el.append("<div class=\"" + paneClass + "\"><div class=\"" + sliderClass + "\" /></div>");
-      this.content = $(this.el.children("." + contentClass)[0]);
+      this.content = this.el.children("." + contentClass);
       this.content.attr('tabindex', 0);
       this.slider = this.el.find("." + sliderClass);
       this.pane = this.el.find("." + paneClass);

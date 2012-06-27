@@ -213,7 +213,7 @@
       options = @options
       {paneClass, sliderClass, contentClass} = options
       @el.append """<div class="#{paneClass}"><div class="#{sliderClass}" /></div>"""
-      @content = $ @el.children(".#{contentClass}")[0]
+      @content = @el.children(".#{contentClass}")
       @content.attr 'tabindex', 0
       # slider is the name for the  scrollbox or thumb of the scrollbar gadget
       @slider  = @el.find ".#{sliderClass}"
