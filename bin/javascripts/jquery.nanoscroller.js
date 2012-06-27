@@ -265,7 +265,7 @@
     };
 
     NanoScroll.prototype.reset = function() {
-      var content, contentHeight, contentStyle, contentStyleOverflowY, paneBottom, paneHeight, paneOuterHeight, paneTop, sliderHeight, sliderMinHeight;
+      var content, contentHeight, contentStyle, contentStyleOverflowY, paneBottom, paneHeight, paneOuterHeight, paneTop, sliderHeight;
       if (!this.el.find("." + this.options.paneClass).length) {
         this.generate().stop();
       }
@@ -285,7 +285,6 @@
       paneTop = parseInt(this.pane.css('top'), 10);
       paneBottom = parseInt(this.pane.css('bottom'), 10);
       paneOuterHeight = paneHeight + paneTop + paneBottom;
-      sliderMinHeight = this.options.sliderMinHeight;
       sliderHeight = Math.round(paneOuterHeight / contentHeight * paneOuterHeight);
       sliderHeight = sliderHeight > this.options.sliderMinHeight ? sliderHeight : this.options.sliderMinHeight;
       if (contentStyleOverflowY === SCROLL && contentStyle.overflowX !== SCROLL) {

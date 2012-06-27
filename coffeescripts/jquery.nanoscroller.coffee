@@ -252,7 +252,6 @@
       paneBottom = parseInt(@pane.css('bottom'), 10)
       paneOuterHeight = paneHeight + paneTop + paneBottom
       # set the slider's height
-      sliderMinHeight = @options.sliderMinHeight
       sliderHeight = Math.round paneOuterHeight / contentHeight * paneOuterHeight
       sliderHeight = if sliderHeight > @options.sliderMinHeight then sliderHeight else @options.sliderMinHeight # set min height
       sliderHeight += BROWSER_SCROLLBAR_WIDTH if contentStyleOverflowY is SCROLL and contentStyle.overflowX isnt SCROLL
