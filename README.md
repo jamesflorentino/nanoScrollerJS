@@ -66,6 +66,12 @@ To stop the operation. This option will tell the plugin to disable all event bin
 
     $(".nano").nanoScroller({ stop: true });
 
+#### flash:
+
+To flash the scrollbar gadget for an amount of time defined in plugin settings (_defaults to 1,5s_). Useful if you want to show the user (e.g. on pageload) that there is more content waiting for him.
+
+    $(".nano").nanoScroller({ flash: true });
+
 #### nanoScroller();    
 
 Refresh the scrollbar. This simply re-calculates the position and height of the scrollbar gadget.
@@ -135,6 +141,14 @@ Set to true to stop the scrollbar from auto-hiding itself.
 __Default:__ false
 
     $(".nano").nanoScroller({ alwaysVisible: true });
+
+#### flashDelay:
+
+Use this setting to specify the scrollbar hide delay in milliseconds if you have enabled the `flash` option.
+
+    $(".nano").nanoScroller({ flashDelay: 1000 });
+
+__Default:__ 1500
 
 #### paneClass
 
@@ -235,6 +249,7 @@ If you wish to include your site in this list, you can do so by tweeting the lin
 
 Other people who have contributed code:
 
+- [iStefo](https://github.com/iStefo) #65
 - [tahajahangir](https://github.com/tahajahangir) #60
 - [n0valyfe](https://github.com/n0valyfe) #57
 - [johanbaath](https://github.com/johanbaath) #42

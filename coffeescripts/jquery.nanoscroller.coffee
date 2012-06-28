@@ -10,6 +10,7 @@
     preventPageScrolling: false
     disableResize: false
     alwaysVisible: false
+    flashDelay: 1500
 
   # constants
   SCROLLBAR  = 'scrollbar'
@@ -308,8 +309,16 @@
       @pane.hide()
       this
 
+    flash: ->
+      @pane.addClass 'flashed'
+      setTimeout =>
+        @pane.removeClass 'flashed'
+        return
+      , @options.flashDelay
+      this
+
   $.fn.nanoScroller = (settings) ->
-    {scrollBottom, scrollTop, scrollTo, scroll, stop} = settings if settings?
+    {scrollBottom, scrollTop, scrollTo, scroll, stop, flash} = settings if settings?
     options = $.extend({}, defaults, settings)
     @each ->
       me = this
@@ -327,6 +336,7 @@
       return scrollbar.scrollTop(0) if scroll is 'top'
       return scrollbar.scrollTo(scroll) if scroll instanceof $
       return scrollbar.stop() if stop
+      return scrollbar.flash() if flash
       scrollbar.reset()
     return
   return

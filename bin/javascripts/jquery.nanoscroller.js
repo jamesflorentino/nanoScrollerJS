@@ -12,7 +12,8 @@
     iOSNativeScrolling: false,
     preventPageScrolling: false,
     disableResize: false,
-    alwaysVisible: false
+    alwaysVisible: false,
+    flashDelay: 1500
   };
   SCROLLBAR = 'scrollbar';
   SCROLL = 'scroll';
@@ -350,13 +351,22 @@
       return this;
     };
 
+    NanoScroll.prototype.flash = function() {
+      var _this = this;
+      this.pane.addClass('flashed');
+      setTimeout(function() {
+        _this.pane.removeClass('flashed');
+      }, this.options.flashDelay);
+      return this;
+    };
+
     return NanoScroll;
 
   })();
   $.fn.nanoScroller = function(settings) {
-    var options, scroll, scrollBottom, scrollTo, scrollTop, stop;
+    var flash, options, scroll, scrollBottom, scrollTo, scrollTop, stop;
     if (settings != null) {
-      scrollBottom = settings.scrollBottom, scrollTop = settings.scrollTop, scrollTo = settings.scrollTo, scroll = settings.scroll, stop = settings.stop;
+      scrollBottom = settings.scrollBottom, scrollTop = settings.scrollTop, scrollTo = settings.scrollTo, scroll = settings.scroll, stop = settings.stop, flash = settings.flash;
     }
     options = $.extend({}, defaults, settings);
     this.each(function() {
@@ -389,6 +399,9 @@
       }
       if (stop) {
         return scrollbar.stop();
+      }
+      if (flash) {
+        return scrollbar.flash();
       }
       return scrollbar.reset();
     });
