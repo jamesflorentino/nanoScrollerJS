@@ -185,11 +185,8 @@
       @win.bind RESIZE, events[RESIZE] if not @options.disableResize
       @slider.bind MOUSEDOWN, events[DOWN]
       @pane.bind(MOUSEDOWN, events[PANEDOWN])
-        .bind(MOUSEWHEEL, events[WHEEL])
-        .bind(DOMSCROLL, events[WHEEL])
-      @content.bind(MOUSEWHEEL, events[SCROLL])
-        .bind(DOMSCROLL, events[SCROLL])
-        .bind(TOUCHMOVE, events[SCROLL])
+        .bind("#{MOUSEWHEEL} #{DOMSCROLL}", events[WHEEL])
+      @content.bind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", events[SCROLL])
         .bind(KEYDOWN, events[KEYDOWN])
         .bind(KEYUP, events[KEYUP])
       return
@@ -199,11 +196,8 @@
       @win.unbind(RESIZE, events[RESIZE]) if not @options.disableResize
       @slider.unbind MOUSEDOWN, events[DOWN]
       @pane.unbind(MOUSEDOWN, events[PANEDOWN])
-        .unbind(MOUSEWHEEL, events[WHEEL])
-        .unbind(DOMSCROLL, events[WHEEL])
-      @content.unbind(MOUSEWHEEL, events[SCROLL])
-        .unbind(DOMSCROLL, events[SCROLL])
-        .unbind(TOUCHMOVE, events[SCROLL])
+        .unbind("#{MOUSEWHEEL} #{DOMSCROLL}", events[WHEEL])
+      @content.unbind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", events[SCROLL])
         .unbind(KEYDOWN, events[KEYDOWN])
         .unbind(KEYUP, events[KEYUP])
       return
