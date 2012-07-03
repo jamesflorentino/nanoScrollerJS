@@ -80,7 +80,7 @@
       # `scrollTop / maxScrollTop = sliderTop / maxSliderTop`
       @maxScrollTop = content.scrollHeight - content.clientHeight
       @contentScrollTop = content.scrollTop
-      @maxSliderTop = @paneOuterHeight - @sliderHeight
+      @maxSliderTop = @paneHeight - @sliderHeight
       # `sliderTop = scrollTop / maxScrollTop * maxSliderTop
       @sliderTop = @contentScrollTop * @maxSliderTop / @maxScrollTop
       return
