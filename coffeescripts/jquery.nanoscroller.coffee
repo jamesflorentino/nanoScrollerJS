@@ -262,7 +262,7 @@
       # scroll sets the position of the @slider
       @events.scroll()
       @pane.show()
-      if @paneOuterHeight >= content.scrollHeight and contentStyleOverflowY isnt SCROLL
+      if @pane.outerHeight(true) >= content.scrollHeight and contentStyleOverflowY isnt SCROLL
         @pane.hide()
       else if @el.height() is content.scrollHeight and contentStyleOverflowY is SCROLL
         @slider.hide()
