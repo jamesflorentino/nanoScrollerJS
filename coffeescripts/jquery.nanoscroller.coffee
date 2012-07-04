@@ -65,6 +65,7 @@
       @reset()
 
     preventScrolling: (e, direction) ->
+      return unless @isActive
       if e.type is DOMSCROLL # Gecko
         if direction is DOWN and e.originalEvent.detail > 0 or direction is UP and e.originalEvent.detail < 0 
           e.preventDefault()
@@ -268,6 +269,8 @@
         @slider.hide()
       else
         @slider.show()
+      # To know if the scroll height is longer than the viewport.
+      @isActive = @pane.is(':visible')
       this
 
     scroll: ->
