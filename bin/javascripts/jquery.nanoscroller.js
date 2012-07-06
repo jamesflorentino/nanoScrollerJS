@@ -7,13 +7,14 @@
   defaults = {
     paneClass: 'pane',
     sliderClass: 'slider',
-    sliderMinHeight: 20,
     contentClass: 'content',
     iOSNativeScrolling: false,
     preventPageScrolling: false,
     disableResize: false,
     alwaysVisible: false,
-    flashDelay: 1500
+    flashDelay: 1500,
+    sliderMinHeight: 20,
+    sliderMaxHeight: null
   };
   SCROLLBAR = 'scrollbar';
   SCROLL = 'scroll';
@@ -290,7 +291,11 @@
       paneBottom = parseInt(this.pane.css('bottom'), 10);
       paneOuterHeight = paneHeight + paneTop + paneBottom;
       sliderHeight = Math.round(paneOuterHeight / contentHeight * paneOuterHeight);
-      sliderHeight = sliderHeight > this.options.sliderMinHeight ? sliderHeight : this.options.sliderMinHeight;
+      if (sliderHeight < this.options.sliderMinHeight) {
+        sliderHeight = this.options.sliderMinHeight;
+      } else if ((this.options.sliderMaxHeight != null) && sliderHeight > this.options.sliderMaxHeight) {
+        sliderHeight = this.options.sliderMaxHeight;
+      }
       if (contentStyleOverflowY === SCROLL && contentStyle.overflowX !== SCROLL) {
         sliderHeight += BROWSER_SCROLLBAR_WIDTH;
       }

@@ -4,13 +4,14 @@
   defaults =
     paneClass: 'pane'
     sliderClass: 'slider'
-    sliderMinHeight: 20
     contentClass: 'content'
     iOSNativeScrolling: false
     preventPageScrolling: false
     disableResize: false
     alwaysVisible: false
     flashDelay: 1500
+    sliderMinHeight: 20
+    sliderMaxHeight: null
 
   # constants
   SCROLLBAR  = 'scrollbar'
@@ -249,7 +250,10 @@
       paneOuterHeight = paneHeight + paneTop + paneBottom
       # set the slider's height
       sliderHeight = Math.round paneOuterHeight / contentHeight * paneOuterHeight
-      sliderHeight = if sliderHeight > @options.sliderMinHeight then sliderHeight else @options.sliderMinHeight # set min height
+      if sliderHeight < @options.sliderMinHeight
+        sliderHeight = @options.sliderMinHeight # set min height
+      else if @options.sliderMaxHeight? and sliderHeight > @options.sliderMaxHeight
+        sliderHeight = @options.sliderMaxHeight # set max height
       sliderHeight += BROWSER_SCROLLBAR_WIDTH if contentStyleOverflowY is SCROLL and contentStyle.overflowX isnt SCROLL
       # the maximum top value for the slider
       @maxSliderTop = paneOuterHeight - sliderHeight
