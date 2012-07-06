@@ -1,6 +1,6 @@
 <h1>nanoScroller.js</h1>
 
-<p><a href="http://jamesflorentino.com/jquery.nanoscroller">nanoScroller.js</a> is a jQuery plugin that offers a simplistic way of implementing Mac OS X Lion-styled scrollbars for your website.
+<p><a href="https://github.com/jamesflorentino/nanoScrollerJS">nanoScroller.js</a> is a jQuery plugin that offers a simplistic way of implementing Mac OS X Lion-styled scrollbars for your website.
 It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other scrollbar div elements <code>.pane &gt; .slider</code> are added during run time to prevent clutter in templating. The latest version utilizes native scrolling and works with the iPad, iPhone, and some Android Tablets.</p>
 
 <p>Please visit the <a href="https://github.com/jamesflorentino/nanoScrollerJS/downloads">downloads</a> section to get the js and css template file (.zip).</p>
@@ -74,6 +74,13 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 <p>To stop the operation. This option will tell the plugin to disable all event bindings and hide the gadget scrollbar from the UI.</p>
 
 <pre><code>$(&quot;.nano&quot;).nanoScroller({ stop: true });
+</code></pre>
+
+<h4>flash:</h4>
+
+<p>To flash the scrollbar gadget for an amount of time defined in plugin settings (<em>defaults to 1,5s</em>). Useful if you want to show the user (e.g. on pageload) that there is more content waiting for him.</p>
+
+<pre><code>$(&quot;.nano&quot;).nanoScroller({ flash: true });
 </code></pre>
 
 <h4>nanoScroller();</h4>
@@ -153,6 +160,15 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 
 <pre><code>$(&quot;.nano&quot;).nanoScroller({ alwaysVisible: true });
 </code></pre>
+
+<h4>flashDelay:</h4>
+
+<p>Use this setting to specify the scrollbar hide delay in milliseconds if you have enabled the <code>flash</code> option.</p>
+
+<pre><code>$(&quot;.nano&quot;).nanoScroller({ flashDelay: 1000 });
+</code></pre>
+
+<p><strong>Default:</strong> 1500</p>
 
 <h4>paneClass</h4>
 
@@ -272,6 +288,7 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 <p>Other people who have contributed code:</p>
 
 <ul>
+<li><a href="https://github.com/iStefo">iStefo</a> #65</li>
 <li><a href="https://github.com/tahajahangir">tahajahangir</a> #60</li>
 <li><a href="https://github.com/n0valyfe">n0valyfe</a> #57</li>
 <li><a href="https://github.com/johanbaath">johanbaath</a> #42</li>
