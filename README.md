@@ -118,6 +118,14 @@ __Default:__ 20
 
     $(".nano").nanoScroller({ sliderMinHeight: 40 });
 
+#### sliderMaxHeight
+
+Sets the maximum height of the slider element.
+
+__Default:__ null
+
+    $(".nano").nanoScroller({ sliderMaxHeight: 200 });
+
 #### preventPageScrolling
 
 Set to true to prevent page scrolling when top or bottom inside the content div is reached.
