@@ -93,10 +93,10 @@
         percentage = scrollLength / (@contentHeight - @paneHeight) * 100
         sliderY = (percentage * @maxSliderTop) / 100
         @sliderY = if key is KEYS.up or key is KEYS.pgup then @sliderY - sliderY else @sliderY + sliderY
-         do @scroll
+        do @scroll
       else if key is KEYS.home or key is KEYS.end
         @sliderY = if key is KEYS.home then 0 else @maxSliderTop
-         do @scroll
+        do @scroll
       return
 
     createEvents: ->
@@ -329,7 +329,7 @@
         fraction = offset / @contentHeight
         new_slider = @maxSliderTop * fraction
         @sliderY = new_slider
-         do @scroll
+        do @scroll
       this
 
     stop: ->
@@ -350,7 +350,6 @@
     @each ->
       if not scrollbar = @nanoscroller
         options = $.extend {}, defaults
-        console.log 'options', options
         @nanoscroller = scrollbar = new NanoScroll this, options
       
       # scrollbar settings

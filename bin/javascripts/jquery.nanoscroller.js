@@ -211,6 +211,7 @@
 
     NanoScroll.prototype.addEvents = function() {
       var events;
+      this.removeEvents();
       events = this.events;
       if (!this.options.disableResize) {
         this.win.bind(RESIZE, events[RESIZE]);
@@ -384,7 +385,6 @@
       var options, scrollbar;
       if (!(scrollbar = this.nanoscroller)) {
         options = $.extend({}, defaults);
-        console.log('options', options);
         this.nanoscroller = scrollbar = new NanoScroll(this, options);
       }
       if (typeof settings === "object") {
