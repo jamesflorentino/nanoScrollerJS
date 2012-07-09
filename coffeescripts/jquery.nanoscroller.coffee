@@ -225,7 +225,8 @@
       # http://msdn.microsoft.com/en-us/library/windows/desktop/bb787527(v=vs.85).aspx#parts_of_scroll_bar
       options = @options
       {paneClass, sliderClass, contentClass} = options
-      @$el.append """<div class="#{paneClass}"><div class="#{sliderClass}" /></div>"""
+      if @$el.find("#{paneClass}").length is 0 and @$el.find("#{sliderClass}").length is 0
+        @$el.append """<div class="#{paneClass}"><div class="#{sliderClass}" /></div>"""
       @content = @$el.children(".#{contentClass}")
       @content.attr 'tabindex', 0
 
@@ -234,6 +235,7 @@
 
       # pane is the name for the actual scrollbar.
       @pane = @$el.find ".#{paneClass}"
+
       if BROWSER_SCROLLBAR_WIDTH
         cssRule = right: -BROWSER_SCROLLBAR_WIDTH
         @$el.addClass 'has-scrollbar'
