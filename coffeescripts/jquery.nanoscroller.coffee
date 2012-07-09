@@ -87,18 +87,6 @@
       @sliderTop = @contentScrollTop * @maxSliderTop / @maxScrollTop
       return
 
-    handleKeyPress: (key) ->
-      if key is KEYS.up or key is KEYS.pgup or key is KEYS.down or key is KEYS.pgdown
-        scrollLength = if key is KEYS.up or key is KEYS.down then 40 else @paneHeight * 0.9
-        percentage = scrollLength / (@contentHeight - @paneHeight) * 100
-        sliderY = (percentage * @maxSliderTop) / 100
-        @sliderY = if key is KEYS.up or key is KEYS.pgup then @sliderY - sliderY else @sliderY + sliderY
-        do @scroll
-      else if key is KEYS.home or key is KEYS.end
-        @sliderY = if key is KEYS.home then 0 else @maxSliderTop
-        do @scroll
-      return
-
     createEvents: ->
       @events =
         down: (e) =>
@@ -165,25 +153,6 @@
           do @scroll
           false
 
-        keydown: (e) =>
-          return unless e?
-          key = e.which
-          if key is KEYS.up or key is KEYS.pgup or key is KEYS.down or key is KEYS.pgdown or key is KEYS.home or key is KEYS.end
-            @sliderY = if isNaN(@sliderY) then 0 else @sliderY
-            KEYSTATES[key] = setTimeout =>
-              @handleKeyPress key
-              return
-            , 100
-            do e.preventDefault
-          return
-
-        keyup: (e) =>
-          return unless e?
-          key = e.which
-          @handleKeyPress key
-          clearTimeout KEYSTATES[key] if KEYSTATES[key]?
-          return
-
       return
 
     addEvents: ->
@@ -199,13 +168,6 @@
         .bind("#{MOUSEWHEEL} #{DOMSCROLL}", events[WHEEL])
       @content
         .bind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", events[SCROLL])
-      do @addKeyboardEvents if @options.keyboardSupport
-      return
-
-    addKeyboardEvents: ->
-      @content
-        .bind(KEYDOWN, events[KEYDOWN])
-        .bind(KEYUP, events[KEYUP])
       return
 
     removeEvents: ->

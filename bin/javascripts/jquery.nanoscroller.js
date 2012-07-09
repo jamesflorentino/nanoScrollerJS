@@ -99,20 +99,6 @@
       this.sliderTop = this.contentScrollTop * this.maxSliderTop / this.maxScrollTop;
     };
 
-    NanoScroll.prototype.handleKeyPress = function(key) {
-      var percentage, scrollLength, sliderY;
-      if (key === KEYS.up || key === KEYS.pgup || key === KEYS.down || key === KEYS.pgdown) {
-        scrollLength = key === KEYS.up || key === KEYS.down ? 40 : this.paneHeight * 0.9;
-        percentage = scrollLength / (this.contentHeight - this.paneHeight) * 100;
-        sliderY = (percentage * this.maxSliderTop) / 100;
-        this.sliderY = key === KEYS.up || key === KEYS.pgup ? this.sliderY - sliderY : this.sliderY + sliderY;
-        this.scroll();
-      } else if (key === KEYS.home || key === KEYS.end) {
-        this.sliderY = key === KEYS.home ? 0 : this.maxSliderTop;
-        this.scroll();
-      }
-    };
-
     NanoScroll.prototype.createEvents = function() {
       var _this = this;
       this.events = {
@@ -180,31 +166,6 @@
           _this.sliderY += -e.wheelDeltaY || -e.delta;
           _this.scroll();
           return false;
-        },
-        keydown: function(e) {
-          var key;
-          if (e == null) {
-            return;
-          }
-          key = e.which;
-          if (key === KEYS.up || key === KEYS.pgup || key === KEYS.down || key === KEYS.pgdown || key === KEYS.home || key === KEYS.end) {
-            _this.sliderY = isNaN(_this.sliderY) ? 0 : _this.sliderY;
-            KEYSTATES[key] = setTimeout(function() {
-              _this.handleKeyPress(key);
-            }, 100);
-            e.preventDefault();
-          }
-        },
-        keyup: function(e) {
-          var key;
-          if (e == null) {
-            return;
-          }
-          key = e.which;
-          _this.handleKeyPress(key);
-          if (KEYSTATES[key] != null) {
-            clearTimeout(KEYSTATES[key]);
-          }
         }
       };
     };
@@ -219,13 +180,6 @@
       this.slider.bind(MOUSEDOWN, events[DOWN]);
       this.pane.bind(MOUSEDOWN, events[PANEDOWN]).bind("" + MOUSEWHEEL + " " + DOMSCROLL, events[WHEEL]);
       this.content.bind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]);
-      if (this.options.keyboardSupport) {
-        this.addKeyboardEvents();
-      }
-    };
-
-    NanoScroll.prototype.addKeyboardEvents = function() {
-      this.content.bind(KEYDOWN, events[KEYDOWN]).bind(KEYUP, events[KEYUP]);
     };
 
     NanoScroll.prototype.removeEvents = function() {
