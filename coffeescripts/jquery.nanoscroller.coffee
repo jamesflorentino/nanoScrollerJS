@@ -355,7 +355,7 @@
         @nanoscroller = scrollbar = new NanoScroll this, options
       
       # scrollbar settings
-      if typeof settings is "object"
+      if settings and typeof settings is "object"
         $.extend scrollbar.options, settings # update scrollbar settings
         return scrollbar.scrollBottom settings.scrollBottom if settings.scrollBottom
         return scrollbar.scrollTop settings.scrollTop if settings.scrollTop

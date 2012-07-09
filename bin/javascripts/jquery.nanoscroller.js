@@ -389,7 +389,7 @@
         options = $.extend({}, defaults);
         this.nanoscroller = scrollbar = new NanoScroll(this, options);
       }
-      if (typeof settings === "object") {
+      if (settings && typeof settings === "object") {
         $.extend(scrollbar.options, settings);
         if (settings.scrollBottom) {
           return scrollbar.scrollBottom(settings.scrollBottom);
