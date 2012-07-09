@@ -241,7 +241,7 @@
       var contentClass, cssRule, options, paneClass, sliderClass;
       options = this.options;
       paneClass = options.paneClass, sliderClass = options.sliderClass, contentClass = options.contentClass;
-      if (this.$el.find("" + paneClass).length === 0 && this.$el.find("" + sliderClass).length === 0) {
+      if (!this.$el.find("" + paneClass).length && !this.$el.find("" + sliderClass).length) {
         this.$el.append("<div class=\"" + paneClass + "\"><div class=\"" + sliderClass + "\" /></div>");
       }
       this.content = this.$el.children("." + contentClass);
