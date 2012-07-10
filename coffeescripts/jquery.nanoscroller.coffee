@@ -205,7 +205,6 @@
         cssRule ?= {}
         cssRule.WebkitOverflowScrolling = 'touch'
       @content.css cssRule if cssRule?
-      @pane.css opacity: 1, visibility: 'visible' if options.alwaysVisible
       this
 
     restore: ->
@@ -267,6 +266,12 @@
       else
         do @slider.show
 
+      # allow the pane element to stay visible
+      if @options.alwaysVisible
+        @pane.css opacity: 1, visibility: 'visible'
+      else
+        @pane.css opacity: '', visibility: ''
+
       this
 
     scroll: ->
@@ -313,21 +318,19 @@
   $.fn.nanoScroller = (settings) ->
     @each ->
       if not scrollbar = @nanoscroller
-        options = $.extend {}, defaults
-        if settings and typeof settings is "object"
-          options = $.extend options, settings
+        options = $.extend {}, defaults, settings
         @nanoscroller = scrollbar = new NanoScroll this, options
       
       # scrollbar settings
       if settings and typeof settings is "object"
         $.extend scrollbar.options, settings # update scrollbar settings
+        do scrollbar.reset
         return scrollbar.scrollBottom settings.scrollBottom if settings.scrollBottom
         return scrollbar.scrollTop settings.scrollTop if settings.scrollTop
         return scrollbar.scrollTo settings.scrollTo if settings.scrollTo
         return scrollbar.scrollBottom 0 if settings.scroll is 'bottom'
         return scrollbar.scrollTop 0 if settings.scroll is 'top'
-        if settings.scroll
-          return scrollbar.scrollTo settings.scroll if settings.scroll instanceof $
+        return scrollbar.scrollTo settings.scroll if settings.scroll and settings.scroll instanceof $
         return do scrollbar.stop if settings.stop
         return do scrollbar.flash if settings.flash
 

@@ -217,12 +217,6 @@
       if (cssRule != null) {
         this.content.css(cssRule);
       }
-      if (options.alwaysVisible) {
-        this.pane.css({
-          opacity: 1,
-          visibility: 'visible'
-        });
-      }
       return this;
     };
 
@@ -278,6 +272,17 @@
         this.slider.hide();
       } else {
         this.slider.show();
+      }
+      if (this.options.alwaysVisible) {
+        this.pane.css({
+          opacity: 1,
+          visibility: 'visible'
+        });
+      } else {
+        this.pane.css({
+          opacity: '',
+          visibility: ''
+        });
       }
       return this;
     };
@@ -340,14 +345,12 @@
     return this.each(function() {
       var options, scrollbar;
       if (!(scrollbar = this.nanoscroller)) {
-        options = $.extend({}, defaults);
-        if (settings && typeof settings === "object") {
-          options = $.extend(options, settings);
-        }
+        options = $.extend({}, defaults, settings);
         this.nanoscroller = scrollbar = new NanoScroll(this, options);
       }
       if (settings && typeof settings === "object") {
         $.extend(scrollbar.options, settings);
+        scrollbar.reset();
         if (settings.scrollBottom) {
           return scrollbar.scrollBottom(settings.scrollBottom);
         }
@@ -363,10 +366,8 @@
         if (settings.scroll === 'top') {
           return scrollbar.scrollTop(0);
         }
-        if (settings.scroll) {
-          if (settings.scroll instanceof $) {
-            return scrollbar.scrollTo(settings.scroll);
-          }
+        if (settings.scroll && settings.scroll instanceof $) {
+          return scrollbar.scrollTo(settings.scroll);
         }
         if (settings.stop) {
           return scrollbar.stop();
