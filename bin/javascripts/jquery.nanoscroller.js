@@ -341,6 +341,9 @@
       var options, scrollbar;
       if (!(scrollbar = this.nanoscroller)) {
         options = $.extend({}, defaults);
+        if (settings && typeof settings === "object") {
+          options = $.extend(options, settings);
+        }
         this.nanoscroller = scrollbar = new NanoScroll(this, options);
       }
       if (settings && typeof settings === "object") {

@@ -314,6 +314,8 @@
     @each ->
       if not scrollbar = @nanoscroller
         options = $.extend {}, defaults
+        if settings and typeof settings is "object"
+          options = $.extend options, settings
         @nanoscroller = scrollbar = new NanoScroll this, options
       
       # scrollbar settings
