@@ -1,8 +1,7 @@
 $(function(){
 
   $('.nano').nanoScroller({
-    preventPageScrolling: true,
-    contentClass: 'content_new'
+    preventPageScrolling: true
   });
   $("#main").find('.description').load("readme.html", function(){
     $(".nano").nanoScroller();
