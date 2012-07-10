@@ -1,4 +1,4 @@
-# Compiled source #
+
 ###################
 *.com
 *.class
@@ -36,5 +36,6 @@
 Icon?
 ehthumbs.db
 Thumbs.db
+publish.sh
 
 build/.sizecache.json
