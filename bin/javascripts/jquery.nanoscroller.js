@@ -331,6 +331,7 @@
 
     NanoScroll.prototype.flash = function() {
       var _this = this;
+      this.reset();
       this.pane.addClass('flashed');
       setTimeout(function() {
         _this.pane.removeClass('flashed');
@@ -350,7 +351,6 @@
       }
       if (settings && typeof settings === "object") {
         $.extend(scrollbar.options, settings);
-        scrollbar.reset();
         if (settings.scrollBottom) {
           return scrollbar.scrollBottom(settings.scrollBottom);
         }

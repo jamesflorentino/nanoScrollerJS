@@ -308,6 +308,7 @@
       this
 
     flash: ->
+      do @reset
       @pane.addClass 'flashed'
       setTimeout =>
         @pane.removeClass 'flashed'
@@ -324,7 +325,6 @@
       # scrollbar settings
       if settings and typeof settings is "object"
         $.extend scrollbar.options, settings # update scrollbar settings
-        do scrollbar.reset
         return scrollbar.scrollBottom settings.scrollBottom if settings.scrollBottom
         return scrollbar.scrollTop settings.scrollTop if settings.scrollTop
         return scrollbar.scrollTo settings.scrollTo if settings.scrollTo
