@@ -134,6 +134,15 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 <pre><code>$(&quot;.nano&quot;).nanoScroller({ sliderMinHeight: 40 });
 </code></pre>
 
+<h4>sliderMaxHeight</h4>
+
+<p>Sets the maximum height of the slider element.</p>
+
+<p><strong>Default:</strong> null</p>
+
+<pre><code>$(&quot;.nano&quot;).nanoScroller({ sliderMaxHeight: 200 });
+</code></pre>
+
 <h4>preventPageScrolling</h4>
 
 <p>Set to true to prevent page scrolling when top or bottom inside the content div is reached.</p>
@@ -198,6 +207,8 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 </code></pre>
 
 <h2>How it works</h2>
+
+<p><img src="https://github.com/jamesflorentino/nanoScrollerJS/raw/master/fig1.png" alt="Fig 1."></p>
 
 <p>The plugin works basically by creating a scrollbar gadget (with pre-defined css for styling) and then subscribing DOM events to it. In doing so, you still retain the native scrolling mechanism thesystem OS provides. The native scrollbars are hidden from the viewport and replacing it with a stylized version. This solution is applicable for web content that has multiple items on a single page. An example would be a chat site (which is how nanoScroller&#39;s necessity came to be). The plugin offers minimal mark-up and a non-obstructive UI replacement. As of May 2012, it still does not support horizontal scrolling. You are free to create a pull request if you wish to contribute that feature.</p>
 
