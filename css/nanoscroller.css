@@ -5,7 +5,7 @@
   height   : 100%;
   overflow : hidden;
 }
-.nano .content_new {
+.nano .content {
   position      : absolute;
   overflow      : scroll;
   overflow-x    : hidden;
@@ -14,13 +14,13 @@
   bottom        : 0;
   left          : 0;
 }
-.nano .content_new:focus {
+.nano .content:focus {
   outline: thin dotted;
 }
-.nano .content_new::-webkit-scrollbar {
+.nano .content::-webkit-scrollbar {
   visibility: hidden;
 }
-.has-scrollbar .content_new::-webkit-scrollbar {
+.has-scrollbar .content::-webkit-scrollbar {
   visibility: visible;
 }
 .nano > .pane {

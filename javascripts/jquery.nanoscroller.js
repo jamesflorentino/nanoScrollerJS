@@ -217,12 +217,6 @@
       if (cssRule != null) {
         this.content.css(cssRule);
       }
-      if (options.alwaysVisible) {
-        this.pane.css({
-          opacity: 1,
-          visibility: 'visible'
-        });
-      }
       return this;
     };
 
@@ -279,6 +273,17 @@
       } else {
         this.slider.show();
       }
+      if (this.options.alwaysVisible) {
+        this.pane.css({
+          opacity: 1,
+          visibility: 'visible'
+        });
+      } else {
+        this.pane.css({
+          opacity: '',
+          visibility: ''
+        });
+      }
       return this;
     };
 
@@ -326,6 +331,7 @@
 
     NanoScroll.prototype.flash = function() {
       var _this = this;
+      this.reset();
       this.pane.addClass('flashed');
       setTimeout(function() {
         _this.pane.removeClass('flashed');
@@ -340,10 +346,7 @@
     return this.each(function() {
       var options, scrollbar;
       if (!(scrollbar = this.nanoscroller)) {
-        options = $.extend({}, defaults);
-        if (settings && typeof settings === "object") {
-          options = $.extend(options, settings);
-        }
+        options = $.extend({}, defaults, settings);
         this.nanoscroller = scrollbar = new NanoScroll(this, options);
       }
       if (settings && typeof settings === "object") {
@@ -363,10 +366,8 @@
         if (settings.scroll === 'top') {
           return scrollbar.scrollTop(0);
         }
-        if (settings.scroll) {
-          if (settings.scroll instanceof $) {
-            return scrollbar.scrollTo(settings.scroll);
-          }
+        if (settings.scroll && settings.scroll instanceof $) {
+          return scrollbar.scrollTo(settings.scroll);
         }
         if (settings.stop) {
           return scrollbar.stop();
