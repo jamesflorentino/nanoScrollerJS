@@ -186,7 +186,9 @@ __Default:__ 'content'
 
 ![Fig 1.](https://github.com/jamesflorentino/nanoScrollerJS/raw/master/fig1.png)
 
-The plugin works basically by creating a scrollbar gadget (with pre-defined css for styling) and then subscribing DOM events to it. In doing so, you still retain the native scrolling mechanism thesystem OS provides. The native scrollbars are hidden from the viewport and replacing it with a stylized version. This solution is applicable for web content that has multiple items on a single page. An example would be a chat site (which is how nanoScroller's necessity came to be). The plugin offers minimal mark-up and a non-obstructive UI replacement. As of May 2012, it still does not support horizontal scrolling. You are free to create a pull request if you wish to contribute that feature.
+The plugin works by creating a scrollbar gadget (with pre-defined css for styling) and then subscribing the `.content`'s scroll events to it. Mouse press and drag events are also subscribed to the `.pane` and `.pane > .slider` to emulate the native scrollbar's mechanism. The system scrollbars are hidden from the viewport (Fig 1). By doing this, we still retain the natural scrolling experience provided by the OS.
+
+We are still working on doing a horizontal scrolling feature. If you're interested in contributing to the project, you are free to fork it and create a pull request.
 
 ### Development
 
