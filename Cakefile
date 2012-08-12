@@ -15,6 +15,11 @@ task "build", "Build everything and minify", (options) ->
           throw errWriting if errWriting
           console.log "Success!"
 
+task "build:tests", "Build tests", (options) ->
+  exec "coffee -c --bare --output tests/spec/ tests/coffeescripts/", (err, stdout, stderr) ->
+    throw err if err
+    console.log stdout + stderr if (stderr? or stdout?)
+
 task "size", "Check how nanoScroller size has changed compared to last Cake build", ->
   exec "gzip -c bin/javascripts/jquery.nanoscroller.min.js > bin/javascripts/jquery.nanoscroller.min.js.gz", (err, stdout, stderr) ->
     throw err if err
