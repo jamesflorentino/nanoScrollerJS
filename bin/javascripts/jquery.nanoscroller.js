@@ -92,7 +92,7 @@
 
     NanoScroll.prototype.updateScrollValues = function() {
       var content;
-      content = this.content[0];
+      content = this.content;
       this.maxScrollTop = content.scrollHeight - content.clientHeight;
       this.contentScrollTop = content.scrollTop;
       this.maxSliderTop = this.paneHeight - this.sliderHeight;
@@ -179,7 +179,7 @@
       }
       this.slider.bind(MOUSEDOWN, events[DOWN]);
       this.pane.bind(MOUSEDOWN, events[PANEDOWN]).bind("" + MOUSEWHEEL + " " + DOMSCROLL, events[WHEEL]);
-      this.content.bind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]);
+      this.$content.bind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]);
     };
 
     NanoScroll.prototype.removeEvents = function() {
@@ -188,7 +188,7 @@
       this.win.unbind(RESIZE, events[RESIZE]);
       this.slider.unbind();
       this.pane.unbind();
-      this.content.unbind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]).unbind(KEYDOWN, events[KEYDOWN]).unbind(KEYUP, events[KEYUP]);
+      this.$content.unbind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]);
     };
 
     NanoScroll.prototype.generate = function() {
@@ -198,8 +198,9 @@
       if (!this.$el.find("" + paneClass).length && !this.$el.find("" + sliderClass).length) {
         this.$el.append("<div class=\"" + paneClass + "\"><div class=\"" + sliderClass + "\" /></div>");
       }
-      this.content = this.$el.children("." + contentClass);
-      this.content.attr('tabindex', 0);
+      this.$content = this.$el.children("." + contentClass);
+      this.$content.attr('tabindex', 0);
+      this.content = this.$content[0];
       this.slider = this.$el.find("." + sliderClass);
       this.pane = this.$el.find("." + paneClass);
       if (BROWSER_SCROLLBAR_WIDTH) {
@@ -209,13 +210,11 @@
         this.$el.addClass('has-scrollbar');
       }
       if (options.iOSNativeScrolling) {
-        if (cssRule == null) {
-          cssRule = {};
-        }
+        cssRule || (cssRule = {});
         cssRule.WebkitOverflowScrolling = 'touch';
       }
       if (cssRule != null) {
-        this.content.css(cssRule);
+        this.$content.css(cssRule);
       }
       return this;
     };
@@ -234,12 +233,12 @@
       if (this.stopped) {
         this.restore();
       }
-      content = this.content[0];
+      content = this.content;
       contentStyle = content.style;
       contentStyleOverflowY = contentStyle.overflowY;
       if (BROWSER_IS_IE7) {
-        this.content.css({
-          height: this.content.height()
+        this.$content.css({
+          height: this.$content.height()
         });
       }
       contentHeight = content.scrollHeight + BROWSER_SCROLLBAR_WIDTH;
@@ -290,7 +289,7 @@
     NanoScroll.prototype.scroll = function() {
       this.sliderY = Math.max(0, this.sliderY);
       this.sliderY = Math.min(this.maxSliderTop, this.sliderY);
-      this.content.scrollTop((this.paneHeight - this.contentHeight + BROWSER_SCROLLBAR_WIDTH) * this.sliderY / this.maxSliderTop * -1);
+      this.$content.scrollTop((this.paneHeight - this.contentHeight + BROWSER_SCROLLBAR_WIDTH) * this.sliderY / this.maxSliderTop * -1);
       this.slider.css({
         top: this.sliderY
       });
@@ -299,13 +298,13 @@
 
     NanoScroll.prototype.scrollBottom = function(offsetY) {
       this.reset();
-      this.content.scrollTop(this.contentHeight - this.content.height() - offsetY).trigger(MOUSEWHEEL);
+      this.$content.scrollTop(this.contentHeight - this.$content.height() - offsetY).trigger(MOUSEWHEEL);
       return this;
     };
 
     NanoScroll.prototype.scrollTop = function(offsetY) {
       this.reset();
-      this.content.scrollTop(+offsetY).trigger(MOUSEWHEEL);
+      this.$content.scrollTop(+offsetY).trigger(MOUSEWHEEL);
       return this;
     };
 

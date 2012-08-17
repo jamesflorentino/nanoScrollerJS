@@ -77,7 +77,7 @@
       return
 
     updateScrollValues: ->
-      content = @content[0]
+      content = @content
       # Formula/ratio
       # `scrollTop / maxScrollTop = sliderTop / maxSliderTop`
       @maxScrollTop = content.scrollHeight - content.clientHeight
@@ -166,7 +166,7 @@
       @pane
         .bind(MOUSEDOWN, events[PANEDOWN])
         .bind("#{MOUSEWHEEL} #{DOMSCROLL}", events[WHEEL])
-      @content
+      @$content
         .bind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", events[SCROLL])
       return
 
@@ -176,10 +176,8 @@
         .unbind(RESIZE, events[RESIZE])
       do @slider.unbind
       do @pane.unbind
-      @content
+      @$content
         .unbind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", events[SCROLL])
-        .unbind(KEYDOWN, events[KEYDOWN])
-        .unbind(KEYUP, events[KEYUP])
       return
 
     generate: ->
@@ -189,8 +187,9 @@
       {paneClass, sliderClass, contentClass} = options
       if not @$el.find("#{paneClass}").length and not @$el.find("#{sliderClass}").length
         @$el.append """<div class="#{paneClass}"><div class="#{sliderClass}" /></div>"""
-      @content = @$el.children(".#{contentClass}")
-      @content.attr 'tabindex', 0
+      @$content = @$el.children(".#{contentClass}")
+      @$content.attr 'tabindex', 0
+      @content = @$content[0]
 
       # slider is the name for the  scrollbox or thumb of the scrollbar gadget
       @slider = @$el.find ".#{sliderClass}"
@@ -202,9 +201,9 @@
         cssRule = right: -BROWSER_SCROLLBAR_WIDTH
         @$el.addClass 'has-scrollbar'
       if options.iOSNativeScrolling
-        cssRule ?= {}
+        cssRule or= {}
         cssRule.WebkitOverflowScrolling = 'touch'
-      @content.css cssRule if cssRule?
+      @$content.css cssRule if cssRule?
       this
 
     restore: ->
@@ -215,13 +214,13 @@
     reset: ->
       @generate().stop() if not @$el.find(".#{@options.paneClass}").length
       do @restore if @stopped
-      content = @content[0]
+      content = @content
       contentStyle = content.style
       contentStyleOverflowY = contentStyle.overflowY
 
       # try to detect IE7 and IE7 compatibility mode.
       # this sniffing is done to fix a IE7 related bug.
-      @content.css height: do @content.height if BROWSER_IS_IE7
+      @$content.css height: do @$content.height if BROWSER_IS_IE7
 
       # set the scrollbar UI's height
       # the target content
@@ -277,18 +276,18 @@
     scroll: ->
       @sliderY = Math.max 0, @sliderY
       @sliderY = Math.min @maxSliderTop, @sliderY
-      @content.scrollTop (@paneHeight - @contentHeight + BROWSER_SCROLLBAR_WIDTH) * @sliderY / @maxSliderTop * -1
+      @$content.scrollTop (@paneHeight - @contentHeight + BROWSER_SCROLLBAR_WIDTH) * @sliderY / @maxSliderTop * -1
       @slider.css top: @sliderY
       this
 
     scrollBottom: (offsetY) ->
       do @reset
-      @content.scrollTop(@contentHeight - @content.height() - offsetY).trigger(MOUSEWHEEL) # Update scrollbar position by triggering one of the scroll events
+      @$content.scrollTop(@contentHeight - @$content.height() - offsetY).trigger(MOUSEWHEEL) # Update scrollbar position by triggering one of the scroll events
       this
 
     scrollTop: (offsetY) ->
       do @reset
-      @content.scrollTop(+offsetY).trigger(MOUSEWHEEL) # Update scrollbar position by triggering one of the scroll events
+      @$content.scrollTop(+offsetY).trigger(MOUSEWHEEL) # Update scrollbar position by triggering one of the scroll events
       this
 
     scrollTo: (node) ->
