@@ -3,7 +3,7 @@
 (function($, window, document) {
   "use strict";
 
-  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYS, KEYSTATES, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, defaults, getBrowserScrollbarWidth;
+  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, defaults, getBrowserScrollbarWidth;
   defaults = {
     paneClass: 'pane',
     sliderClass: 'slider',
@@ -34,15 +34,6 @@
   TOUCHMOVE = 'touchmove';
   BROWSER_IS_IE7 = window.navigator.appName === 'Microsoft Internet Explorer' && /msie 7./i.test(window.navigator.appVersion) && window.ActiveXObject;
   BROWSER_SCROLLBAR_WIDTH = null;
-  KEYSTATES = {};
-  KEYS = {
-    up: 38,
-    down: 40,
-    pgup: 33,
-    pgdown: 34,
-    home: 36,
-    end: 35
-  };
   getBrowserScrollbarWidth = function() {
     var outer, outerStyle, scrollbarWidth;
     outer = document.createElement('div');

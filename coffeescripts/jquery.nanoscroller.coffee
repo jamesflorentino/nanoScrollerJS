@@ -32,14 +32,6 @@
   TOUCHMOVE  = 'touchmove'
   BROWSER_IS_IE7 = window.navigator.appName is 'Microsoft Internet Explorer' and (/msie 7./i).test(window.navigator.appVersion) and window.ActiveXObject
   BROWSER_SCROLLBAR_WIDTH = null
-  KEYSTATES = {}
-  KEYS =
-    up: 38
-    down: 40
-    pgup: 33
-    pgdown: 34
-    home: 36
-    end: 35
 
   getBrowserScrollbarWidth = ->
     outer = document.createElement 'div'
