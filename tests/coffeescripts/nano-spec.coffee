@@ -1,4 +1,4 @@
-describe "nanoScroller", ->
+describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)", ->
   $nano = null
   $content = null
   $pane = null
@@ -74,6 +74,13 @@ describe "nanoScroller", ->
       it "should have hidden .pane with 'display: none'", ->
         expect($pane.css('display')).toEqual('none')
 
+    describe "calling $('.nano').nanoScroller({ flash: true })", ->
+      beforeEach ->
+        $nano.nanoScroller({ flash: true })
+        $pane = $nano.find('.pane')
+      it "should have added CSS class .flashed to .pane", ->
+        expect($pane).toHaveClass('flashed')
+
   describe "when the plugin is called without any options and there is no content", ->
     beforeEach ->
       loadFixtures('nano-no-content.html')
@@ -139,4 +146,9 @@ describe "nanoScroller", ->
       it "should have hidden .pane with 'display: none'", ->
         expect($pane.css('display')).toEqual('none')
 
-  
+    describe "calling $('.nano').nanoScroller({ flash: true })", ->
+      beforeEach ->
+        $nano.nanoScroller({ flash: true })
+        $pane = $nano.find('.pane')
+      it "should not have added CSS class .flashed to .pane", ->
+        expect($pane).not.toHaveClass('flashed')
