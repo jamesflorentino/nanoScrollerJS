@@ -257,7 +257,8 @@
 
       do @pane.show
       @isActive = true
-      if @pane.outerHeight(true) >= content.scrollHeight and contentStyleOverflowY isnt SCROLL
+      if (content.scrollHeight is content.clientHeight) or (
+          @pane.outerHeight(true) >= content.scrollHeight and contentStyleOverflowY isnt SCROLL)
         do @pane.hide
         @isActive = false
       else if @el.clientHeight is content.scrollHeight and contentStyleOverflowY is SCROLL
