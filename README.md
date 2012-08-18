@@ -261,6 +261,7 @@ If you wish to include your site in this list, you can do so by tweeting the lin
 
 Other people who have contributed code:
 
+- [livskiy](https://github.com/livskiy) #83
 - [iStefo](https://github.com/iStefo) #65
 - [tahajahangir](https://github.com/tahajahangir) #60
 - [n0valyfe](https://github.com/n0valyfe) #57
