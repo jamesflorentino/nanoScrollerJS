@@ -213,7 +213,7 @@
     NanoScroll.prototype.restore = function() {
       this.stopped = false;
       this.pane.show();
-      return this.addEvents();
+      this.addEvents();
     };
 
     NanoScroll.prototype.reset = function() {
@@ -278,6 +278,9 @@
     };
 
     NanoScroll.prototype.scroll = function() {
+      if (!this.isActive) {
+        return;
+      }
       this.sliderY = Math.max(0, this.sliderY);
       this.sliderY = Math.min(this.maxSliderTop, this.sliderY);
       this.$content.scrollTop((this.paneHeight - this.contentHeight + BROWSER_SCROLLBAR_WIDTH) * this.sliderY / this.maxSliderTop * -1);
@@ -288,12 +291,18 @@
     };
 
     NanoScroll.prototype.scrollBottom = function(offsetY) {
+      if (!this.isActive) {
+        return;
+      }
       this.reset();
       this.$content.scrollTop(this.contentHeight - this.$content.height() - offsetY).trigger(MOUSEWHEEL);
       return this;
     };
 
     NanoScroll.prototype.scrollTop = function(offsetY) {
+      if (!this.isActive) {
+        return;
+      }
       this.reset();
       this.$content.scrollTop(+offsetY).trigger(MOUSEWHEEL);
       return this;
@@ -301,6 +310,9 @@
 
     NanoScroll.prototype.scrollTo = function(node) {
       var fraction, new_slider, offset;
+      if (!this.isActive) {
+        return;
+      }
       this.reset();
       offset = $(node).offset().top;
       if (offset > this.maxSliderTop) {
@@ -321,6 +333,9 @@
 
     NanoScroll.prototype.flash = function() {
       var _this = this;
+      if (!this.isActive) {
+        return;
+      }
       this.reset();
       this.pane.addClass('flashed');
       setTimeout(function() {

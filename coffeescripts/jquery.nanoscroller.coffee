@@ -202,6 +202,7 @@
       @stopped = false
       do @pane.show
       do @addEvents
+      return
 
     reset: ->
       @generate().stop() if not @$el.find(".#{@options.paneClass}").length
@@ -267,6 +268,7 @@
       this
 
     scroll: ->
+      return unless @isActive
       @sliderY = Math.max 0, @sliderY
       @sliderY = Math.min @maxSliderTop, @sliderY
       @$content.scrollTop (@paneHeight - @contentHeight + BROWSER_SCROLLBAR_WIDTH) * @sliderY / @maxSliderTop * -1
@@ -274,16 +276,19 @@
       this
 
     scrollBottom: (offsetY) ->
+      return unless @isActive
       do @reset
       @$content.scrollTop(@contentHeight - @$content.height() - offsetY).trigger(MOUSEWHEEL) # Update scrollbar position by triggering one of the scroll events
       this
 
     scrollTop: (offsetY) ->
+      return unless @isActive
       do @reset
       @$content.scrollTop(+offsetY).trigger(MOUSEWHEEL) # Update scrollbar position by triggering one of the scroll events
       this
 
     scrollTo: (node) ->
+      return unless @isActive
       do @reset
       offset = $(node).offset().top
       if offset > @maxSliderTop
@@ -300,6 +305,7 @@
       this
 
     flash: ->
+      return unless @isActive
       do @reset
       @pane.addClass 'flashed'
       setTimeout =>
