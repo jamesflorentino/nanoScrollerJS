@@ -104,7 +104,7 @@ describe("nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
         return expect($pane.css('display')).toEqual('none');
       });
     });
-    return describe("calling $('.nano').nanoScroller({ flash: true })", function() {
+    describe("calling $('.nano').nanoScroller({ flash: true })", function() {
       beforeEach(function() {
         $nano.nanoScroller({
           flash: true
@@ -113,6 +113,43 @@ describe("nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
       });
       return it("should have added CSS class .flashed to .pane", function() {
         return expect($pane).toHaveClass('flashed');
+      });
+    });
+    describe("calling $('.nano').nanoScroller({ sliderMinHeight: 120 })", function() {
+      beforeEach(function() {
+        $nano.nanoScroller({
+          sliderMinHeight: 120
+        });
+        return $slider = $nano.find('.slider');
+      });
+      return it("should have set slider height to at least 120px", function() {
+        return expect($slider.height()).toBeGreaterThan(119);
+      });
+    });
+    describe("calling $('.nano').nanoScroller({ sliderMaxHeight: 21 })", function() {
+      beforeEach(function() {
+        $nano.nanoScroller({
+          sliderMaxHeight: 21
+        });
+        return $slider = $nano.find('.slider');
+      });
+      return it("should not have set slider height to more than 21px", function() {
+        return expect($slider.height()).toBeLessThan(22);
+      });
+    });
+    return describe("calling $('.nano').nanoScroller({ sliderMinHeight: 120, sliderMaxHeight: 120 })", function() {
+      beforeEach(function() {
+        $nano.nanoScroller({
+          sliderMinHeight: 120,
+          sliderMaxHeight: 120
+        });
+        return $slider = $nano.find('.slider');
+      });
+      return it("should have set slider height to 120px", function() {
+        expect($slider).toHaveCss({
+          height: '120px'
+        });
+        return expect($slider.height()).toBe(120);
       });
     });
   });
@@ -207,7 +244,7 @@ describe("nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
         return expect($pane.css('display')).toEqual('none');
       });
     });
-    return describe("calling $('.nano').nanoScroller({ flash: true })", function() {
+    describe("calling $('.nano').nanoScroller({ flash: true })", function() {
       beforeEach(function() {
         $nano.nanoScroller({
           flash: true
@@ -216,6 +253,43 @@ describe("nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
       });
       return it("should not have added CSS class .flashed to .pane", function() {
         return expect($pane).not.toHaveClass('flashed');
+      });
+    });
+    describe("calling $('.nano').nanoScroller({ sliderMinHeight: 120 })", function() {
+      beforeEach(function() {
+        $nano.nanoScroller({
+          sliderMinHeight: 120
+        });
+        return $slider = $nano.find('.slider');
+      });
+      return it("should have set slider height to at least 120px", function() {
+        return expect($slider.height()).toBeGreaterThan(119);
+      });
+    });
+    describe("calling $('.nano').nanoScroller({ sliderMaxHeight: 21 })", function() {
+      beforeEach(function() {
+        $nano.nanoScroller({
+          sliderMaxHeight: 21
+        });
+        return $slider = $nano.find('.slider');
+      });
+      return it("should not have set slider height to more than 21px", function() {
+        return expect($slider.height()).toBeLessThan(22);
+      });
+    });
+    return describe("calling $('.nano').nanoScroller({ sliderMinHeight: 120, sliderMaxHeight: 120 })", function() {
+      beforeEach(function() {
+        $nano.nanoScroller({
+          sliderMinHeight: 120,
+          sliderMaxHeight: 120
+        });
+        return $slider = $nano.find('.slider');
+      });
+      return it("should have set slider height to 120px", function() {
+        expect($slider).toHaveCss({
+          height: '120px'
+        });
+        return expect($slider.height()).toBe(120);
       });
     });
   });

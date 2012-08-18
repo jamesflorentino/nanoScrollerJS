@@ -81,6 +81,28 @@ describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
       it "should have added CSS class .flashed to .pane", ->
         expect($pane).toHaveClass('flashed')
 
+    describe "calling $('.nano').nanoScroller({ sliderMinHeight: 120 })", ->
+      beforeEach ->
+        $nano.nanoScroller({ sliderMinHeight: 120 })
+        $slider = $nano.find('.slider')
+      it "should have set slider height to at least 120px", ->
+        expect($slider.height()).toBeGreaterThan(119)
+
+    describe "calling $('.nano').nanoScroller({ sliderMaxHeight: 21 })", ->
+      beforeEach ->
+        $nano.nanoScroller({ sliderMaxHeight: 21 })
+        $slider = $nano.find('.slider')
+      it "should not have set slider height to more than 21px", ->
+        expect($slider.height()).toBeLessThan(22)
+
+    describe "calling $('.nano').nanoScroller({ sliderMinHeight: 120, sliderMaxHeight: 120 })", ->
+      beforeEach ->
+        $nano.nanoScroller({ sliderMinHeight: 120, sliderMaxHeight: 120 })
+        $slider = $nano.find('.slider')
+      it "should have set slider height to 120px", ->
+        expect($slider).toHaveCss({ height: '120px' })
+        expect($slider.height()).toBe(120)
+
   describe "when the plugin is called without any options and there is no content", ->
     beforeEach ->
       loadFixtures('nano-no-content.html')
@@ -152,3 +174,25 @@ describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
         $pane = $nano.find('.pane')
       it "should not have added CSS class .flashed to .pane", ->
         expect($pane).not.toHaveClass('flashed')
+
+    describe "calling $('.nano').nanoScroller({ sliderMinHeight: 120 })", ->
+      beforeEach ->
+        $nano.nanoScroller({ sliderMinHeight: 120 })
+        $slider = $nano.find('.slider')
+      it "should have set slider height to at least 120px", ->
+        expect($slider.height()).toBeGreaterThan(119)
+
+    describe "calling $('.nano').nanoScroller({ sliderMaxHeight: 21 })", ->
+      beforeEach ->
+        $nano.nanoScroller({ sliderMaxHeight: 21 })
+        $slider = $nano.find('.slider')
+      it "should not have set slider height to more than 21px", ->
+        expect($slider.height()).toBeLessThan(22)
+
+    describe "calling $('.nano').nanoScroller({ sliderMinHeight: 120, sliderMaxHeight: 120 })", ->
+      beforeEach ->
+        $nano.nanoScroller({ sliderMinHeight: 120, sliderMaxHeight: 120 })
+        $slider = $nano.find('.slider')
+      it "should have set slider height to 120px", ->
+        expect($slider).toHaveCss({ height: '120px' })
+        expect($slider.height()).toBe(120)
