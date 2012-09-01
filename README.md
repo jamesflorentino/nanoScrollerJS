@@ -195,9 +195,9 @@ We are still working on doing a horizontal scrolling feature. If you're interest
 To build nanoScroller from source you need the following libraries installed:
 
 * Node.js and npm: [homepage / download](http://nodejs.org/)
-* Coffeescript: [homepage](http://coffeescript.org/) | `npm install -g coffee-script`
+* Grunt: [homepage](http://gruntjs.com/) | `npm install -g grunt`
 
-To allow the build process to convert the README file to HTML you also need:
+If you want to be able to build the README file to HTML you also need:
 
 * Ruby (pre-installed in OS X): [homepage](http://www.ruby-lang.org/en/) | [download](http://www.ruby-lang.org/en/downloads/)
 * GCC: [homepage](http://gcc.gnu.org/) | [download for OS X](https://github.com/kennethreitz/osx-gcc-installer)
@@ -205,12 +205,16 @@ To allow the build process to convert the README file to HTML you also need:
 
 #### How to build & contribute
 
-1. Make all JS changes in Coffeescript file(s), CSS changes in CSS file(s).
-2. In terminal move to nanoscroller folder and run `cake build`
-3. If you want to check how much the plugin size has changed compared to last build, run `cake size` *
-4. Make sure that all changes are valid and open a pull request.
+1. Make sure that you have [Grunt](http://gruntjs.com/) installed.
+2. In terminal move to nanoscroller folder and run `npm install` to install all dependencies.
+3. Make all Javascript changes in Coffeescript file(s), CSS changes in CSS file(s).
+4. run `grunt` to build nanoScroller
+5. Make sure that all changes are valid and open a pull request.
 
-\* Uses `sizer.js` from [jQuery project](https://github.com/jquery/jquery/pull/511)
+#### How to run tests
+
+1. You need to have [PhantomJS](http://phantomjs.org/) installed. On Mac OS X the easiest way is to install [Homebrew](http://mxcl.github.com/homebrew/) and run `brew install phantomjs`.
+2. run `grunt test` in terminal
 
 ### Browser compatibility
 

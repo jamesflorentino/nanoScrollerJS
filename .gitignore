@@ -39,3 +39,4 @@ Thumbs.db
 publish.sh
 
 build/.sizecache.json
+node_modules

@@ -220,10 +220,10 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 
 <ul>
 <li>Node.js and npm: <a href="http://nodejs.org/">homepage / download</a></li>
-<li>Coffeescript: <a href="http://coffeescript.org/">homepage</a> | <code>npm install -g coffee-script</code></li>
+<li>Grunt: <a href="http://gruntjs.com/">homepage</a> | <code>npm install -g grunt</code></li>
 </ul>
 
-<p>To allow the build process to convert the README file to HTML you also need:</p>
+<p>If you want to be able to build the README file to HTML you also need:</p>
 
 <ul>
 <li>Ruby (pre-installed in OS X): <a href="http://www.ruby-lang.org/en/">homepage</a> | <a href="http://www.ruby-lang.org/en/downloads/">download</a></li>
@@ -234,13 +234,19 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 <h4>How to build &amp; contribute</h4>
 
 <ol>
-<li>Make all JS changes in Coffeescript file(s), CSS changes in CSS file(s).</li>
-<li>In terminal move to nanoscroller folder and run <code>cake build</code></li>
-<li>If you want to check how much the plugin size has changed compared to last build, run <code>cake size</code> *</li>
+<li>Make sure that you have <a href="http://gruntjs.com/">Grunt</a> installed.</li>
+<li>In terminal move to nanoscroller folder and run <code>npm install</code> to install all dependencies.</li>
+<li>Make all Javascript changes in Coffeescript file(s), CSS changes in CSS file(s).</li>
+<li>run <code>grunt</code> to build nanoScroller</li>
 <li>Make sure that all changes are valid and open a pull request.</li>
 </ol>
 
-<p>* Uses <code>sizer.js</code> from <a href="https://github.com/jquery/jquery/pull/511">jQuery project</a></p>
+<h4>How to run tests</h4>
+
+<ol>
+<li>You need to have <a href="http://phantomjs.org/">PhantomJS</a> installed. On Mac OS X the easiest way is to install <a href="http://mxcl.github.com/homebrew/">Homebrew</a> and run <code>brew install phantomjs</code>.</li>
+<li>run <code>grunt test</code> in terminal</li>
+</ol>
 
 <h3>Browser compatibility</h3>
 
