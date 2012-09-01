@@ -198,12 +198,6 @@ To build nanoScroller from source you need the following libraries installed:
 * Grunt: [homepage](http://gruntjs.com/) | `npm install -g grunt`
 * Java
 
-If you want to be able to build the README file to HTML you also need:
-
-* Ruby (pre-installed in OS X): [homepage](http://www.ruby-lang.org/en/) | [download](http://www.ruby-lang.org/en/downloads/)
-* GCC: [homepage](http://gcc.gnu.org/) | [download for OS X](https://github.com/kennethreitz/osx-gcc-installer)
-* Redcarpet: [homepage](https://github.com/tanoku/redcarpet) | `gem install redcarpet` (add `sudo` if needed)
-
 #### How to build & contribute
 
 1. Make sure that you have [Grunt](http://gruntjs.com/) installed.

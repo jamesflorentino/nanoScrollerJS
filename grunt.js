@@ -112,17 +112,16 @@ module.exports = function(grunt) {
       }
     },
     shell: {
-      redcarpet: {
-        command: 'redcarpet README.md > bin/readme.html',
+      marked: {
+        command: 'node_modules/marked/bin/marked README.md > bin/readme.html',
         stdout: true
       }
     }
   });
 
-  grunt.registerTask('default', 'coffee:nano closureCompiler concat:unmin concat:min csslint lint sizediff');
+  grunt.registerTask('default', 'coffee:nano closureCompiler concat:unmin concat:min csslint lint sizediff shell:marked');
   grunt.registerTask('build', 'default');
   grunt.registerTask('build:tests', 'coffee:tests');
-  grunt.registerTask('build:readme', 'shell:redcarpet');
   grunt.registerTask('test', 'coffee:tests jasmine');
   grunt.registerTask('size', 'sizediff');
 };
