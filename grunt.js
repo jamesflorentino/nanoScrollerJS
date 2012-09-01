@@ -65,14 +65,10 @@ module.exports = function(grunt) {
         dest: '<%= dirs.testDir %>/spec'
       }
     },
-    closureCompiler:  {
+    min: {
       all: {
-        closureCompiler: 'build/compiler.jar',
-        js: '<%= dirs.jsDir %>/<%= pkg.name %>.js',
-        output_file: '<%= dirs.jsDir %>/<%= pkg.name %>.min.js',
-        options: {
-          compilation_level: 'SIMPLE_OPTIMIZATIONS'
-        }
+        src: ['<%= dirs.jsDir %>/<%= pkg.name %>.js'],
+        dest: '<%= dirs.jsDir %>/<%= pkg.name %>.min.js'
       }
     },
     sizediff: {
@@ -119,7 +115,7 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('default', 'coffee:nano closureCompiler concat:unmin concat:min csslint lint sizediff shell:marked');
+  grunt.registerTask('default', 'coffee:nano min concat:unmin concat:min csslint lint sizediff shell:marked');
   grunt.registerTask('build', 'default');
   grunt.registerTask('build:tests', 'coffee:tests');
   grunt.registerTask('test', 'coffee:tests jasmine');
