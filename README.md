@@ -196,6 +196,7 @@ To build nanoScroller from source you need the following libraries installed:
 
 * Node.js and npm: [homepage / download](http://nodejs.org/)
 * Grunt: [homepage](http://gruntjs.com/) | `npm install -g grunt`
+* Java
 
 If you want to be able to build the README file to HTML you also need:
 
