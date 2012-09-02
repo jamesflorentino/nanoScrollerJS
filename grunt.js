@@ -1,6 +1,6 @@
 /*global module:false*/
 module.exports = function(grunt) {
-
+  grunt.loadNpmTasks('grunt-contrib');
   grunt.loadNpmTasks('grunt-jasmine-task');
   grunt.loadNpmTasks('grunt-coffee');
   grunt.loadNpmTasks('grunt-css');
@@ -112,10 +112,18 @@ module.exports = function(grunt) {
         command: 'node_modules/marked/bin/marked README.md > bin/readme.html',
         stdout: true
       }
+    },
+    yuidoc: {
+      compile: {
+        options: {
+          paths: "bin/javascripts",
+          outdir: "docs/"
+        }
+      }
     }
   });
 
-  grunt.registerTask('default', 'coffee:nano min concat:unmin concat:min csslint lint sizediff shell:marked');
+  grunt.registerTask('default', 'coffee:nano min concat:unmin concat:min csslint lint sizediff shell:marked yuidoc');
   grunt.registerTask('build', 'default');
   grunt.registerTask('build:tests', 'coffee:tests');
   grunt.registerTask('test', 'coffee:tests jasmine');

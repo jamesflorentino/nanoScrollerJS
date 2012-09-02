@@ -1,38 +1,263 @@
+#  @project nanoScrollerJS
+#  @url http://jamesflorentino.github.com/nanoScrollerJS/
+#  @author James Florentino
+#  @contributor Krister Kari
+
 (($, window, document) ->
   "use strict"
 
+  # Default settings
+
   defaults =
+    ###*
+      a classname for the pane element.
+      @property paneClass
+      @type String
+      @default 'pane'
+    ###
     paneClass: 'pane'
+
+    ###*
+      a classname for the slider element.
+      @property sliderClass
+      @type String
+      @default 'slider'
+    ###
     sliderClass: 'slider'
+
+    ###*
+      a classname for the content element.
+      @property contentClass
+      @type String
+      @default 'content'
+    ###
     contentClass: 'content'
+
+    ###*
+      a setting to enable native scrolling in iOS devices.
+      @property iOSNativeScrolling
+      @type Boolean
+      @default false
+    ###
     iOSNativeScrolling: false
+
+    ###*
+      a setting to prevent the rest of the page being 
+      scrolled when user scrolls the `.content` element.
+      @property preventPageScrolling
+      @type Boolean
+      @default false
+    ###
     preventPageScrolling: false
+
+    ###*
+      a setting to disable binding to the resize event.
+      @property disableResize
+      @type Boolean
+      @default false
+    ###
     disableResize: false
+
+    ###*
+      a setting to make the scrollbar always visible.
+      @property alwaysVisible
+      @type Boolean
+      @default false
+    ###
     alwaysVisible: false
+
+    ###*
+      a default timeout for the `flash()` method.
+      @property flashDelay
+      @type Number
+      @default 1500
+    ###
     flashDelay: 1500
+
+    ###*
+      a minimum height for the `.slider` element.
+      @property sliderMinHeight
+      @type Number
+      @default 20
+    ###
     sliderMinHeight: 20
+
+    ###*
+      a maximum height for the `.slider` element.
+      @property sliderMaxHeight
+      @type Number
+      @default null
+    ###
     sliderMaxHeight: null
 
-  # constants
-  SCROLLBAR  = 'scrollbar'
-  SCROLL     = 'scroll'
-  MOUSEDOWN  = 'mousedown'
-  MOUSEMOVE  = 'mousemove'
+  # Constants
+
+  ###*
+    @property SCROLLBAR
+    @type String
+    @static
+    @final
+    @private
+  ###
+  SCROLLBAR = 'scrollbar'
+
+  ###*
+    @property SCROLL
+    @type String
+    @static
+    @final
+    @private
+  ###
+  SCROLL = 'scroll'
+
+  ###*
+    @property MOUSEDOWN
+    @type String
+    @final
+    @private
+  ###
+  MOUSEDOWN = 'mousedown'
+
+  ###*
+    @property MOUSEMOVE
+    @type String
+    @static
+    @final
+    @private
+  ###
+  MOUSEMOVE = 'mousemove'
+
+  ###*
+    @property MOUSEWHEEL
+    @type String
+    @final
+    @private
+  ###
   MOUSEWHEEL = 'mousewheel'
-  MOUSEUP    = 'mouseup'
-  RESIZE     = 'resize'
-  DRAG       = 'drag'
-  UP         = 'up'
-  PANEDOWN   = 'panedown'
+
+  ###*
+    @property MOUSEUP
+    @type String
+    @static
+    @final
+    @private
+  ###
+  MOUSEUP = 'mouseup'
+
+  ###*
+    @property RESIZE
+    @type String
+    @final
+    @private
+  ###
+  RESIZE = 'resize'
+
+  ###*
+    @property DRAG
+    @type String
+    @static
+    @final
+    @private
+  ###
+  DRAG = 'drag'
+
+  ###*
+    @property UP
+    @type String
+    @static
+    @final
+    @private
+  ###
+  UP = 'up'
+
+  ###*
+    @property PANEDOWN
+    @type String
+    @static
+    @final
+    @private
+  ###
+  PANEDOWN = 'panedown'
+
+  ###*
+    @property DOMSCROLL
+    @type String
+    @static
+    @final
+    @private
+  ###
   DOMSCROLL  = 'DOMMouseScroll'
-  DOWN       = 'down'
-  WHEEL      = 'wheel'
+
+  ###*
+    @property DOWN
+    @type String
+    @static
+    @final
+    @private
+  ###
+  DOWN = 'down'
+
+  ###*
+    @property WHEEL
+    @type String
+    @static
+    @final
+    @private
+  ###
+  WHEEL = 'wheel'
+
+  ###*
+    @property KEYDOWN
+    @type String
+    @static
+    @final
+    @private
+  ###
   KEYDOWN    = 'keydown'
-  KEYUP      = 'keyup'
-  TOUCHMOVE  = 'touchmove'
+
+  ###*
+    @property KEYUP
+    @type String
+    @static
+    @final
+    @private
+  ###
+  KEYUP = 'keyup'
+
+  ###*
+    @property TOUCHMOVE
+    @type String
+    @static
+    @final
+    @private
+  ###
+  TOUCHMOVE = 'touchmove'
+
+  ###*
+    @property BROWSER_IS_IE7
+    @type Boolean
+    @static
+    @final
+    @private
+  ###
   BROWSER_IS_IE7 = window.navigator.appName is 'Microsoft Internet Explorer' and (/msie 7./i).test(window.navigator.appVersion) and window.ActiveXObject
+  
+  ###*
+    @property BROWSER_SCROLLBAR_WIDTH
+    @type Number
+    @static
+    @default null
+    @private
+  ###
   BROWSER_SCROLLBAR_WIDTH = null
 
+  ###*
+    Returns browser's native scrollbar width
+    @method getBrowserScrollbarWidth
+    @return {Number} the scrollbar width in pixels
+    @static
+    @private
+  ###
   getBrowserScrollbarWidth = ->
     outer = document.createElement 'div'
     outerStyle = outer.style
@@ -46,6 +271,12 @@
     document.body.removeChild outer
     scrollbarWidth
 
+  ###*
+    @class NanoSCroll
+    @param element {HTMLElement|Node} the main element
+    @param options {Object} nanoScroller's options
+    @constructor
+  ###
   class NanoScroll
     constructor: (@el, @options) ->
       BROWSER_SCROLLBAR_WIDTH or= do getBrowserScrollbarWidth
@@ -57,6 +288,14 @@
       do @addEvents
       do @reset
 
+    ###*
+      Prevents the rest of the page being scrolled 
+      when user scrolls the `.content` element.
+      @method preventScrolling
+      @param event {Event}
+      @param direction {String} Scroll direction (up or down)
+      @private
+    ###
     preventScrolling: (e, direction) ->
       return unless @isActive
       if e.type is DOMSCROLL # Gecko
@@ -68,6 +307,12 @@
           do e.preventDefault
       return
 
+    ###*
+      Updates those nanoScroller properties that 
+      are related to current scrollbar position.
+      @method updateScrollValues
+      @private
+    ###
     updateScrollValues: ->
       content = @content
       # Formula/ratio
@@ -79,6 +324,11 @@
       @sliderTop = @contentScrollTop * @maxSliderTop / @maxScrollTop
       return
 
+    ###*
+      Creates event related methods
+      @method createEvents
+      @private
+    ###
     createEvents: ->
       @events =
         down: (e) =>
@@ -147,6 +397,11 @@
 
       return
 
+    ###*
+      Adds event listeners with jQuery.
+      @method addEvents
+      @private
+    ###
     addEvents: ->
       do @removeEvents
       events = @events
@@ -162,6 +417,11 @@
         .bind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", events[SCROLL])
       return
 
+    ###*
+      Removes event listeners with jQuery.
+      @method removeEvents
+      @private
+    ###
     removeEvents: ->
       events = @events
       @win
@@ -172,6 +432,12 @@
         .unbind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", events[SCROLL])
       return
 
+    ###*
+      Generates nanoScroller's scrollbar and elements for it.
+      @method generate
+      @chainable
+      @private
+    ###
     generate: ->
       # For reference:
       # http://msdn.microsoft.com/en-us/library/windows/desktop/bb787527(v=vs.85).aspx#parts_of_scroll_bar
@@ -198,12 +464,23 @@
       @$content.css cssRule if cssRule?
       this
 
+    ###*
+      @method restore
+      @private
+    ###
     restore: ->
       @stopped = false
       do @pane.show
       do @addEvents
       return
 
+    ###*
+      Resets nanoScroller's scrollbar.
+      @method reset
+      @chainable
+      @example
+          $(".nano").nanoScroller();
+    ###
     reset: ->
       @generate().stop() if not @$el.find(".#{@options.paneClass}").length
       do @restore if @stopped
@@ -266,6 +543,12 @@
 
       this
 
+    ###*
+      @method scroll
+      @private
+      @example
+          $(".nano").nanoScroller({ scroll: 'top' });
+    ###
     scroll: ->
       return unless @isActive
       @sliderY = Math.max 0, @sliderY
@@ -274,18 +557,42 @@
       @slider.css top: @sliderY
       this
 
+    ###*
+      Scroll at the bottom with an offset value
+      @method scrollBottom
+      @param offsetY {Number}
+      @chainable
+      @example
+          $(".nano").nanoScroller({ scrollBottom: value });
+    ###
     scrollBottom: (offsetY) ->
       return unless @isActive
       do @reset
       @$content.scrollTop(@contentHeight - @$content.height() - offsetY).trigger(MOUSEWHEEL) # Update scrollbar position by triggering one of the scroll events
       this
 
+    ###*
+      Scroll at the top with an offset value
+      @method scrollTop
+      @param offsetY {Number}
+      @chainable
+      @example
+          $(".nano").nanoScroller({ scrollTop: value });
+    ###
     scrollTop: (offsetY) ->
       return unless @isActive
       do @reset
       @$content.scrollTop(+offsetY).trigger(MOUSEWHEEL) # Update scrollbar position by triggering one of the scroll events
       this
 
+    ###*
+      Scroll to an element
+      @method scrollTo
+      @param node {Node} A node to scroll to.
+      @chainable
+      @example
+          $(".nano").nanoScroller({ scrollTo: $('#a_node') });
+    ###
     scrollTo: (node) ->
       return unless @isActive
       do @reset
@@ -297,12 +604,28 @@
         do @scroll
       this
 
+    ###*
+      To stop the operation. 
+      This option will tell the plugin to disable all event bindings and hide the gadget scrollbar from the UI.
+      @method stop
+      @chainable
+      @example
+          $(".nano").nanoScroller({ stop: true });
+    ###
     stop: ->
       @stopped = true
       do @removeEvents
       do @pane.hide
       this
 
+    ###*
+      To flash the scrollbar gadget for an amount of time defined in plugin settings (defaults to 1,5s).
+      Useful if you want to show the user (e.g. on pageload) that there is more content waiting for him.
+      @method flash
+      @chainable
+      @example
+          $(".nano").nanoScroller({ flash: true });
+    ###
     flash: ->
       return unless @isActive
       do @reset

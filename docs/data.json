@@ -1,0 +1,563 @@
+{
+    "project": {
+        "options": {
+            "paths": "bin/javascripts",
+            "outdir": "docs/"
+        }
+    },
+    "files": {
+        "bin/javascripts/jquery.nanoscroller.js": {
+            "name": "bin/javascripts/jquery.nanoscroller.js",
+            "modules": {},
+            "classes": {
+                "NanoSCroll": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "NanoSCroll": {
+            "name": "NanoSCroll",
+            "shortname": "NanoSCroll",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 274,
+            "params": [
+                {
+                    "name": "element",
+                    "description": "the main element",
+                    "type": "HTMLElement|Node"
+                },
+                {
+                    "name": "options",
+                    "description": "nanoScroller's options",
+                    "type": "Object"
+                }
+            ],
+            "is_constructor": 1
+        }
+    },
+    "classitems": [
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 11,
+            "description": "a classname for the pane element.",
+            "itemtype": "property",
+            "name": "paneClass",
+            "type": "String",
+            "default": "'pane'",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 19,
+            "description": "a classname for the slider element.",
+            "itemtype": "property",
+            "name": "sliderClass",
+            "type": "String",
+            "default": "'slider'",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 27,
+            "description": "a classname for the content element.",
+            "itemtype": "property",
+            "name": "contentClass",
+            "type": "String",
+            "default": "'content'",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 35,
+            "description": "a setting to enable native scrolling in iOS devices.",
+            "itemtype": "property",
+            "name": "iOSNativeScrolling",
+            "type": "Boolean",
+            "default": "false",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 43,
+            "description": "a setting to prevent the rest of the page being \nscrolled when user scrolls the `.content` element.",
+            "itemtype": "property",
+            "name": "preventPageScrolling",
+            "type": "Boolean",
+            "default": "false",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 52,
+            "description": "a setting to disable binding to the resize event.",
+            "itemtype": "property",
+            "name": "disableResize",
+            "type": "Boolean",
+            "default": "false",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 60,
+            "description": "a setting to make the scrollbar always visible.",
+            "itemtype": "property",
+            "name": "alwaysVisible",
+            "type": "Boolean",
+            "default": "false",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 68,
+            "description": "a default timeout for the `flash()` method.",
+            "itemtype": "property",
+            "name": "flashDelay",
+            "type": "Number",
+            "default": "1500",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 76,
+            "description": "a minimum height for the `.slider` element.",
+            "itemtype": "property",
+            "name": "sliderMinHeight",
+            "type": "Number",
+            "default": "20",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 84,
+            "description": "a maximum height for the `.slider` element.",
+            "itemtype": "property",
+            "name": "sliderMaxHeight",
+            "type": "Number",
+            "default": "null",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 93,
+            "itemtype": "property",
+            "name": "SCROLLBAR",
+            "type": "String",
+            "static": 1,
+            "final": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 102,
+            "itemtype": "property",
+            "name": "SCROLL",
+            "type": "String",
+            "static": 1,
+            "final": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 111,
+            "itemtype": "property",
+            "name": "MOUSEDOWN",
+            "type": "String",
+            "final": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 119,
+            "itemtype": "property",
+            "name": "MOUSEMOVE",
+            "type": "String",
+            "static": 1,
+            "final": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 128,
+            "itemtype": "property",
+            "name": "MOUSEWHEEL",
+            "type": "String",
+            "final": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 136,
+            "itemtype": "property",
+            "name": "MOUSEUP",
+            "type": "String",
+            "static": 1,
+            "final": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 145,
+            "itemtype": "property",
+            "name": "RESIZE",
+            "type": "String",
+            "final": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 153,
+            "itemtype": "property",
+            "name": "DRAG",
+            "type": "String",
+            "static": 1,
+            "final": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 162,
+            "itemtype": "property",
+            "name": "UP",
+            "type": "String",
+            "static": 1,
+            "final": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 171,
+            "itemtype": "property",
+            "name": "PANEDOWN",
+            "type": "String",
+            "static": 1,
+            "final": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 180,
+            "itemtype": "property",
+            "name": "DOMSCROLL",
+            "type": "String",
+            "static": 1,
+            "final": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 189,
+            "itemtype": "property",
+            "name": "DOWN",
+            "type": "String",
+            "static": 1,
+            "final": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 198,
+            "itemtype": "property",
+            "name": "WHEEL",
+            "type": "String",
+            "static": 1,
+            "final": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 207,
+            "itemtype": "property",
+            "name": "KEYDOWN",
+            "type": "String",
+            "static": 1,
+            "final": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 216,
+            "itemtype": "property",
+            "name": "KEYUP",
+            "type": "String",
+            "static": 1,
+            "final": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 225,
+            "itemtype": "property",
+            "name": "TOUCHMOVE",
+            "type": "String",
+            "static": 1,
+            "final": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 234,
+            "itemtype": "property",
+            "name": "BROWSER_IS_IE7",
+            "type": "Boolean",
+            "static": 1,
+            "final": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 243,
+            "itemtype": "property",
+            "name": "BROWSER_SCROLLBAR_WIDTH",
+            "type": "Number",
+            "static": 1,
+            "default": "null",
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 252,
+            "description": "Returns browser's native scrollbar width",
+            "itemtype": "method",
+            "name": "getBrowserScrollbarWidth",
+            "return": {
+                "description": "the scrollbar width in pixels",
+                "type": "Number"
+            },
+            "static": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 296,
+            "description": "Prevents the rest of the page being scrolled \nwhen user scrolls the `.content` element.",
+            "itemtype": "method",
+            "name": "preventScrolling",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "",
+                    "type": "Event"
+                },
+                {
+                    "name": "direction",
+                    "description": "Scroll direction (up or down)",
+                    "type": "String"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 324,
+            "description": "Updates those nanoScroller properties that \nare related to current scrollbar position.",
+            "itemtype": "method",
+            "name": "updateScrollValues",
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 341,
+            "description": "Creates event related methods",
+            "itemtype": "method",
+            "name": "createEvents",
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 419,
+            "description": "Adds event listeners with jQuery.",
+            "itemtype": "method",
+            "name": "addEvents",
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 438,
+            "description": "Removes event listeners with jQuery.",
+            "itemtype": "method",
+            "name": "removeEvents",
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 454,
+            "description": "Generates nanoScroller's scrollbar and elements for it.",
+            "itemtype": "method",
+            "name": "generate",
+            "chainable": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 490,
+            "itemtype": "method",
+            "name": "restore",
+            "access": "private",
+            "tagname": "",
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 502,
+            "description": "Resets nanoScroller's scrollbar.",
+            "itemtype": "method",
+            "name": "reset",
+            "chainable": 1,
+            "example": [
+                "\n    $(\".nano\").nanoScroller();"
+            ],
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 565,
+            "itemtype": "method",
+            "name": "scroll",
+            "access": "private",
+            "tagname": "",
+            "example": [
+                "\n    $(\".nano\").nanoScroller({ scroll: 'top' });"
+            ],
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 586,
+            "description": "Scroll at the bottom with an offset value",
+            "itemtype": "method",
+            "name": "scrollBottom",
+            "params": [
+                {
+                    "name": "offsetY",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "chainable": 1,
+            "example": [
+                "\n    $(\".nano\").nanoScroller({ scrollBottom: value });"
+            ],
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 605,
+            "description": "Scroll at the top with an offset value",
+            "itemtype": "method",
+            "name": "scrollTop",
+            "params": [
+                {
+                    "name": "offsetY",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "chainable": 1,
+            "example": [
+                "\n    $(\".nano\").nanoScroller({ scrollTop: value });"
+            ],
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 624,
+            "description": "Scroll to an element",
+            "itemtype": "method",
+            "name": "scrollTo",
+            "params": [
+                {
+                    "name": "node",
+                    "description": "A node to scroll to.",
+                    "type": "Node"
+                }
+            ],
+            "chainable": 1,
+            "example": [
+                "\n    $(\".nano\").nanoScroller({ scrollTo: $('#a_node') });"
+            ],
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 650,
+            "description": "To stop the operation. \nThis option will tell the plugin to disable all event bindings and hide the gadget scrollbar from the UI.",
+            "itemtype": "method",
+            "name": "stop",
+            "chainable": 1,
+            "example": [
+                "\n    $(\".nano\").nanoScroller({ stop: true });"
+            ],
+            "class": "NanoSCroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 667,
+            "description": "To flash the scrollbar gadget for an amount of time defined in plugin settings (defaults to 1,5s).\nUseful if you want to show the user (e.g. on pageload) that there is more content waiting for him.",
+            "itemtype": "method",
+            "name": "flash",
+            "chainable": 1,
+            "example": [
+                "\n    $(\".nano\").nanoScroller({ flash: true });"
+            ],
+            "class": "NanoSCroll"
+        }
+    ]
+}
