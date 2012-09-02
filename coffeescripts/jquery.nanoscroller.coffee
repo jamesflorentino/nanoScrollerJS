@@ -42,7 +42,7 @@
     iOSNativeScrolling: false
 
     ###*
-      a setting to prevent the rest of the page being 
+      a setting to prevent the rest of the page being
       scrolled when user scrolls the `.content` element.
       @property preventPageScrolling
       @type Boolean
@@ -289,7 +289,7 @@
       do @reset
 
     ###*
-      Prevents the rest of the page being scrolled 
+      Prevents the rest of the page being scrolled
       when user scrolls the `.content` element.
       @method preventScrolling
       @param event {Event}
@@ -308,7 +308,7 @@
       return
 
     ###*
-      Updates those nanoScroller properties that 
+      Updates those nanoScroller properties that
       are related to current scrollbar position.
       @method updateScrollValues
       @private
@@ -605,7 +605,7 @@
       this
 
     ###*
-      To stop the operation. 
+      To stop the operation.
       This option will tell the plugin to disable all event bindings and hide the gadget scrollbar from the UI.
       @method stop
       @chainable

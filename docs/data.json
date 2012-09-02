@@ -87,7 +87,7 @@
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
             "line": 43,
-            "description": "a setting to prevent the rest of the page being \nscrolled when user scrolls the `.content` element.",
+            "description": "a setting to prevent the rest of the page being\nscrolled when user scrolls the `.content` element.",
             "itemtype": "property",
             "name": "preventPageScrolling",
             "type": "Boolean",
@@ -375,7 +375,7 @@
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
             "line": 296,
-            "description": "Prevents the rest of the page being scrolled \nwhen user scrolls the `.content` element.",
+            "description": "Prevents the rest of the page being scrolled\nwhen user scrolls the `.content` element.",
             "itemtype": "method",
             "name": "preventScrolling",
             "params": [
@@ -397,7 +397,7 @@
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
             "line": 324,
-            "description": "Updates those nanoScroller properties that \nare related to current scrollbar position.",
+            "description": "Updates those nanoScroller properties that\nare related to current scrollbar position.",
             "itemtype": "method",
             "name": "updateScrollValues",
             "access": "private",
@@ -538,7 +538,7 @@
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
             "line": 650,
-            "description": "To stop the operation. \nThis option will tell the plugin to disable all event bindings and hide the gadget scrollbar from the UI.",
+            "description": "To stop the operation.\nThis option will tell the plugin to disable all event bindings and hide the gadget scrollbar from the UI.",
             "itemtype": "method",
             "name": "stop",
             "chainable": 1,
