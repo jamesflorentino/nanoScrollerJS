@@ -10,7 +10,7 @@
             "name": "bin/javascripts/jquery.nanoscroller.js",
             "modules": {},
             "classes": {
-                "NanoSCroll": 1
+                "NanoScroll": 1
             },
             "fors": {},
             "namespaces": {}
@@ -18,9 +18,9 @@
     },
     "modules": {},
     "classes": {
-        "NanoSCroll": {
-            "name": "NanoSCroll",
-            "shortname": "NanoSCroll",
+        "NanoScroll": {
+            "name": "NanoScroll",
+            "shortname": "NanoScroll",
             "classitems": [],
             "plugins": [],
             "extensions": [],
@@ -52,7 +52,7 @@
             "name": "paneClass",
             "type": "String",
             "default": "'pane'",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -62,7 +62,7 @@
             "name": "sliderClass",
             "type": "String",
             "default": "'slider'",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -72,7 +72,7 @@
             "name": "contentClass",
             "type": "String",
             "default": "'content'",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -82,7 +82,7 @@
             "name": "iOSNativeScrolling",
             "type": "Boolean",
             "default": "false",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -92,7 +92,7 @@
             "name": "preventPageScrolling",
             "type": "Boolean",
             "default": "false",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -102,7 +102,7 @@
             "name": "disableResize",
             "type": "Boolean",
             "default": "false",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -112,7 +112,7 @@
             "name": "alwaysVisible",
             "type": "Boolean",
             "default": "false",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -122,7 +122,7 @@
             "name": "flashDelay",
             "type": "Number",
             "default": "1500",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -132,7 +132,7 @@
             "name": "sliderMinHeight",
             "type": "Number",
             "default": "20",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -142,7 +142,7 @@
             "name": "sliderMaxHeight",
             "type": "Number",
             "default": "null",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -154,7 +154,7 @@
             "final": 1,
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -166,7 +166,7 @@
             "final": 1,
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -177,7 +177,7 @@
             "final": 1,
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -189,7 +189,7 @@
             "final": 1,
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -200,7 +200,7 @@
             "final": 1,
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -212,7 +212,7 @@
             "final": 1,
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -223,7 +223,7 @@
             "final": 1,
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -235,7 +235,7 @@
             "final": 1,
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -247,7 +247,7 @@
             "final": 1,
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -259,7 +259,7 @@
             "final": 1,
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -271,7 +271,7 @@
             "final": 1,
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -283,7 +283,7 @@
             "final": 1,
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -295,7 +295,7 @@
             "final": 1,
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -307,7 +307,7 @@
             "final": 1,
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -319,7 +319,7 @@
             "final": 1,
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -331,7 +331,7 @@
             "final": 1,
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -343,7 +343,7 @@
             "final": 1,
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -355,7 +355,7 @@
             "default": "null",
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -370,7 +370,7 @@
             "static": 1,
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -392,7 +392,7 @@
             ],
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -402,7 +402,7 @@
             "name": "updateScrollValues",
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -412,7 +412,7 @@
             "name": "createEvents",
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -422,7 +422,7 @@
             "name": "addEvents",
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -432,7 +432,7 @@
             "name": "removeEvents",
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -443,7 +443,7 @@
             "chainable": 1,
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -452,7 +452,7 @@
             "name": "restore",
             "access": "private",
             "tagname": "",
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -464,7 +464,7 @@
             "example": [
                 "\n    $(\".nano\").nanoScroller();"
             ],
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -476,7 +476,7 @@
             "example": [
                 "\n    $(\".nano\").nanoScroller({ scroll: 'top' });"
             ],
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -495,7 +495,7 @@
             "example": [
                 "\n    $(\".nano\").nanoScroller({ scrollBottom: value });"
             ],
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -514,7 +514,7 @@
             "example": [
                 "\n    $(\".nano\").nanoScroller({ scrollTop: value });"
             ],
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -533,7 +533,7 @@
             "example": [
                 "\n    $(\".nano\").nanoScroller({ scrollTo: $('#a_node') });"
             ],
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -545,7 +545,7 @@
             "example": [
                 "\n    $(\".nano\").nanoScroller({ stop: true });"
             ],
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
@@ -557,7 +557,7 @@
             "example": [
                 "\n    $(\".nano\").nanoScroller({ flash: true });"
             ],
-            "class": "NanoSCroll"
+            "class": "NanoScroll"
         }
     ]
 }
