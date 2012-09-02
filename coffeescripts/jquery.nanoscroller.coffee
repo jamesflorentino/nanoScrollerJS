@@ -260,10 +260,9 @@
         do @slider.show
 
       # allow the pane element to stay visible
-      if @options.alwaysVisible
-        @pane.css opacity: 1, visibility: 'visible'
-      else
-        @pane.css opacity: '', visibility: ''
+      @pane.css
+        opacity: (if @options.alwaysVisible then 1 else '')
+        visibility: (if @options.alwaysVisible then 'visible' else '')
 
       this
 

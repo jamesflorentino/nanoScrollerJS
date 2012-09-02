@@ -266,17 +266,10 @@
       } else {
         this.slider.show();
       }
-      if (this.options.alwaysVisible) {
-        this.pane.css({
-          opacity: 1,
-          visibility: 'visible'
-        });
-      } else {
-        this.pane.css({
-          opacity: '',
-          visibility: ''
-        });
-      }
+      this.pane.css({
+        opacity: (this.options.alwaysVisible ? 1 : ''),
+        visibility: (this.options.alwaysVisible ? 'visible' : '')
+      });
       return this;
     };
 
