@@ -4,7 +4,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-jasmine-task');
   grunt.loadNpmTasks('grunt-coffee');
   grunt.loadNpmTasks('grunt-css');
-  grunt.loadNpmTasks('grunt-closure-tools');
   grunt.loadNpmTasks('grunt-sizediff');
   grunt.loadNpmTasks('grunt-shell');
 
