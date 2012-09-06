@@ -456,7 +456,7 @@
       @pane = @$el.find ".#{paneClass}"
 
       if BROWSER_SCROLLBAR_WIDTH
-        cssRule = right: -BROWSER_SCROLLBAR_WIDTH
+        cssRule = if @$el.css('direction') is 'rtl' then left: -BROWSER_SCROLLBAR_WIDTH else right: -BROWSER_SCROLLBAR_WIDTH
         @$el.addClass 'has-scrollbar'
       if options.iOSNativeScrolling
         cssRule or= {}

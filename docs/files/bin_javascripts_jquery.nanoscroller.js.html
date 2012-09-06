@@ -560,7 +560,9 @@
       this.slider = this.$el.find(&quot;.&quot; + sliderClass);
       this.pane = this.$el.find(&quot;.&quot; + paneClass);
       if (BROWSER_SCROLLBAR_WIDTH) {
-        cssRule = {
+        cssRule = this.$el.css(&#x27;direction&#x27;) === &#x27;rtl&#x27; ? {
+          left: -BROWSER_SCROLLBAR_WIDTH
+        } : {
           right: -BROWSER_SCROLLBAR_WIDTH
         };
         this.$el.addClass(&#x27;has-scrollbar&#x27;);
