@@ -246,12 +246,6 @@ To use overthrow, link to the javascript file in your HTML document...
      <div class="overthrow content"> ... content here ...  </div> 
     </div>
 
-## Sites that use nanoScroller
-
-If you wish to include your site in this list, you can do so by tweeting the link on Twitter with a `#nanoScroller` hashtag.
-
-- [makechat.com](http://makechat.com)
-
 ### Contributors
 
 - [jamesflorentino](https://github.com/jamesflorentino)
