@@ -1,10 +1,5 @@
 {
-    "project": {
-        "options": {
-            "paths": "bin/javascripts",
-            "outdir": "docs/"
-        }
-    },
+    "project": {},
     "files": {
         "bin/javascripts/jquery.nanoscroller.js": {
             "name": "bin/javascripts/jquery.nanoscroller.js",
