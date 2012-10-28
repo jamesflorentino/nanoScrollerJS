@@ -1,6 +1,6 @@
 /*global module:false*/
 module.exports = function(grunt) {
-  grunt.loadNpmTasks('grunt-contrib');
+  grunt.loadNpmTasks('grunt-contrib-yuidoc');
   grunt.loadNpmTasks('grunt-jasmine-task');
   grunt.loadNpmTasks('grunt-coffee');
   grunt.loadNpmTasks('grunt-css');
