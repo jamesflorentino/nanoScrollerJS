@@ -634,18 +634,11 @@
 
 
     NanoScroll.prototype.scrollTo = function(node) {
-      var fraction, new_slider, offset;
       if (!this.isActive) {
         return;
       }
       this.reset();
-      offset = $(node).get(0).offsetTop;
-      if (offset > this.maxSliderTop) {
-        fraction = offset / this.contentHeight;
-        new_slider = this.maxSliderTop * fraction;
-        this.sliderY = new_slider;
-        this.scroll();
-      }
+      this.scrollTop($(node).get(0).offsetTop);
       return this;
     };
 
