@@ -596,7 +596,7 @@
     scrollTo: (node) ->
       return unless @isActive
       do @reset
-      offset = $(node).offset().top
+      offset = $(node).get(0).offsetTop
       if offset > @maxSliderTop
         fraction = offset / @contentHeight
         new_slider = @maxSliderTop * fraction

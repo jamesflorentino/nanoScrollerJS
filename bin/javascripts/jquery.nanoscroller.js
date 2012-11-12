@@ -639,7 +639,7 @@
         return;
       }
       this.reset();
-      offset = $(node).offset().top;
+      offset = $(node).get(0).offsetTop;
       if (offset > this.maxSliderTop) {
         fraction = offset / this.contentHeight;
         new_slider = this.maxSliderTop * fraction;
