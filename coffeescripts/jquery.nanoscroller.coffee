@@ -461,6 +461,8 @@
       if options.iOSNativeScrolling
         cssRule or= {}
         cssRule.WebkitOverflowScrolling = 'touch'
+        # disable slider if native scrolling is enabled
+        @slider.hide() if @content.style.WebkitOverflowScrolling?
       @$content.css cssRule if cssRule?
       this
 
