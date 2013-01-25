@@ -41,6 +41,7 @@
   border-radius         : 5px;
 }
 .nano > .pane > .slider {
+  background: #444;
   background: rgba(0,0,0,.5);
   position              : relative;
   margin                : 0 1px;
