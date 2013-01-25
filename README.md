@@ -9,7 +9,7 @@ It uses minimal HTML markup being `.nano > .content`. The other scrollbar div el
 - [Default stylesheet](https://raw.github.com/jamesflorentino/nanoScrollerJS/master/bin/css/nanoscroller.css)
 
 
-To start using, you to do three basic things:
+To start using, you need three basic things:
 
 ### 1. Markup
 
