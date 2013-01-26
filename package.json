@@ -5,7 +5,7 @@
     "node": ">= 0.6.0"
   },
   "dependencies": {
-    "grunt-css": ">= 0.2.1",
+    "grunt-css": "0.2.1 - 0.4.1",
     "grunt-coffee": ">= 0.0.6",
     "grunt-jasmine-task": ">= 0.2.2",
     "grunt-sizediff": ">= 0.2.1",
