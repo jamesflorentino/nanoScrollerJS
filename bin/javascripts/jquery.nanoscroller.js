@@ -1,6 +1,6 @@
 /*! nanoScrollerJS - v0.7
 * http://jamesflorentino.github.com/nanoScrollerJS/
-* Copyright (c) 2012 James Florentino; Licensed MIT */
+* Copyright (c) 2013 James Florentino; Licensed MIT */
 
 
 (function($, window, document) {
@@ -287,7 +287,14 @@
       this.$el = $(this.el);
       this.doc = $(document);
       this.win = $(window);
-      this.generate();
+      this.$content = this.$el.children("." + options.contentClass);
+      this.$content.attr('tabindex', 0);
+      this.content = this.$content[0];
+      if (this.options.iOSNativeScrolling && (this.el.style.WebkitOverflowScrolling != null)) {
+        this.nativeScrolling();
+      } else {
+        this.generate();
+      }
       this.createEvents();
       this.addEvents();
       this.reset();
@@ -319,6 +326,18 @@
           e.preventDefault();
         }
       }
+    };
+
+    /**
+      Enable iOS native scrolling
+    */
+
+
+    NanoScroll.prototype.nativeScrolling = function() {
+      this.$content.css({
+        WebkitOverflowScrolling: 'touch'
+      });
+      this.iOSNativeScrolling = true;
     };
 
     /**
@@ -386,10 +405,12 @@
             return;
           }
           _this.updateScrollValues();
-          _this.sliderY = _this.sliderTop;
-          _this.slider.css({
-            top: _this.sliderTop
-          });
+          if (!_this.iOSNativeScrolling) {
+            _this.sliderY = _this.sliderTop;
+            _this.slider.css({
+              top: _this.sliderTop
+            });
+          }
           if (e == null) {
             return;
           }
@@ -430,8 +451,10 @@
       if (!this.options.disableResize) {
         this.win.bind(RESIZE, events[RESIZE]);
       }
-      this.slider.bind(MOUSEDOWN, events[DOWN]);
-      this.pane.bind(MOUSEDOWN, events[PANEDOWN]).bind("" + MOUSEWHEEL + " " + DOMSCROLL, events[WHEEL]);
+      if (!this.iOSNativeScrolling) {
+        this.slider.bind(MOUSEDOWN, events[DOWN]);
+        this.pane.bind(MOUSEDOWN, events[PANEDOWN]).bind("" + MOUSEWHEEL + " " + DOMSCROLL, events[WHEEL]);
+      }
       this.$content.bind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]);
     };
 
@@ -446,8 +469,10 @@
       var events;
       events = this.events;
       this.win.unbind(RESIZE, events[RESIZE]);
-      this.slider.unbind();
-      this.pane.unbind();
+      if (!this.iOSNativeScrolling) {
+        this.slider.unbind();
+        this.pane.unbind();
+      }
       this.$content.unbind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]);
     };
 
@@ -466,9 +491,6 @@
       if (!this.$el.find("" + paneClass).length && !this.$el.find("" + sliderClass).length) {
         this.$el.append("<div class=\"" + paneClass + "\"><div class=\"" + sliderClass + "\" /></div>");
       }
-      this.$content = this.$el.children("." + contentClass);
-      this.$content.attr('tabindex', 0);
-      this.content = this.$content[0];
       this.slider = this.$el.find("." + sliderClass);
       this.pane = this.$el.find("." + paneClass);
       if (BROWSER_SCROLLBAR_WIDTH) {
@@ -478,10 +500,6 @@
           right: -BROWSER_SCROLLBAR_WIDTH
         };
         this.$el.addClass('has-scrollbar');
-      }
-      if (options.iOSNativeScrolling) {
-        cssRule || (cssRule = {});
-        cssRule.WebkitOverflowScrolling = 'touch';
       }
       if (cssRule != null) {
         this.$content.css(cssRule);
@@ -512,6 +530,9 @@
 
     NanoScroll.prototype.reset = function() {
       var content, contentHeight, contentStyle, contentStyleOverflowY, paneBottom, paneHeight, paneOuterHeight, paneTop, sliderHeight;
+      if (this.iOSNativeScrolling) {
+        return;
+      }
       if (!this.$el.find("." + this.options.paneClass).length) {
         this.generate().stop();
       }
