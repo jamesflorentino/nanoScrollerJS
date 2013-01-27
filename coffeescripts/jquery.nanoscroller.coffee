@@ -283,7 +283,14 @@
       @$el = $ @el
       @doc = $ document
       @win = $ window
-      do @generate
+      @$content = @$el.children(".#{options.contentClass}")
+      @$content.attr 'tabindex', 0
+      @content = @$content[0]
+
+      if @options.iOSNativeScrolling && @el.style.WebkitOverflowScrolling?
+        do @nativeScrolling
+      else
+        do @generate
       do @createEvents
       do @addEvents
       do @reset
@@ -305,6 +312,15 @@
         return if not e.originalEvent or not e.originalEvent.wheelDelta
         if direction is DOWN and e.originalEvent.wheelDelta < 0 or direction is UP and e.originalEvent.wheelDelta > 0
           do e.preventDefault
+      return
+
+    ###*
+      Enable iOS native scrolling
+    ####
+    nativeScrolling: ->
+      # simply enable container
+      @$content.css {WebkitOverflowScrolling: 'touch'}
+      @iOSNativeScrolling = true
       return
 
     ###*
@@ -373,9 +389,10 @@
           # This is invoked when a user presses and moves the slider or pane
           return if @isBeingDragged
           do @updateScrollValues
-          # update the slider position
-          @sliderY = @sliderTop
-          @slider.css top: @sliderTop
+          if not @iOSNativeScrolling
+            # update the slider position
+            @sliderY = @sliderTop
+            @slider.css top: @sliderTop
           # the succeeding code should be ignored if @events.scroll() wasn't
           # invoked by a DOM event. (refer to @reset)
           return unless e?
@@ -408,11 +425,12 @@
       if not @options.disableResize
         @win
           .bind RESIZE, events[RESIZE]
-      @slider
-        .bind MOUSEDOWN, events[DOWN]
-      @pane
-        .bind(MOUSEDOWN, events[PANEDOWN])
-        .bind("#{MOUSEWHEEL} #{DOMSCROLL}", events[WHEEL])
+      if not @iOSNativeScrolling
+        @slider
+          .bind MOUSEDOWN, events[DOWN]
+        @pane
+          .bind(MOUSEDOWN, events[PANEDOWN])
+          .bind("#{MOUSEWHEEL} #{DOMSCROLL}", events[WHEEL])
       @$content
         .bind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", events[SCROLL])
       return
@@ -426,8 +444,9 @@
       events = @events
       @win
         .unbind(RESIZE, events[RESIZE])
-      do @slider.unbind
-      do @pane.unbind
+      if not @iOSNativeScrolling
+        do @slider.unbind
+        do @pane.unbind
       @$content
         .unbind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", events[SCROLL])
       return
@@ -445,9 +464,6 @@
       {paneClass, sliderClass, contentClass} = options
       if not @$el.find("#{paneClass}").length and not @$el.find("#{sliderClass}").length
         @$el.append """<div class="#{paneClass}"><div class="#{sliderClass}" /></div>"""
-      @$content = @$el.children(".#{contentClass}")
-      @$content.attr 'tabindex', 0
-      @content = @$content[0]
 
       # slider is the name for the  scrollbox or thumb of the scrollbar gadget
       @slider = @$el.find ".#{sliderClass}"
@@ -458,10 +474,9 @@
       if BROWSER_SCROLLBAR_WIDTH
         cssRule = if @$el.css('direction') is 'rtl' then left: -BROWSER_SCROLLBAR_WIDTH else right: -BROWSER_SCROLLBAR_WIDTH
         @$el.addClass 'has-scrollbar'
-      if options.iOSNativeScrolling
-        cssRule or= {}
-        cssRule.WebkitOverflowScrolling = 'touch'
+
       @$content.css cssRule if cssRule?
+
       this
 
     ###*
@@ -482,6 +497,7 @@
           $(".nano").nanoScroller();
     ###
     reset: ->
+      return if @iOSNativeScrolling
       @generate().stop() if not @$el.find(".#{@options.paneClass}").length
       do @restore if @stopped
       content = @content
