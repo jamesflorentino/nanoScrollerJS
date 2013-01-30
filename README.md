@@ -111,6 +111,8 @@ There are a few options that you can change when running nanoScroller, e.g. `$("
 
 Set to true if you want to use native scrolling in iOS 5+. This will disable your custom nanoScroller scrollbar in iOS 5+ and use the native one instead. While the native iOS scrollbar usually works much better, [there could possibly be bugs](http://github.com/scottjehl/Device-Bugs/issues) in certain situations.
 
+Notice that `.pane` and `.slider` elements are *not generated/added* for devices that support iOS native scrolling when `iOSNativeScrolling` option is enabled.
+
 __Default:__ false
 
     $(".nano").nanoScroller({ iOSNativeScrolling: true });
@@ -258,6 +260,7 @@ To use overthrow, link to the javascript file in your HTML document...
 
 Other people who have contributed code:
 
+- [mente](https://github.com/mente) #110
 - [livskiy](https://github.com/livskiy) #83
 - [iStefo](https://github.com/iStefo) #65
 - [tahajahangir](https://github.com/tahajahangir) #60
