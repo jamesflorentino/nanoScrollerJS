@@ -1,4 +1,4 @@
-/*! nanoScrollerJS - v0.7
+/*! nanoScrollerJS - v0.7.1
 * http://jamesflorentino.github.com/nanoScrollerJS/
 * Copyright (c) 2013 James Florentino; Licensed MIT */
 
