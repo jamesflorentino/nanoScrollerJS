@@ -1,7 +1,8 @@
 
 describe("nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)", function() {
-  var $content, $nano, $pane, $slider, height, spyScrollend, spyScrolltop;
+  var $content, $nano, $nestedNano, $pane, $slider, height, spyScrollend, spyScrolltop;
   $nano = null;
+  $nestedNano = null;
   $content = null;
   $pane = null;
   $slider = null;
@@ -152,7 +153,7 @@ describe("nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
       });
     });
   });
-  return describe("when the plugin is called without any options and there is no content", function() {
+  describe("when the plugin is called without any options and there is no content", function() {
     beforeEach(function() {
       loadFixtures('nano-no-content.html');
       $nano = $("#nano");
@@ -290,6 +291,25 @@ describe("nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
         });
         return expect($slider.height()).toBe(120);
       });
+    });
+  });
+  return describe("when there is a nested nanoScroller, calling nanoScroller() on the parent", function() {
+    beforeEach(function() {
+      loadFixtures('nano-content.html');
+      $nano = $("#nano");
+      $content = $nano.find('.content');
+      $content.append('<div id="nestednano" class="nano" style="width:200px;height:200px"><div class="content" /></div>');
+      $nestedNano = $('#nestednano');
+      $nestedNano.nanoScroller();
+      return $nano.nanoScroller();
+    });
+    return it("should not modify the slider element of its child", function() {
+      var $nestedSlider;
+      $nano.nanoScroller({
+        scrollTop: 100
+      });
+      $nestedSlider = $nestedNano.find('.slider');
+      return expect($nestedSlider.css('top')).toEqual('auto');
     });
   });
 });

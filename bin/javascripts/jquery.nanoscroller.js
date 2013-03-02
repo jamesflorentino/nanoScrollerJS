@@ -494,8 +494,8 @@
       if (!this.$el.find("" + paneClass).length && !this.$el.find("" + sliderClass).length) {
         this.$el.append("<div class=\"" + paneClass + "\"><div class=\"" + sliderClass + "\" /></div>");
       }
-      this.slider = this.$el.find("." + sliderClass);
-      this.pane = this.$el.find("." + paneClass);
+      this.pane = this.$el.children("." + paneClass);
+      this.slider = this.pane.find("." + sliderClass);
       if (BROWSER_SCROLLBAR_WIDTH) {
         cssRule = this.$el.css('direction') === 'rtl' ? {
           left: -BROWSER_SCROLLBAR_WIDTH

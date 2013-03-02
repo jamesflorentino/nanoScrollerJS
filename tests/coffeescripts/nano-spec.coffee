@@ -1,5 +1,6 @@
 describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)", ->
   $nano = null
+  $nestedNano = null
   $content = null
   $pane = null
   $slider = null
@@ -196,3 +197,18 @@ describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
       it "should have set slider height to 120px", ->
         expect($slider).toHaveCss({ height: '120px' })
         expect($slider.height()).toBe(120)
+
+  describe "when there is a nested nanoScroller, calling nanoScroller() on the parent", ->
+    beforeEach ->
+      loadFixtures('nano-content.html')
+      $nano = $("#nano")
+      $content = $nano.find('.content')
+      $content.append('<div id="nestednano" class="nano" style="width:200px;height:200px"><div class="content" /></div>')
+      $nestedNano = $('#nestednano')
+      $nestedNano.nanoScroller()
+      $nano.nanoScroller()
+
+    it "should not modify the slider element of its child", ->
+      $nano.nanoScroller({ scrollTop: 100 })
+      $nestedSlider = $nestedNano.find('.slider')
+      expect($nestedSlider.css('top')).toEqual('auto')

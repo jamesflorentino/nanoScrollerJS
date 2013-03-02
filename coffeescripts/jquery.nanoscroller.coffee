@@ -468,11 +468,11 @@
       if not @$el.find("#{paneClass}").length and not @$el.find("#{sliderClass}").length
         @$el.append """<div class="#{paneClass}"><div class="#{sliderClass}" /></div>"""
 
-      # slider is the name for the  scrollbox or thumb of the scrollbar gadget
-      @slider = @$el.find ".#{sliderClass}"
-
       # pane is the name for the actual scrollbar.
-      @pane = @$el.find ".#{paneClass}"
+      @pane = @$el.children ".#{paneClass}"
+
+      # slider is the name for the  scrollbox or thumb of the scrollbar gadget
+      @slider = @pane.find ".#{sliderClass}"
 
       if BROWSER_SCROLLBAR_WIDTH
         cssRule = if @$el.css('direction') is 'rtl' then left: -BROWSER_SCROLLBAR_WIDTH else right: -BROWSER_SCROLLBAR_WIDTH
