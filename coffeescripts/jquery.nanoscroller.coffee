@@ -90,6 +90,22 @@
     ###
     sliderMaxHeight: null
 
+    ###*
+      an alternate document context.
+      @property documentContext
+      @type Document
+      @default null
+    ###
+    documentContext: null
+
+    ###*
+      an alternate window context.
+      @property windowContext
+      @type Window
+      @default null
+    ###
+    windowContext: null
+
   # Constants
 
   ###*
@@ -281,8 +297,8 @@
     constructor: (@el, @options) ->
       BROWSER_SCROLLBAR_WIDTH or= do getBrowserScrollbarWidth
       @$el = $ @el
-      @doc = $ document
-      @win = $ window
+      @doc = $ @options.documentContext or document
+      @win = $ @options.windowContext or window
       @$content = @$el.children(".#{options.contentClass}")
       @$content.attr 'tabindex', 0
       @content = @$content[0]
