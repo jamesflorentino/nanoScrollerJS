@@ -6,7 +6,7 @@
 (function($, window, document) {
   "use strict";
 
-  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, LEFT, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, PANERIGHT, RESIZE, RIGHT, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, defaults, getBrowserScrollbarWidth;
+  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_HEIGHT, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, LEFT, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, PANERIGHT, RESIZE, RIGHT, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, defaults, getBrowserScrollbarSizes;
   defaults = {
     /**
       a classname for the pane element.
@@ -277,15 +277,24 @@
 
   BROWSER_SCROLLBAR_WIDTH = null;
   /**
+    @property BROWSER_SCROLLBAR_HEIGHT
+    @type Number
+    @static
+    @default null
+    @private
+  */
+
+  BROWSER_SCROLLBAR_HEIGHT = null;
+  /**
     Returns browser's native scrollbar width
-    @method getBrowserScrollbarWidth
+    @method getBrowserScrollbarSizes
     @return {Number} the scrollbar width in pixels
     @static
     @private
   */
 
-  getBrowserScrollbarWidth = function() {
-    var outer, outerStyle, scrollbarWidth;
+  getBrowserScrollbarSizes = function() {
+    var outer, outerStyle, scrollbarHeight, scrollbarWidth;
     outer = document.createElement('div');
     outerStyle = outer.style;
     outerStyle.position = 'absolute';
@@ -295,8 +304,9 @@
     outerStyle.top = '-9999px';
     document.body.appendChild(outer);
     scrollbarWidth = outer.offsetWidth - outer.clientWidth;
+    scrollbarHeight = outer.offsetHeight - outer.clientHeight;
     document.body.removeChild(outer);
-    return scrollbarWidth;
+    return [scrollbarWidth, scrollbarHeight];
   };
   /**
     @class NanoScroll
@@ -308,9 +318,12 @@
   NanoScroll = (function() {
 
     function NanoScroll(el, options) {
+      var _ref;
       this.el = el;
       this.options = options;
-      BROWSER_SCROLLBAR_WIDTH || (BROWSER_SCROLLBAR_WIDTH = getBrowserScrollbarWidth());
+      if (!BROWSER_SCROLLBAR_WIDTH || !BROWSER_SCROLLBAR_HEIGHT) {
+        _ref = getBrowserScrollbarSizes(), BROWSER_SCROLLBAR_WIDTH = _ref[0], BROWSER_SCROLLBAR_HEIGHT = _ref[1];
+      }
       this.$el = $(this.el);
       this.doc = $(document);
       this.win = $(window);

@@ -279,13 +279,22 @@
   BROWSER_SCROLLBAR_WIDTH = null
 
   ###*
+    @property BROWSER_SCROLLBAR_HEIGHT
+    @type Number
+    @static
+    @default null
+    @private
+  ###
+  BROWSER_SCROLLBAR_HEIGHT = null
+
+  ###*
     Returns browser's native scrollbar width
-    @method getBrowserScrollbarWidth
+    @method getBrowserScrollbarSizes
     @return {Number} the scrollbar width in pixels
     @static
     @private
   ###
-  getBrowserScrollbarWidth = ->
+  getBrowserScrollbarSizes = ->
     outer = document.createElement 'div'
     outerStyle = outer.style
     outerStyle.position = 'absolute'
@@ -295,8 +304,9 @@
     outerStyle.top = '-9999px'
     document.body.appendChild outer
     scrollbarWidth = outer.offsetWidth - outer.clientWidth
+    scrollbarHeight = outer.offsetHeight - outer.clientHeight
     document.body.removeChild outer
-    scrollbarWidth
+    [scrollbarWidth, scrollbarHeight]
 
   ###*
     @class NanoScroll
@@ -306,7 +316,8 @@
   ###
   class NanoScroll
     constructor: (@el, @options) ->
-      BROWSER_SCROLLBAR_WIDTH or= do getBrowserScrollbarWidth
+      if not BROWSER_SCROLLBAR_WIDTH or not BROWSER_SCROLLBAR_HEIGHT
+        [BROWSER_SCROLLBAR_WIDTH, BROWSER_SCROLLBAR_HEIGHT] = do getBrowserScrollbarSizes
       @$el = $ @el
       @doc = $ document
       @win = $ window
