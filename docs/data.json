@@ -420,7 +420,7 @@
             "line": 343,
             "description": "Prevents the rest of the page being scrolled\nwhen user scrolls the `.content` element.",
             "itemtype": "method",
-            "name": "preventScrolling",
+            "name": "preventVerticalScrolling",
             "params": [
                 {
                     "name": "event",

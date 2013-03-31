@@ -336,12 +336,12 @@
     ###*
       Prevents the rest of the page being scrolled
       when user scrolls the `.content` element.
-      @method preventScrolling
+      @method preventVerticalScrolling
       @param event {Event}
       @param direction {String} Scroll direction (up or down)
       @private
     ###
-    preventScrolling: (e, direction) ->
+    preventVerticalScrolling: (e, direction) ->
       return unless @isActive
       if e.type is DOMSCROLL # Gecko
         if direction is DOWN and e.originalEvent.detail > 0 or direction is UP and e.originalEvent.detail < 0
@@ -440,10 +440,10 @@
           # if it reaches the maximum and minimum scrolling point,
           # we dispatch an event.
           if @contentScrollTop >= @maxScrollTop
-            @preventScrolling(e, DOWN) if @options.preventPageScrolling
+            @preventVerticalScrolling(e, DOWN) if @options.preventPageScrolling
             @$el.trigger 'scrollend'
           else if @contentScrollTop is 0
-            @preventScrolling(e, UP) if @options.preventPageScrolling
+            @preventVerticalScrolling(e, UP) if @options.preventPageScrolling
             @$el.trigger 'scrolltop'
           return
 

@@ -343,14 +343,14 @@
     /**
       Prevents the rest of the page being scrolled
       when user scrolls the `.content` element.
-      @method preventScrolling
+      @method preventVerticalScrolling
       @param event {Event}
       @param direction {String} Scroll direction (up or down)
       @private
     */
 
 
-    NanoScroll.prototype.preventScrolling = function(e, direction) {
+    NanoScroll.prototype.preventVerticalScrolling = function(e, direction) {
       if (!this.isActive) {
         return;
       }
@@ -459,12 +459,12 @@
           }
           if (_this.contentScrollTop >= _this.maxScrollTop) {
             if (_this.options.preventPageScrolling) {
-              _this.preventScrolling(e, DOWN);
+              _this.preventVerticalScrolling(e, DOWN);
             }
             _this.$el.trigger('scrollend');
           } else if (_this.contentScrollTop === 0) {
             if (_this.options.preventPageScrolling) {
-              _this.preventScrolling(e, UP);
+              _this.preventVerticalScrolling(e, UP);
             }
             _this.$el.trigger('scrolltop');
           }
