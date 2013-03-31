@@ -44,7 +44,7 @@
             "line": 11,
             "description": "a classname for the pane element.",
             "itemtype": "property",
-            "name": "paneClass",
+            "name": "paneClassY",
             "type": "String",
             "default": "'pane'",
             "class": "NanoScroll"

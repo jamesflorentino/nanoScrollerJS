@@ -98,12 +98,12 @@
   defaults = {
     &#x2F;**
       a classname for the pane element.
-      @property paneClass
+      @property paneClassY
       @type String
       @default &#x27;pane&#x27;
     *&#x2F;
 
-    paneClass: &#x27;pane&#x27;,
+    paneClassY: &#x27;pane-y&#x27;,
     &#x2F;**
       a classname for the slider element.
       @property sliderClass
@@ -576,13 +576,13 @@
 
 
     NanoScroll.prototype.generate = function() {
-      var contentClass, cssRule, options, paneClass, sliderClass;
+      var contentClass, cssRule, options, paneClassY, sliderClass;
       options = this.options;
-      paneClass = options.paneClass, sliderClass = options.sliderClass, contentClass = options.contentClass;
-      if (!this.$el.find(&quot;&quot; + paneClass).length &amp;&amp; !this.$el.find(&quot;&quot; + sliderClass).length) {
-        this.$el.append(&quot;&lt;div class=\&quot;&quot; + paneClass + &quot;\&quot;&gt;&lt;div class=\&quot;&quot; + sliderClass + &quot;\&quot; &#x2F;&gt;&lt;&#x2F;div&gt;&quot;);
+      paneClassY = options.paneClassY, sliderClass = options.sliderClass, contentClass = options.contentClass;
+      if (!this.$el.find(&quot;&quot; + paneClassY).length &amp;&amp; !this.$el.find(&quot;&quot; + sliderClass).length) {
+        this.$el.append(&quot;&lt;div class=\&quot;&quot; + paneClassY + &quot;\&quot;&gt;&lt;div class=\&quot;&quot; + sliderClass + &quot;\&quot; &#x2F;&gt;&lt;&#x2F;div&gt;&quot;);
       }
-      this.yPane = this.$el.children(&quot;.&quot; + paneClass);
+      this.yPane = this.$el.children(&quot;.&quot; + paneClassY);
       this.ySlider = this.yPane.find(&quot;.&quot; + sliderClass);
       if (BROWSER_SCROLLBAR_WIDTH) {
         cssRule = this.$el.css(&#x27;direction&#x27;) === &#x27;rtl&#x27; ? {
@@ -625,7 +625,7 @@
         this.contentHeight = this.content.scrollHeight;
         return;
       }
-      if (!this.$el.find(&quot;.&quot; + this.options.paneClass).length) {
+      if (!this.$el.find(&quot;.&quot; + this.options.paneClassY).length) {
         this.generate().stop();
       }
       if (this.stopped) {
@@ -804,6 +804,9 @@
     return this.each(function() {
       var options, scrollbar;
       if (!(scrollbar = this.nanoscroller)) {
+        if (!settings.paneClassY &amp;&amp; settings.paneClass) {
+          settings.paneClassY = settings.paneClass;
+        }
         options = $.extend({}, defaults, settings);
         this.nanoscroller = scrollbar = new NanoScroll(this, options);
       }

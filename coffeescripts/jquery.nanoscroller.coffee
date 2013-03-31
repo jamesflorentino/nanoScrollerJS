@@ -11,11 +11,11 @@
   defaults =
     ###*
       a classname for the pane element.
-      @property paneClass
+      @property paneClassY
       @type String
       @default 'pane'
     ###
-    paneClass: 'pane'
+    paneClassY: 'pane-y'
 
     ###*
       a classname for the slider element.
@@ -464,12 +464,12 @@
       # For reference:
       # http://msdn.microsoft.com/en-us/library/windows/desktop/bb787527(v=vs.85).aspx#parts_of_scroll_bar
       options = @options
-      {paneClass, sliderClass, contentClass} = options
-      if not @$el.find("#{paneClass}").length and not @$el.find("#{sliderClass}").length
-        @$el.append """<div class="#{paneClass}"><div class="#{sliderClass}" /></div>"""
+      {paneClassY, sliderClass, contentClass} = options
+      if not @$el.find("#{paneClassY}").length and not @$el.find("#{sliderClass}").length
+        @$el.append """<div class="#{paneClassY}"><div class="#{sliderClass}" /></div>"""
 
       # pane is the name for the actual scrollbar.
-      @yPane = @$el.children ".#{paneClass}"
+      @yPane = @$el.children ".#{paneClassY}"
 
       # slider is the name for the  scrollbox or thumb of the scrollbar gadget
       @ySlider = @yPane.find ".#{sliderClass}"
@@ -503,7 +503,7 @@
       if @iOSNativeScrolling
         @contentHeight = @content.scrollHeight
         return
-      @generate().stop() if not @$el.find(".#{@options.paneClass}").length
+      @generate().stop() if not @$el.find(".#{@options.paneClassY}").length
       do @restore if @stopped
       content = @content
       contentStyle = content.style
@@ -656,6 +656,8 @@
   $.fn.nanoScroller = (settings) ->
     @each ->
       if not scrollbar = @nanoscroller
+        if not settings.paneClassY and settings.paneClass
+          settings.paneClassY = settings.paneClass # "#{settings.paneClass}-y"
         options = $.extend {}, defaults, settings
         @nanoscroller = scrollbar = new NanoScroll this, options
       
