@@ -94,7 +94,7 @@
 (function($, window, document) {
   &quot;use strict&quot;;
 
-  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, defaults, getBrowserScrollbarWidth;
+  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, LEFT, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, PANERIGHT, RESIZE, RIGHT, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, defaults, getBrowserScrollbarWidth;
   defaults = {
     &#x2F;**
       a classname for the pane element.
@@ -266,6 +266,24 @@
 
   PANEDOWN = &#x27;panedown&#x27;;
   &#x2F;**
+    @property LEFT
+    @type String
+    @static
+    @final
+    @private
+  *&#x2F;
+
+  LEFT = &#x27;left&#x27;;
+  &#x2F;**
+    @property PANERIGHT
+    @type String
+    @static
+    @final
+    @private
+  *&#x2F;
+
+  PANERIGHT = &#x27;paneright&#x27;;
+  &#x2F;**
     @property DOMSCROLL
     @type String
     @static
@@ -283,6 +301,15 @@
   *&#x2F;
 
   DOWN = &#x27;down&#x27;;
+  &#x2F;**
+    @property RIGHT
+    @type String
+    @static
+    @final
+    @private
+  *&#x2F;
+
+  RIGHT = &#x27;right&#x27;;
   &#x2F;**
     @property WHEEL
     @type String

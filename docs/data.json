@@ -22,7 +22,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 274,
+            "line": 301,
             "params": [
                 {
                     "name": "element",
@@ -260,7 +260,7 @@
             "file": "bin/javascripts/jquery.nanoscroller.js",
             "line": 180,
             "itemtype": "property",
-            "name": "DOMSCROLL",
+            "name": "LEFT",
             "type": "String",
             "static": 1,
             "final": 1,
@@ -272,7 +272,7 @@
             "file": "bin/javascripts/jquery.nanoscroller.js",
             "line": 189,
             "itemtype": "property",
-            "name": "DOWN",
+            "name": "PANERIGHT",
             "type": "String",
             "static": 1,
             "final": 1,
@@ -284,7 +284,7 @@
             "file": "bin/javascripts/jquery.nanoscroller.js",
             "line": 198,
             "itemtype": "property",
-            "name": "WHEEL",
+            "name": "DOMSCROLL",
             "type": "String",
             "static": 1,
             "final": 1,
@@ -296,7 +296,7 @@
             "file": "bin/javascripts/jquery.nanoscroller.js",
             "line": 207,
             "itemtype": "property",
-            "name": "KEYDOWN",
+            "name": "DOWN",
             "type": "String",
             "static": 1,
             "final": 1,
@@ -308,7 +308,7 @@
             "file": "bin/javascripts/jquery.nanoscroller.js",
             "line": 216,
             "itemtype": "property",
-            "name": "KEYUP",
+            "name": "RIGHT",
             "type": "String",
             "static": 1,
             "final": 1,
@@ -320,7 +320,7 @@
             "file": "bin/javascripts/jquery.nanoscroller.js",
             "line": 225,
             "itemtype": "property",
-            "name": "TOUCHMOVE",
+            "name": "WHEEL",
             "type": "String",
             "static": 1,
             "final": 1,
@@ -332,6 +332,42 @@
             "file": "bin/javascripts/jquery.nanoscroller.js",
             "line": 234,
             "itemtype": "property",
+            "name": "KEYDOWN",
+            "type": "String",
+            "static": 1,
+            "final": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "NanoScroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 243,
+            "itemtype": "property",
+            "name": "KEYUP",
+            "type": "String",
+            "static": 1,
+            "final": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "NanoScroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 252,
+            "itemtype": "property",
+            "name": "TOUCHMOVE",
+            "type": "String",
+            "static": 1,
+            "final": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "NanoScroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 261,
+            "itemtype": "property",
             "name": "BROWSER_IS_IE7",
             "type": "Boolean",
             "static": 1,
@@ -342,7 +378,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 243,
+            "line": 270,
             "itemtype": "property",
             "name": "BROWSER_SCROLLBAR_WIDTH",
             "type": "Number",
@@ -354,7 +390,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 252,
+            "line": 279,
             "description": "Returns browser's native scrollbar width",
             "itemtype": "method",
             "name": "getBrowserScrollbarWidth",
@@ -369,7 +405,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 303,
+            "line": 330,
             "description": "Prevents the rest of the page being scrolled\nwhen user scrolls the `.content` element.",
             "itemtype": "method",
             "name": "preventScrolling",
@@ -391,13 +427,13 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 331,
+            "line": 358,
             "description": "Enable iOS native scrolling",
             "class": "NanoScroll"
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 344,
+            "line": 371,
             "description": "Updates those nanoScroller properties that\nare related to current scrollbar position.",
             "itemtype": "method",
             "name": "updateScrollValues",
@@ -407,7 +443,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 363,
+            "line": 390,
             "description": "Creates event related methods",
             "itemtype": "method",
             "name": "createEvents",
@@ -417,7 +453,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 443,
+            "line": 470,
             "description": "Adds event listeners with jQuery.",
             "itemtype": "method",
             "name": "addEvents",
@@ -427,7 +463,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 464,
+            "line": 491,
             "description": "Removes event listeners with jQuery.",
             "itemtype": "method",
             "name": "removeEvents",
@@ -437,7 +473,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 482,
+            "line": 509,
             "description": "Generates nanoScroller's scrollbar and elements for it.",
             "itemtype": "method",
             "name": "generate",
@@ -448,7 +484,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 513,
+            "line": 540,
             "itemtype": "method",
             "name": "restore",
             "access": "private",
@@ -457,7 +493,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 525,
+            "line": 552,
             "description": "Resets nanoScroller's scrollbar.",
             "itemtype": "method",
             "name": "reset",
@@ -469,7 +505,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 592,
+            "line": 619,
             "itemtype": "method",
             "name": "scroll",
             "access": "private",
@@ -481,7 +517,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 615,
+            "line": 642,
             "description": "Scroll at the bottom with an offset value",
             "itemtype": "method",
             "name": "scrollBottom",
@@ -500,7 +536,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 634,
+            "line": 661,
             "description": "Scroll at the top with an offset value",
             "itemtype": "method",
             "name": "scrollTop",
@@ -519,7 +555,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 653,
+            "line": 680,
             "description": "Scroll to an element",
             "itemtype": "method",
             "name": "scrollTo",
@@ -538,7 +574,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 672,
+            "line": 699,
             "description": "To stop the operation.\nThis option will tell the plugin to disable all event bindings and hide the gadget scrollbar from the UI.",
             "itemtype": "method",
             "name": "stop",
@@ -550,7 +586,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 689,
+            "line": 716,
             "description": "To flash the scrollbar gadget for an amount of time defined in plugin settings (defaults to 1,5s).\nUseful if you want to show the user (e.g. on pageload) that there is more content waiting for him.",
             "itemtype": "method",
             "name": "flash",
@@ -564,7 +600,7 @@
     "warnings": [
         {
             "message": "Missing item type\nEnable iOS native scrolling",
-            "line": " bin/javascripts/jquery.nanoscroller.js:331"
+            "line": " bin/javascripts/jquery.nanoscroller.js:358"
         }
     ]
 }

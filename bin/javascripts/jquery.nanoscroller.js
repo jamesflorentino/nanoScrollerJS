@@ -6,7 +6,7 @@
 (function($, window, document) {
   "use strict";
 
-  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, defaults, getBrowserScrollbarWidth;
+  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, LEFT, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, PANERIGHT, RESIZE, RIGHT, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, defaults, getBrowserScrollbarWidth;
   defaults = {
     /**
       a classname for the pane element.
@@ -178,6 +178,24 @@
 
   PANEDOWN = 'panedown';
   /**
+    @property LEFT
+    @type String
+    @static
+    @final
+    @private
+  */
+
+  LEFT = 'left';
+  /**
+    @property PANERIGHT
+    @type String
+    @static
+    @final
+    @private
+  */
+
+  PANERIGHT = 'paneright';
+  /**
     @property DOMSCROLL
     @type String
     @static
@@ -195,6 +213,15 @@
   */
 
   DOWN = 'down';
+  /**
+    @property RIGHT
+    @type String
+    @static
+    @final
+    @private
+  */
+
+  RIGHT = 'right';
   /**
     @property WHEEL
     @type String

@@ -180,6 +180,24 @@
   PANEDOWN = 'panedown'
 
   ###*
+    @property LEFT
+    @type String
+    @static
+    @final
+    @private
+  ###
+  LEFT = 'left'
+
+  ###*
+    @property PANERIGHT
+    @type String
+    @static
+    @final
+    @private
+  ###
+  PANERIGHT = 'paneright'
+
+  ###*
     @property DOMSCROLL
     @type String
     @static
@@ -196,6 +214,15 @@
     @private
   ###
   DOWN = 'down'
+
+  ###*
+    @property RIGHT
+    @type String
+    @static
+    @final
+    @private
+  ###
+  RIGHT = 'right'
 
   ###*
     @property WHEEL
