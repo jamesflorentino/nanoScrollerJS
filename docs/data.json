@@ -448,7 +448,7 @@
             "line": 384,
             "description": "Updates those nanoScroller properties that\nare related to current scrollbar position.",
             "itemtype": "method",
-            "name": "updateScrollValues",
+            "name": "updateVerticalScrollValues",
             "access": "private",
             "tagname": "",
             "class": "NanoScroll"
@@ -519,7 +519,7 @@
             "file": "bin/javascripts/jquery.nanoscroller.js",
             "line": 632,
             "itemtype": "method",
-            "name": "scroll",
+            "name": "scrollY",
             "access": "private",
             "tagname": "",
             "example": [

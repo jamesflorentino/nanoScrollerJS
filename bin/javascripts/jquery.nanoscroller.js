@@ -384,12 +384,12 @@
     /**
       Updates those nanoScroller properties that
       are related to current scrollbar position.
-      @method updateScrollValues
+      @method updateVerticalScrollValues
       @private
     */
 
 
-    NanoScroll.prototype.updateScrollValues = function() {
+    NanoScroll.prototype.updateVerticalScrollValues = function() {
       var content;
       content = this.content;
       this.maxScrollTop = content.scrollHeight - content.clientHeight;
@@ -409,18 +409,18 @@
 
     NanoScroll.prototype.createEvents = function() {
       var _this = this;
-      this.events = {
+      this.yEvents = {
         down: function(e) {
           _this.isBeingDragged = true;
           _this.offsetY = e.pageY - _this.ySlider.offset().top;
           _this.yPane.addClass('active');
-          _this.doc.bind(MOUSEMOVE, _this.events[DRAG]).bind(MOUSEUP, _this.events[UP]);
+          _this.doc.bind(MOUSEMOVE, _this.yEvents[DRAG]).bind(MOUSEUP, _this.yEvents[UP]);
           return false;
         },
         drag: function(e) {
           _this.ySliderY = e.pageY - _this.$el.offset().top - _this.offsetY;
-          _this.scroll();
-          _this.updateScrollValues();
+          _this.scrollY();
+          _this.updateVerticalScrollValues();
           if (_this.contentScrollTop >= _this.maxScrollTop) {
             _this.$el.trigger('scrollend');
           } else if (_this.contentScrollTop === 0) {
@@ -431,7 +431,7 @@
         up: function(e) {
           _this.isBeingDragged = false;
           _this.yPane.removeClass('active');
-          _this.doc.unbind(MOUSEMOVE, _this.events[DRAG]).unbind(MOUSEUP, _this.events[UP]);
+          _this.doc.unbind(MOUSEMOVE, _this.yEvents[DRAG]).unbind(MOUSEUP, _this.yEvents[UP]);
           return false;
         },
         resize: function(e) {
@@ -439,15 +439,15 @@
         },
         panedown: function(e) {
           _this.ySliderY = (e.offsetY || e.originalEvent.layerY) - (_this.ySliderHeight * 0.5);
-          _this.scroll();
-          _this.events.down(e);
+          _this.scrollY();
+          _this.yEvents.down(e);
           return false;
         },
         scroll: function(e) {
           if (_this.isBeingDragged) {
             return;
           }
-          _this.updateScrollValues();
+          _this.updateVerticalScrollValues();
           if (!_this.iOSNativeScrolling) {
             _this.ySliderY = _this.ySliderTop;
             _this.ySlider.css({
@@ -474,7 +474,7 @@
             return;
           }
           _this.ySliderY += -e.wheelDeltaY || -e.delta;
-          _this.scroll();
+          _this.scrollY();
           return false;
         }
       };
@@ -490,7 +490,7 @@
     NanoScroll.prototype.addEvents = function() {
       var events;
       this.removeEvents();
-      events = this.events;
+      events = this.yEvents;
       if (!this.options.disableResize) {
         this.win.bind(RESIZE, events[RESIZE]);
       }
@@ -510,7 +510,7 @@
 
     NanoScroll.prototype.removeEvents = function() {
       var events;
-      events = this.events;
+      events = this.yEvents;
       this.win.unbind(RESIZE, events[RESIZE]);
       if (!this.iOSNativeScrolling) {
         this.ySlider.unbind();
@@ -611,7 +611,7 @@
       this.yPaneOuterHeight = paneOuterHeight;
       this.ySliderHeight = sliderHeight;
       this.ySlider.height(sliderHeight);
-      this.events.scroll();
+      this.yEvents.scroll();
       this.yPane.show();
       this.isActive = true;
       if ((content.scrollHeight === content.clientHeight) || (this.yPane.outerHeight(true) >= content.scrollHeight && contentStyleOverflowY !== SCROLL)) {
@@ -630,14 +630,14 @@
     };
 
     /**
-      @method scroll
+      @method scrollY
       @private
       @example
           $(".nano").nanoScroller({ scroll: 'top' });
     */
 
 
-    NanoScroll.prototype.scroll = function() {
+    NanoScroll.prototype.scrollY = function() {
       if (!this.isActive) {
         return;
       }

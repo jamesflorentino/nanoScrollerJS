@@ -366,10 +366,10 @@
     ###*
       Updates those nanoScroller properties that
       are related to current scrollbar position.
-      @method updateScrollValues
+      @method updateVerticalScrollValues
       @private
     ###
-    updateScrollValues: ->
+    updateVerticalScrollValues: ->
       content = @content
       # Formula/ratio
       # `scrollTop / maxScrollTop = sliderTop / maxSliderTop`
@@ -387,20 +387,20 @@
       @private
     ###
     createEvents: ->
-      @events =
+      @yEvents =
         down: (e) =>
           @isBeingDragged  = true
           @offsetY = e.pageY - @ySlider.offset().top
           @yPane.addClass 'active'
           @doc
-            .bind(MOUSEMOVE, @events[DRAG])
-            .bind(MOUSEUP, @events[UP])
+            .bind(MOUSEMOVE, @yEvents[DRAG])
+            .bind(MOUSEUP, @yEvents[UP])
           false
 
         drag: (e) =>
           @ySliderY = e.pageY - @$el.offset().top - @offsetY
-          do @scroll
-          do @updateScrollValues
+          do @scrollY
+          do @updateVerticalScrollValues
           if @contentScrollTop >= @maxScrollTop
             @$el.trigger 'scrollend'
           else if @contentScrollTop is 0
@@ -411,8 +411,8 @@
           @isBeingDragged = false
           @yPane.removeClass 'active'
           @doc
-            .unbind(MOUSEMOVE, @events[DRAG])
-            .unbind(MOUSEUP, @events[UP])
+            .unbind(MOUSEMOVE, @yEvents[DRAG])
+            .unbind(MOUSEUP, @yEvents[UP])
           false
 
         resize: (e) =>
@@ -421,20 +421,20 @@
 
         panedown: (e) =>
           @ySliderY = (e.offsetY or e.originalEvent.layerY) - (@ySliderHeight * 0.5)
-          do @scroll
-          @events.down e
+          do @scrollY
+          @yEvents.down e
           false
 
         scroll: (e) =>
           # Don't operate if there is a dragging mechanism going on.
           # This is invoked when a user presses and moves the slider or pane
           return if @isBeingDragged
-          do @updateScrollValues
+          do @updateVerticalScrollValues
           if not @iOSNativeScrolling
             # update the slider position
             @ySliderY = @ySliderTop
             @ySlider.css top: @ySliderTop
-          # the succeeding code should be ignored if @events.scroll() wasn't
+          # the succeeding code should be ignored if @yEvents.scroll() wasn't
           # invoked by a DOM event. (refer to @reset)
           return unless e?
           # if it reaches the maximum and minimum scrolling point,
@@ -450,7 +450,7 @@
         wheel: (e) =>
           return unless e?
           @ySliderY +=  -e.wheelDeltaY or -e.delta
-          do @scroll
+          do @scrollY
           false
 
       return
@@ -462,7 +462,7 @@
     ###
     addEvents: ->
       do @removeEvents
-      events = @events
+      events = @yEvents
       if not @options.disableResize
         @win
           .bind RESIZE, events[RESIZE]
@@ -482,7 +482,7 @@
       @private
     ###
     removeEvents: ->
-      events = @events
+      events = @yEvents
       @win
         .unbind(RESIZE, events[RESIZE])
       if not @iOSNativeScrolling
@@ -582,7 +582,7 @@
       @ySlider.height sliderHeight
 
       # scroll sets the position of the @ySlider
-      do @events.scroll
+      do @yEvents.scroll
 
       do @yPane.show
       @isActive = true
@@ -603,12 +603,12 @@
       this
 
     ###*
-      @method scroll
+      @method scrollY
       @private
       @example
           $(".nano").nanoScroller({ scroll: 'top' });
     ###
-    scroll: ->
+    scrollY: ->
       return unless @isActive
       @ySliderY = Math.max 0, @ySliderY
       @ySliderY = Math.min @maxSliderTop, @ySliderY
