@@ -355,8 +355,8 @@
       this.maxScrollTop = content.scrollHeight - content.clientHeight;
       this.contentScrollTop = content.scrollTop;
       if (!this.iOSNativeScrolling) {
-        this.maxSliderTop = this.paneHeight - this.sliderHeight;
-        this.sliderTop = this.contentScrollTop * this.maxSliderTop / this.maxScrollTop;
+        this.maxSliderTop = this.yPaneHeight - this.ySliderHeight;
+        this.ySliderTop = this.contentScrollTop * this.maxSliderTop / this.maxScrollTop;
       }
     };
 
@@ -372,13 +372,13 @@
       this.events = {
         down: function(e) {
           _this.isBeingDragged = true;
-          _this.offsetY = e.pageY - _this.slider.offset().top;
-          _this.pane.addClass('active');
+          _this.offsetY = e.pageY - _this.ySlider.offset().top;
+          _this.yPane.addClass('active');
           _this.doc.bind(MOUSEMOVE, _this.events[DRAG]).bind(MOUSEUP, _this.events[UP]);
           return false;
         },
         drag: function(e) {
-          _this.sliderY = e.pageY - _this.$el.offset().top - _this.offsetY;
+          _this.ySliderY = e.pageY - _this.$el.offset().top - _this.offsetY;
           _this.scroll();
           _this.updateScrollValues();
           if (_this.contentScrollTop >= _this.maxScrollTop) {
@@ -390,7 +390,7 @@
         },
         up: function(e) {
           _this.isBeingDragged = false;
-          _this.pane.removeClass('active');
+          _this.yPane.removeClass('active');
           _this.doc.unbind(MOUSEMOVE, _this.events[DRAG]).unbind(MOUSEUP, _this.events[UP]);
           return false;
         },
@@ -398,7 +398,7 @@
           _this.reset();
         },
         panedown: function(e) {
-          _this.sliderY = (e.offsetY || e.originalEvent.layerY) - (_this.sliderHeight * 0.5);
+          _this.ySliderY = (e.offsetY || e.originalEvent.layerY) - (_this.ySliderHeight * 0.5);
           _this.scroll();
           _this.events.down(e);
           return false;
@@ -409,9 +409,9 @@
           }
           _this.updateScrollValues();
           if (!_this.iOSNativeScrolling) {
-            _this.sliderY = _this.sliderTop;
-            _this.slider.css({
-              top: _this.sliderTop
+            _this.ySliderY = _this.ySliderTop;
+            _this.ySlider.css({
+              top: _this.ySliderTop
             });
           }
           if (e == null) {
@@ -433,7 +433,7 @@
           if (e == null) {
             return;
           }
-          _this.sliderY += -e.wheelDeltaY || -e.delta;
+          _this.ySliderY += -e.wheelDeltaY || -e.delta;
           _this.scroll();
           return false;
         }
@@ -455,8 +455,8 @@
         this.win.bind(RESIZE, events[RESIZE]);
       }
       if (!this.iOSNativeScrolling) {
-        this.slider.bind(MOUSEDOWN, events[DOWN]);
-        this.pane.bind(MOUSEDOWN, events[PANEDOWN]).bind("" + MOUSEWHEEL + " " + DOMSCROLL, events[WHEEL]);
+        this.ySlider.bind(MOUSEDOWN, events[DOWN]);
+        this.yPane.bind(MOUSEDOWN, events[PANEDOWN]).bind("" + MOUSEWHEEL + " " + DOMSCROLL, events[WHEEL]);
       }
       this.$content.bind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]);
     };
@@ -473,8 +473,8 @@
       events = this.events;
       this.win.unbind(RESIZE, events[RESIZE]);
       if (!this.iOSNativeScrolling) {
-        this.slider.unbind();
-        this.pane.unbind();
+        this.ySlider.unbind();
+        this.yPane.unbind();
       }
       this.$content.unbind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]);
     };
@@ -494,8 +494,8 @@
       if (!this.$el.find("" + paneClass).length && !this.$el.find("" + sliderClass).length) {
         this.$el.append("<div class=\"" + paneClass + "\"><div class=\"" + sliderClass + "\" /></div>");
       }
-      this.pane = this.$el.children("." + paneClass);
-      this.slider = this.pane.find("." + sliderClass);
+      this.yPane = this.$el.children("." + paneClass);
+      this.ySlider = this.yPane.find("." + sliderClass);
       if (BROWSER_SCROLLBAR_WIDTH) {
         cssRule = this.$el.css('direction') === 'rtl' ? {
           left: -BROWSER_SCROLLBAR_WIDTH
@@ -518,7 +518,7 @@
 
     NanoScroll.prototype.restore = function() {
       this.stopped = false;
-      this.pane.show();
+      this.yPane.show();
       this.addEvents();
     };
 
@@ -552,9 +552,9 @@
         });
       }
       contentHeight = content.scrollHeight + BROWSER_SCROLLBAR_WIDTH;
-      paneHeight = this.pane.outerHeight();
-      paneTop = parseInt(this.pane.css('top'), 10);
-      paneBottom = parseInt(this.pane.css('bottom'), 10);
+      paneHeight = this.yPane.outerHeight();
+      paneTop = parseInt(this.yPane.css('top'), 10);
+      paneBottom = parseInt(this.yPane.css('bottom'), 10);
       paneOuterHeight = paneHeight + paneTop + paneBottom;
       sliderHeight = Math.round(paneOuterHeight / contentHeight * paneOuterHeight);
       if (sliderHeight < this.options.sliderMinHeight) {
@@ -567,22 +567,22 @@
       }
       this.maxSliderTop = paneOuterHeight - sliderHeight;
       this.contentHeight = contentHeight;
-      this.paneHeight = paneHeight;
-      this.paneOuterHeight = paneOuterHeight;
-      this.sliderHeight = sliderHeight;
-      this.slider.height(sliderHeight);
+      this.yPaneHeight = paneHeight;
+      this.yPaneOuterHeight = paneOuterHeight;
+      this.ySliderHeight = sliderHeight;
+      this.ySlider.height(sliderHeight);
       this.events.scroll();
-      this.pane.show();
+      this.yPane.show();
       this.isActive = true;
-      if ((content.scrollHeight === content.clientHeight) || (this.pane.outerHeight(true) >= content.scrollHeight && contentStyleOverflowY !== SCROLL)) {
-        this.pane.hide();
+      if ((content.scrollHeight === content.clientHeight) || (this.yPane.outerHeight(true) >= content.scrollHeight && contentStyleOverflowY !== SCROLL)) {
+        this.yPane.hide();
         this.isActive = false;
       } else if (this.el.clientHeight === content.scrollHeight && contentStyleOverflowY === SCROLL) {
-        this.slider.hide();
+        this.ySlider.hide();
       } else {
-        this.slider.show();
+        this.ySlider.show();
       }
-      this.pane.css({
+      this.yPane.css({
         opacity: (this.options.alwaysVisible ? 1 : ''),
         visibility: (this.options.alwaysVisible ? 'visible' : '')
       });
@@ -601,12 +601,12 @@
       if (!this.isActive) {
         return;
       }
-      this.sliderY = Math.max(0, this.sliderY);
-      this.sliderY = Math.min(this.maxSliderTop, this.sliderY);
-      this.$content.scrollTop((this.paneHeight - this.contentHeight + BROWSER_SCROLLBAR_WIDTH) * this.sliderY / this.maxSliderTop * -1);
+      this.ySliderY = Math.max(0, this.ySliderY);
+      this.ySliderY = Math.min(this.maxSliderTop, this.ySliderY);
+      this.$content.scrollTop((this.yPaneHeight - this.contentHeight + BROWSER_SCROLLBAR_WIDTH) * this.ySliderY / this.maxSliderTop * -1);
       if (!this.iOSNativeScrolling) {
-        this.slider.css({
-          top: this.sliderY
+        this.ySlider.css({
+          top: this.ySliderY
         });
       }
       return this;
@@ -682,7 +682,7 @@
     NanoScroll.prototype.stop = function() {
       this.stopped = true;
       this.removeEvents();
-      this.pane.hide();
+      this.yPane.hide();
       return this;
     };
 
@@ -702,9 +702,9 @@
         return;
       }
       this.reset();
-      this.pane.addClass('flashed');
+      this.yPane.addClass('flashed');
       setTimeout(function() {
-        _this.pane.removeClass('flashed');
+        _this.yPane.removeClass('flashed');
       }, this.options.flashDelay);
       return this;
     };

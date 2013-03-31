@@ -338,9 +338,9 @@
       @maxScrollTop = content.scrollHeight - content.clientHeight
       @contentScrollTop = content.scrollTop
       if not @iOSNativeScrolling
-        @maxSliderTop = @paneHeight - @sliderHeight
+        @maxSliderTop = @yPaneHeight - @ySliderHeight
         # `sliderTop = scrollTop / maxScrollTop * maxSliderTop
-        @sliderTop = @contentScrollTop * @maxSliderTop / @maxScrollTop
+        @ySliderTop = @contentScrollTop * @maxSliderTop / @maxScrollTop
       return
 
     ###*
@@ -352,15 +352,15 @@
       @events =
         down: (e) =>
           @isBeingDragged  = true
-          @offsetY = e.pageY - @slider.offset().top
-          @pane.addClass 'active'
+          @offsetY = e.pageY - @ySlider.offset().top
+          @yPane.addClass 'active'
           @doc
             .bind(MOUSEMOVE, @events[DRAG])
             .bind(MOUSEUP, @events[UP])
           false
 
         drag: (e) =>
-          @sliderY = e.pageY - @$el.offset().top - @offsetY
+          @ySliderY = e.pageY - @$el.offset().top - @offsetY
           do @scroll
           do @updateScrollValues
           if @contentScrollTop >= @maxScrollTop
@@ -371,7 +371,7 @@
 
         up: (e) =>
           @isBeingDragged = false
-          @pane.removeClass 'active'
+          @yPane.removeClass 'active'
           @doc
             .unbind(MOUSEMOVE, @events[DRAG])
             .unbind(MOUSEUP, @events[UP])
@@ -382,7 +382,7 @@
           return
 
         panedown: (e) =>
-          @sliderY = (e.offsetY or e.originalEvent.layerY) - (@sliderHeight * 0.5)
+          @ySliderY = (e.offsetY or e.originalEvent.layerY) - (@ySliderHeight * 0.5)
           do @scroll
           @events.down e
           false
@@ -394,8 +394,8 @@
           do @updateScrollValues
           if not @iOSNativeScrolling
             # update the slider position
-            @sliderY = @sliderTop
-            @slider.css top: @sliderTop
+            @ySliderY = @ySliderTop
+            @ySlider.css top: @ySliderTop
           # the succeeding code should be ignored if @events.scroll() wasn't
           # invoked by a DOM event. (refer to @reset)
           return unless e?
@@ -411,7 +411,7 @@
 
         wheel: (e) =>
           return unless e?
-          @sliderY +=  -e.wheelDeltaY or -e.delta
+          @ySliderY +=  -e.wheelDeltaY or -e.delta
           do @scroll
           false
 
@@ -429,9 +429,9 @@
         @win
           .bind RESIZE, events[RESIZE]
       if not @iOSNativeScrolling
-        @slider
+        @ySlider
           .bind MOUSEDOWN, events[DOWN]
-        @pane
+        @yPane
           .bind(MOUSEDOWN, events[PANEDOWN])
           .bind("#{MOUSEWHEEL} #{DOMSCROLL}", events[WHEEL])
       @$content
@@ -448,8 +448,8 @@
       @win
         .unbind(RESIZE, events[RESIZE])
       if not @iOSNativeScrolling
-        do @slider.unbind
-        do @pane.unbind
+        do @ySlider.unbind
+        do @yPane.unbind
       @$content
         .unbind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", events[SCROLL])
       return
@@ -469,10 +469,10 @@
         @$el.append """<div class="#{paneClass}"><div class="#{sliderClass}" /></div>"""
 
       # pane is the name for the actual scrollbar.
-      @pane = @$el.children ".#{paneClass}"
+      @yPane = @$el.children ".#{paneClass}"
 
       # slider is the name for the  scrollbox or thumb of the scrollbar gadget
-      @slider = @pane.find ".#{sliderClass}"
+      @ySlider = @yPane.find ".#{sliderClass}"
 
       if BROWSER_SCROLLBAR_WIDTH
         cssRule = if @$el.css('direction') is 'rtl' then left: -BROWSER_SCROLLBAR_WIDTH else right: -BROWSER_SCROLLBAR_WIDTH
@@ -488,7 +488,7 @@
     ###
     restore: ->
       @stopped = false
-      do @pane.show
+      do @yPane.show
       do @addEvents
       return
 
@@ -518,9 +518,9 @@
       contentHeight = content.scrollHeight + BROWSER_SCROLLBAR_WIDTH
 
       # set the pane's height.
-      paneHeight = do @pane.outerHeight
-      paneTop = parseInt @pane.css('top'), 10
-      paneBottom = parseInt @pane.css('bottom'), 10
+      paneHeight = do @yPane.outerHeight
+      paneTop = parseInt @yPane.css('top'), 10
+      paneBottom = parseInt @yPane.css('bottom'), 10
       paneOuterHeight = paneHeight + paneTop + paneBottom
 
       # set the slider's height
@@ -536,29 +536,29 @@
 
       # set into properties for further use
       @contentHeight = contentHeight
-      @paneHeight = paneHeight
-      @paneOuterHeight = paneOuterHeight
-      @sliderHeight = sliderHeight
+      @yPaneHeight = paneHeight
+      @yPaneOuterHeight = paneOuterHeight
+      @ySliderHeight = sliderHeight
 
       # set the values to the gadget
-      @slider.height sliderHeight
+      @ySlider.height sliderHeight
 
-      # scroll sets the position of the @slider
+      # scroll sets the position of the @ySlider
       do @events.scroll
 
-      do @pane.show
+      do @yPane.show
       @isActive = true
       if (content.scrollHeight is content.clientHeight) or (
-          @pane.outerHeight(true) >= content.scrollHeight and contentStyleOverflowY isnt SCROLL)
-        do @pane.hide
+          @yPane.outerHeight(true) >= content.scrollHeight and contentStyleOverflowY isnt SCROLL)
+        do @yPane.hide
         @isActive = false
       else if @el.clientHeight is content.scrollHeight and contentStyleOverflowY is SCROLL
-        do @slider.hide
+        do @ySlider.hide
       else
-        do @slider.show
+        do @ySlider.show
 
       # allow the pane element to stay visible
-      @pane.css
+      @yPane.css
         opacity: (if @options.alwaysVisible then 1 else '')
         visibility: (if @options.alwaysVisible then 'visible' else '')
 
@@ -572,11 +572,11 @@
     ###
     scroll: ->
       return unless @isActive
-      @sliderY = Math.max 0, @sliderY
-      @sliderY = Math.min @maxSliderTop, @sliderY
-      @$content.scrollTop (@paneHeight - @contentHeight + BROWSER_SCROLLBAR_WIDTH) * @sliderY / @maxSliderTop * -1
+      @ySliderY = Math.max 0, @ySliderY
+      @ySliderY = Math.min @maxSliderTop, @ySliderY
+      @$content.scrollTop (@yPaneHeight - @contentHeight + BROWSER_SCROLLBAR_WIDTH) * @ySliderY / @maxSliderTop * -1
       if not @iOSNativeScrolling
-        @slider.css top: @sliderY
+        @ySlider.css top: @ySliderY
       this
 
     ###*
@@ -632,7 +632,7 @@
     stop: ->
       @stopped = true
       do @removeEvents
-      do @pane.hide
+      do @yPane.hide
       this
 
     ###*
@@ -646,9 +646,9 @@
     flash: ->
       return unless @isActive
       do @reset
-      @pane.addClass 'flashed'
+      @yPane.addClass 'flashed'
       setTimeout =>
-        @pane.removeClass 'flashed'
+        @yPane.removeClass 'flashed'
         return
       , @options.flashDelay
       this
