@@ -10,6 +10,14 @@
   defaults = {
     /**
       a classname for the pane element.
+      @property paneClass
+      @type String
+      @default 'pane'
+    */
+
+    paneClass: 'pane',
+    /**
+      a classname for the pane-y element.
       @property paneClassY
       @type String
       @default 'pane-y'
@@ -17,7 +25,7 @@
 
     paneClassY: 'pane-y',
     /**
-      a classname for the pane element.
+      a classname for the pane-x element.
       @property paneClassX
       @type String
       @default 'pane-x'
@@ -26,6 +34,14 @@
     paneClassX: 'pane-x',
     /**
       a classname for the slider element.
+      @property sliderClass
+      @type String
+      @default 'slider'
+    */
+
+    sliderClass: 'slider',
+    /**
+      a classname for the slider-y element.
       @property sliderClassY
       @type String
       @default 'slider-y'
@@ -33,7 +49,7 @@
 
     sliderClassY: 'slider-y',
     /**
-      a classname for the slider element.
+      a classname for the slider-x element.
       @property sliderClassX
       @type String
       @default 'slider-x'
@@ -669,14 +685,14 @@
 
 
     NanoScroll.prototype.generate = function() {
-      var contentClass, cssRuleX, cssRuleY, options, paneClassX, paneClassY, sliderClassX, sliderClassY;
+      var contentClass, cssRuleX, cssRuleY, options, paneClass, paneClassX, paneClassY, sliderClass, sliderClassX, sliderClassY;
       options = this.options;
-      paneClassY = options.paneClassY, paneClassX = options.paneClassX, sliderClassY = options.sliderClassY, sliderClassX = options.sliderClassX, contentClass = options.contentClass;
+      paneClass = options.paneClass, paneClassY = options.paneClassY, paneClassX = options.paneClassX, sliderClass = options.sliderClass, sliderClassY = options.sliderClassY, sliderClassX = options.sliderClassX, contentClass = options.contentClass;
       if (!this.$el.find("" + paneClassY).length && !this.$el.find("" + sliderClassY).length) {
-        this.$el.append("<div class=\"" + paneClassY + "\"><div class=\"" + sliderClassY + "\" /></div>");
+        this.$el.append("<div class=\"" + paneClass + " " + paneClassY + "\"><div class=\"" + sliderClass + " " + sliderClassY + "\" /></div>");
       }
       if (!this.$el.find("" + paneClassX).length && !this.$el.find("" + sliderClassX).length) {
-        this.$el.append("<div class=\"" + paneClassX + "\"><div class=\"" + sliderClassX + "\" /></div>");
+        this.$el.append("<div class=\"" + paneClass + " " + paneClassX + "\"><div class=\"" + sliderClass + " " + sliderClassX + "\" /></div>");
       }
       this.yPane = this.$el.children("." + paneClassY);
       this.xPane = this.$el.children("." + paneClassX);
@@ -1047,11 +1063,21 @@
     return this.each(function() {
       var options, scrollbar;
       if (!(scrollbar = this.nanoscroller)) {
-        if (!settings.paneClassY && settings.paneClass) {
-          settings.paneClassY = settings.paneClass;
+        if (settings.paneClass) {
+          if (!settings.paneClassX) {
+            settings.paneClassX = "" + settings.paneClass + "-x";
+          }
+          if (!settings.paneClassY) {
+            settings.paneClassY = "" + settings.paneClass + "-y";
+          }
         }
-        if (!settings.sliderClassY && settings.sliderClass) {
-          settings.sliderClassY = settings.sliderClass;
+        if (settings.sliderClass) {
+          if (!settings.sliderClassX) {
+            settings.sliderClassX = "" + settings.sliderClass + "-x";
+          }
+          if (!settings.sliderClassY) {
+            settings.sliderClassY = "" + settings.sliderClass + "-y";
+          }
         }
         options = $.extend({}, defaults, settings);
         this.nanoscroller = scrollbar = new NanoScroll(this, options);

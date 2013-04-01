@@ -20,7 +20,7 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 <p>You should specify a width and a height to your container, and apply some custom styling for your scrollbar. Here&#39;s an example:</p>
 <pre><code>.nano { background: #bba; width: 500px; height: 500px; }
 .nano .content { padding: 10px; }
-.nano .pane   { background: #888; }
+.nano .pane { background: #888; }
 .nano .slider { background: #111; }</code></pre>
 <h3>3. JavaScript</h3>
 <p>Running this script will apply the nanoScroller plugin to all DOM elements with a <code>.nano</code> className.</p>
@@ -31,10 +31,18 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 <pre><code>$(&quot;.nano&quot;).nanoScroller({ scroll: &#39;top&#39; });</code></pre>
 <p>To scroll at the bottom:</p>
 <pre><code>$(&quot;.nano&quot;).nanoScroller({ scroll: &#39;bottom&#39; });</code></pre>
+<p>To scroll at the left:</p>
+<pre><code>$(&quot;.nano&quot;).nanoScroller({ scroll: &#39;left&#39; });</code></pre>
+<p>To scroll at the right:</p>
+<pre><code>$(&quot;.nano&quot;).nanoScroller({ scroll: &#39;right&#39; });</code></pre>
 <p>To scroll at the top with an offset value:</p>
 <pre><code>$(&quot;.nano&quot;).nanoScroller({ scrollTop: value });</code></pre>
 <p>To scroll at the bottom with an offset value:</p>
 <pre><code>$(&quot;.nano&quot;).nanoScroller({ scrollBottom: value });</code></pre>
+<p>To scroll at the left with an offset value:</p>
+<pre><code>$(&quot;.nano&quot;).nanoScroller({ scrollLeft: value });</code></pre>
+<p>To scroll at the right with an offset value:</p>
+<pre><code>$(&quot;.nano&quot;).nanoScroller({ scrollRight: value });</code></pre>
 <p>To scroll to an element:</p>
 <pre><code>$(&quot;.nano&quot;).nanoScroller({ scrollTo: $(&#39;#a_node&#39;) });</code></pre>
 <h4>stop:</h4>
@@ -69,6 +77,14 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 <p>Sets the minimum height of the slider element.</p>
 <p><strong>Default:</strong> 20</p>
 <pre><code>$(&quot;.nano&quot;).nanoScroller({ sliderMinHeight: 40 });</code></pre>
+<h4>sliderMinWidth</h4>
+<p>Sets the minimum width of the slider element.</p>
+<p><strong>Default:</strong> 20</p>
+<pre><code>$(&quot;.nano&quot;).nanoScroller({ sliderMinHeight: 40 });</code></pre>
+<h4>sliderMaxWidth</h4>
+<p>Sets the maximum width of the slider element.</p>
+<p><strong>Default:</strong> null</p>
+<pre><code>$(&quot;.nano&quot;).nanoScroller({ sliderMaxWidth: 200 });</code></pre>
 <h4>sliderMaxHeight</h4>
 <p>Sets the maximum height of the slider element.</p>
 <p><strong>Default:</strong> null</p>
@@ -104,7 +120,6 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 <h2>How it works</h2>
 <p><img src="https://github.com/jamesflorentino/nanoScrollerJS/raw/master/fig1.png" alt="Fig 1."></p>
 <p>The plugin works by creating a scrollbar gadget (with pre-defined css for styling) and then subscribing the <code>.content</code>&#39;s scroll events to it. Mouse press and drag events are also subscribed to the <code>.pane</code> and <code>.pane &gt; .slider</code> to emulate the native scrollbar&#39;s mechanism. The system scrollbars are hidden from the viewport (Fig 1). By doing this, we still retain the natural scrolling experience provided by the OS.</p>
-<p>We are still working on doing a horizontal scrolling feature. If you&#39;re interested in contributing to the project, you are free to fork it and create a pull request.</p>
 <h3>Development</h3>
 <p>To build nanoScroller from source you need the following libraries installed:</p>
 <ul>

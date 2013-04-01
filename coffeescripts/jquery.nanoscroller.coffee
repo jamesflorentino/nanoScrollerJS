@@ -11,6 +11,14 @@
   defaults =
     ###*
       a classname for the pane element.
+      @property paneClass
+      @type String
+      @default 'pane'
+    ###
+    paneClass: 'pane'
+
+    ###*
+      a classname for the pane-y element.
       @property paneClassY
       @type String
       @default 'pane-y'
@@ -18,7 +26,7 @@
     paneClassY: 'pane-y'
 
     ###*
-      a classname for the pane element.
+      a classname for the pane-x element.
       @property paneClassX
       @type String
       @default 'pane-x'
@@ -27,6 +35,14 @@
 
     ###*
       a classname for the slider element.
+      @property sliderClass
+      @type String
+      @default 'slider'
+    ###
+    sliderClass: 'slider'
+
+    ###*
+      a classname for the slider-y element.
       @property sliderClassY
       @type String
       @default 'slider-y'
@@ -34,7 +50,7 @@
     sliderClassY: 'slider-y'
 
     ###*
-      a classname for the slider element.
+      a classname for the slider-x element.
       @property sliderClassX
       @type String
       @default 'slider-x'
@@ -637,12 +653,12 @@
       # For reference:
       # http://msdn.microsoft.com/en-us/library/windows/desktop/bb787527(v=vs.85).aspx#parts_of_scroll_bar
       options = @options
-      {paneClassY, paneClassX, sliderClassY, sliderClassX, contentClass} = options
+      {paneClass, paneClassY, paneClassX, sliderClass, sliderClassY, sliderClassX, contentClass} = options
       if not @$el.find("#{paneClassY}").length and not @$el.find("#{sliderClassY}").length
-        @$el.append """<div class="#{paneClassY}"><div class="#{sliderClassY}" /></div>"""
+        @$el.append """<div class="#{paneClass} #{paneClassY}"><div class="#{sliderClass} #{sliderClassY}" /></div>"""
 
       if not @$el.find("#{paneClassX}").length and not @$el.find("#{sliderClassX}").length
-        @$el.append """<div class="#{paneClassX}"><div class="#{sliderClassX}" /></div>"""
+        @$el.append """<div class="#{paneClass} #{paneClassX}"><div class="#{sliderClass} #{sliderClassX}" /></div>"""
 
       # pane is the name for the actual scrollbar.
       @yPane = @$el.children ".#{paneClassY}"
@@ -957,10 +973,12 @@
     @each ->
       if not scrollbar = @nanoscroller
         # For maintain compatibility
-        if not settings.paneClassY and settings.paneClass
-          settings.paneClassY = settings.paneClass
-        if not settings.sliderClassY and settings.sliderClass
-          settings.sliderClassY = settings.sliderClass
+        if settings.paneClass
+          settings.paneClassX = "#{settings.paneClass}-x" if not settings.paneClassX
+          settings.paneClassY = "#{settings.paneClass}-y" if not settings.paneClassY
+        if settings.sliderClass
+          settings.sliderClassX = "#{settings.sliderClass}-x" if not settings.sliderClassX
+          settings.sliderClassY = "#{settings.sliderClass}-y" if not settings.sliderClassY
 
         options = $.extend {}, defaults, settings
         @nanoscroller = scrollbar = new NanoScroll this, options
