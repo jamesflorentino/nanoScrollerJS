@@ -569,7 +569,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 822,
+            "line": 832,
             "itemtype": "method",
             "name": "scrollY",
             "access": "private",
@@ -581,7 +581,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 845,
+            "line": 855,
             "itemtype": "method",
             "name": "scrollX",
             "access": "private",
@@ -593,7 +593,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 868,
+            "line": 878,
             "description": "Scroll at the bottom with an offset value",
             "itemtype": "method",
             "name": "scrollBottom",
@@ -612,7 +612,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 887,
+            "line": 897,
             "description": "Scroll at the right with an offset value",
             "itemtype": "method",
             "name": "scrollRight",
@@ -631,7 +631,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 906,
+            "line": 916,
             "description": "Scroll at the top with an offset value",
             "itemtype": "method",
             "name": "scrollTop",
@@ -650,7 +650,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 925,
+            "line": 935,
             "description": "Scroll at the left with an offset value",
             "itemtype": "method",
             "name": "scrollLeft",
@@ -669,7 +669,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 944,
+            "line": 954,
             "description": "Scroll to an element",
             "itemtype": "method",
             "name": "scrollTo",
@@ -688,7 +688,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 970,
+            "line": 980,
             "description": "To stop the operation.\nThis option will tell the plugin to disable all event bindings and hide the gadget scrollbar from the UI.",
             "itemtype": "method",
             "name": "stop",
@@ -700,7 +700,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 988,
+            "line": 998,
             "description": "To flash the scrollbar gadget for an amount of time defined in plugin settings (defaults to 1,5s).\nUseful if you want to show the user (e.g. on pageload) that there is more content waiting for him.",
             "itemtype": "method",
             "name": "flash",

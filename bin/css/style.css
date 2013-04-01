@@ -6,21 +6,32 @@
 	background: #555;
 	width: 8px;
 	right: 1px;
-  margin: 5px;
-  margin-bottom: 16px;
+	margin: 5px;
 }
 
 .nano .pane-x {
 	background: #555;
 	height: 8px;
 	bottom: 1px;
-  margin: 5px;
-  margin-right: 16px;
+	margin: 5px;
 }
 
 .nano .slider-y, .nano .slider-x {
 	background: #111;
 }
+
+.nano .slider-y {
+	width: 6px;
+}
+
 .nano .slider-x {
 	height: 6px;
+}
+
+.nano.has-scrollbar-x .pane-y {
+	margin-bottom: 18px;
+}
+
+.nano.has-scrollbar-y .pane-x {
+	margin-right: 18px;
 }

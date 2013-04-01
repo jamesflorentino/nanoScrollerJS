@@ -818,6 +818,8 @@
         this.contentWidth = this.content.scrollWidth;
         return;
       }
+      this.$el.removeClass(&#x27;has-scrollbar-x&#x27;);
+      this.$el.removeClass(&#x27;has-scrollbar-y&#x27;);
       if (!this.$el.find(&quot;.&quot; + this.options.paneClassY).length &amp;&amp; !this.$el.find(&quot;.&quot; + this.options.paneClassX).length) {
         this.generate().stop();
       }
@@ -836,6 +838,12 @@
       }
       contentHeight = content.scrollHeight + BROWSER_SCROLLBAR_WIDTH;
       contentWidth = content.scrollWidth + BROWSER_SCROLLBAR_HEIGHT;
+      if (content.scrollWidth &gt; this.xPane.outerWidth(true)) {
+        this.$el.addClass(&#x27;has-scrollbar-x&#x27;);
+      }
+      if (content.scrollHeight &gt; this.yPane.outerHeight(true)) {
+        this.$el.addClass(&#x27;has-scrollbar-y&#x27;);
+      }
       paneHeight = this.yPane.outerHeight();
       paneTop = parseInt(this.yPane.css(&#x27;top&#x27;), 10);
       paneBottom = parseInt(this.yPane.css(&#x27;bottom&#x27;), 10);
@@ -880,6 +888,7 @@
       this.isActiveY = true;
       if ((content.scrollHeight === content.clientHeight) || (this.yPane.outerHeight(true) &gt;= content.scrollHeight &amp;&amp; contentStyleOverflowY !== SCROLL)) {
         this.yPane.hide();
+        this.$el.removeClass(&#x27;has-scrollbar-y&#x27;);
         this.isActiveY = false;
       } else if (this.el.clientHeight === content.scrollHeight &amp;&amp; contentStyleOverflowY === SCROLL) {
         this.ySlider.hide();
@@ -890,6 +899,7 @@
       this.isActiveX = true;
       if ((content.scrollWidth === content.clientWidth) || (this.xPane.outerWidth(true) &gt;= content.scrollWidth &amp;&amp; contentStyleOverflowX !== SCROLL)) {
         this.xPane.hide();
+        this.$el.removeClass(&#x27;has-scrollbar-x&#x27;);
         this.isActiveX = false;
       } else if (this.el.clientWidth === content.scrollWidth &amp;&amp; contentStyleOverflowX === SCROLL) {
         this.xSlider.hide();

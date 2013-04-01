@@ -687,6 +687,9 @@
         @contentHeight = @content.scrollHeight
         @contentWidth = @content.scrollWidth
         return
+      @$el.removeClass 'has-scrollbar-x'
+      @$el.removeClass 'has-scrollbar-y'
+
       @generate().stop() if not @$el.find(".#{@options.paneClassY}").length and not @$el.find(".#{@options.paneClassX}").length
       do @restore if @stopped
       content = @content
@@ -708,6 +711,14 @@
       # set the scrollbar UI's width
       # the target content
       contentWidth = content.scrollWidth + BROWSER_SCROLLBAR_HEIGHT
+
+      # console.log contentWidth, contentHeight, @xPane.outerWidth(), @xPane.outerWidth(true), @yPane.outerHeight(), @yPane.outerHeight(true)
+      if content.scrollWidth > @xPane.outerWidth(true)
+        @$el.addClass 'has-scrollbar-x'
+
+      if content.scrollHeight > @yPane.outerHeight(true)
+        @$el.addClass 'has-scrollbar-y'
+
 
       # set the y pane's height.
       paneHeight = do @yPane.outerHeight
@@ -766,6 +777,7 @@
       if (content.scrollHeight is content.clientHeight) or (
           @yPane.outerHeight(true) >= content.scrollHeight and contentStyleOverflowY isnt SCROLL)
         do @yPane.hide
+        @$el.removeClass 'has-scrollbar-y'
         @isActiveY = false
       else if @el.clientHeight is content.scrollHeight and contentStyleOverflowY is SCROLL
         do @ySlider.hide
@@ -777,6 +789,7 @@
       if (content.scrollWidth is content.clientWidth) or (
           @xPane.outerWidth(true) >= content.scrollWidth and contentStyleOverflowX isnt SCROLL)
         do @xPane.hide
+        @$el.removeClass 'has-scrollbar-x'
         @isActiveX = false
       else if @el.clientWidth is content.scrollWidth and contentStyleOverflowX is SCROLL
         do @xSlider.hide

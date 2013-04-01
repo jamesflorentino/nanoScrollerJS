@@ -730,6 +730,8 @@
         this.contentWidth = this.content.scrollWidth;
         return;
       }
+      this.$el.removeClass('has-scrollbar-x');
+      this.$el.removeClass('has-scrollbar-y');
       if (!this.$el.find("." + this.options.paneClassY).length && !this.$el.find("." + this.options.paneClassX).length) {
         this.generate().stop();
       }
@@ -748,6 +750,12 @@
       }
       contentHeight = content.scrollHeight + BROWSER_SCROLLBAR_WIDTH;
       contentWidth = content.scrollWidth + BROWSER_SCROLLBAR_HEIGHT;
+      if (content.scrollWidth > this.xPane.outerWidth(true)) {
+        this.$el.addClass('has-scrollbar-x');
+      }
+      if (content.scrollHeight > this.yPane.outerHeight(true)) {
+        this.$el.addClass('has-scrollbar-y');
+      }
       paneHeight = this.yPane.outerHeight();
       paneTop = parseInt(this.yPane.css('top'), 10);
       paneBottom = parseInt(this.yPane.css('bottom'), 10);
@@ -792,6 +800,7 @@
       this.isActiveY = true;
       if ((content.scrollHeight === content.clientHeight) || (this.yPane.outerHeight(true) >= content.scrollHeight && contentStyleOverflowY !== SCROLL)) {
         this.yPane.hide();
+        this.$el.removeClass('has-scrollbar-y');
         this.isActiveY = false;
       } else if (this.el.clientHeight === content.scrollHeight && contentStyleOverflowY === SCROLL) {
         this.ySlider.hide();
@@ -802,6 +811,7 @@
       this.isActiveX = true;
       if ((content.scrollWidth === content.clientWidth) || (this.xPane.outerWidth(true) >= content.scrollWidth && contentStyleOverflowX !== SCROLL)) {
         this.xPane.hide();
+        this.$el.removeClass('has-scrollbar-x');
         this.isActiveX = false;
       } else if (this.el.clientWidth === content.scrollWidth && contentStyleOverflowX === SCROLL) {
         this.xSlider.hide();
