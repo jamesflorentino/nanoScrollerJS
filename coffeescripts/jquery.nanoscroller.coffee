@@ -13,17 +13,33 @@
       a classname for the pane element.
       @property paneClassY
       @type String
-      @default 'pane'
+      @default 'pane-y'
     ###
     paneClassY: 'pane-y'
 
     ###*
-      a classname for the slider element.
-      @property sliderClass
+      a classname for the pane element.
+      @property paneClassX
       @type String
-      @default 'slider'
+      @default 'pane-x'
     ###
-    sliderClass: 'slider'
+    paneClassX: 'pane-x'
+
+    ###*
+      a classname for the slider element.
+      @property sliderClassY
+      @type String
+      @default 'slider-y'
+    ###
+    sliderClassY: 'slider-y'
+
+    ###*
+      a classname for the slider element.
+      @property sliderClassX
+      @type String
+      @default 'slider-x'
+    ###
+    sliderClassX: 'slider-x'
 
     ###*
       a classname for the content element.
@@ -342,13 +358,34 @@
       @private
     ###
     preventVerticalScrolling: (e, direction) ->
-      return unless @isActive
+      return unless @isActiveY
+      return
       if e.type is DOMSCROLL # Gecko
         if direction is DOWN and e.originalEvent.detail > 0 or direction is UP and e.originalEvent.detail < 0
           do e.preventDefault
       else if e.type is MOUSEWHEEL # WebKit, Trident and Presto
         return if not e.originalEvent or not e.originalEvent.wheelDelta
         if direction is DOWN and e.originalEvent.wheelDelta < 0 or direction is UP and e.originalEvent.wheelDelta > 0
+          do e.preventDefault
+      return
+
+    ###*
+      Prevents the rest of the page being scrolled
+      when user scrolls the `.content` element.
+      @method preventHorizontalScrolling
+      @param event {Event}
+      @param direction {String} Scroll direction (left or right)
+      @private
+    ###
+    preventHorizontalScrolling: (e, direction) ->
+      return unless @isActiveX
+      return
+      if e.type is DOMSCROLL # Gecko
+        if direction is RIGHT and e.originalEvent.detail > 0 or direction is LEFT and e.originalEvent.detail < 0
+          do e.preventDefault
+      else if e.type is MOUSEWHEEL # WebKit, Trident and Presto
+        return if not e.originalEvent or not e.originalEvent.wheelDelta
+        if direction is RIGHT and e.originalEvent.wheelDelta < 0 or direction is LEFT and e.originalEvent.wheelDelta > 0
           do e.preventDefault
       return
 
@@ -360,7 +397,8 @@
       @$content.css {WebkitOverflowScrolling: 'touch'}
       @iOSNativeScrolling = true
       # we are always active
-      @isActive = true
+      @isActiveX = true
+      @isActiveY = true
       return
 
     ###*
@@ -382,6 +420,24 @@
       return
 
     ###*
+      Updates those nanoScroller properties that
+      are related to current scrollbar position.
+      @method updateVerticalScrollValues
+      @private
+    ###
+    updateHorizontalScrollValues: ->
+      content = @content
+      # Formula/ratio
+      # `scrollTop / maxScrollTop = sliderTop / maxSliderTop`
+      @maxScrollLeft = content.scrollWidth - content.clientWidth
+      @contentScrollLeft = content.scrollLeft
+      if not @iOSNativeScrolling
+        @maxSliderLeft = @xPaneWidth - @xSliderWidth
+        # `sliderTop = scrollTop / maxScrollTop * maxSliderTop
+        @xSliderLeft = @contentScrollLeft * @maxSliderLeft / @maxScrollLeft
+      return
+
+    ###*
       Creates event related methods
       @method createEvents
       @private
@@ -389,7 +445,7 @@
     createEvents: ->
       @yEvents =
         down: (e) =>
-          @isBeingDragged  = true
+          @isYBeingDragged  = true
           @offsetY = e.pageY - @ySlider.offset().top
           @yPane.addClass 'active'
           @doc
@@ -408,7 +464,7 @@
           false
 
         up: (e) =>
-          @isBeingDragged = false
+          @isYBeingDragged = false
           @yPane.removeClass 'active'
           @doc
             .unbind(MOUSEMOVE, @yEvents[DRAG])
@@ -428,7 +484,7 @@
         scroll: (e) =>
           # Don't operate if there is a dragging mechanism going on.
           # This is invoked when a user presses and moves the slider or pane
-          return if @isBeingDragged
+          return if @isYBeingDragged
           do @updateVerticalScrollValues
           if not @iOSNativeScrolling
             # update the slider position
@@ -453,6 +509,72 @@
           do @scrollY
           false
 
+      @xEvents =
+        down: (e) =>
+          @isXBeingDragged  = true
+          @offsetX = e.pageX - @xSlider.offset().left
+          @xPane.addClass 'active'
+          @doc
+            .bind(MOUSEMOVE, @xEvents[DRAG])
+            .bind(MOUSEUP, @xEvents[UP])
+          false
+
+        drag: (e) =>
+          @xSliderX = e.pageX - @$el.offset().left - @offsetX
+          do @scrollX
+          do @updateHorizontalScrollValues
+          if @contentScrollLeft >= @maxScrollLeft
+            @$el.trigger 'scrollend'
+          else if @contentScrollLeft is 0
+            @$el.trigger 'scrollleft'
+          false
+
+        up: (e) =>
+          @isXBeingDragged = false
+          @xPane.removeClass 'active'
+          @doc
+            .unbind(MOUSEMOVE, @xEvents[DRAG])
+            .unbind(MOUSEUP, @xEvents[UP])
+          false
+
+        resize: (e) =>
+          do @reset
+          return
+
+        panedown: (e) =>
+          @xSliderX = (e.offsetX or e.originalEvent.layerX) - (@xSliderWidth * 0.5)
+          do @scrollX
+          @xEvents.down e
+          false
+
+        scroll: (e) =>
+          # Don't operate if there is a dragging mechanism going on.
+          # This is invoked when a user presses and moves the slider or pane
+          return if @isXBeingDragged
+          do @updateHorizontalScrollValues
+          if not @iOSNativeScrolling
+            # update the slider position
+            @xSliderX = @xSliderLeft
+            @xSlider.css left: @xSliderLeft
+          # the succeeding code should be ignored if @xEvents.scroll() wasn't
+          # invoked by a DOM event. (refer to @reset)
+          return unless e?
+          # if it reaches the maximum and minimum scrolling point,
+          # we dispatch an event.
+          if @contentScrollLeft >= @maxScrollLeft
+            @preventHorizontalScrolling(e, RIGHT) if @options.preventPageScrolling
+            @$el.trigger 'scrollend'
+          else if @contentScrollLeft is 0
+            @preventHorizontalScrolling(e, LEFT) if @options.preventPageScrolling
+            @$el.trigger 'scrollleft'
+          return
+
+        wheel: (e) =>
+          return unless e?
+          @xSliderX +=  -e.wheelDeltaX or -e.delta
+          do @scrollX
+          false
+
       return
 
     ###*
@@ -462,18 +584,26 @@
     ###
     addEvents: ->
       do @removeEvents
-      events = @yEvents
+      yEvents = @yEvents
+      xEvents = @xEvents
       if not @options.disableResize
         @win
-          .bind RESIZE, events[RESIZE]
+          .bind RESIZE, yEvents[RESIZE]
+          .bind RESIZE, xEvents[RESIZE]
       if not @iOSNativeScrolling
         @ySlider
-          .bind MOUSEDOWN, events[DOWN]
+          .bind MOUSEDOWN, yEvents[DOWN]
+        @xSlider
+          .bind MOUSEDOWN, xEvents[DOWN]
         @yPane
-          .bind(MOUSEDOWN, events[PANEDOWN])
-          .bind("#{MOUSEWHEEL} #{DOMSCROLL}", events[WHEEL])
+          .bind(MOUSEDOWN, yEvents[PANEDOWN])
+          .bind("#{MOUSEWHEEL} #{DOMSCROLL}", yEvents[WHEEL])
+        @xPane
+          .bind(MOUSEDOWN, xEvents[PANEDOWN])
+          .bind("#{MOUSEWHEEL} #{DOMSCROLL}", xEvents[WHEEL])
       @$content
-        .bind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", events[SCROLL])
+        .bind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", yEvents[SCROLL])
+        .bind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", xEvents[SCROLL])
       return
 
     ###*
@@ -482,14 +612,19 @@
       @private
     ###
     removeEvents: ->
-      events = @yEvents
+      yEvents = @yEvents
+      xEvents = @xEvents
       @win
-        .unbind(RESIZE, events[RESIZE])
+        .unbind(RESIZE, yEvents[RESIZE])
+        .unbind(RESIZE, xEvents[RESIZE])
       if not @iOSNativeScrolling
         do @ySlider.unbind
+        do @xSlider.unbind
         do @yPane.unbind
+        do @xPane.unbind
       @$content
-        .unbind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", events[SCROLL])
+        .unbind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", yEvents[SCROLL])
+        .unbind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", xEvents[SCROLL])
       return
 
     ###*
@@ -502,21 +637,30 @@
       # For reference:
       # http://msdn.microsoft.com/en-us/library/windows/desktop/bb787527(v=vs.85).aspx#parts_of_scroll_bar
       options = @options
-      {paneClassY, sliderClass, contentClass} = options
-      if not @$el.find("#{paneClassY}").length and not @$el.find("#{sliderClass}").length
-        @$el.append """<div class="#{paneClassY}"><div class="#{sliderClass}" /></div>"""
+      {paneClassY, paneClassX, sliderClassY, sliderClassX, contentClass} = options
+      if not @$el.find("#{paneClassY}").length and not @$el.find("#{sliderClassY}").length
+        @$el.append """<div class="#{paneClassY}"><div class="#{sliderClassY}" /></div>"""
+
+      if not @$el.find("#{paneClassX}").length and not @$el.find("#{sliderClassX}").length
+        @$el.append """<div class="#{paneClassX}"><div class="#{sliderClassX}" /></div>"""
 
       # pane is the name for the actual scrollbar.
       @yPane = @$el.children ".#{paneClassY}"
+      @xPane = @$el.children ".#{paneClassX}"
 
       # slider is the name for the  scrollbox or thumb of the scrollbar gadget
-      @ySlider = @yPane.find ".#{sliderClass}"
+      @ySlider = @yPane.find ".#{sliderClassY}"
+      @xSlider = @xPane.find ".#{sliderClassX}"
 
       if BROWSER_SCROLLBAR_WIDTH
-        cssRule = if @$el.css('direction') is 'rtl' then left: -BROWSER_SCROLLBAR_WIDTH else right: -BROWSER_SCROLLBAR_WIDTH
+        cssRuleY = if @$el.css('direction') is 'rtl' then left: -BROWSER_SCROLLBAR_WIDTH else right: -BROWSER_SCROLLBAR_WIDTH
         @$el.addClass 'has-scrollbar'
+        @$content.css cssRuleY
 
-      @$content.css cssRule if cssRule?
+      if BROWSER_SCROLLBAR_HEIGHT
+        cssRuleX = bottom: -BROWSER_SCROLLBAR_WIDTH
+        @$el.addClass 'has-scrollbar'
+        @$content.css cssRuleX
 
       this
 
@@ -527,6 +671,7 @@
     restore: ->
       @stopped = false
       do @yPane.show
+      do @xPane.show
       do @addEvents
       return
 
@@ -540,28 +685,43 @@
     reset: ->
       if @iOSNativeScrolling
         @contentHeight = @content.scrollHeight
+        @contentWidth = @content.scrollWidth
         return
-      @generate().stop() if not @$el.find(".#{@options.paneClassY}").length
+      @generate().stop() if not @$el.find(".#{@options.paneClassY}").length and not @$el.find(".#{@options.paneClassX}").length
       do @restore if @stopped
       content = @content
       contentStyle = content.style
       contentStyleOverflowY = contentStyle.overflowY
+      contentStyleOverflowX = contentStyle.overflowX
 
       # try to detect IE7 and IE7 compatibility mode.
       # this sniffing is done to fix a IE7 related bug.
-      @$content.css height: do @$content.height if BROWSER_IS_IE7
+      if BROWSER_IS_IE7
+        @$content.css
+          height: do @$content.height
+          width: do @$content.height
 
       # set the scrollbar UI's height
       # the target content
       contentHeight = content.scrollHeight + BROWSER_SCROLLBAR_WIDTH
 
-      # set the pane's height.
+      # set the scrollbar UI's width
+      # the target content
+      contentWidth = content.scrollWidth + BROWSER_SCROLLBAR_HEIGHT
+
+      # set the y pane's height.
       paneHeight = do @yPane.outerHeight
       paneTop = parseInt @yPane.css('top'), 10
       paneBottom = parseInt @yPane.css('bottom'), 10
       paneOuterHeight = paneHeight + paneTop + paneBottom
 
-      # set the slider's height
+      # set the x pane's width.
+      paneWidth = do @xPane.outerWidth
+      paneLeft = parseInt @xPane.css('left'), 10
+      paneRight = parseInt @xPane.css('right'), 10
+      paneOuterWidth = paneWidth + paneLeft + paneRight
+
+      # set the y slider's height
       sliderHeight = Math.round paneOuterHeight / contentHeight * paneOuterHeight
       if sliderHeight < @options.sliderMinHeight
         sliderHeight = @options.sliderMinHeight # set min height
@@ -569,34 +729,66 @@
         sliderHeight = @options.sliderMaxHeight # set max height
       sliderHeight += BROWSER_SCROLLBAR_WIDTH if contentStyleOverflowY is SCROLL and contentStyle.overflowX isnt SCROLL
 
+      # set the x slider's width
+      sliderWidth = Math.round paneOuterWidth / contentWidth * paneOuterWidth
+      if sliderWidth < @options.sliderMinWidth
+        sliderWidth = @options.sliderMinWidth # set min height
+      else if @options.sliderMaxWidth? and sliderWidth > @options.sliderMaxWidth
+        sliderWidth = @options.sliderMaxWidth # set max height
+      sliderWidth += BROWSER_SCROLLBAR_HEIGHT if contentStyleOverflowX is SCROLL and contentStyle.overflowY isnt SCROLL
+
       # the maximum top value for the slider
       @maxSliderTop = paneOuterHeight - sliderHeight
 
+      # the maximum left value for the slider
+      @maxSliderLeft = paneOuterWidth - sliderWidth
+
       # set into properties for further use
       @contentHeight = contentHeight
+      @contentWidth = contentWidth
       @yPaneHeight = paneHeight
+      @xPaneWidth = paneWidth
       @yPaneOuterHeight = paneOuterHeight
+      @xPaneOuterWidth = paneOuterWidth
       @ySliderHeight = sliderHeight
+      @xSliderWidth = sliderWidth
 
       # set the values to the gadget
       @ySlider.height sliderHeight
+      @xSlider.width sliderWidth
 
-      # scroll sets the position of the @ySlider
+      # scroll sets the position of the @ySlider and @xSlider
       do @yEvents.scroll
+      do @xEvents.scroll
 
       do @yPane.show
-      @isActive = true
+      @isActiveY = true
       if (content.scrollHeight is content.clientHeight) or (
           @yPane.outerHeight(true) >= content.scrollHeight and contentStyleOverflowY isnt SCROLL)
         do @yPane.hide
-        @isActive = false
+        @isActiveY = false
       else if @el.clientHeight is content.scrollHeight and contentStyleOverflowY is SCROLL
         do @ySlider.hide
       else
         do @ySlider.show
 
-      # allow the pane element to stay visible
+      do @xPane.show
+      @isActiveX = true
+      if (content.scrollWidth is content.clientWidth) or (
+          @xPane.outerWidth(true) >= content.scrollWidth and contentStyleOverflowX isnt SCROLL)
+        do @xPane.hide
+        @isActiveX = false
+      else if @el.clientWidth is content.scrollWidth and contentStyleOverflowX is SCROLL
+        do @xSlider.hide
+      else
+        do @xSlider.show
+
+      # allow the pane elements to stay visible
       @yPane.css
+        opacity: (if @options.alwaysVisible then 1 else '')
+        visibility: (if @options.alwaysVisible then 'visible' else '')
+
+      @xPane.css
         opacity: (if @options.alwaysVisible then 1 else '')
         visibility: (if @options.alwaysVisible then 'visible' else '')
 
@@ -606,15 +798,30 @@
       @method scrollY
       @private
       @example
-          $(".nano").nanoScroller({ scroll: 'top' });
+          $(".nano").nanoScroller({ scrollY: 'top' });
     ###
     scrollY: ->
-      return unless @isActive
+      return unless @isActiveY
       @ySliderY = Math.max 0, @ySliderY
       @ySliderY = Math.min @maxSliderTop, @ySliderY
       @$content.scrollTop (@yPaneHeight - @contentHeight + BROWSER_SCROLLBAR_WIDTH) * @ySliderY / @maxSliderTop * -1
       if not @iOSNativeScrolling
         @ySlider.css top: @ySliderY
+      this
+
+    ###*
+      @method scrollX
+      @private
+      @example
+          $(".nano").nanoScroller({ scrollX: 'top' });
+    ###
+    scrollX: ->
+      return unless @isActiveX
+      @xSliderX = Math.max 0, @xSliderX
+      @xSliderX = Math.min @maxSliderLeft, @xSliderX
+      @$content.scrollLeft (@xPaneWidth - @contentWidth + BROWSER_SCROLLBAR_HEIGHT) * @xSliderX / @maxSliderLeft * -1
+      if not @iOSNativeScrolling
+        @xSlider.css left: @xSliderX
       this
 
     ###*
@@ -626,9 +833,23 @@
           $(".nano").nanoScroller({ scrollBottom: value });
     ###
     scrollBottom: (offsetY) ->
-      return unless @isActive
+      return unless @isActiveY
       do @reset
       @$content.scrollTop(@contentHeight - @$content.height() - offsetY).trigger(MOUSEWHEEL) # Update scrollbar position by triggering one of the scroll events
+      this
+
+    ###*
+      Scroll at the right with an offset value
+      @method scrollRight
+      @param offsetX {Number}
+      @chainable
+      @example
+          $(".nano").nanoScroller({ scrollRight: value });
+    ###
+    scrollRight: (offsetX) ->
+      return unless @isActiveX
+      do @reset
+      @$content.scrollLeft(@contentWidth - @$content.width() - offsetX).trigger(MOUSEWHEEL) # Update scrollbar position by triggering one of the scroll events
       this
 
     ###*
@@ -640,9 +861,23 @@
           $(".nano").nanoScroller({ scrollTop: value });
     ###
     scrollTop: (offsetY) ->
-      return unless @isActive
+      return unless @isActiveY
       do @reset
       @$content.scrollTop(+offsetY).trigger(MOUSEWHEEL) # Update scrollbar position by triggering one of the scroll events
+      this
+
+    ###*
+      Scroll at the left with an offset value
+      @method scrollLeft
+      @param offsetX {Number}
+      @chainable
+      @example
+          $(".nano").nanoScroller({ scrollLeft: value });
+    ###
+    scrollLeft: (offsetX) ->
+      return unless @isActiveX
+      do @reset
+      @$content.scrollLeft(+offsetX).trigger(MOUSEWHEEL) # Update scrollbar position by triggering one of the scroll events
       this
 
     ###*
@@ -654,9 +889,11 @@
           $(".nano").nanoScroller({ scrollTo: $('#a_node') });
     ###
     scrollTo: (node) ->
-      return unless @isActive
+      return unless (@isActiveY or @isActiveX)
       do @reset
-      @scrollTop $(node).get(0).offsetTop
+      n = $(node).get(0)
+      @scrollTop n.offsetTop if @isActiveY
+      @scrollLeft n.offsetLeft if @isActiveX
       this
 
     ###*
@@ -671,6 +908,7 @@
       @stopped = true
       do @removeEvents
       do @yPane.hide
+      do @xPane.hide
       this
 
     ###*
@@ -682,11 +920,13 @@
           $(".nano").nanoScroller({ flash: true });
     ###
     flash: ->
-      return unless @isActive
+      return unless (@isActiveY or @isActiveX)
       do @reset
-      @yPane.addClass 'flashed'
+      @yPane.addClass 'flashed' if @isActiveY
+      @xPane.addClass 'flashed' if @isActiveX
       setTimeout =>
-        @yPane.removeClass 'flashed'
+        @yPane.removeClass 'flashed' if @isActiveY
+        @xPane.removeClass 'flashed' if @isActiveX
         return
       , @options.flashDelay
       this
@@ -704,9 +944,13 @@
         $.extend scrollbar.options, settings # update scrollbar settings
         return scrollbar.scrollBottom settings.scrollBottom if settings.scrollBottom
         return scrollbar.scrollTop settings.scrollTop if settings.scrollTop
+        return scrollbar.scrollRight settings.scrollRight if settings.scrollRight
+        return scrollbar.scrollLeft settings.scrollLeft if settings.scrollLeft
         return scrollbar.scrollTo settings.scrollTo if settings.scrollTo
         return scrollbar.scrollBottom 0 if settings.scroll is 'bottom'
         return scrollbar.scrollTop 0 if settings.scroll is 'top'
+        return scrollbar.scrollRight 0 if settings.scroll is 'right'
+        return scrollbar.scrollLeft 0 if settings.scroll is 'left'
         return scrollbar.scrollTo settings.scroll if settings.scroll and settings.scroll instanceof $
         return do scrollbar.stop if settings.stop
         return do scrollbar.flash if settings.flash

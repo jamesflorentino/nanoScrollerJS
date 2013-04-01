@@ -7,8 +7,20 @@
 	width: 8px;
 	right: 1px;
   margin: 5px;
+  margin-bottom: 16px;
 }
 
-.nano .slider {
+.nano .pane-x {
+	background: #555;
+	height: 8px;
+	bottom: 1px;
+  margin: 5px;
+  margin-right: 16px;
+}
+
+.nano .slider-y, .nano .slider-x {
 	background: #111;
+}
+.nano .slider-x {
+	height: 6px;
 }
