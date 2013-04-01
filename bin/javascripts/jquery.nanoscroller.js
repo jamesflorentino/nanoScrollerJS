@@ -693,7 +693,7 @@
       }
       if (BROWSER_SCROLLBAR_HEIGHT) {
         cssRuleX = {
-          bottom: -BROWSER_SCROLLBAR_WIDTH
+          bottom: -BROWSER_SCROLLBAR_HEIGHT
         };
         this.$el.addClass('has-scrollbar');
         this.$content.css(cssRuleX);

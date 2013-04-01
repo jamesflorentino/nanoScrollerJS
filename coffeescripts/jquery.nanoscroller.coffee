@@ -658,7 +658,7 @@
         @$content.css cssRuleY
 
       if BROWSER_SCROLLBAR_HEIGHT
-        cssRuleX = bottom: -BROWSER_SCROLLBAR_WIDTH
+        cssRuleX = bottom: -BROWSER_SCROLLBAR_HEIGHT
         @$el.addClass 'has-scrollbar'
         @$content.css cssRuleX
 
