@@ -31,7 +31,7 @@ You should specify a width and a height to your container, and apply some custom
 
     .nano { background: #bba; width: 500px; height: 500px; }
     .nano .content { padding: 10px; }
-    .nano .pane   { background: #888; }
+    .nano .pane { background: #888; }
     .nano .slider { background: #111; }
 
 ### 3. JavaScript
@@ -53,6 +53,14 @@ To scroll at the bottom:
 
     $(".nano").nanoScroller({ scroll: 'bottom' });
 
+To scroll at the left:
+
+    $(".nano").nanoScroller({ scroll: 'left' });
+
+To scroll at the right:
+
+    $(".nano").nanoScroller({ scroll: 'right' });
+
 To scroll at the top with an offset value:
 
     $(".nano").nanoScroller({ scrollTop: value });
@@ -60,6 +68,14 @@ To scroll at the top with an offset value:
 To scroll at the bottom with an offset value:
 
     $(".nano").nanoScroller({ scrollBottom: value });
+
+To scroll at the left with an offset value:
+
+    $(".nano").nanoScroller({ scrollLeft: value });
+
+To scroll at the right with an offset value:
+
+    $(".nano").nanoScroller({ scrollRight: value });
 
 To scroll to an element:
 
@@ -124,6 +140,22 @@ Sets the minimum height of the slider element.
 __Default:__ 20
 
     $(".nano").nanoScroller({ sliderMinHeight: 40 });
+
+#### sliderMinWidth
+
+Sets the minimum width of the slider element.
+
+__Default:__ 20
+
+    $(".nano").nanoScroller({ sliderMinHeight: 40 });
+
+#### sliderMaxWidth
+
+Sets the maximum width of the slider element.
+
+__Default:__ null
+
+    $(".nano").nanoScroller({ sliderMaxWidth: 200 });
 
 #### sliderMaxHeight
 
@@ -194,8 +226,6 @@ __Default:__ 'content'
 ![Fig 1.](https://github.com/jamesflorentino/nanoScrollerJS/raw/master/fig1.png)
 
 The plugin works by creating a scrollbar gadget (with pre-defined css for styling) and then subscribing the `.content`'s scroll events to it. Mouse press and drag events are also subscribed to the `.pane` and `.pane > .slider` to emulate the native scrollbar's mechanism. The system scrollbars are hidden from the viewport (Fig 1). By doing this, we still retain the natural scrolling experience provided by the OS.
-
-We are still working on doing a horizontal scrolling feature. If you're interested in contributing to the project, you are free to fork it and create a pull request.
 
 ### Development
 
