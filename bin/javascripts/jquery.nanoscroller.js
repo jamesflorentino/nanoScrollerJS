@@ -830,6 +830,18 @@
     };
 
     /**
+      @method scroll
+      @private
+      @example
+          $(".nano").nanoScroller({ scroll: 'top' });
+    */
+
+
+    NanoScroll.prototype.scroll = function() {
+      return this.scrollY();
+    };
+
+    /**
       @method scrollY
       @private
       @example
@@ -1037,6 +1049,9 @@
       if (!(scrollbar = this.nanoscroller)) {
         if (!settings.paneClassY && settings.paneClass) {
           settings.paneClassY = settings.paneClass;
+        }
+        if (!settings.sliderClassY && settings.sliderClass) {
+          settings.sliderClassY = settings.sliderClass;
         }
         options = $.extend({}, defaults, settings);
         this.nanoscroller = scrollbar = new NanoScroll(this, options);

@@ -808,6 +808,15 @@
       this
 
     ###*
+      @method scroll
+      @private
+      @example
+          $(".nano").nanoScroller({ scroll: 'top' });
+    ###
+    scroll: ->
+      @scrollY() # Just for maintain compatibility
+
+    ###*
       @method scrollY
       @private
       @example
@@ -947,8 +956,12 @@
   $.fn.nanoScroller = (settings) ->
     @each ->
       if not scrollbar = @nanoscroller
+        # For maintain compatibility
         if not settings.paneClassY and settings.paneClass
-          settings.paneClassY = settings.paneClass # "#{settings.paneClass}-y"
+          settings.paneClassY = settings.paneClass
+        if not settings.sliderClassY and settings.sliderClass
+          settings.sliderClassY = settings.sliderClass
+
         options = $.extend {}, defaults, settings
         @nanoscroller = scrollbar = new NanoScroll this, options
       
