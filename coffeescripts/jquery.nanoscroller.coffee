@@ -375,7 +375,6 @@
     ###
     preventVerticalScrolling: (e, direction) ->
       return unless @isActiveY
-      return
       if e.type is DOMSCROLL # Gecko
         if direction is DOWN and e.originalEvent.detail > 0 or direction is UP and e.originalEvent.detail < 0
           do e.preventDefault
@@ -395,7 +394,6 @@
     ###
     preventHorizontalScrolling: (e, direction) ->
       return unless @isActiveX
-      return
       if e.type is DOMSCROLL # Gecko
         if direction is RIGHT and e.originalEvent.detail > 0 or direction is LEFT and e.originalEvent.detail < 0
           do e.preventDefault
@@ -604,8 +602,8 @@
       xEvents = @xEvents
       if not @options.disableResize
         @win
-          .bind RESIZE, yEvents[RESIZE]
-          .bind RESIZE, xEvents[RESIZE]
+          .bind(RESIZE, yEvents[RESIZE])
+          .bind(RESIZE, xEvents[RESIZE])
       if not @iOSNativeScrolling
         @ySlider
           .bind MOUSEDOWN, yEvents[DOWN]
