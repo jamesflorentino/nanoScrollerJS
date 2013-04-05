@@ -474,7 +474,6 @@
       if (!this.isActiveY) {
         return;
       }
-      return;
       if (e.type === DOMSCROLL) {
         if (direction === DOWN &amp;&amp; e.originalEvent.detail &gt; 0 || direction === UP &amp;&amp; e.originalEvent.detail &lt; 0) {
           e.preventDefault();
@@ -503,7 +502,6 @@
       if (!this.isActiveX) {
         return;
       }
-      return;
       if (e.type === DOMSCROLL) {
         if (direction === RIGHT &amp;&amp; e.originalEvent.detail &gt; 0 || direction === LEFT &amp;&amp; e.originalEvent.detail &lt; 0) {
           e.preventDefault();
@@ -732,7 +730,7 @@
       yEvents = this.yEvents;
       xEvents = this.xEvents;
       if (!this.options.disableResize) {
-        this.win.bind(RESIZE, yEvents[RESIZE].bind(RESIZE, xEvents[RESIZE]));
+        this.win.bind(RESIZE, yEvents[RESIZE]).bind(RESIZE, xEvents[RESIZE]);
       }
       if (!this.iOSNativeScrolling) {
         this.ySlider.bind(MOUSEDOWN, yEvents[DOWN]);

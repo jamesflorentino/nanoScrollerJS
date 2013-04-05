@@ -386,7 +386,6 @@
       if (!this.isActiveY) {
         return;
       }
-      return;
       if (e.type === DOMSCROLL) {
         if (direction === DOWN && e.originalEvent.detail > 0 || direction === UP && e.originalEvent.detail < 0) {
           e.preventDefault();
@@ -415,7 +414,6 @@
       if (!this.isActiveX) {
         return;
       }
-      return;
       if (e.type === DOMSCROLL) {
         if (direction === RIGHT && e.originalEvent.detail > 0 || direction === LEFT && e.originalEvent.detail < 0) {
           e.preventDefault();
@@ -644,7 +642,7 @@
       yEvents = this.yEvents;
       xEvents = this.xEvents;
       if (!this.options.disableResize) {
-        this.win.bind(RESIZE, yEvents[RESIZE].bind(RESIZE, xEvents[RESIZE]));
+        this.win.bind(RESIZE, yEvents[RESIZE]).bind(RESIZE, xEvents[RESIZE]);
       }
       if (!this.iOSNativeScrolling) {
         this.ySlider.bind(MOUSEDOWN, yEvents[DOWN]);
