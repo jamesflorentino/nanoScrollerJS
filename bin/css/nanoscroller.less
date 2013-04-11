@@ -1,7 +1,7 @@
 //
 // nanoScrollerJS
 // --------------------------------------------------
-
+/** initial setup **/
 .nano {
   position: relative;
   width: 100%;
@@ -29,7 +29,8 @@
     right:0;
     top:0;
     bottom:0;
-    visibility:hidden\9; /* Target only IE7 and IE8 with this hack */
+    /* Target only IE7 and IE8 with this hack */
+    visibility:hidden\9; 
     opacity: .01; 
     -webkit-transition: .2s;
     -moz-transition: .2s;
@@ -48,14 +49,14 @@
       border-radius: 3px;
     }
   }
-  &:hover{
-    > .pane, 
-    .pane.active, 
-    .pane.flashed {
-      visibility: visible\9; /* Target only IE7 and IE8 with this hack */
-      opacity: 0.99;
-    }
-  }
+}
+
+.nano:hover > .pane, 
+.pane.active, 
+.pane.flashed {
+  /* Target only IE7 and IE8 with this hack */
+  visibility: visible\9; 
+  opacity: 0.99;
 }
 
 .has-scrollbar .content::-webkit-scrollbar {
