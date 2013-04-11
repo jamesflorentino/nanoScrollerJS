@@ -8,14 +8,13 @@
   height: 100%;
   overflow: hidden;
   .content {
-    position: absolute;
-    overflow: scroll;
-    overflow-x: hidden;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: 0 20px 0 0;
+  position: absolute;
+  overflow: scroll;
+  overflow-x: hidden;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
     &:focus {
       outline: thin dotted;
     }
@@ -49,8 +48,7 @@
       border-radius: 3px;
     }
   }
-  &:hover,
-  &.visible{
+  &:hover{
     > .pane, 
     .pane.active, 
     .pane.flashed {
