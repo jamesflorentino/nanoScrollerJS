@@ -63,17 +63,3 @@
 .has-scrollbar .content::-webkit-scrollbar {
   visibility: visible;
 }
-
-/* Remove the scroller from mobile devices */
-
-@media (max-width: 767px) {
-  .nano{
-    overflow-x: hidden;
-    overflow-y: scroll;
-    > .pane{display: none!important;}
-    .content{
-      position: static;
-      overflow: hidden;
-    }
-  }
-}
