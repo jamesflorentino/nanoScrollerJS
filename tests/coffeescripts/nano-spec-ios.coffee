@@ -25,19 +25,19 @@ describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
 
     describe "pane element", ->
       beforeEach ->
-        $pane = $nano.find('.pane')
+        $pane = $nano.find('.pane-y')
       it "should not exist", ->
         expect($pane).not.toExist()
         expect($pane.length).not.toBeTruthy()
-        expect($nano).not.toContain("div.pane")
+        expect($nano).not.toContain("div.pane-y")
 
     describe "slider element", ->
       beforeEach ->
-        $slider = $nano.find('.slider')
+        $slider = $nano.find('.slider-y')
       it "should not exist", ->
         expect($slider).not.toExist()
         expect($slider.length).not.toBeTruthy()
-        expect($nano).not.toContain("div.slider")
+        expect($nano).not.toContain("div.slider-y")
 
     describe "calling $('.nano').nanoScroller({ scroll: 'bottom' })", ->
       it "should have triggered the 'scrollend' event", ->
