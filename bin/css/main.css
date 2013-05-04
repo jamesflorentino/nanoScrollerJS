@@ -78,6 +78,7 @@ pre {
 
 #main pre {
 	background: #222;
+	width: 200%; /* just for demonstrate horizontal scrolling */
 	border-bottom: 1px solid white;
 	border-top: 1px solid black;
 	-webkit-box-shadow: black 0 1px 10px inset;
