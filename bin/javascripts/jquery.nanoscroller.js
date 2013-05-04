@@ -88,7 +88,23 @@
       @default null
     */
 
-    sliderMaxHeight: null
+    sliderMaxHeight: null,
+    /**
+      an alternate document context.
+      @property documentContext
+      @type Document
+      @default null
+    */
+
+    documentContext: null,
+    /**
+      an alternate window context.
+      @property windowContext
+      @type Window
+      @default null
+    */
+
+    windowContext: null
   };
   /**
     @property SCROLLBAR
@@ -285,8 +301,8 @@
       this.options = options;
       BROWSER_SCROLLBAR_WIDTH || (BROWSER_SCROLLBAR_WIDTH = getBrowserScrollbarWidth());
       this.$el = $(this.el);
-      this.doc = $(document);
-      this.win = $(window);
+      this.doc = $(this.options.documentContext || document);
+      this.win = $(this.options.windowContext || window);
       this.$content = this.$el.children("." + options.contentClass);
       this.$content.attr('tabindex', 0);
       this.content = this.$content[0];
