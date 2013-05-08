@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>bin&#x2F;javascripts&#x2F;jquery.nanoscroller.js</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="..&#x2F;assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/NanoScroll.html">NanoScroll</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: bin&#x2F;javascripts&#x2F;jquery.nanoscroller.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&#x2F;*! nanoScrollerJS - v0.7.2
+* http:&#x2F;&#x2F;jamesflorentino.github.com&#x2F;nanoScrollerJS&#x2F;
+* Copyright (c) 2013 James Florentino; Licensed MIT *&#x2F;
+
+
+(function($, window, document) {
+  &quot;use strict&quot;;
+
+  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, defaults, getBrowserScrollbarWidth;
+  defaults = {
+    &#x2F;**
+      a classname for the pane element.
+      @property paneClass
+      @type String
+      @default &#x27;pane&#x27;
+    *&#x2F;
+
+    paneClass: &#x27;pane&#x27;,
+    &#x2F;**
+      a classname for the slider element.
+      @property sliderClass
+      @type String
+      @default &#x27;slider&#x27;
+    *&#x2F;
+
+    sliderClass: &#x27;slider&#x27;,
+    &#x2F;**
+      a classname for the content element.
+      @property contentClass
+      @type String
+      @default &#x27;content&#x27;
+    *&#x2F;
+
+    contentClass: &#x27;content&#x27;,
+    &#x2F;**
+      a setting to enable native scrolling in iOS devices.
+      @property iOSNativeScrolling
+      @type Boolean
+      @default false
+    *&#x2F;
+
+    iOSNativeScrolling: false,
+    &#x2F;**
+      a setting to prevent the rest of the page being
+      scrolled when user scrolls the &#x60;.content&#x60; element.
+      @property preventPageScrolling
+      @type Boolean
+      @default false
+    *&#x2F;
+
+    preventPageScrolling: false,
+    &#x2F;**
+      a setting to disable binding to the resize event.
+      @property disableResize
+      @type Boolean
+      @default false
+    *&#x2F;
+
+    disableResize: false,
+    &#x2F;**
+      a setting to make the scrollbar always visible.
+      @property alwaysVisible
+      @type Boolean
+      @default false
+    *&#x2F;
+
+    alwaysVisible: false,
+    &#x2F;**
+      a default timeout for the &#x60;flash()&#x60; method.
+      @property flashDelay
+      @type Number
+      @default 1500
+    *&#x2F;
+
+    flashDelay: 1500,
+    &#x2F;**
+      a minimum height for the &#x60;.slider&#x60; element.
+      @property sliderMinHeight
+      @type Number
+      @default 20
+    *&#x2F;
+
+    sliderMinHeight: 20,
+    &#x2F;**
+      a maximum height for the &#x60;.slider&#x60; element.
+      @property sliderMaxHeight
+      @type Number
+      @default null
+    *&#x2F;
+
+    sliderMaxHeight: null,
+    &#x2F;**
+      an alternate document context.
+      @property documentContext
+      @type Document
+      @default null
+    *&#x2F;
+
+    documentContext: null,
+    &#x2F;**
+      an alternate window context.
+      @property windowContext
+      @type Window
+      @default null
+    *&#x2F;
+
+    windowContext: null
+  };
+  &#x2F;**
+    @property SCROLLBAR
+    @type String
+    @static
+    @final
+    @private
+  *&#x2F;
+
+  SCROLLBAR = &#x27;scrollbar&#x27;;
+  &#x2F;**
+    @property SCROLL
+    @type String
+    @static
+    @final
+    @private
+  *&#x2F;
+
+  SCROLL = &#x27;scroll&#x27;;
+  &#x2F;**
+    @property MOUSEDOWN
+    @type String
+    @final
+    @private
+  *&#x2F;
+
+  MOUSEDOWN = &#x27;mousedown&#x27;;
+  &#x2F;**
+    @property MOUSEMOVE
+    @type String
+    @static
+    @final
+    @private
+  *&#x2F;
+
+  MOUSEMOVE = &#x27;mousemove&#x27;;
+  &#x2F;**
+    @property MOUSEWHEEL
+    @type String
+    @final
+    @private
+  *&#x2F;
+
+  MOUSEWHEEL = &#x27;mousewheel&#x27;;
+  &#x2F;**
+    @property MOUSEUP
+    @type String
+    @static
+    @final
+    @private
+  *&#x2F;
+
+  MOUSEUP = &#x27;mouseup&#x27;;
+  &#x2F;**
+    @property RESIZE
+    @type String
+    @final
+    @private
+  *&#x2F;
+
+  RESIZE = &#x27;resize&#x27;;
+  &#x2F;**
+    @property DRAG
+    @type String
+    @static
+    @final
+    @private
+  *&#x2F;
+
+  DRAG = &#x27;drag&#x27;;
+  &#x2F;**
+    @property UP
+    @type String
+    @static
+    @final
+    @private
+  *&#x2F;
+
+  UP = &#x27;up&#x27;;
+  &#x2F;**
+    @property PANEDOWN
+    @type String
+    @static
+    @final
+    @private
+  *&#x2F;
+
+  PANEDOWN = &#x27;panedown&#x27;;
+  &#x2F;**
+    @property DOMSCROLL
+    @type String
+    @static
+    @final
+    @private
+  *&#x2F;
+
+  DOMSCROLL = &#x27;DOMMouseScroll&#x27;;
+  &#x2F;**
+    @property DOWN
+    @type String
+    @static
+    @final
+    @private
+  *&#x2F;
+
+  DOWN = &#x27;down&#x27;;
+  &#x2F;**
+    @property WHEEL
+    @type String
+    @static
+    @final
+    @private
+  *&#x2F;
+
+  WHEEL = &#x27;wheel&#x27;;
+  &#x2F;**
+    @property KEYDOWN
+    @type String
+    @static
+    @final
+    @private
+  *&#x2F;
+
+  KEYDOWN = &#x27;keydown&#x27;;
+  &#x2F;**
+    @property KEYUP
+    @type String
+    @static
+    @final
+    @private
+  *&#x2F;
+
+  KEYUP = &#x27;keyup&#x27;;
+  &#x2F;**
+    @property TOUCHMOVE
+    @type String
+    @static
+    @final
+    @private
+  *&#x2F;
+
+  TOUCHMOVE = &#x27;touchmove&#x27;;
+  &#x2F;**
+    @property BROWSER_IS_IE7
+    @type Boolean
+    @static
+    @final
+    @private
+  *&#x2F;
+
+  BROWSER_IS_IE7 = window.navigator.appName === &#x27;Microsoft Internet Explorer&#x27; &amp;&amp; &#x2F;msie 7.&#x2F;i.test(window.navigator.appVersion) &amp;&amp; window.ActiveXObject;
+  &#x2F;**
+    @property BROWSER_SCROLLBAR_WIDTH
+    @type Number
+    @static
+    @default null
+    @private
+  *&#x2F;
+
+  BROWSER_SCROLLBAR_WIDTH = null;
+  &#x2F;**
+    Returns browser&#x27;s native scrollbar width
+    @method getBrowserScrollbarWidth
+    @return {Number} the scrollbar width in pixels
+    @static
+    @private
+  *&#x2F;
+
+  getBrowserScrollbarWidth = function() {
+    var outer, outerStyle, scrollbarWidth;
+    outer = document.createElement(&#x27;div&#x27;);
+    outerStyle = outer.style;
+    outerStyle.position = &#x27;absolute&#x27;;
+    outerStyle.width = &#x27;100px&#x27;;
+    outerStyle.height = &#x27;100px&#x27;;
+    outerStyle.overflow = SCROLL;
+    outerStyle.top = &#x27;-9999px&#x27;;
+    document.body.appendChild(outer);
+    scrollbarWidth = outer.offsetWidth - outer.clientWidth;
+    document.body.removeChild(outer);
+    return scrollbarWidth;
+  };
+  &#x2F;**
+    @class NanoScroll
+    @param element {HTMLElement|Node} the main element
+    @param options {Object} nanoScroller&#x27;s options
+    @constructor
+  *&#x2F;
+
+  NanoScroll = (function() {
+
+    function NanoScroll(el, options) {
+      this.el = el;
+      this.options = options;
+      BROWSER_SCROLLBAR_WIDTH || (BROWSER_SCROLLBAR_WIDTH = getBrowserScrollbarWidth());
+      this.$el = $(this.el);
+      this.doc = $(this.options.documentContext || document);
+      this.win = $(this.options.windowContext || window);
+      this.$content = this.$el.children(&quot;.&quot; + options.contentClass);
+      this.$content.attr(&#x27;tabindex&#x27;, 0);
+      this.content = this.$content[0];
+      if (this.options.iOSNativeScrolling &amp;&amp; (this.el.style.WebkitOverflowScrolling != null)) {
+        this.nativeScrolling();
+      } else {
+        this.generate();
+      }
+      this.createEvents();
+      this.addEvents();
+      this.reset();
+    }
+
+    &#x2F;**
+      Prevents the rest of the page being scrolled
+      when user scrolls the &#x60;.content&#x60; element.
+      @method preventScrolling
+      @param event {Event}
+      @param direction {String} Scroll direction (up or down)
+      @private
+    *&#x2F;
+
+
+    NanoScroll.prototype.preventScrolling = function(e, direction) {
+      if (!this.isActive) {
+        return;
+      }
+      if (e.type === DOMSCROLL) {
+        if (direction === DOWN &amp;&amp; e.originalEvent.detail &gt; 0 || direction === UP &amp;&amp; e.originalEvent.detail &lt; 0) {
+          e.preventDefault();
+        }
+      } else if (e.type === MOUSEWHEEL) {
+        if (!e.originalEvent || !e.originalEvent.wheelDelta) {
+          return;
+        }
+        if (direction === DOWN &amp;&amp; e.originalEvent.wheelDelta &lt; 0 || direction === UP &amp;&amp; e.originalEvent.wheelDelta &gt; 0) {
+          e.preventDefault();
+        }
+      }
+    };
+
+    &#x2F;**
+      Enable iOS native scrolling
+    *&#x2F;
+
+
+    NanoScroll.prototype.nativeScrolling = function() {
+      this.$content.css({
+        WebkitOverflowScrolling: &#x27;touch&#x27;
+      });
+      this.iOSNativeScrolling = true;
+      this.isActive = true;
+    };
+
+    &#x2F;**
+      Updates those nanoScroller properties that
+      are related to current scrollbar position.
+      @method updateScrollValues
+      @private
+    *&#x2F;
+
+
+    NanoScroll.prototype.updateScrollValues = function() {
+      var content;
+      content = this.content;
+      this.maxScrollTop = content.scrollHeight - content.clientHeight;
+      this.contentScrollTop = content.scrollTop;
+      if (!this.iOSNativeScrolling) {
+        this.maxSliderTop = this.paneHeight - this.sliderHeight;
+        this.sliderTop = this.contentScrollTop * this.maxSliderTop &#x2F; this.maxScrollTop;
+      }
+    };
+
+    &#x2F;**
+      Creates event related methods
+      @method createEvents
+      @private
+    *&#x2F;
+
+
+    NanoScroll.prototype.createEvents = function() {
+      var _this = this;
+      this.events = {
+        down: function(e) {
+          _this.isBeingDragged = true;
+          _this.offsetY = e.pageY - _this.slider.offset().top;
+          _this.pane.addClass(&#x27;active&#x27;);
+          _this.doc.bind(MOUSEMOVE, _this.events[DRAG]).bind(MOUSEUP, _this.events[UP]);
+          return false;
+        },
+        drag: function(e) {
+          _this.sliderY = e.pageY - _this.$el.offset().top - _this.offsetY;
+          _this.scroll();
+          _this.updateScrollValues();
+          if (_this.contentScrollTop &gt;= _this.maxScrollTop) {
+            _this.$el.trigger(&#x27;scrollend&#x27;);
+          } else if (_this.contentScrollTop === 0) {
+            _this.$el.trigger(&#x27;scrolltop&#x27;);
+          }
+          return false;
+        },
+        up: function(e) {
+          _this.isBeingDragged = false;
+          _this.pane.removeClass(&#x27;active&#x27;);
+          _this.doc.unbind(MOUSEMOVE, _this.events[DRAG]).unbind(MOUSEUP, _this.events[UP]);
+          return false;
+        },
+        resize: function(e) {
+          _this.reset();
+        },
+        panedown: function(e) {
+          _this.sliderY = (e.offsetY || e.originalEvent.layerY) - (_this.sliderHeight * 0.5);
+          _this.scroll();
+          _this.events.down(e);
+          return false;
+        },
+        scroll: function(e) {
+          if (_this.isBeingDragged) {
+            return;
+          }
+          _this.updateScrollValues();
+          if (!_this.iOSNativeScrolling) {
+            _this.sliderY = _this.sliderTop;
+            _this.slider.css({
+              top: _this.sliderTop
+            });
+          }
+          if (e == null) {
+            return;
+          }
+          if (_this.contentScrollTop &gt;= _this.maxScrollTop) {
+            if (_this.options.preventPageScrolling) {
+              _this.preventScrolling(e, DOWN);
+            }
+            _this.$el.trigger(&#x27;scrollend&#x27;);
+          } else if (_this.contentScrollTop === 0) {
+            if (_this.options.preventPageScrolling) {
+              _this.preventScrolling(e, UP);
+            }
+            _this.$el.trigger(&#x27;scrolltop&#x27;);
+          }
+        },
+        wheel: function(e) {
+          if (e == null) {
+            return;
+          }
+          _this.sliderY += -e.wheelDeltaY || -e.delta;
+          _this.scroll();
+          return false;
+        }
+      };
+    };
+
+    &#x2F;**
+      Adds event listeners with jQuery.
+      @method addEvents
+      @private
+    *&#x2F;
+
+
+    NanoScroll.prototype.addEvents = function() {
+      var events;
+      this.removeEvents();
+      events = this.events;
+      if (!this.options.disableResize) {
+        this.win.bind(RESIZE, events[RESIZE]);
+      }
+      if (!this.iOSNativeScrolling) {
+        this.slider.bind(MOUSEDOWN, events[DOWN]);
+        this.pane.bind(MOUSEDOWN, events[PANEDOWN]).bind(&quot;&quot; + MOUSEWHEEL + &quot; &quot; + DOMSCROLL, events[WHEEL]);
+      }
+      this.$content.bind(&quot;&quot; + SCROLL + &quot; &quot; + MOUSEWHEEL + &quot; &quot; + DOMSCROLL + &quot; &quot; + TOUCHMOVE, events[SCROLL]);
+    };
+
+    &#x2F;**
+      Removes event listeners with jQuery.
+      @method removeEvents
+      @private
+    *&#x2F;
+
+
+    NanoScroll.prototype.removeEvents = function() {
+      var events;
+      events = this.events;
+      this.win.unbind(RESIZE, events[RESIZE]);
+      if (!this.iOSNativeScrolling) {
+        this.slider.unbind();
+        this.pane.unbind();
+      }
+      this.$content.unbind(&quot;&quot; + SCROLL + &quot; &quot; + MOUSEWHEEL + &quot; &quot; + DOMSCROLL + &quot; &quot; + TOUCHMOVE, events[SCROLL]);
+    };
+
+    &#x2F;**
+      Generates nanoScroller&#x27;s scrollbar and elements for it.
+      @method generate
+      @chainable
+      @private
+    *&#x2F;
+
+
+    NanoScroll.prototype.generate = function() {
+      var contentClass, cssRule, options, paneClass, sliderClass;
+      options = this.options;
+      paneClass = options.paneClass, sliderClass = options.sliderClass, contentClass = options.contentClass;
+      if (!this.$el.find(&quot;&quot; + paneClass).length &amp;&amp; !this.$el.find(&quot;&quot; + sliderClass).length) {
+        this.$el.append(&quot;&lt;div class=\&quot;&quot; + paneClass + &quot;\&quot;&gt;&lt;div class=\&quot;&quot; + sliderClass + &quot;\&quot; &#x2F;&gt;&lt;&#x2F;div&gt;&quot;);
+      }
+      this.pane = this.$el.children(&quot;.&quot; + paneClass);
+      this.slider = this.pane.find(&quot;.&quot; + sliderClass);
+      if (BROWSER_SCROLLBAR_WIDTH) {
+        cssRule = this.$el.css(&#x27;direction&#x27;) === &#x27;rtl&#x27; ? {
+          left: -BROWSER_SCROLLBAR_WIDTH
+        } : {
+          right: -BROWSER_SCROLLBAR_WIDTH
+        };
+        this.$el.addClass(&#x27;has-scrollbar&#x27;);
+      }
+      if (cssRule != null) {
+        this.$content.css(cssRule);
+      }
+      return this;
+    };
+
+    &#x2F;**
+      @method restore
+      @private
+    *&#x2F;
+
+
+    NanoScroll.prototype.restore = function() {
+      this.stopped = false;
+      this.pane.show();
+      this.addEvents();
+    };
+
+    &#x2F;**
+      Resets nanoScroller&#x27;s scrollbar.
+      @method reset
+      @chainable
+      @example
+          $(&quot;.nano&quot;).nanoScroller();
+    *&#x2F;
+
+
+    NanoScroll.prototype.reset = function() {
+      var content, contentHeight, contentStyle, contentStyleOverflowY, paneBottom, paneHeight, paneOuterHeight, paneTop, sliderHeight;
+      if (this.iOSNativeScrolling) {
+        this.contentHeight = this.content.scrollHeight;
+        return;
+      }
+      if (!this.$el.find(&quot;.&quot; + this.options.paneClass).length) {
+        this.generate().stop();
+      }
+      if (this.stopped) {
+        this.restore();
+      }
+      content = this.content;
+      contentStyle = content.style;
+      contentStyleOverflowY = contentStyle.overflowY;
+      if (BROWSER_IS_IE7) {
+        this.$content.css({
+          height: this.$content.height()
+        });
+      }
+      contentHeight = content.scrollHeight + BROWSER_SCROLLBAR_WIDTH;
+      paneHeight = this.pane.outerHeight();
+      paneTop = parseInt(this.pane.css(&#x27;top&#x27;), 10);
+      paneBottom = parseInt(this.pane.css(&#x27;bottom&#x27;), 10);
+      paneOuterHeight = paneHeight + paneTop + paneBottom;
+      sliderHeight = Math.round(paneOuterHeight &#x2F; contentHeight * paneOuterHeight);
+      if (sliderHeight &lt; this.options.sliderMinHeight) {
+        sliderHeight = this.options.sliderMinHeight;
+      } else if ((this.options.sliderMaxHeight != null) &amp;&amp; sliderHeight &gt; this.options.sliderMaxHeight) {
+        sliderHeight = this.options.sliderMaxHeight;
+      }
+      if (contentStyleOverflowY === SCROLL &amp;&amp; contentStyle.overflowX !== SCROLL) {
+        sliderHeight += BROWSER_SCROLLBAR_WIDTH;
+      }
+      this.maxSliderTop = paneOuterHeight - sliderHeight;
+      this.contentHeight = contentHeight;
+      this.paneHeight = paneHeight;
+      this.paneOuterHeight = paneOuterHeight;
+      this.sliderHeight = sliderHeight;
+      this.slider.height(sliderHeight);
+      this.events.scroll();
+      this.pane.show();
+      this.isActive = true;
+      if ((content.scrollHeight === content.clientHeight) || (this.pane.outerHeight(true) &gt;= content.scrollHeight &amp;&amp; contentStyleOverflowY !== SCROLL)) {
+        this.pane.hide();
+        this.isActive = false;
+      } else if (this.el.clientHeight === content.scrollHeight &amp;&amp; contentStyleOverflowY === SCROLL) {
+        this.slider.hide();
+      } else {
+        this.slider.show();
+      }
+      this.pane.css({
+        opacity: (this.options.alwaysVisible ? 1 : &#x27;&#x27;),
+        visibility: (this.options.alwaysVisible ? &#x27;visible&#x27; : &#x27;&#x27;)
+      });
+      return this;
+    };
+
+    &#x2F;**
+      @method scroll
+      @private
+      @example
+          $(&quot;.nano&quot;).nanoScroller({ scroll: &#x27;top&#x27; });
+    *&#x2F;
+
+
+    NanoScroll.prototype.scroll = function() {
+      if (!this.isActive) {
+        return;
+      }
+      this.sliderY = Math.max(0, this.sliderY);
+      this.sliderY = Math.min(this.maxSliderTop, this.sliderY);
+      this.$content.scrollTop((this.paneHeight - this.contentHeight + BROWSER_SCROLLBAR_WIDTH) * this.sliderY &#x2F; this.maxSliderTop * -1);
+      if (!this.iOSNativeScrolling) {
+        this.slider.css({
+          top: this.sliderY
+        });
+      }
+      return this;
+    };
+
+    &#x2F;**
+      Scroll at the bottom with an offset value
+      @method scrollBottom
+      @param offsetY {Number}
+      @chainable
+      @example
+          $(&quot;.nano&quot;).nanoScroller({ scrollBottom: value });
+    *&#x2F;
+
+
+    NanoScroll.prototype.scrollBottom = function(offsetY) {
+      if (!this.isActive) {
+        return;
+      }
+      this.reset();
+      this.$content.scrollTop(this.contentHeight - this.$content.height() - offsetY).trigger(MOUSEWHEEL);
+      return this;
+    };
+
+    &#x2F;**
+      Scroll at the top with an offset value
+      @method scrollTop
+      @param offsetY {Number}
+      @chainable
+      @example
+          $(&quot;.nano&quot;).nanoScroller({ scrollTop: value });
+    *&#x2F;
+
+
+    NanoScroll.prototype.scrollTop = function(offsetY) {
+      if (!this.isActive) {
+        return;
+      }
+      this.reset();
+      this.$content.scrollTop(+offsetY).trigger(MOUSEWHEEL);
+      return this;
+    };
+
+    &#x2F;**
+      Scroll to an element
+      @method scrollTo
+      @param node {Node} A node to scroll to.
+      @chainable
+      @example
+          $(&quot;.nano&quot;).nanoScroller({ scrollTo: $(&#x27;#a_node&#x27;) });
+    *&#x2F;
+
+
+    NanoScroll.prototype.scrollTo = function(node) {
+      if (!this.isActive) {
+        return;
+      }
+      this.reset();
+      this.scrollTop($(node).get(0).offsetTop);
+      return this;
+    };
+
+    &#x2F;**
+      To stop the operation.
+      This option will tell the plugin to disable all event bindings and hide the gadget scrollbar from the UI.
+      @method stop
+      @chainable
+      @example
+          $(&quot;.nano&quot;).nanoScroller({ stop: true });
+    *&#x2F;
+
+
+    NanoScroll.prototype.stop = function() {
+      this.stopped = true;
+      this.removeEvents();
+      this.pane.hide();
+      return this;
+    };
+
+    &#x2F;**
+      To flash the scrollbar gadget for an amount of time defined in plugin settings (defaults to 1,5s).
+      Useful if you want to show the user (e.g. on pageload) that there is more content waiting for him.
+      @method flash
+      @chainable
+      @example
+          $(&quot;.nano&quot;).nanoScroller({ flash: true });
+    *&#x2F;
+
+
+    NanoScroll.prototype.flash = function() {
+      var _this = this;
+      if (!this.isActive) {
+        return;
+      }
+      this.reset();
+      this.pane.addClass(&#x27;flashed&#x27;);
+      setTimeout(function() {
+        _this.pane.removeClass(&#x27;flashed&#x27;);
+      }, this.options.flashDelay);
+      return this;
+    };
+
+    return NanoScroll;
+
+  })();
+  $.fn.nanoScroller = function(settings) {
+    return this.each(function() {
+      var options, scrollbar;
+      if (!(scrollbar = this.nanoscroller)) {
+        options = $.extend({}, defaults, settings);
+        this.nanoscroller = scrollbar = new NanoScroll(this, options);
+      }
+      if (settings &amp;&amp; typeof settings === &quot;object&quot;) {
+        $.extend(scrollbar.options, settings);
+        if (settings.scrollBottom) {
+          return scrollbar.scrollBottom(settings.scrollBottom);
+        }
+        if (settings.scrollTop) {
+          return scrollbar.scrollTop(settings.scrollTop);
+        }
+        if (settings.scrollTo) {
+          return scrollbar.scrollTo(settings.scrollTo);
+        }
+        if (settings.scroll === &#x27;bottom&#x27;) {
+          return scrollbar.scrollBottom(0);
+        }
+        if (settings.scroll === &#x27;top&#x27;) {
+          return scrollbar.scrollTop(0);
+        }
+        if (settings.scroll &amp;&amp; settings.scroll instanceof $) {
+          return scrollbar.scrollTo(settings.scroll);
+        }
+        if (settings.stop) {
+          return scrollbar.stop();
+        }
+        if (settings.flash) {
+          return scrollbar.flash();
+        }
+      }
+      return scrollbar.reset();
+    });
+  };
+})(jQuery, window, document);
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>
