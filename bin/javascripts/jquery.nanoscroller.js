@@ -489,7 +489,7 @@
       */
 
       NanoScroll.prototype.reset = function() {
-        var content, contentHeight, contentStyle, contentStyleOverflowY, paneBottom, paneHeight, paneOuterHeight, paneTop, parentHeight, sliderHeight;
+        var content, contentHeight, contentStyle, contentStyleOverflowY, paneBottom, paneHeight, paneOuterHeight, paneTop, parentMaxHeight, sliderHeight;
         if (this.iOSNativeScrolling) {
           this.contentHeight = this.content.scrollHeight;
           return;
@@ -507,10 +507,11 @@
           });
         }
         contentHeight = content.scrollHeight + BROWSER_SCROLLBAR_WIDTH;
-        if (parentHeight = $(this.$el).css("max-height")) {
+        parentMaxHeight = parseInt($(this.$el).css("max-height"));
+        if (parentMaxHeight > 0) {
           $(this.el).height("");
-          if (content.scrollHeight > parseInt(parentHeight)) {
-            $(this.$el).height(parentHeight);
+          if (content.scrollHeight > parentMaxHeight) {
+            $(this.$el).height(parentMaxHeight);
           } else {
             $(this.$el).height(content.scrollHeight);
           }

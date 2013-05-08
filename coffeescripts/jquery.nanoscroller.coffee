@@ -535,10 +535,11 @@
 
       # Handle using max-height on the parent @$el and not
       # setting the height explicitly
-      if parentHeight = $(@$el).css("max-height")
+      parentMaxHeight = parseInt($(@$el).css("max-height"))
+      if parentMaxHeight > 0
         $(@el).height ""
-        if content.scrollHeight > parseInt(parentHeight)
-          $(@$el).height parentHeight
+        if content.scrollHeight > parentMaxHeight
+          $(@$el).height parentMaxHeight
         else
           $(@$el).height content.scrollHeight
 
