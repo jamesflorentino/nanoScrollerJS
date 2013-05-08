@@ -257,7 +257,7 @@
     @private
   ###
   BROWSER_IS_IE7 = window.navigator.appName is 'Microsoft Internet Explorer' and (/msie 7./i).test(window.navigator.appVersion) and window.ActiveXObject
-  
+
   ###*
     @property BROWSER_SCROLLBAR_WIDTH
     @type Number
@@ -533,8 +533,18 @@
       # the target content
       contentHeight = content.scrollHeight + BROWSER_SCROLLBAR_WIDTH
 
+      # Handle using max-height on the parent @$el and not
+      # setting the height explicitly
+      if parentHeight = $(@$el).css("max-height")
+        $(@el).height ""
+        if content.scrollHeight > parseInt(parentHeight)
+          $(@$el).height parentHeight
+        else
+          $(@$el).height content.scrollHeight
+
       # set the pane's height.
       paneHeight = do @pane.outerHeight
+
       paneTop = parseInt @pane.css('top'), 10
       paneBottom = parseInt @pane.css('bottom'), 10
       paneOuterHeight = paneHeight + paneTop + paneBottom
@@ -674,7 +684,7 @@
       if not scrollbar = @nanoscroller
         options = $.extend {}, defaults, settings
         @nanoscroller = scrollbar = new NanoScroll this, options
-      
+
       # scrollbar settings
       if settings and typeof settings is "object"
         $.extend scrollbar.options, settings # update scrollbar settings
