@@ -77,7 +77,7 @@ To flash the scrollbar gadget for an amount of time defined in plugin settings (
 
     $(".nano").nanoScroller({ flash: true });
 
-#### nanoScroller();    
+#### nanoScroller();
 
 Refresh the scrollbar. This simply re-calculates the position and height of the scrollbar gadget.
 
