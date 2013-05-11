@@ -49,16 +49,14 @@
       border-radius: 3px;
     }
   }
-}
-
-.nano:hover > .pane, 
-.pane.active, 
-.pane.flashed {
-  /* Target only IE7 and IE8 with this hack */
-  visibility: visible\9; 
-  opacity: 0.99;
-}
-
-.has-scrollbar .content::-webkit-scrollbar {
-  visibility: visible;
+  &:hover > .pane, 
+  &.active, 
+  &.flashed {
+    /* Target only IE7 and IE8 with this hack */
+    visibility: visible\9; 
+    opacity: 0.99;
+  }
+  &.has-scrollbar .content::-webkit-scrollbar {
+    visibility: visible;
+  }
 }
