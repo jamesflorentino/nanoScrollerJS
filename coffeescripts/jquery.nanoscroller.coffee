@@ -491,7 +491,7 @@
       @slider = @pane.find ".#{sliderClass}"
 
       if BROWSER_SCROLLBAR_WIDTH
-        cssRule = if @$el.css('direction') is 'rtl' then left: -BROWSER_SCROLLBAR_WIDTH else right: -BROWSER_SCROLLBAR_WIDTH
+        cssRule = right: -BROWSER_SCROLLBAR_WIDTH
         @$el.addClass 'has-scrollbar'
 
       @$content.css cssRule if cssRule?
@@ -652,6 +652,23 @@
       this
 
     ###*
+      Destroys nanoScroller and restores browser's native scrollbar.
+      @method destroy
+      @chainable
+      @example
+          $(".nano").nanoScroller({ destroy: true });
+    ###
+    destroy: ->
+      do @stop if not @stopped
+      do @pane.remove if @pane.length
+      @$content.height '' if BROWSER_IS_IE7
+      @$content.removeAttr 'tabindex'
+      if @$el.hasClass('has-scrollbar')
+        @$el.removeClass('has-scrollbar') 
+        @$content.css right: '' 
+      this
+
+    ###*
       To flash the scrollbar gadget for an amount of time defined in plugin settings (defaults to 1,5s).
       Useful if you want to show the user (e.g. on pageload) that there is more content waiting for him.
       @method flash
@@ -685,6 +702,7 @@
         return scrollbar.scrollTop 0 if settings.scroll is 'top'
         return scrollbar.scrollTo settings.scroll if settings.scroll and settings.scroll instanceof $
         return do scrollbar.stop if settings.stop
+        return do scrollbar.destroy if settings.destroy
         return do scrollbar.flash if settings.flash
 
       do scrollbar.reset

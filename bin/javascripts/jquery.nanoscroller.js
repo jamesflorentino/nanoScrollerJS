@@ -513,9 +513,7 @@
       this.pane = this.$el.children("." + paneClass);
       this.slider = this.pane.find("." + sliderClass);
       if (BROWSER_SCROLLBAR_WIDTH) {
-        cssRule = this.$el.css('direction') === 'rtl' ? {
-          left: -BROWSER_SCROLLBAR_WIDTH
-        } : {
+        cssRule = {
           right: -BROWSER_SCROLLBAR_WIDTH
         };
         this.$el.addClass('has-scrollbar');
@@ -703,6 +701,35 @@
     };
 
     /**
+      Destroys nanoScroller and restores browser's native scrollbar.
+      @method destroy
+      @chainable
+      @example
+          $(".nano").nanoScroller({ destroy: true });
+    */
+
+
+    NanoScroll.prototype.destroy = function() {
+      if (!this.stopped) {
+        this.stop();
+      }
+      if (this.pane.length) {
+        this.pane.remove();
+      }
+      if (BROWSER_IS_IE7) {
+        this.$content.height('');
+      }
+      this.$content.removeAttr('tabindex');
+      if (this.$el.hasClass('has-scrollbar')) {
+        this.$el.removeClass('has-scrollbar');
+        this.$content.css({
+          right: ''
+        });
+      }
+      return this;
+    };
+
+    /**
       To flash the scrollbar gadget for an amount of time defined in plugin settings (defaults to 1,5s).
       Useful if you want to show the user (e.g. on pageload) that there is more content waiting for him.
       @method flash
@@ -757,6 +784,9 @@
         }
         if (settings.stop) {
           return scrollbar.stop();
+        }
+        if (settings.destroy) {
+          return scrollbar.destroy();
         }
         if (settings.flash) {
           return scrollbar.flash();

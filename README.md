@@ -71,6 +71,12 @@ To stop the operation. This option will tell the plugin to disable all event bin
 
     $(".nano").nanoScroller({ stop: true });
 
+#### destroy:
+
+Destroys nanoScroller and restores browser's native scrollbar.
+
+    $(".nano").nanoScroller({ destroy: true });
+
 #### flash:
 
 To flash the scrollbar gadget for an amount of time defined in plugin settings (_defaults to 1,5s_). Useful if you want to show the user (e.g. on pageload) that there is more content waiting for him.

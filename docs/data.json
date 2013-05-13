@@ -468,7 +468,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 529,
+            "line": 527,
             "itemtype": "method",
             "name": "restore",
             "access": "private",
@@ -477,7 +477,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 541,
+            "line": 539,
             "description": "Resets nanoScroller's scrollbar.",
             "itemtype": "method",
             "name": "reset",
@@ -489,7 +489,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 608,
+            "line": 606,
             "itemtype": "method",
             "name": "scroll",
             "access": "private",
@@ -501,7 +501,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 631,
+            "line": 629,
             "description": "Scroll at the bottom with an offset value",
             "itemtype": "method",
             "name": "scrollBottom",
@@ -520,7 +520,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 650,
+            "line": 648,
             "description": "Scroll at the top with an offset value",
             "itemtype": "method",
             "name": "scrollTop",
@@ -539,7 +539,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 669,
+            "line": 667,
             "description": "Scroll to an element",
             "itemtype": "method",
             "name": "scrollTo",
@@ -558,7 +558,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 688,
+            "line": 686,
             "description": "To stop the operation.\nThis option will tell the plugin to disable all event bindings and hide the gadget scrollbar from the UI.",
             "itemtype": "method",
             "name": "stop",
@@ -570,7 +570,19 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 705,
+            "line": 703,
+            "description": "Destroys nanoScroller and restores browser's native scrollbar.",
+            "itemtype": "method",
+            "name": "destroy",
+            "chainable": 1,
+            "example": [
+                "\n    $(\".nano\").nanoScroller({ destroy: true });"
+            ],
+            "class": "NanoScroll"
+        },
+        {
+            "file": "bin/javascripts/jquery.nanoscroller.js",
+            "line": 732,
             "description": "To flash the scrollbar gadget for an amount of time defined in plugin settings (defaults to 1,5s).\nUseful if you want to show the user (e.g. on pageload) that there is more content waiting for him.",
             "itemtype": "method",
             "name": "flash",

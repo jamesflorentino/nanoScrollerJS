@@ -40,6 +40,9 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 <h4>stop:</h4>
 <p>To stop the operation. This option will tell the plugin to disable all event bindings and hide the gadget scrollbar from the UI.</p>
 <pre><code>$(&quot;.nano&quot;).nanoScroller({ stop: true });</code></pre>
+<h4>destroy:</h4>
+<p>Destroys nanoScroller and restores browser&#39;s native scrollbar.</p>
+<pre><code>$(&quot;.nano&quot;).nanoScroller({ destroy: true });</code></pre>
 <h4>flash:</h4>
 <p>To flash the scrollbar gadget for an amount of time defined in plugin settings (<em>defaults to 1,5s</em>). Useful if you want to show the user (e.g. on pageload) that there is more content waiting for him.</p>
 <pre><code>$(&quot;.nano&quot;).nanoScroller({ flash: true });</code></pre>
