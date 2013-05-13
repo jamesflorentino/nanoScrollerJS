@@ -266,6 +266,7 @@ To use overthrow, link to the javascript file in your HTML document...
 
 Other people who have contributed code:
 
+- [miljan-aleksic](https://github.com/miljan-aleksic) #144 
 - [callmevlad](https://github.com/callmevlad) #122
 - [bobo76](https://github.com/bobo76) #115
 - [mente](https://github.com/mente) #110
