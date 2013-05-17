@@ -121,9 +121,10 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('default', 'coffee:nano min concat:unmin concat:min csslint lint sizediff shell:marked yuidoc');
+  grunt.registerTask('default', 'coffee:nano min concat:unmin concat:min csslint lint sizediff shell:marked');
   grunt.registerTask('build', 'default');
   grunt.registerTask('build:tests', 'coffee:tests');
+  grunt.registerTask('build:docs', 'yuidoc');
   grunt.registerTask('test', 'coffee:tests jasmine');
   grunt.registerTask('size', 'sizediff');
 };
