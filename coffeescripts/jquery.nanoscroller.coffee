@@ -427,7 +427,8 @@
 
         wheel: (e) =>
           return unless e?
-          @sliderY +=  -e.wheelDeltaY or -e.delta
+          delta = e.delta or e.wheelDelta or (e.originalEvent and e.originalEvent.wheelDelta) or -e.detail or (e.originalEvent and -e.originalEvent.detail)
+          @sliderY += -delta / 3 if delta
           do @scroll
           false
 

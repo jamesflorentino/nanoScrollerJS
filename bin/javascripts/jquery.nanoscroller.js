@@ -446,10 +446,14 @@
           }
         },
         wheel: function(e) {
+          var delta;
           if (e == null) {
             return;
           }
-          _this.sliderY += -e.wheelDeltaY || -e.delta;
+          delta = e.delta || e.wheelDelta || (e.originalEvent && e.originalEvent.wheelDelta) || -e.detail || (e.originalEvent && -e.originalEvent.detail);
+          if (delta) {
+            _this.sliderY += -delta / 3;
+          }
           _this.scroll();
           return false;
         }
