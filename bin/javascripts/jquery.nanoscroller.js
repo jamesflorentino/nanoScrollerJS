@@ -369,6 +369,7 @@
       var content;
       content = this.content;
       this.maxScrollTop = content.scrollHeight - content.clientHeight;
+      this.prevScrollTop = this.contentScrollTop || 0;
       this.contentScrollTop = content.scrollTop;
       if (!this.iOSNativeScrolling) {
         this.maxSliderTop = this.paneHeight - this.sliderHeight;
@@ -397,9 +398,9 @@
           _this.sliderY = e.pageY - _this.$el.offset().top - _this.offsetY;
           _this.scroll();
           _this.updateScrollValues();
-          if (_this.contentScrollTop >= _this.maxScrollTop) {
+          if (_this.contentScrollTop >= _this.maxScrollTop && _this.prevScrollTop !== _this.maxScrollTop) {
             _this.$el.trigger('scrollend');
-          } else if (_this.contentScrollTop === 0) {
+          } else if (_this.contentScrollTop === 0 && _this.prevScrollTop !== 0) {
             _this.$el.trigger('scrolltop');
           }
           return false;
@@ -437,12 +438,16 @@
             if (_this.options.preventPageScrolling) {
               _this.preventScrolling(e, DOWN);
             }
-            _this.$el.trigger('scrollend');
+            if (_this.prevScrollTop !== _this.maxScrollTop) {
+              _this.$el.trigger('scrollend');
+            }
           } else if (_this.contentScrollTop === 0) {
             if (_this.options.preventPageScrolling) {
               _this.preventScrolling(e, UP);
             }
-            _this.$el.trigger('scrolltop');
+            if (_this.prevScrollTop !== 0) {
+              _this.$el.trigger('scrolltop');
+            }
           }
         },
         wheel: function(e) {

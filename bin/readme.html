@@ -51,7 +51,7 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 <pre><code>$(&quot;.nano&quot;).nanoScroller();</code></pre>
 <h3>Custom events</h3>
 <h4>&#39;scrollend&#39;</h4>
-<p>A custom <code>&#39;scrollend&#39;</code> event is triggered on the element every time the user has scrolled to the end of the content element.</p>
+<p>A custom <code>&#39;scrollend&#39;</code> event is triggered on the element every time the user has scrolled to the end of the content element (does <em>not</em> get triggered more than once when user tries to scroll down and has already reached the end of scrollable content).</p>
 <pre><code>$(&quot;.nano&quot;).bind(&quot;scrollend&quot;, function(e){
   console.log(&quot;current HTMLDivElement&quot;, e.currentTarget);
 });</code></pre>

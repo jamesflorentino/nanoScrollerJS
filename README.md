@@ -93,7 +93,7 @@ Refresh the scrollbar. This simply re-calculates the position and height of the 
 
 #### 'scrollend'
 
-A custom `'scrollend'` event is triggered on the element every time the user has scrolled to the end of the content element.
+A custom `'scrollend'` event is triggered on the element every time the user has scrolled to the end of the content element (does *not* get triggered more than once when user tries to scroll down and has already reached the end of scrollable content).
 
     $(".nano").bind("scrollend", function(e){
       console.log("current HTMLDivElement", e.currentTarget);
