@@ -11,12 +11,12 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 <h3>1. Markup</h3>
 <p>The following type of markup structure is needed to make the plugin work:</p>
 <pre><code>&lt;div id=&quot;about&quot; class=&quot;nano&quot;&gt;
- &lt;div class=&quot;content&quot;&gt; ... content here ...  &lt;/div&gt; 
+ &lt;div class=&quot;content&quot;&gt; ... content here ...  &lt;/div&gt;
 &lt;/div&gt;</code></pre>
 <p>Copy the HTML markup. Change <code>.nano</code> into something related to your content. Though you can also remove that attribute as long as you have a parent div with an ID reference. e.g. <code>#parent &gt; .nano</code>. <code>nano</code> and <code>content</code> classnames can be customized via plugin options (<em>in that case you must rename them inside the plugin&#39;s CSS file as well</em>).</p>
 <h3>2. CSS</h3>
 <p>Link to the <code>nanoscroller.css</code> file inside your page&#39;s <code>&lt;head&gt;</code> section (...or copy the contents from it to your page&#39;s main stylesheet file).</p>
-<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;nanoscroller.css&quot;&gt; </code></pre>
+<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;nanoscroller.css&quot;&gt;</code></pre>
 <p>You should specify a width and a height to your container, and apply some custom styling for your scrollbar. Here&#39;s an example:</p>
 <pre><code>.nano { background: #bba; width: 500px; height: 500px; }
 .nano .content { padding: 10px; }
@@ -150,9 +150,9 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 <p>You can use <a href="https://github.com/filamentgroup/Overthrow/">overthrow.js</a> polyfill (~1.5kb minified and gzipped) to make nanoScroller work on many mobile devices. It emulates CSS overflow (overflow: auto;/overflow: scroll;) in devices that are lacking it.</p>
 <p>To use overthrow, link to the javascript file in your HTML document...</p>
 <pre><code>&lt;script src=&quot;overthrow.js&quot;&gt;&lt;/script&gt;</code></pre>
-<p>...and add an <code>overthrow</code> class to your <code>content</code> div. </p>
+<p>...and add an <code>overthrow</code> class to your <code>content</code> div.</p>
 <pre><code>&lt;div id=&quot;about&quot; class=&quot;nano&quot;&gt;
- &lt;div class=&quot;overthrow content&quot;&gt; ... content here ...  &lt;/div&gt; 
+ &lt;div class=&quot;overthrow content&quot;&gt; ... content here ...  &lt;/div&gt;
 &lt;/div&gt;</code></pre>
 <h3>Contributors</h3>
 <ul>
@@ -162,7 +162,7 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 <p>Other people who have contributed code:</p>
 <ul>
 <li><a href="https://github.com/antonpinchuk">antonpinchuk</a> #123</li>
-<li><a href="https://github.com/miljan-aleksic">miljan-aleksic</a> #144 </li>
+<li><a href="https://github.com/miljan-aleksic">miljan-aleksic</a> #144</li>
 <li><a href="https://github.com/callmevlad">callmevlad</a> #122</li>
 <li><a href="https://github.com/bobo76">bobo76</a> #115</li>
 <li><a href="https://github.com/mente">mente</a> #110</li>

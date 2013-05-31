@@ -47,9 +47,10 @@ describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
       it "should have style attribute set", ->
         expect($slider).toHaveAttr('style')
 
-    describe "calling $('.nano').nanoScroller({ scroll: 'top' })", ->
+    describe "calling $('.nano').nanoScroller({ scroll: 'top' }) when the scrollbar is not at the top", ->
       beforeEach ->
         spyScrolltop = spyOnEvent($nano, 'scrolltop')
+        $nano.nanoScroller({ scroll: 'bottom' })
         $nano.nanoScroller({ scroll: 'top' })
         $slider = $nano.find('.slider')
       it "should have set .slider CSS 'top' value to 0px", ->
@@ -57,7 +58,7 @@ describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
       it "should have triggered the 'scrolltop' event", ->
         expect('scrolltop').toHaveBeenTriggeredOn($nano)
 
-    describe "calling $('.nano').nanoScroller({ scroll: 'bottom' })", ->
+    describe "calling $('.nano').nanoScroller({ scroll: 'bottom' }) when the scrollbar is at the top", ->
       beforeEach ->
         spyScrollend = spyOnEvent($nano, 'scrollend')
         $nano.nanoScroller({ scroll: 'bottom' })
@@ -144,14 +145,15 @@ describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
       it "should have style attribute set", ->
         expect($slider).toHaveAttr('style')
 
-    describe "calling $('.nano').nanoScroller({ scroll: 'top' })", ->
+    describe "calling $('.nano').nanoScroller({ scroll: 'top' }) when the scrollbar is not at the top", ->
       beforeEach ->
-        spyScrolltop = spyOnEvent($nano, 'scrolltop');
+        spyScrolltop = spyOnEvent($nano, 'scrolltop')
+        $nano.nanoScroller({ scroll: 'bottom' })
         $nano.nanoScroller({ scroll: 'top' })
       it "should not have triggered the 'scrolltop' event", ->
         expect('scrolltop').not.toHaveBeenTriggeredOn($nano)
 
-    describe "calling $('.nano').nanoScroller({ scroll: 'bottom' })", ->
+    describe "calling $('.nano').nanoScroller({ scroll: 'bottom' }) when the scrollbar is at the top", ->
       beforeEach ->
         spyScrollend = spyOnEvent($nano, 'scrollend')
         $nano.nanoScroller({ scroll: 'bottom' })

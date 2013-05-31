@@ -2,18 +2,19 @@
   "name": "jquery-plugin",
   "version": "0.0.0-ignored",
   "engines": {
-    "node": ">= 0.6.0"
-  },
-  "dependencies": {
-    "grunt-css": "~0.4.1",
-    "grunt-coffee": "~0.0.6",
-    "grunt-jasmine-task": "~0.2.3",
-    "grunt-sizediff": "~0.2.1",
-    "grunt-shell": "~0.1.4",
-    "grunt-contrib-yuidoc": "~0.3.2",
-    "marked": "~0.2.8"
+    "node": ">= 0.8.0"
   },
   "devDependencies": {
-    "grunt": "~0.3.17"
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-uglify": "~0.1.1",
+    "grunt-contrib-watch": "~0.2.0",
+    "grunt": "~0.4.1",
+    "grunt-sizediff": "~0.3.1",
+    "grunt-contrib-coffee": "~0.7.0",
+    "grunt-shell": "~0.2.2",
+    "grunt-contrib-yuidoc": "~0.4.0",
+    "marked": "~0.2.8",
+    "grunt-contrib-jasmine": "~0.4.2",
+    "grunt-contrib-csslint": "~0.1.2"
   }
 }

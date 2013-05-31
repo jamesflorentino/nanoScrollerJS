@@ -39,3 +39,4 @@ publish.sh
 
 build/.sizecache.json
 node_modules
+.grunt

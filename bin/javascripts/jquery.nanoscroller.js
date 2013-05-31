@@ -1,12 +1,10 @@
-/*! nanoScrollerJS - v0.7.2
+/*! nanoScrollerJS - v0.7.2 - 2013
 * http://jamesflorentino.github.com/nanoScrollerJS/
 * Copyright (c) 2013 James Florentino; Licensed MIT */
-
-
 (function($, window, document) {
   "use strict";
-
   var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, defaults, getBrowserScrollbarWidth;
+
   defaults = {
     /**
       a classname for the pane element.
@@ -275,6 +273,7 @@
 
   getBrowserScrollbarWidth = function() {
     var outer, outerStyle, scrollbarWidth;
+
     outer = document.createElement('div');
     outerStyle = outer.style;
     outerStyle.position = 'absolute';
@@ -295,7 +294,6 @@
   */
 
   NanoScroll = (function() {
-
     function NanoScroll(el, options) {
       this.el = el;
       this.options = options;
@@ -367,6 +365,7 @@
 
     NanoScroll.prototype.updateScrollValues = function() {
       var content;
+
       content = this.content;
       this.maxScrollTop = content.scrollHeight - content.clientHeight;
       this.prevScrollTop = this.contentScrollTop || 0;
@@ -386,6 +385,7 @@
 
     NanoScroll.prototype.createEvents = function() {
       var _this = this;
+
       this.events = {
         down: function(e) {
           _this.isBeingDragged = true;
@@ -452,6 +452,7 @@
         },
         wheel: function(e) {
           var delta;
+
           if (e == null) {
             return;
           }
@@ -474,6 +475,7 @@
 
     NanoScroll.prototype.addEvents = function() {
       var events;
+
       this.removeEvents();
       events = this.events;
       if (!this.options.disableResize) {
@@ -495,6 +497,7 @@
 
     NanoScroll.prototype.removeEvents = function() {
       var events;
+
       events = this.events;
       this.win.unbind(RESIZE, events[RESIZE]);
       if (!this.iOSNativeScrolling) {
@@ -514,6 +517,7 @@
 
     NanoScroll.prototype.generate = function() {
       var contentClass, cssRule, options, paneClass, sliderClass;
+
       options = this.options;
       paneClass = options.paneClass, sliderClass = options.sliderClass, contentClass = options.contentClass;
       if (!this.$el.find("" + paneClass).length && !this.$el.find("" + sliderClass).length) {
@@ -556,6 +560,7 @@
 
     NanoScroll.prototype.reset = function() {
       var content, contentHeight, contentStyle, contentStyleOverflowY, paneBottom, paneHeight, paneOuterHeight, paneTop, sliderHeight;
+
       if (this.iOSNativeScrolling) {
         this.contentHeight = this.content.scrollHeight;
         return;
@@ -750,6 +755,7 @@
 
     NanoScroll.prototype.flash = function() {
       var _this = this;
+
       if (!this.isActive) {
         return;
       }
@@ -767,6 +773,7 @@
   $.fn.nanoScroller = function(settings) {
     return this.each(function() {
       var options, scrollbar;
+
       if (!(scrollbar = this.nanoscroller)) {
         options = $.extend({}, defaults, settings);
         this.nanoscroller = scrollbar = new NanoScroll(this, options);
@@ -805,3 +812,7 @@
     });
   };
 })(jQuery, window, document);
+
+/*
+//@ sourceMappingURL=jquery.nanoscroller.js.map
+*/

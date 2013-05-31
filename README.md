@@ -16,7 +16,7 @@ To start using, you need three basic things:
 The following type of markup structure is needed to make the plugin work:
 
     <div id="about" class="nano">
-     <div class="content"> ... content here ...  </div> 
+     <div class="content"> ... content here ...  </div>
     </div>
 
 Copy the HTML markup. Change `.nano` into something related to your content. Though you can also remove that attribute as long as you have a parent div with an ID reference. e.g. `#parent > .nano`. `nano` and `content` classnames can be customized via plugin options (_in that case you must rename them inside the plugin's CSS file as well_).
@@ -25,7 +25,7 @@ Copy the HTML markup. Change `.nano` into something related to your content. Tho
 
 Link to the `nanoscroller.css` file inside your page's `<head>` section (...or copy the contents from it to your page's main stylesheet file).
 
-    <link rel="stylesheet" href="nanoscroller.css"> 
+    <link rel="stylesheet" href="nanoscroller.css">
 
 You should specify a width and a height to your container, and apply some custom styling for your scrollbar. Here's an example:
 
@@ -253,10 +253,10 @@ To use overthrow, link to the javascript file in your HTML document...
     <script src="overthrow.js"></script>
 
 
-...and add an `overthrow` class to your `content` div. 
+...and add an `overthrow` class to your `content` div.
 
     <div id="about" class="nano">
-     <div class="overthrow content"> ... content here ...  </div> 
+     <div class="overthrow content"> ... content here ...  </div>
     </div>
 
 ### Contributors
@@ -267,7 +267,7 @@ To use overthrow, link to the javascript file in your HTML document...
 Other people who have contributed code:
 
 - [antonpinchuk](https://github.com/antonpinchuk) #123
-- [miljan-aleksic](https://github.com/miljan-aleksic) #144 
+- [miljan-aleksic](https://github.com/miljan-aleksic) #144
 - [callmevlad](https://github.com/callmevlad) #122
 - [bobo76](https://github.com/bobo76) #115
 - [mente](https://github.com/mente) #110

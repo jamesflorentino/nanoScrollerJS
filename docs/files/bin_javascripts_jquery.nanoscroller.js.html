@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>bin/javascripts/jquery.nanoscroller.js</title>
+    <title>bin/javascripts/jquery.nanoscroller.js - jquery.nanoscroller</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -15,11 +15,11 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="../assets/css/logo.png" title=""></h1>
+                <h1><img src="../assets/css/logo.png" title="jquery.nanoscroller"></h1>
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: </em>
+            <em>API Docs for: 0.7.2</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -86,15 +86,13 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
-/*! nanoScrollerJS - v0.7.2
+/*! nanoScrollerJS - v0.7.2 - 2013
 * http://jamesflorentino.github.com/nanoScrollerJS/
 * Copyright (c) 2013 James Florentino; Licensed MIT */
-
-
 (function($, window, document) {
   &quot;use strict&quot;;
-
   var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, defaults, getBrowserScrollbarWidth;
+
   defaults = {
     /**
       a classname for the pane element.
@@ -363,6 +361,7 @@
 
   getBrowserScrollbarWidth = function() {
     var outer, outerStyle, scrollbarWidth;
+
     outer = document.createElement(&#x27;div&#x27;);
     outerStyle = outer.style;
     outerStyle.position = &#x27;absolute&#x27;;
@@ -383,7 +382,6 @@
   */
 
   NanoScroll = (function() {
-
     function NanoScroll(el, options) {
       this.el = el;
       this.options = options;
@@ -455,6 +453,7 @@
 
     NanoScroll.prototype.updateScrollValues = function() {
       var content;
+
       content = this.content;
       this.maxScrollTop = content.scrollHeight - content.clientHeight;
       this.prevScrollTop = this.contentScrollTop || 0;
@@ -474,6 +473,7 @@
 
     NanoScroll.prototype.createEvents = function() {
       var _this = this;
+
       this.events = {
         down: function(e) {
           _this.isBeingDragged = true;
@@ -540,6 +540,7 @@
         },
         wheel: function(e) {
           var delta;
+
           if (e == null) {
             return;
           }
@@ -562,6 +563,7 @@
 
     NanoScroll.prototype.addEvents = function() {
       var events;
+
       this.removeEvents();
       events = this.events;
       if (!this.options.disableResize) {
@@ -583,6 +585,7 @@
 
     NanoScroll.prototype.removeEvents = function() {
       var events;
+
       events = this.events;
       this.win.unbind(RESIZE, events[RESIZE]);
       if (!this.iOSNativeScrolling) {
@@ -602,6 +605,7 @@
 
     NanoScroll.prototype.generate = function() {
       var contentClass, cssRule, options, paneClass, sliderClass;
+
       options = this.options;
       paneClass = options.paneClass, sliderClass = options.sliderClass, contentClass = options.contentClass;
       if (!this.$el.find(&quot;&quot; + paneClass).length &amp;&amp; !this.$el.find(&quot;&quot; + sliderClass).length) {
@@ -644,6 +648,7 @@
 
     NanoScroll.prototype.reset = function() {
       var content, contentHeight, contentStyle, contentStyleOverflowY, paneBottom, paneHeight, paneOuterHeight, paneTop, sliderHeight;
+
       if (this.iOSNativeScrolling) {
         this.contentHeight = this.content.scrollHeight;
         return;
@@ -838,6 +843,7 @@
 
     NanoScroll.prototype.flash = function() {
       var _this = this;
+
       if (!this.isActive) {
         return;
       }
@@ -855,6 +861,7 @@
   $.fn.nanoScroller = function(settings) {
     return this.each(function() {
       var options, scrollbar;
+
       if (!(scrollbar = this.nanoscroller)) {
         options = $.extend({}, defaults, settings);
         this.nanoscroller = scrollbar = new NanoScroll(this, options);
@@ -894,6 +901,9 @@
   };
 })(jQuery, window, document);
 
+/*
+//@ sourceMappingURL=jquery.nanoscroller.js.map
+*/
     </pre>
 </div>
 
