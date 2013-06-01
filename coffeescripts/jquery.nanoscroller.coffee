@@ -257,7 +257,7 @@
     @private
   ###
   BROWSER_IS_IE7 = window.navigator.appName is 'Microsoft Internet Explorer' and (/msie 7./i).test(window.navigator.appVersion) and window.ActiveXObject
-  
+
   ###*
     @property BROWSER_SCROLLBAR_WIDTH
     @type Number
@@ -666,8 +666,8 @@
       @$content.height '' if BROWSER_IS_IE7
       @$content.removeAttr 'tabindex'
       if @$el.hasClass('has-scrollbar')
-        @$el.removeClass('has-scrollbar') 
-        @$content.css right: '' 
+        @$el.removeClass('has-scrollbar')
+        @$content.css right: ''
       this
 
     ###*
@@ -693,7 +693,7 @@
       if not scrollbar = @nanoscroller
         options = $.extend {}, defaults, settings
         @nanoscroller = scrollbar = new NanoScroll this, options
-      
+
       # scrollbar settings
       if settings and typeof settings is "object"
         $.extend scrollbar.options, settings # update scrollbar settings

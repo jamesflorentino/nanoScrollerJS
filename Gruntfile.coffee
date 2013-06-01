@@ -80,9 +80,14 @@ module.exports = (grunt) ->
         csslintrc: '.csslintrc'
       src: ['<%= dirs.cssDir %>/nanoscroller.css']
 
+    connect:
+      server:
+        options:
+          port: 8888
+
     watch:
       src:
-        files: '<%= dirs.coffeeDir %>'
+        files: '<%= dirs.coffeeDir %>/*.coffee'
         tasks: ['default']
 
   grunt.loadNpmTasks 'grunt-contrib-concat'
@@ -94,6 +99,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-yuidoc'
   grunt.loadNpmTasks 'grunt-contrib-jasmine'
   grunt.loadNpmTasks 'grunt-contrib-csslint'
+  grunt.loadNpmTasks 'grunt-contrib-connect'
 
   grunt.registerTask 'default', ['coffee:nano', 'concat', 'uglify','csslint',  'sizediff', 'shell:marked']
   grunt.registerTask 'build', ['default']
@@ -101,3 +107,4 @@ module.exports = (grunt) ->
   grunt.registerTask 'build:tests', ['coffee:tests']
   grunt.registerTask 'test', ['coffee:tests', 'jasmine']
   grunt.registerTask 'size', ['sizediff']
+  grunt.registerTask 'server', ['default', 'connect:server', 'watch']
