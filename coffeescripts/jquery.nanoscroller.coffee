@@ -535,6 +535,13 @@
       # the target content
       contentHeight = content.scrollHeight + BROWSER_SCROLLBAR_WIDTH
 
+      # Handle using max-height on the parent @$el and not
+      # setting the height explicitly
+      parentMaxHeight = parseInt(@$el.css("max-height"), 10)
+      if parentMaxHeight > 0
+        @$el.height("")
+        @$el.height(if content.scrollHeight > parentMaxHeight then parentMaxHeight else content.scrollHeight)
+
       # set the pane's height.
       paneHeight = do @pane.outerHeight
       paneTop = parseInt @pane.css('top'), 10
