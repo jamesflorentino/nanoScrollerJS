@@ -2,7 +2,7 @@
     "project": {
         "name": "jquery.nanoscroller",
         "description": "A jQuery plugin that offers a simplistic way of implementing Lion OS scrollbars.",
-        "version": "0.7.2",
+        "version": "0.7.3",
         "url": "http://jamesflorentino.github.com/nanoScrollerJS/"
     },
     "files": {
@@ -494,7 +494,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 620,
+            "line": 625,
             "itemtype": "method",
             "name": "scroll",
             "access": "private",
@@ -506,7 +506,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 643,
+            "line": 648,
             "description": "Scroll at the bottom with an offset value",
             "itemtype": "method",
             "name": "scrollBottom",
@@ -525,7 +525,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 662,
+            "line": 667,
             "description": "Scroll at the top with an offset value",
             "itemtype": "method",
             "name": "scrollTop",
@@ -544,7 +544,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 681,
+            "line": 686,
             "description": "Scroll to an element",
             "itemtype": "method",
             "name": "scrollTo",
@@ -563,7 +563,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 700,
+            "line": 705,
             "description": "To stop the operation.\nThis option will tell the plugin to disable all event bindings and hide the gadget scrollbar from the UI.",
             "itemtype": "method",
             "name": "stop",
@@ -575,7 +575,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 717,
+            "line": 722,
             "description": "Destroys nanoScroller and restores browser's native scrollbar.",
             "itemtype": "method",
             "name": "destroy",
@@ -587,7 +587,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 746,
+            "line": 751,
             "description": "To flash the scrollbar gadget for an amount of time defined in plugin settings (defaults to 1,5s).\nUseful if you want to show the user (e.g. on pageload) that there is more content waiting for him.",
             "itemtype": "method",
             "name": "flash",
