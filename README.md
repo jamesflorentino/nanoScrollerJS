@@ -208,7 +208,7 @@ We are still working on doing a horizontal scrolling feature. If you're interest
 To build nanoScroller from source you need the following libraries installed:
 
 * Node.js and npm: [homepage / download](http://nodejs.org/)
-* Grunt: [homepage](http://gruntjs.com/) | `npm install -g grunt`
+* Grunt: [homepage](http://gruntjs.com/) | `npm install -g grunt-cli`
 
 #### How to build & contribute
 
