@@ -543,7 +543,7 @@
         @$el.height(if content.scrollHeight > parentMaxHeight then parentMaxHeight else content.scrollHeight)
 
       # set the pane's height.
-      paneHeight = do @pane.outerHeight
+      paneHeight = @pane.outerHeight(false)
       paneTop = parseInt @pane.css('top'), 10
       paneBottom = parseInt @pane.css('bottom'), 10
       paneOuterHeight = paneHeight + paneTop + paneBottom

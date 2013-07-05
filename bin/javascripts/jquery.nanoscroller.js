@@ -585,7 +585,7 @@
         this.$el.height("");
         this.$el.height(content.scrollHeight > parentMaxHeight ? parentMaxHeight : content.scrollHeight);
       }
-      paneHeight = this.pane.outerHeight();
+      paneHeight = this.pane.outerHeight(false);
       paneTop = parseInt(this.pane.css('top'), 10);
       paneBottom = parseInt(this.pane.css('bottom'), 10);
       paneOuterHeight = paneHeight + paneTop + paneBottom;
