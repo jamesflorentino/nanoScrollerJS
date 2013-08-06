@@ -460,7 +460,7 @@
       this.contentScrollTop = content.scrollTop;
       if (!this.iOSNativeScrolling) {
         this.maxSliderTop = this.paneHeight - this.sliderHeight;
-        this.sliderTop = this.contentScrollTop * this.maxSliderTop / this.maxScrollTop;
+        this.sliderTop = this.maxScrollTop === 0 ? 0 : this.contentScrollTop * this.maxSliderTop / this.maxScrollTop;
       }
     };
 
@@ -673,7 +673,7 @@
         this.$el.height(&quot;&quot;);
         this.$el.height(content.scrollHeight &gt; parentMaxHeight ? parentMaxHeight : content.scrollHeight);
       }
-      paneHeight = this.pane.outerHeight();
+      paneHeight = this.pane.outerHeight(false);
       paneTop = parseInt(this.pane.css(&#x27;top&#x27;), 10);
       paneBottom = parseInt(this.pane.css(&#x27;bottom&#x27;), 10);
       paneOuterHeight = paneHeight + paneTop + paneBottom;
