@@ -317,7 +317,7 @@
           scrollTop: 100
         });
         $nestedSlider = $nestedNano.find('.slider');
-        return expect($nestedSlider.css('top')).toEqual('auto');
+        return expect($nestedSlider.css('top')).toEqual('0px');
       });
     });
   });

@@ -213,4 +213,4 @@ describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
     it "should not modify the slider element of its child", ->
       $nano.nanoScroller({ scrollTop: 100 })
       $nestedSlider = $nestedNano.find('.slider')
-      expect($nestedSlider.css('top')).toEqual('auto')
+      expect($nestedSlider.css('top')).toEqual('0px')
