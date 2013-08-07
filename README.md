@@ -195,6 +195,14 @@ __Default:__ 'content'
 
     $(".nano").nanoScroller({ contentClass: 'sliderContent' });
 
+#### tabIndex
+
+Set the tab order of the scrollable content. Set to -1 to skip over the scrollable content when tabbing.
+
+__Default:__ 0
+
+    $(".nano").nanoScroller({ tabIndex: 0 });
+
 ## How it works
 
 ![Fig 1.](https://github.com/jamesflorentino/nanoScrollerJS/raw/master/fig1.png)
