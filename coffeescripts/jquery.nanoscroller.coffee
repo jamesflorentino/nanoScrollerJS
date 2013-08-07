@@ -300,7 +300,7 @@
       @doc = $ @options.documentContext or document
       @win = $ @options.windowContext or window
       @$content = @$el.children(".#{options.contentClass}")
-      @$content.attr 'tabindex', 0
+      @$content.attr 'tabindex', @options.tabIndex or 0
       @content = @$content[0]
 
       if @options.iOSNativeScrolling && @el.style.WebkitOverflowScrolling?
