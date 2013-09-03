@@ -651,7 +651,11 @@
         return;
       }
       this.reset();
-      this.$content.scrollTop(this.contentHeight - this.$content.height() - offsetY).trigger(MOUSEWHEEL);
+      if(offsetY==0 || offsetY==true){	
+		      this.$content.scrollTop(this.contentHeight).trigger(MOUSEWHEEL);
+      }else {
+      		this.$content.scrollTop(this.contentHeight - this.$content.height() - offsetY).trigger(MOUSEWHEEL);
+      }
       return this;
     };
 
