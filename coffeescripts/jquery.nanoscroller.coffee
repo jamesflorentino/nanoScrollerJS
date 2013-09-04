@@ -715,6 +715,8 @@
         return do scrollbar.flash if settings.flash
 
       do scrollbar.reset
+
+  $.fn.nanoScroller.Constructor = NanoScroll
   return
 
 )(jQuery, window, document)

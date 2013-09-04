@@ -214,3 +214,9 @@ describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
       $nano.nanoScroller({ scrollTop: 100 })
       $nestedSlider = $nestedNano.find('.slider')
       expect($nestedSlider.css('top')).toEqual('0px')
+
+  describe "extending the constructor", ->
+    it "should be possible via $.fn.nanoScroller.Constructor", ->
+      expect(typeof $.fn.nanoScroller.Constructor).toBe("function")
+      expect(typeof $.fn.nanoScroller.Constructor.prototype.scroll).toBe("function")
+
