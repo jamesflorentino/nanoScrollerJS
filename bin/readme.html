@@ -104,6 +104,10 @@ It uses minimal HTML markup being <code>.nano &gt; .content</code>. The other sc
 <p>A classname for your content div. If you change this setting, you also have to change it in the plugin&#39;s CSS file.</p>
 <p><strong>Default:</strong> &#39;content&#39;</p>
 <pre><code>$(&quot;.nano&quot;).nanoScroller({ contentClass: &#39;sliderContent&#39; });</code></pre>
+<h4>tabIndex</h4>
+<p>Set the tab order of the scrollable content. Set to -1 to skip over the scrollable content when tabbing.</p>
+<p><strong>Default:</strong> 0</p>
+<pre><code>$(&quot;.nano&quot;).nanoScroller({ tabIndex: 0 });</code></pre>
 <h2>How it works</h2>
 <p><img src="https://github.com/jamesflorentino/nanoScrollerJS/raw/master/fig1.png" alt="Fig 1."></p>
 <p>The plugin works by creating a scrollbar gadget (with pre-defined css for styling) and then subscribing the <code>.content</code>&#39;s scroll events to it. Mouse press and drag events are also subscribed to the <code>.pane</code> and <code>.pane &gt; .slider</code> to emulate the native scrollbar&#39;s mechanism. The system scrollbars are hidden from the viewport (Fig 1). By doing this, we still retain the natural scrolling experience provided by the OS.</p>

@@ -805,6 +805,7 @@
       return scrollbar.reset();
     });
   };
+  $.fn.nanoScroller.Constructor = NanoScroll;
 })(jQuery, window, document);
 
 /*

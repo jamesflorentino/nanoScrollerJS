@@ -1,7 +1,6 @@
 (function() {
   describe("nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)", function() {
     var $content, $nano, $nestedNano, $pane, $slider, height, spyScrollend, spyScrolltop;
-
     $nano = null;
     $nestedNano = null;
     $content = null;
@@ -300,7 +299,7 @@
         });
       });
     });
-    return describe("when there is a nested nanoScroller, calling nanoScroller() on the parent", function() {
+    describe("when there is a nested nanoScroller, calling nanoScroller() on the parent", function() {
       beforeEach(function() {
         loadFixtures('nano-content.html');
         $nano = $("#nano");
@@ -312,12 +311,17 @@
       });
       return it("should not modify the slider element of its child", function() {
         var $nestedSlider;
-
         $nano.nanoScroller({
           scrollTop: 100
         });
         $nestedSlider = $nestedNano.find('.slider');
         return expect($nestedSlider.css('top')).toEqual('0px');
+      });
+    });
+    return describe("extending the constructor", function() {
+      return it("should be possible via $.fn.nanoScroller.Constructor", function() {
+        expect(typeof $.fn.nanoScroller.Constructor).toBe("function");
+        return expect(typeof $.fn.nanoScroller.Constructor.prototype.scroll).toBe("function");
       });
     });
   });
