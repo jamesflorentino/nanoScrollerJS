@@ -12,6 +12,7 @@ $contentClass: "content";
     height: 100%;
     position: relative;
     overflow: hidden;
+    overflow: -moz-hidden-unscrollable;
 
     .#{$contentClass} {
         position: absolute;
