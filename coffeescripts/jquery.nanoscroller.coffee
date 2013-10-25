@@ -267,6 +267,29 @@
   ###
   BROWSER_SCROLLBAR_WIDTH = null
 
+  rAF = window.requestAnimationFrame
+
+  # this transform stuff is from iScroll.
+  # all credit goes to @cubiq
+  _elementStyle = document.createElement('div').style
+
+  _vendor = do ->
+    vendors = ['t', 'webkitT', 'MozT', 'msT', 'OT']
+    for vendor, i in vendors
+      transform = vendors[i] + 'ransform';
+      if transform of _elementStyle
+        return vendors[i].substr(0, vendors[i].length - 1)
+    return false
+
+  _prefixStyle = (style) ->
+    return false if _vendor is false
+    return style if _vendor is ''
+    return _vendor + style.charAt(0).toUpperCase() + style.substr(1)
+
+  transform = _prefixStyle('transform')
+
+  hasTransform = transform isnt false
+
   ###*
     Returns browser's native scrollbar width
     @method getBrowserScrollbarWidth
@@ -419,7 +442,20 @@
           if not @iOSNativeScrolling
             # update the slider position
             @sliderY = @sliderTop
-            @slider.css top: @sliderTop
+
+            if hasTransform
+              cssValue = {}
+              cssValue[transform] = "translate(0, #{@sliderTop}px)"
+            else
+              cssValue = top: @sliderTop
+
+            if rAF
+              window.requestAnimationFrame =>
+                @slider.css cssValue
+                return
+            else
+              @slider.css cssValue
+
           # the succeeding code should be ignored if @events.scroll() wasn't
           # invoked by a DOM event. (refer to @reset)
           return unless e?

@@ -3,7 +3,7 @@
 * Copyright (c) 2013 James Florentino; Licensed MIT */
 (function($, window, document) {
   "use strict";
-  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, defaults, getBrowserScrollbarWidth, isFFWithBuggyScrollbar;
+  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor;
   defaults = {
     /**
       a classname for the pane element.
@@ -262,6 +262,31 @@
   */
 
   BROWSER_SCROLLBAR_WIDTH = null;
+  rAF = window.requestAnimationFrame;
+  _elementStyle = document.createElement('div').style;
+  _vendor = (function() {
+    var i, transform, vendor, vendors, _i, _len;
+    vendors = ['t', 'webkitT', 'MozT', 'msT', 'OT'];
+    for (i = _i = 0, _len = vendors.length; _i < _len; i = ++_i) {
+      vendor = vendors[i];
+      transform = vendors[i] + 'ransform';
+      if (transform in _elementStyle) {
+        return vendors[i].substr(0, vendors[i].length - 1);
+      }
+    }
+    return false;
+  })();
+  _prefixStyle = function(style) {
+    if (_vendor === false) {
+      return false;
+    }
+    if (_vendor === '') {
+      return style;
+    }
+    return _vendor + style.charAt(0).toUpperCase() + style.substr(1);
+  };
+  transform = _prefixStyle('transform');
+  hasTransform = transform !== false;
   /**
     Returns browser's native scrollbar width
     @method getBrowserScrollbarWidth
@@ -427,15 +452,28 @@
           return false;
         },
         scroll: function(e) {
+          var cssValue;
           if (_this.isBeingDragged) {
             return;
           }
           _this.updateScrollValues();
           if (!_this.iOSNativeScrolling) {
             _this.sliderY = _this.sliderTop;
-            _this.slider.css({
-              top: _this.sliderTop
-            });
+            if (hasTransform) {
+              cssValue = {};
+              cssValue[transform] = "translate(0, " + _this.sliderTop + "px)";
+            } else {
+              cssValue = {
+                top: _this.sliderTop
+              };
+            }
+            if (rAF) {
+              window.requestAnimationFrame(function() {
+                _this.slider.css(cssValue);
+              });
+            } else {
+              _this.slider.css(cssValue);
+            }
           }
           if (e == null) {
             return;
