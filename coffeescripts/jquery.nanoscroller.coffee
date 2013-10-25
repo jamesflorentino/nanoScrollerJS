@@ -287,6 +287,13 @@
     document.body.removeChild outer
     scrollbarWidth
 
+  isFFWithBuggyScrollbar = ->
+    ua = window.navigator.userAgent
+    isOSXFF = /(?=.+Mac OS X)(?=.+Firefox)/.test(ua)
+    version = /Firefox\/\d{2}\./.exec(ua)
+    version = version[0].replace(/\D+/g, '') if version
+    return isOSXFF and +version > 23
+
   ###*
     @class NanoScroll
     @param element {HTMLElement|Node} the main element
@@ -492,7 +499,12 @@
       # slider is the name for the  scrollbox or thumb of the scrollbar gadget
       @slider = @pane.find ".#{sliderClass}"
 
-      if BROWSER_SCROLLBAR_WIDTH
+      if BROWSER_SCROLLBAR_WIDTH is 0 and do isFFWithBuggyScrollbar
+        currentPadding = window.getComputedStyle(@content,null).getPropertyValue('padding-right').replace(/\D+/g, '')
+        cssRule =
+          right: -14
+          paddingRight: +currentPadding + 14
+      else if BROWSER_SCROLLBAR_WIDTH
         cssRule = right: -BROWSER_SCROLLBAR_WIDTH
         @$el.addClass 'has-scrollbar'
 
