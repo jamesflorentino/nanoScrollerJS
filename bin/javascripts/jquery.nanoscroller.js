@@ -3,7 +3,7 @@
 * Copyright (c) 2013 James Florentino; Licensed MIT */
 (function($, window, document) {
   "use strict";
-  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor;
+  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor;
   defaults = {
     /**
       a classname for the pane element.
@@ -263,6 +263,7 @@
 
   BROWSER_SCROLLBAR_WIDTH = null;
   rAF = window.requestAnimationFrame;
+  cAF = window.cancelAnimationFrame;
   _elementStyle = document.createElement('div').style;
   _vendor = (function() {
     var i, transform, vendor, vendors, _i, _len;
@@ -762,6 +763,9 @@
 
 
     NanoScroll.prototype.stop = function() {
+      if (cAF) {
+        cAF();
+      }
       this.stopped = true;
       this.removeEvents();
       this.pane.hide();

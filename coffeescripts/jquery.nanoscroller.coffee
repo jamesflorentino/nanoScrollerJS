@@ -268,6 +268,7 @@
   BROWSER_SCROLLBAR_WIDTH = null
 
   rAF = window.requestAnimationFrame
+  cAF = window.cancelAnimationFrame
 
   # this transform stuff is from iScroll.
   # all credit goes to @cubiq
@@ -706,6 +707,7 @@
           $(".nano").nanoScroller({ stop: true });
     ###
     stop: ->
+      do cAF if cAF
       @stopped = true
       do @removeEvents
       do @pane.hide
