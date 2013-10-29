@@ -468,9 +468,13 @@
               };
             }
             if (rAF) {
-              window.requestAnimationFrame(function() {
-                _this.slider.css(cssValue);
-              });
+              if (!_this.activeRAF) {
+                _this.activeRAF = true;
+                window.requestAnimationFrame(function() {
+                  _this.activeRAF = false;
+                  _this.slider.css(cssValue);
+                });
+              }
             } else {
               _this.slider.css(cssValue);
             }

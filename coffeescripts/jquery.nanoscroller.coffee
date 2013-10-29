@@ -450,9 +450,12 @@
               cssValue = top: @sliderTop
 
             if rAF
-              window.requestAnimationFrame =>
-                @slider.css cssValue
-                return
+              if not @activeRAF
+                @activeRAF = true
+                window.requestAnimationFrame =>
+                  @activeRAF = false
+                  @slider.css cssValue
+                  return
             else
               @slider.css cssValue
 
