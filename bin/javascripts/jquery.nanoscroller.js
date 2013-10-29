@@ -421,10 +421,9 @@
         };
       }
       if (rAF) {
-        if (!this.activeRAF) {
-          this.activeRAF = true;
-          window.requestAnimationFrame(function() {
-            _this.activeRAF = false;
+        if (!this.scrollRAF) {
+          this.scrollRAF = rAF(function() {
+            _this.scrollRAF = null;
             _this.slider.css(cssValue);
           });
         }
@@ -768,7 +767,7 @@
 
     NanoScroll.prototype.stop = function() {
       if (cAF) {
-        cAF();
+        cAF(this.scrollRAF);
       }
       this.stopped = true;
       this.removeEvents();

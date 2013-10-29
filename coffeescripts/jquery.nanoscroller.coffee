@@ -399,10 +399,9 @@
         cssValue = top: @sliderTop
 
       if rAF
-        if not @activeRAF
-          @activeRAF = true
-          window.requestAnimationFrame =>
-            @activeRAF = false
+        if not @scrollRAF
+          @scrollRAF = rAF =>
+            @scrollRAF = null
             @slider.css cssValue
             return
       else
@@ -709,7 +708,7 @@
           $(".nano").nanoScroller({ stop: true });
     ###
     stop: ->
-      do cAF if cAF
+      cAF(@scrollRAF) if cAF
       @stopped = true
       do @removeEvents
       do @pane.hide if not @iOSNativeScrolling
