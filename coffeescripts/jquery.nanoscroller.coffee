@@ -560,7 +560,7 @@
     ###
     restore: ->
       @stopped = false
-      do @pane.show
+      do @pane.show if not @iOSNativeScrolling
       do @addEvents
       return
 
@@ -712,7 +712,7 @@
       do cAF if cAF
       @stopped = true
       do @removeEvents
-      do @pane.hide
+      do @pane.hide if not @iOSNativeScrolling
       this
 
     ###*
@@ -724,7 +724,7 @@
     ###
     destroy: ->
       do @stop if not @stopped
-      do @pane.remove if @pane.length
+      do @pane.remove if not @iOSNativeScrolling and @pane.length
       @$content.height '' if BROWSER_IS_IE7
       @$content.removeAttr 'tabindex'
       if @$el.hasClass('has-scrollbar')
@@ -741,6 +741,7 @@
           $(".nano").nanoScroller({ flash: true });
     ###
     flash: ->
+      return if @iOSNativeScrolling
       return unless @isActive
       do @reset
       @pane.addClass 'flashed'

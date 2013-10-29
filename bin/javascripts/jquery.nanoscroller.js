@@ -600,7 +600,9 @@
 
     NanoScroll.prototype.restore = function() {
       this.stopped = false;
-      this.pane.show();
+      if (!this.iOSNativeScrolling) {
+        this.pane.show();
+      }
       this.addEvents();
     };
 
@@ -770,7 +772,9 @@
       }
       this.stopped = true;
       this.removeEvents();
-      this.pane.hide();
+      if (!this.iOSNativeScrolling) {
+        this.pane.hide();
+      }
       return this;
     };
 
@@ -787,7 +791,7 @@
       if (!this.stopped) {
         this.stop();
       }
-      if (this.pane.length) {
+      if (!this.iOSNativeScrolling && this.pane.length) {
         this.pane.remove();
       }
       if (BROWSER_IS_IE7) {
@@ -815,6 +819,9 @@
 
     NanoScroll.prototype.flash = function() {
       var _this = this;
+      if (this.iOSNativeScrolling) {
+        return;
+      }
       if (!this.isActive) {
         return;
       }
