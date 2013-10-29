@@ -391,6 +391,24 @@
         @sliderTop = if @maxScrollTop is 0 then 0 else @contentScrollTop * @maxSliderTop / @maxScrollTop
       return
 
+    setOnScrollStyles: ->
+      if hasTransform
+        cssValue = {}
+        cssValue[transform] = "translate(0, #{@sliderTop}px)"
+      else
+        cssValue = top: @sliderTop
+
+      if rAF
+        if not @activeRAF
+          @activeRAF = true
+          window.requestAnimationFrame =>
+            @activeRAF = false
+            @slider.css cssValue
+            return
+      else
+        @slider.css cssValue
+      return
+
     ###*
       Creates event related methods
       @method createEvents
@@ -442,23 +460,7 @@
           do @updateScrollValues
           if not @iOSNativeScrolling
             # update the slider position
-            @sliderY = @sliderTop
-
-            if hasTransform
-              cssValue = {}
-              cssValue[transform] = "translate(0, #{@sliderTop}px)"
-            else
-              cssValue = top: @sliderTop
-
-            if rAF
-              if not @activeRAF
-                @activeRAF = true
-                window.requestAnimationFrame =>
-                  @activeRAF = false
-                  @slider.css cssValue
-                  return
-            else
-              @slider.css cssValue
+            do @setOnScrollStyles
 
           # the succeeding code should be ignored if @events.scroll() wasn't
           # invoked by a DOM event. (refer to @reset)
@@ -653,7 +655,7 @@
       @sliderY = Math.min @maxSliderTop, @sliderY
       @$content.scrollTop (@paneHeight - @contentHeight + BROWSER_SCROLLBAR_WIDTH) * @sliderY / @maxSliderTop * -1
       if not @iOSNativeScrolling
-        @slider.css top: @sliderY
+        do @setOnScrollStyles
       this
 
     ###*

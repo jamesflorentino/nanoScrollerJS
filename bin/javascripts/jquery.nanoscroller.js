@@ -409,6 +409,30 @@
       }
     };
 
+    NanoScroll.prototype.setOnScrollStyles = function() {
+      var cssValue,
+        _this = this;
+      if (hasTransform) {
+        cssValue = {};
+        cssValue[transform] = "translate(0, " + this.sliderTop + "px)";
+      } else {
+        cssValue = {
+          top: this.sliderTop
+        };
+      }
+      if (rAF) {
+        if (!this.activeRAF) {
+          this.activeRAF = true;
+          window.requestAnimationFrame(function() {
+            _this.activeRAF = false;
+            _this.slider.css(cssValue);
+          });
+        }
+      } else {
+        this.slider.css(cssValue);
+      }
+    };
+
     /**
       Creates event related methods
       @method createEvents
@@ -453,32 +477,12 @@
           return false;
         },
         scroll: function(e) {
-          var cssValue;
           if (_this.isBeingDragged) {
             return;
           }
           _this.updateScrollValues();
           if (!_this.iOSNativeScrolling) {
-            _this.sliderY = _this.sliderTop;
-            if (hasTransform) {
-              cssValue = {};
-              cssValue[transform] = "translate(0, " + _this.sliderTop + "px)";
-            } else {
-              cssValue = {
-                top: _this.sliderTop
-              };
-            }
-            if (rAF) {
-              if (!_this.activeRAF) {
-                _this.activeRAF = true;
-                window.requestAnimationFrame(function() {
-                  _this.activeRAF = false;
-                  _this.slider.css(cssValue);
-                });
-              }
-            } else {
-              _this.slider.css(cssValue);
-            }
+            _this.setOnScrollStyles();
           }
           if (e == null) {
             return;
@@ -688,9 +692,7 @@
       this.sliderY = Math.min(this.maxSliderTop, this.sliderY);
       this.$content.scrollTop((this.paneHeight - this.contentHeight + BROWSER_SCROLLBAR_WIDTH) * this.sliderY / this.maxSliderTop * -1);
       if (!this.iOSNativeScrolling) {
-        this.slider.css({
-          top: this.sliderY
-        });
+        this.setOnScrollStyles();
       }
       return this;
     };
