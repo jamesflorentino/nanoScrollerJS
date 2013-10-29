@@ -378,6 +378,8 @@
 
     /**
       Enable iOS native scrolling
+      @method nativeScrolling
+      @private
     */
 
 
@@ -408,6 +410,14 @@
         this.sliderTop = this.maxScrollTop === 0 ? 0 : this.contentScrollTop * this.maxSliderTop / this.maxScrollTop;
       }
     };
+
+    /**
+      Updates CSS styles for current scroll position.
+      Uses CSS 2d transfroms and `window.requestAnimationFrame` if available.
+      @method setOnScrollStyles
+      @private
+    */
+
 
     NanoScroll.prototype.setOnScrollStyles = function() {
       var cssValue,

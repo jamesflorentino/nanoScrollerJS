@@ -91,7 +91,7 @@
 * Copyright (c) 2013 James Florentino; Licensed MIT */
 (function($, window, document) {
   &quot;use strict&quot;;
-  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, defaults, getBrowserScrollbarWidth;
+  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor;
   defaults = {
     /**
       a classname for the pane element.
@@ -350,6 +350,32 @@
   */
 
   BROWSER_SCROLLBAR_WIDTH = null;
+  rAF = window.requestAnimationFrame;
+  cAF = window.cancelAnimationFrame;
+  _elementStyle = document.createElement(&#x27;div&#x27;).style;
+  _vendor = (function() {
+    var i, transform, vendor, vendors, _i, _len;
+    vendors = [&#x27;t&#x27;, &#x27;webkitT&#x27;, &#x27;MozT&#x27;, &#x27;msT&#x27;, &#x27;OT&#x27;];
+    for (i = _i = 0, _len = vendors.length; _i &lt; _len; i = ++_i) {
+      vendor = vendors[i];
+      transform = vendors[i] + &#x27;ransform&#x27;;
+      if (transform in _elementStyle) {
+        return vendors[i].substr(0, vendors[i].length - 1);
+      }
+    }
+    return false;
+  })();
+  _prefixStyle = function(style) {
+    if (_vendor === false) {
+      return false;
+    }
+    if (_vendor === &#x27;&#x27;) {
+      return style;
+    }
+    return _vendor + style.charAt(0).toUpperCase() + style.substr(1);
+  };
+  transform = _prefixStyle(&#x27;transform&#x27;);
+  hasTransform = transform !== false;
   /**
     Returns browser&#x27;s native scrollbar width
     @method getBrowserScrollbarWidth
@@ -371,6 +397,16 @@
     scrollbarWidth = outer.offsetWidth - outer.clientWidth;
     document.body.removeChild(outer);
     return scrollbarWidth;
+  };
+  isFFWithBuggyScrollbar = function() {
+    var isOSXFF, ua, version;
+    ua = window.navigator.userAgent;
+    isOSXFF = /(?=.+Mac OS X)(?=.+Firefox)/.test(ua);
+    version = /Firefox\/\d{2}\./.exec(ua);
+    if (version) {
+      version = version[0].replace(/\D+/g, &#x27;&#x27;);
+    }
+    return isOSXFF &amp;&amp; +version &gt; 23;
   };
   /**
     @class NanoScroll
@@ -430,6 +466,8 @@
 
     /**
       Enable iOS native scrolling
+      @method nativeScrolling
+      @private
     */
 
 
@@ -458,6 +496,37 @@
       if (!this.iOSNativeScrolling) {
         this.maxSliderTop = this.paneHeight - this.sliderHeight;
         this.sliderTop = this.maxScrollTop === 0 ? 0 : this.contentScrollTop * this.maxSliderTop / this.maxScrollTop;
+      }
+    };
+
+    /**
+      Updates CSS styles for current scroll position.
+      Uses CSS 2d transfroms and &#x60;window.requestAnimationFrame&#x60; if available.
+      @method setOnScrollStyles
+      @private
+    */
+
+
+    NanoScroll.prototype.setOnScrollStyles = function() {
+      var cssValue,
+        _this = this;
+      if (hasTransform) {
+        cssValue = {};
+        cssValue[transform] = &quot;translate(0, &quot; + this.sliderTop + &quot;px)&quot;;
+      } else {
+        cssValue = {
+          top: this.sliderTop
+        };
+      }
+      if (rAF) {
+        if (!this.scrollRAF) {
+          this.scrollRAF = rAF(function() {
+            _this.scrollRAF = null;
+            _this.slider.css(cssValue);
+          });
+        }
+      } else {
+        this.slider.css(cssValue);
       }
     };
 
@@ -510,10 +579,7 @@
           }
           _this.updateScrollValues();
           if (!_this.iOSNativeScrolling) {
-            _this.sliderY = _this.sliderTop;
-            _this.slider.css({
-              top: _this.sliderTop
-            });
+            _this.setOnScrollStyles();
           }
           if (e == null) {
             return;
@@ -597,15 +663,21 @@
 
 
     NanoScroll.prototype.generate = function() {
-      var contentClass, cssRule, options, paneClass, sliderClass;
+      var contentClass, cssRule, currentPadding, options, paneClass, sliderClass;
       options = this.options;
       paneClass = options.paneClass, sliderClass = options.sliderClass, contentClass = options.contentClass;
-      if (!this.$el.find(&quot;&quot; + paneClass).length &amp;&amp; !this.$el.find(&quot;&quot; + sliderClass).length) {
+      if (!this.$el.find(&quot;.&quot; + paneClass).length &amp;&amp; !this.$el.find(&quot;.&quot; + sliderClass).length) {
         this.$el.append(&quot;&lt;div class=\&quot;&quot; + paneClass + &quot;\&quot;&gt;&lt;div class=\&quot;&quot; + sliderClass + &quot;\&quot; /&gt;&lt;/div&gt;&quot;);
       }
       this.pane = this.$el.children(&quot;.&quot; + paneClass);
       this.slider = this.pane.find(&quot;.&quot; + sliderClass);
-      if (BROWSER_SCROLLBAR_WIDTH) {
+      if (BROWSER_SCROLLBAR_WIDTH === 0 &amp;&amp; isFFWithBuggyScrollbar()) {
+        currentPadding = window.getComputedStyle(this.content, null).getPropertyValue(&#x27;padding-right&#x27;).replace(/\D+/g, &#x27;&#x27;);
+        cssRule = {
+          right: -14,
+          paddingRight: +currentPadding + 14
+        };
+      } else if (BROWSER_SCROLLBAR_WIDTH) {
         cssRule = {
           right: -BROWSER_SCROLLBAR_WIDTH
         };
@@ -625,7 +697,9 @@
 
     NanoScroll.prototype.restore = function() {
       this.stopped = false;
-      this.pane.show();
+      if (!this.iOSNativeScrolling) {
+        this.pane.show();
+      }
       this.addEvents();
     };
 
@@ -717,9 +791,7 @@
       this.sliderY = Math.min(this.maxSliderTop, this.sliderY);
       this.$content.scrollTop((this.paneHeight - this.contentHeight + BROWSER_SCROLLBAR_WIDTH) * this.sliderY / this.maxSliderTop * -1);
       if (!this.iOSNativeScrolling) {
-        this.slider.css({
-          top: this.sliderY
-        });
+        this.setOnScrollStyles();
       }
       return this;
     };
@@ -792,9 +864,14 @@
 
 
     NanoScroll.prototype.stop = function() {
+      if (cAF) {
+        cAF(this.scrollRAF);
+      }
       this.stopped = true;
       this.removeEvents();
-      this.pane.hide();
+      if (!this.iOSNativeScrolling) {
+        this.pane.hide();
+      }
       return this;
     };
 
@@ -811,7 +888,7 @@
       if (!this.stopped) {
         this.stop();
       }
-      if (this.pane.length) {
+      if (!this.iOSNativeScrolling &amp;&amp; this.pane.length) {
         this.pane.remove();
       }
       if (BROWSER_IS_IE7) {
@@ -839,6 +916,9 @@
 
     NanoScroll.prototype.flash = function() {
       var _this = this;
+      if (this.iOSNativeScrolling) {
+        return;
+      }
       if (!this.isActive) {
         return;
       }

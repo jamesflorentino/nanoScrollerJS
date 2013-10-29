@@ -363,6 +363,8 @@
 
     ###*
       Enable iOS native scrolling
+      @method nativeScrolling
+      @private
     ####
     nativeScrolling: ->
       # simply enable container
@@ -391,6 +393,12 @@
         @sliderTop = if @maxScrollTop is 0 then 0 else @contentScrollTop * @maxSliderTop / @maxScrollTop
       return
 
+    ###*
+      Updates CSS styles for current scroll position.
+      Uses CSS 2d transfroms and `window.requestAnimationFrame` if available.
+      @method setOnScrollStyles
+      @private
+    ###
     setOnScrollStyles: ->
       if hasTransform
         cssValue = {}
