@@ -664,6 +664,7 @@
       @sliderY = Math.min @maxSliderTop, @sliderY
       @$content.scrollTop (@paneHeight - @contentHeight + BROWSER_SCROLLBAR_WIDTH) * @sliderY / @maxSliderTop * -1
       if not @iOSNativeScrolling
+        do @updateScrollValues
         do @setOnScrollStyles
       this
 

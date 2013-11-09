@@ -707,6 +707,7 @@
       this.sliderY = Math.min(this.maxSliderTop, this.sliderY);
       this.$content.scrollTop((this.paneHeight - this.contentHeight + BROWSER_SCROLLBAR_WIDTH) * this.sliderY / this.maxSliderTop * -1);
       if (!this.iOSNativeScrolling) {
+        this.updateScrollValues();
         this.setOnScrollStyles();
       }
       return this;
