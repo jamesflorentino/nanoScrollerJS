@@ -314,6 +314,9 @@
     var isOSXFF, ua, version;
     ua = window.navigator.userAgent;
     isOSXFF = /(?=.+Mac OS X)(?=.+Firefox)/.test(ua);
+    if (!isOSXFF) {
+      return false;
+    }
     version = /Firefox\/\d{2}\./.exec(ua);
     if (version) {
       version = version[0].replace(/\D+/g, '');

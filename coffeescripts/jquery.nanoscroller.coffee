@@ -314,6 +314,7 @@
   isFFWithBuggyScrollbar = ->
     ua = window.navigator.userAgent
     isOSXFF = /(?=.+Mac OS X)(?=.+Firefox)/.test(ua)
+    return false if not isOSXFF
     version = /Firefox\/\d{2}\./.exec(ua)
     version = version[0].replace(/\D+/g, '') if version
     return isOSXFF and +version > 23
