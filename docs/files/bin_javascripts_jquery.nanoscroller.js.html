@@ -402,6 +402,9 @@
     var isOSXFF, ua, version;
     ua = window.navigator.userAgent;
     isOSXFF = /(?=.+Mac OS X)(?=.+Firefox)/.test(ua);
+    if (!isOSXFF) {
+      return false;
+    }
     version = /Firefox\/\d{2}\./.exec(ua);
     if (version) {
       version = version[0].replace(/\D+/g, &#x27;&#x27;);
@@ -579,6 +582,7 @@
           }
           _this.updateScrollValues();
           if (!_this.iOSNativeScrolling) {
+            _this.sliderY = _this.sliderTop;
             _this.setOnScrollStyles();
           }
           if (e == null) {
@@ -791,6 +795,7 @@
       this.sliderY = Math.min(this.maxSliderTop, this.sliderY);
       this.$content.scrollTop((this.paneHeight - this.contentHeight + BROWSER_SCROLLBAR_WIDTH) * this.sliderY / this.maxSliderTop * -1);
       if (!this.iOSNativeScrolling) {
+        this.updateScrollValues();
         this.setOnScrollStyles();
       }
       return this;
