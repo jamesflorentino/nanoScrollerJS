@@ -494,6 +494,7 @@
           }
           _this.updateScrollValues();
           if (!_this.iOSNativeScrolling) {
+            _this.sliderY = _this.sliderTop;
             _this.setOnScrollStyles();
           }
           if (e == null) {

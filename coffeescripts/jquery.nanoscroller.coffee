@@ -468,6 +468,7 @@
           do @updateScrollValues
           if not @iOSNativeScrolling
             # update the slider position
+            @sliderY = @sliderTop
             do @setOnScrollStyles
 
           # the succeeding code should be ignored if @events.scroll() wasn't
