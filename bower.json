@@ -5,8 +5,7 @@
   "homepage": "http://jamesflorentino.github.com/nanoScrollerJS/",
   "main": [
     "./bin/css/nanoscroller.css",
-    "./bin/javascripts/jquery.nanoscroller.js",
-    "./bin/javascripts/jquery.nanoscroller.min.js"
+    "./bin/javascripts/jquery.nanoscroller.js"
   ],
   "keywords": [
   ],
