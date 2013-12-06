@@ -859,10 +859,10 @@
       }
       if (settings && typeof settings === "object") {
         $.extend(scrollbar.options, settings);
-        if (settings.scrollBottom) {
+        if (settings.scrollBottom != null) {
           return scrollbar.scrollBottom(settings.scrollBottom);
         }
-        if (settings.scrollTop) {
+        if (settings.scrollTop != null) {
           return scrollbar.scrollTop(settings.scrollTop);
         }
         if (settings.scrollTo) {
