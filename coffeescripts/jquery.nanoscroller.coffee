@@ -770,8 +770,8 @@
       # scrollbar settings
       if settings and typeof settings is "object"
         $.extend scrollbar.options, settings # update scrollbar settings
-        return scrollbar.scrollBottom settings.scrollBottom if settings.scrollBottom
-        return scrollbar.scrollTop settings.scrollTop if settings.scrollTop
+        return scrollbar.scrollBottom settings.scrollBottom if settings.scrollBottom?
+        return scrollbar.scrollTop settings.scrollTop if settings.scrollTop?
         return scrollbar.scrollTo settings.scrollTo if settings.scrollTo
         return scrollbar.scrollBottom 0 if settings.scroll is 'bottom'
         return scrollbar.scrollTop 0 if settings.scroll is 'top'
