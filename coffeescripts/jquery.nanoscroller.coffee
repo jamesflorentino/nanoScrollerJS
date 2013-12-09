@@ -706,7 +706,7 @@
     scrollTo: (node) ->
       return unless @isActive
       do @reset
-      @scrollTop $(node).get(0).offsetTop
+      @scrollTop @$el.find(node).get(0).offsetTop
       this
 
     ###*

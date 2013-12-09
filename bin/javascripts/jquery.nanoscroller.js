@@ -765,7 +765,7 @@
         return;
       }
       this.reset();
-      this.scrollTop($(node).get(0).offsetTop);
+      this.scrollTop(this.$el.find(node).get(0).offsetTop);
       return this;
     };
 
