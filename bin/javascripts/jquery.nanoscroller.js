@@ -465,7 +465,6 @@
         drag: function(e) {
           _this.sliderY = e.pageY - _this.$el.offset().top - _this.offsetY;
           _this.scroll();
-          _this.updateScrollValues();
           if (_this.contentScrollTop >= _this.maxScrollTop && _this.prevScrollTop !== _this.maxScrollTop) {
             _this.$el.trigger('scrollend');
           } else if (_this.contentScrollTop === 0 && _this.prevScrollTop !== 0) {
@@ -489,10 +488,10 @@
           return false;
         },
         scroll: function(e) {
+          _this.updateScrollValues();
           if (_this.isBeingDragged) {
             return;
           }
-          _this.updateScrollValues();
           if (!_this.iOSNativeScrolling) {
             _this.sliderY = _this.sliderTop;
             _this.setOnScrollStyles();

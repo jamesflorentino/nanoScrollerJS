@@ -436,7 +436,6 @@
         drag: (e) =>
           @sliderY = e.pageY - @$el.offset().top - @offsetY
           do @scroll
-          do @updateScrollValues
           if @contentScrollTop >= @maxScrollTop and @prevScrollTop isnt @maxScrollTop
             @$el.trigger 'scrollend'
           else if @contentScrollTop is 0 and @prevScrollTop isnt 0
@@ -462,10 +461,10 @@
           false
 
         scroll: (e) =>
+          do @updateScrollValues
           # Don't operate if there is a dragging mechanism going on.
           # This is invoked when a user presses and moves the slider or pane
           return if @isBeingDragged
-          do @updateScrollValues
           if not @iOSNativeScrolling
             # update the slider position
             @sliderY = @sliderTop
