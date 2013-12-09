@@ -781,8 +781,9 @@
 
 
     NanoScroll.prototype.stop = function() {
-      if (cAF) {
+      if (cAF && this.scrollRAF) {
         cAF(this.scrollRAF);
+        this.scrollRAF = null;
       }
       this.stopped = true;
       this.removeEvents();

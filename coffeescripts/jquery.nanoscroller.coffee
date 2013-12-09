@@ -719,7 +719,9 @@
           $(".nano").nanoScroller({ stop: true });
     ###
     stop: ->
-      cAF(@scrollRAF) if cAF
+      if cAF and @scrollRAF
+        cAF(@scrollRAF)
+        @scrollRAF = null
       @stopped = true
       do @removeEvents
       do @pane.hide if not @iOSNativeScrolling
