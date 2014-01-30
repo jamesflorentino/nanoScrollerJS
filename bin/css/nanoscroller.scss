@@ -3,9 +3,9 @@
 // --------------------------------------------------
 /** initial setup **/
 $nanoClass: "nano";
-$paneClass: "pane";
-$sliderClass: "slider";
-$contentClass: "content";
+$paneClass: "nano-pane";
+$sliderClass: "nano-slider";
+$contentClass: "nano-content";
 
 .#{$nanoClass} {
     width: 100%;
@@ -60,7 +60,7 @@ $contentClass: "content";
     }
 }
 
-.has-scrollbar .#{$contentClass}::-webkit-scrollbar {
+.has-scrollbar > .#{$contentClass}::-webkit-scrollbar {
     visibility: visible;
 }
 

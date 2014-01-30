@@ -1,6 +1,6 @@
-/*! nanoScrollerJS - v0.7.6 - 2013
+/*! nanoScrollerJS - v0.7.6 - 2014
 * http://jamesflorentino.github.com/nanoScrollerJS/
-* Copyright (c) 2013 James Florentino; Licensed MIT */
+* Copyright (c) 2014 James Florentino; Licensed MIT */
 (function($, window, document) {
   "use strict";
   var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor;
@@ -12,7 +12,7 @@
       @default 'pane'
     */
 
-    paneClass: 'pane',
+    paneClass: 'nano-pane',
     /**
       a classname for the slider element.
       @property sliderClass
@@ -20,7 +20,7 @@
       @default 'slider'
     */
 
-    sliderClass: 'slider',
+    sliderClass: 'nano-slider',
     /**
       a classname for the content element.
       @property contentClass
@@ -28,7 +28,7 @@
       @default 'content'
     */
 
-    contentClass: 'content',
+    contentClass: 'nano-content',
     /**
       a setting to enable native scrolling in iOS devices.
       @property iOSNativeScrolling

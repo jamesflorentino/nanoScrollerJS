@@ -3,16 +3,16 @@
 // --------------------------------------------------
 /** initial setup **/
 @nanoClass: ~'nano';
-@paneClass: ~'pane';
-@sliderClass: ~'slider';
-@contentClass: ~'content';
+@paneClass: ~'nano-pane';
+@sliderClass: ~'nano-slider';
+@contentClass: ~'nano-content';
 
 .@{nanoClass} {
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  .@{contentClass} {
+  > .@{contentClass} {
   position: absolute;
   overflow: scroll;
   overflow-x: hidden;
@@ -35,14 +35,14 @@
     top:0;
     bottom:0;
     /* Target only IE7 and IE8 with this hack */
-    visibility:hidden\9; 
-    opacity: .01; 
+    visibility:hidden\9;
+    opacity: .01;
     -webkit-transition: .2s;
     -moz-transition: .2s;
     -o-transition: .2s;
     transition: .2s;
     -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;  
+    -webkit-border-radius: 5px;
     border-radius: 5px;
     > .@{sliderClass} {
       background: #444;
@@ -50,20 +50,20 @@
       position: relative;
       margin : 0 1px;
       -moz-border-radius: 3px;
-      -webkit-border-radius: 3px;  
+      -webkit-border-radius: 3px;
       border-radius: 3px;
     }
   }
 }
 
-.@{nanoClass}:hover > .@{paneClass}, 
-.@{paneClass}.active, 
+.@{nanoClass}:hover > .@{paneClass},
+.@{paneClass}.active,
 .@{paneClass}.flashed {
   /* Target only IE7 and IE8 with this hack */
-  visibility: visible\9; 
+  visibility: visible\9;
   opacity: 0.99;
 }
 
-.has-scrollbar .@{contentClass}::-webkit-scrollbar {
+.has-scrollbar > .@{contentClass}::-webkit-scrollbar {
   visibility: visible;
 }
