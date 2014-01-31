@@ -86,9 +86,9 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
-/*! nanoScrollerJS - v0.7.6 - 2013
+/*! nanoScrollerJS - v0.7.6 - 2014
 * http://jamesflorentino.github.com/nanoScrollerJS/
-* Copyright (c) 2013 James Florentino; Licensed MIT */
+* Copyright (c) 2014 James Florentino; Licensed MIT */
 (function($, window, document) {
   &quot;use strict&quot;;
   var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor;
@@ -97,26 +97,26 @@
       a classname for the pane element.
       @property paneClass
       @type String
-      @default &#x27;pane&#x27;
+      @default &#x27;nano-pane&#x27;
     */
 
-    paneClass: &#x27;pane&#x27;,
+    paneClass: &#x27;nano-pane&#x27;,
     /**
       a classname for the slider element.
       @property sliderClass
       @type String
-      @default &#x27;slider&#x27;
+      @default &#x27;nano-slider&#x27;
     */
 
-    sliderClass: &#x27;slider&#x27;,
+    sliderClass: &#x27;nano-slider&#x27;,
     /**
       a classname for the content element.
       @property contentClass
       @type String
-      @default &#x27;content&#x27;
+      @default &#x27;nano-content&#x27;
     */
 
-    contentClass: &#x27;content&#x27;,
+    contentClass: &#x27;nano-content&#x27;,
     /**
       a setting to enable native scrolling in iOS devices.
       @property iOSNativeScrolling
@@ -441,7 +441,7 @@
 
     /**
       Prevents the rest of the page being scrolled
-      when user scrolls the &#x60;.content&#x60; element.
+      when user scrolls the &#x60;.nano-content&#x60; element.
       @method preventScrolling
       @param event {Event}
       @param direction {String} Scroll direction (up or down)
@@ -553,7 +553,6 @@
         drag: function(e) {
           _this.sliderY = e.pageY - _this.$el.offset().top - _this.offsetY;
           _this.scroll();
-          _this.updateScrollValues();
           if (_this.contentScrollTop &gt;= _this.maxScrollTop &amp;&amp; _this.prevScrollTop !== _this.maxScrollTop) {
             _this.$el.trigger(&#x27;scrollend&#x27;);
           } else if (_this.contentScrollTop === 0 &amp;&amp; _this.prevScrollTop !== 0) {
@@ -577,10 +576,10 @@
           return false;
         },
         scroll: function(e) {
+          _this.updateScrollValues();
           if (_this.isBeingDragged) {
             return;
           }
-          _this.updateScrollValues();
           if (!_this.iOSNativeScrolling) {
             _this.sliderY = _this.sliderTop;
             _this.setOnScrollStyles();
@@ -854,7 +853,7 @@
         return;
       }
       this.reset();
-      this.scrollTop($(node).get(0).offsetTop);
+      this.scrollTop(this.$el.find(node).get(0).offsetTop);
       return this;
     };
 
@@ -869,8 +868,9 @@
 
 
     NanoScroll.prototype.stop = function() {
-      if (cAF) {
+      if (cAF &amp;&amp; this.scrollRAF) {
         cAF(this.scrollRAF);
+        this.scrollRAF = null;
       }
       this.stopped = true;
       this.removeEvents();
@@ -947,10 +947,10 @@
       }
       if (settings &amp;&amp; typeof settings === &quot;object&quot;) {
         $.extend(scrollbar.options, settings);
-        if (settings.scrollBottom) {
+        if (settings.scrollBottom != null) {
           return scrollbar.scrollBottom(settings.scrollBottom);
         }
-        if (settings.scrollTop) {
+        if (settings.scrollTop != null) {
           return scrollbar.scrollTop(settings.scrollTop);
         }
         if (settings.scrollTo) {
