@@ -9,7 +9,7 @@
       a classname for the pane element.
       @property paneClass
       @type String
-      @default 'pane'
+      @default 'nano-pane'
     */
 
     paneClass: 'nano-pane',
@@ -17,7 +17,7 @@
       a classname for the slider element.
       @property sliderClass
       @type String
-      @default 'slider'
+      @default 'nano-slider'
     */
 
     sliderClass: 'nano-slider',
@@ -25,7 +25,7 @@
       a classname for the content element.
       @property contentClass
       @type String
-      @default 'content'
+      @default 'nano-content'
     */
 
     contentClass: 'nano-content',
@@ -353,7 +353,7 @@
 
     /**
       Prevents the rest of the page being scrolled
-      when user scrolls the `.content` element.
+      when user scrolls the `.nano-content` element.
       @method preventScrolling
       @param event {Event}
       @param direction {String} Scroll direction (up or down)

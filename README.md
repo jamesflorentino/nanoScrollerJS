@@ -1,6 +1,6 @@
 # nanoScroller.js
 [nanoScroller.js](https://github.com/jamesflorentino/nanoScrollerJS) is a jQuery plugin that offers a simplistic way of implementing Mac OS X Lion-styled scrollbars for your website.
-It uses minimal HTML markup being `.nano > .content`. The other scrollbar div elements `.pane > .slider` are added during run time to prevent clutter in templating. The latest version utilizes native scrolling and works with the iPad, iPhone, and some Android Tablets.
+It uses minimal HTML markup being `.nano > .nano-content`. The other scrollbar div elements `.pane > .nano-slider` are added during run time to prevent clutter in templating. The latest version utilizes native scrolling and works with the iPad, iPhone, and some Android Tablets.
 
 ### Downloads
 
@@ -16,10 +16,10 @@ To start using, you need three basic things:
 The following type of markup structure is needed to make the plugin work:
 
     <div id="about" class="nano">
-     <div class="content"> ... content here ...  </div>
+     <div class="nano-content"> ... content here ...  </div>
     </div>
 
-Copy the HTML markup. Change `.nano` into something related to your content. Though you can also remove that attribute as long as you have a parent div with an ID reference. e.g. `#parent > .nano`. `nano` and `content` classnames can be customized via plugin options (_in that case you must rename them inside the plugin's CSS file as well_).
+Copy the HTML markup. Change `.nano` into something related to your content. Though you can also remove that attribute as long as you have a parent div with an ID reference. e.g. `#parent > .nano`. `nano` and `nano-content` classnames can be customized via plugin options (_in that case you must rename them inside the plugin's CSS file as well_).
 
 ### 2. CSS
 
@@ -30,9 +30,9 @@ Link to the `nanoscroller.css` file inside your page's `<head>` section (...or c
 You should specify a width and a height to your container, and apply some custom styling for your scrollbar. Here's an example:
 
     .nano { background: #bba; width: 500px; height: 500px; }
-    .nano .content { padding: 10px; }
-    .nano .pane   { background: #888; }
-    .nano .slider { background: #111; }
+    .nano .nano-content { padding: 10px; }
+    .nano .nano-pane   { background: #888; }
+    .nano .nano-slider { background: #111; }
 
 ### 3. JavaScript
 
@@ -175,7 +175,7 @@ __Default:__ 1500
 
 A classname for scrollbar track element. If you change this setting, you also have to change it in the plugin's CSS file.
 
-__Default:__ 'pane'
+__Default:__ 'nano-pane'
 
     $(".nano").nanoScroller({ paneClass: 'scrollPane' });
 
@@ -183,7 +183,7 @@ __Default:__ 'pane'
 
 A classname for scrollbar thumb element. If you change this setting, you also have to change it in the plugin's CSS file.
 
-__Default:__ 'slider'
+__Default:__ 'nano-slider'
 
     $(".nano").nanoScroller({ sliderClass: 'scrollSlider' });
 
@@ -191,7 +191,7 @@ __Default:__ 'slider'
 
 A classname for your content div. If you change this setting, you also have to change it in the plugin's CSS file.
 
-__Default:__ 'content'
+__Default:__ 'nano-content'
 
     $(".nano").nanoScroller({ contentClass: 'sliderContent' });
 
@@ -207,7 +207,7 @@ __Default:__ 0
 
 ![Fig 1.](https://github.com/jamesflorentino/nanoScrollerJS/raw/master/fig1.png)
 
-The plugin works by creating a scrollbar gadget (with pre-defined css for styling) and then subscribing the `.content`'s scroll events to it. Mouse press and drag events are also subscribed to the `.pane` and `.pane > .slider` to emulate the native scrollbar's mechanism. The system scrollbars are hidden from the viewport (Fig 1). By doing this, we still retain the natural scrolling experience provided by the OS.
+The plugin works by creating a scrollbar gadget (with pre-defined css for styling) and then subscribing the `.nano-content`'s scroll events to it. Mouse press and drag events are also subscribed to the `.nano-pane` and `.nano-pane > .nano-slider` to emulate the native scrollbar's mechanism. The system scrollbars are hidden from the viewport (Fig 1). By doing this, we still retain the natural scrolling experience provided by the OS.
 
 We are still working on doing a horizontal scrolling feature. If you're interested in contributing to the project, you are free to fork it and create a pull request.
 
@@ -264,7 +264,7 @@ To use overthrow, link to the javascript file in your HTML document...
 ...and add an `overthrow` class to your `content` div.
 
     <div id="about" class="nano">
-     <div class="overthrow content"> ... content here ...  </div>
+     <div class="overthrow nano-content"> ... content here ...  </div>
     </div>
 
 ### Contributors

@@ -51,7 +51,7 @@
             "itemtype": "property",
             "name": "paneClass",
             "type": "String",
-            "default": "'pane'",
+            "default": "'nano-pane'",
             "class": "NanoScroll"
         },
         {
@@ -61,7 +61,7 @@
             "itemtype": "property",
             "name": "sliderClass",
             "type": "String",
-            "default": "'slider'",
+            "default": "'nano-slider'",
             "class": "NanoScroll"
         },
         {
@@ -71,7 +71,7 @@
             "itemtype": "property",
             "name": "contentClass",
             "type": "String",
-            "default": "'content'",
+            "default": "'nano-content'",
             "class": "NanoScroll"
         },
         {
@@ -395,7 +395,7 @@
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
             "line": 354,
-            "description": "Prevents the rest of the page being scrolled\nwhen user scrolls the `.content` element.",
+            "description": "Prevents the rest of the page being scrolled\nwhen user scrolls the `.nano-content` element.",
             "itemtype": "method",
             "name": "preventScrolling",
             "params": [
@@ -456,7 +456,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 534,
+            "line": 533,
             "description": "Adds event listeners with jQuery.",
             "itemtype": "method",
             "name": "addEvents",
@@ -466,7 +466,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 555,
+            "line": 554,
             "description": "Removes event listeners with jQuery.",
             "itemtype": "method",
             "name": "removeEvents",
@@ -476,7 +476,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 573,
+            "line": 572,
             "description": "Generates nanoScroller's scrollbar and elements for it.",
             "itemtype": "method",
             "name": "generate",
@@ -487,7 +487,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 608,
+            "line": 607,
             "itemtype": "method",
             "name": "restore",
             "access": "private",
@@ -496,7 +496,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 622,
+            "line": 621,
             "description": "Resets nanoScroller's scrollbar.",
             "itemtype": "method",
             "name": "reset",
@@ -508,7 +508,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 694,
+            "line": 693,
             "itemtype": "method",
             "name": "scroll",
             "access": "private",
@@ -520,7 +520,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 716,
+            "line": 715,
             "description": "Scroll at the bottom with an offset value",
             "itemtype": "method",
             "name": "scrollBottom",
@@ -539,7 +539,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 735,
+            "line": 734,
             "description": "Scroll at the top with an offset value",
             "itemtype": "method",
             "name": "scrollTop",
@@ -558,7 +558,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 754,
+            "line": 753,
             "description": "Scroll to an element",
             "itemtype": "method",
             "name": "scrollTo",
@@ -577,7 +577,7 @@
         },
         {
             "file": "bin/javascripts/jquery.nanoscroller.js",
-            "line": 773,
+            "line": 772,
             "description": "To stop the operation.\nThis option will tell the plugin to disable all event bindings and hide the gadget scrollbar from the UI.",
             "itemtype": "method",
             "name": "stop",
