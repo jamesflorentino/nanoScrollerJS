@@ -15,9 +15,11 @@ To start using, you need three basic things:
 
 The following type of markup structure is needed to make the plugin work:
 
-    <div id="about" class="nano">
-     <div class="nano-content"> ... content here ...  </div>
-    </div>
+```html
+<div id="about" class="nano">
+    <div class="nano-content"> ... content here ...  </div>
+</div>
+```
 
 Copy the HTML markup. Change `.nano` into something related to your content. Though you can also remove that attribute as long as you have a parent div with an ID reference. e.g. `#parent > .nano`. `nano` and `nano-content` classnames can be customized via plugin options (_in that case you must rename them inside the plugin's CSS file as well_).
 
@@ -25,21 +27,26 @@ Copy the HTML markup. Change `.nano` into something related to your content. Tho
 
 Link to the `nanoscroller.css` file inside your page's `<head>` section (...or copy the contents from it to your page's main stylesheet file).
 
-    <link rel="stylesheet" href="nanoscroller.css">
+```html
+<link rel="stylesheet" href="nanoscroller.css">
+```
 
 You should specify a width and a height to your container, and apply some custom styling for your scrollbar. Here's an example:
 
-    .nano { background: #bba; width: 500px; height: 500px; }
-    .nano .nano-content { padding: 10px; }
-    .nano .nano-pane   { background: #888; }
-    .nano .nano-slider { background: #111; }
+```css
+.nano { background: #bba; width: 500px; height: 500px; }
+.nano .nano-content { padding: 10px; }
+.nano .nano-pane   { background: #888; }
+.nano .nano-slider { background: #111; }
+```
 
 ### 3. JavaScript
 
 Running this script will apply the nanoScroller plugin to all DOM elements with a `.nano` className.
 
-    $(".nano").nanoScroller();
-
+```js
+$(".nano").nanoScroller();
+```
 
 ### Advanced methods
 
@@ -47,47 +54,65 @@ Running this script will apply the nanoScroller plugin to all DOM elements with 
 
 To scroll at the top:
 
-    $(".nano").nanoScroller({ scroll: 'top' });
+```js
+$(".nano").nanoScroller({ scroll: 'top' });
+```
 
 To scroll at the bottom:
 
-    $(".nano").nanoScroller({ scroll: 'bottom' });
+```js
+$(".nano").nanoScroller({ scroll: 'bottom' });
+```
 
 To scroll at the top with an offset value:
 
-    $(".nano").nanoScroller({ scrollTop: value });
+```js
+$(".nano").nanoScroller({ scrollTop: value });
+```
 
 To scroll at the bottom with an offset value:
 
-    $(".nano").nanoScroller({ scrollBottom: value });
+```js
+$(".nano").nanoScroller({ scrollBottom: value });
+```
 
 To scroll to an element:
 
-    $(".nano").nanoScroller({ scrollTo: $('#a_node') });
+```js
+$(".nano").nanoScroller({ scrollTo: $('#a_node') });
+```
 
 #### stop:
 
 To stop the operation. This option will tell the plugin to disable all event bindings and hide the gadget scrollbar from the UI.
 
-    $(".nano").nanoScroller({ stop: true });
+```js
+$(".nano").nanoScroller({ stop: true });
+```
 
 #### destroy:
 
 Destroys nanoScroller and restores browser's native scrollbar.
 
-    $(".nano").nanoScroller({ destroy: true });
+```js
+$(".nano").nanoScroller({ destroy: true });
+```
 
 #### flash:
 
 To flash the scrollbar gadget for an amount of time defined in plugin settings (_defaults to 1,5s_). Useful if you want to show the user (e.g. on pageload) that there is more content waiting for him.
 
-    $(".nano").nanoScroller({ flash: true });
+```js
+$(".nano").nanoScroller({ flash: true });
+```
 
 #### nanoScroller();
 
 Refresh the scrollbar. This simply re-calculates the position and height of the scrollbar gadget.
 
-    $(".nano").nanoScroller();
+```js
+$(".nano").nanoScroller();
+```
 
 ### Custom events
 
@@ -95,15 +120,19 @@ Refresh the scrollbar. This simply re-calculates the position and height of the 
 
 A custom `'scrollend'` event is triggered on the element every time the user has scrolled to the end of the content element (does *not* get triggered more than once when user tries to scroll down and has already reached the end of scrollable content).
 
-    $(".nano").bind("scrollend", function(e){
-      console.log("current HTMLDivElement", e.currentTarget);
-    });
+```js
+$(".nano").bind("scrollend", function(e){
+    console.log("current HTMLDivElement", e.currentTarget);
+});
+```
 
 Some browsers trigger this event more than once each time, so to listen to the custom event, instead of using jQuery's normal `.bind` or `.on`, you most likely want to use [this tiny jQuery debounce plugin](https://github.com/diaspora/jquery-debounce) to prevent browsers from firing your function more than once every 100ms.
 
-    $(".nano").debounce("scrollend", function() {
-      alert("The end");
-    }, 100);
+```js
+$(".nano").debounce("scrollend", function() {
+    alert("The end");
+}, 100);
+```
 
 #### 'scrolltop'
 
@@ -121,7 +150,9 @@ Notice that `.pane` and `.slider` elements are *not generated/added* for devices
 
 __Default:__ false
 
-    $(".nano").nanoScroller({ iOSNativeScrolling: true });
+```js
+$(".nano").nanoScroller({ iOSNativeScrolling: true });
+```
 
 #### sliderMinHeight
 
@@ -129,7 +160,9 @@ Sets the minimum height of the slider element.
 
 __Default:__ 20
 
-    $(".nano").nanoScroller({ sliderMinHeight: 40 });
+```js
+$(".nano").nanoScroller({ sliderMinHeight: 40 });
+```
 
 #### sliderMaxHeight
 
@@ -137,7 +170,9 @@ Sets the maximum height of the slider element.
 
 __Default:__ null
 
-    $(".nano").nanoScroller({ sliderMaxHeight: 200 });
+```js
+$(".nano").nanoScroller({ sliderMaxHeight: 200 });
+```
 
 #### preventPageScrolling
 
@@ -145,7 +180,9 @@ Set to true to prevent page scrolling when top or bottom inside the content div 
 
 __Default:__ false
 
-    $(".nano").nanoScroller({ preventPageScrolling: true });
+```js
+$(".nano").nanoScroller({ preventPageScrolling: true });
+```
 
 #### disableResize
 
@@ -153,7 +190,9 @@ Set to true to disable the resize from nanoscroller. Useful if you want total co
 
 __Default:__ false
 
-    $(".nano").nanoScroller({ disableResize: true });
+```js
+$(".nano").nanoScroller({ disableResize: true });
+```
 
 #### alwaysVisible
 
@@ -161,13 +200,17 @@ Set to true to stop the scrollbar from auto-hiding itself.
 
 __Default:__ false
 
-    $(".nano").nanoScroller({ alwaysVisible: true });
+```js
+$(".nano").nanoScroller({ alwaysVisible: true });
+```
 
 #### flashDelay:
 
 Use this setting to specify the scrollbar hide delay in milliseconds if you have enabled the `flash` option.
 
-    $(".nano").nanoScroller({ flashDelay: 1000 });
+```js
+$(".nano").nanoScroller({ flashDelay: 1000 });
+```
 
 __Default:__ 1500
 
@@ -177,7 +220,9 @@ A classname for scrollbar track element. If you change this setting, you also ha
 
 __Default:__ 'nano-pane'
 
-    $(".nano").nanoScroller({ paneClass: 'scrollPane' });
+```js
+$(".nano").nanoScroller({ paneClass: 'scrollPane' });
+```
 
 #### sliderClass
 
@@ -185,7 +230,9 @@ A classname for scrollbar thumb element. If you change this setting, you also ha
 
 __Default:__ 'nano-slider'
 
-    $(".nano").nanoScroller({ sliderClass: 'scrollSlider' });
+```js
+$(".nano").nanoScroller({ sliderClass: 'scrollSlider' });
+```
 
 #### contentClass
 
@@ -193,7 +240,9 @@ A classname for your content div. If you change this setting, you also have to c
 
 __Default:__ 'nano-content'
 
-    $(".nano").nanoScroller({ contentClass: 'sliderContent' });
+```js
+$(".nano").nanoScroller({ contentClass: 'sliderContent' });
+```
 
 #### tabIndex
 
@@ -201,7 +250,9 @@ Set the tab order of the scrollable content. Set to -1 to skip over the scrollab
 
 __Default:__ 0
 
-    $(".nano").nanoScroller({ tabIndex: 0 });
+```js
+$(".nano").nanoScroller({ tabIndex: 0 });
+```
 
 ## How it works
 
@@ -258,14 +309,17 @@ You can use [overthrow.js](https://github.com/filamentgroup/Overthrow/) polyfill
 
 To use overthrow, link to the javascript file in your HTML document...
 
-    <script src="overthrow.js"></script>
-
+```html
+<script src="overthrow.js"></script>
+```
 
 ...and add an `overthrow` class to your `content` div.
 
-    <div id="about" class="nano">
-     <div class="overthrow nano-content"> ... content here ...  </div>
-    </div>
+```html
+<div id="about" class="nano">
+    <div class="overthrow nano-content"> ... content here ...  </div>
+</div>
+```
 
 ### Contributors
 
