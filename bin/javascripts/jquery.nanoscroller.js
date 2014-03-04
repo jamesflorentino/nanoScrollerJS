@@ -726,8 +726,8 @@
       if (!this.isActive) {
         return;
       }
-      this.reset();
       this.$content.scrollTop(this.contentHeight - this.$content.height() - offsetY).trigger(MOUSEWHEEL);
+      this.reset();
       return this;
     };
 
@@ -745,8 +745,8 @@
       if (!this.isActive) {
         return;
       }
-      this.reset();
       this.$content.scrollTop(+offsetY).trigger(MOUSEWHEEL);
+      this.reset();
       return this;
     };
 
@@ -764,8 +764,8 @@
       if (!this.isActive) {
         return;
       }
-      this.reset();
       this.scrollTop(this.$el.find(node).get(0).offsetTop);
+      this.reset();
       return this;
     };
 
