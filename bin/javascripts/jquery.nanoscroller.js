@@ -628,7 +628,7 @@
 
 
     NanoScroll.prototype.reset = function() {
-      var content, contentHeight, contentStyle, contentStyleOverflowY, paneBottom, paneHeight, paneOuterHeight, paneTop, parentMaxHeight, sliderHeight;
+      var content, contentHeight, contentPosition, contentStyle, contentStyleOverflowY, paneBottom, paneHeight, paneOuterHeight, paneTop, parentMaxHeight, right, sliderHeight;
       if (this.iOSNativeScrolling) {
         this.contentHeight = this.content.scrollHeight;
         return;
@@ -687,6 +687,16 @@
         opacity: (this.options.alwaysVisible ? 1 : ''),
         visibility: (this.options.alwaysVisible ? 'visible' : '')
       });
+      contentPosition = this.$content.css('position');
+      if (contentPosition === 'static' || contentPosition === 'relative') {
+        right = parseInt(this.$content.css('right'), 10);
+        if (right) {
+          this.$content.css({
+            right: '',
+            marginRight: right
+          });
+        }
+      }
       return this;
     };
 

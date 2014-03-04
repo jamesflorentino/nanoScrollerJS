@@ -649,6 +649,16 @@
         opacity: (if @options.alwaysVisible then 1 else '')
         visibility: (if @options.alwaysVisible then 'visible' else '')
 
+      contentPosition = @$content.css('position')
+
+      if contentPosition is 'static' or contentPosition is 'relative'
+        right = parseInt(@$content.css('right'), 10)
+
+        if right
+          @$content.css
+            right: ''
+            marginRight: right
+
       this
 
     ###*
