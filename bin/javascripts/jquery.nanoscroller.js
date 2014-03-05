@@ -737,7 +737,7 @@
         return;
       }
       this.$content.scrollTop(this.contentHeight - this.$content.height() - offsetY).trigger(MOUSEWHEEL);
-      this.reset();
+      this.stop().restore();
       return this;
     };
 
@@ -756,7 +756,7 @@
         return;
       }
       this.$content.scrollTop(+offsetY).trigger(MOUSEWHEEL);
-      this.reset();
+      this.stop().restore();
       return this;
     };
 
@@ -775,7 +775,6 @@
         return;
       }
       this.scrollTop(this.$el.find(node).get(0).offsetTop);
-      this.reset();
       return this;
     };
 

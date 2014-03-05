@@ -688,7 +688,7 @@
     scrollBottom: (offsetY) ->
       return unless @isActive
       @$content.scrollTop(@contentHeight - @$content.height() - offsetY).trigger(MOUSEWHEEL) # Update scrollbar position by triggering one of the scroll events
-      do @reset
+      @stop().restore()
       this
 
     ###*
@@ -702,7 +702,7 @@
     scrollTop: (offsetY) ->
       return unless @isActive
       @$content.scrollTop(+offsetY).trigger(MOUSEWHEEL) # Update scrollbar position by triggering one of the scroll events
-      do @reset
+      @stop().restore()
       this
 
     ###*
@@ -716,7 +716,6 @@
     scrollTo: (node) ->
       return unless @isActive
       @scrollTop @$el.find(node).get(0).offsetTop
-      do @reset
       this
 
     ###*
