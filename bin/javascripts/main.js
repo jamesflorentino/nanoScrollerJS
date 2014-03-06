@@ -4,9 +4,10 @@ $(function(){
     preventPageScrolling: true
   });
   $("#main").find('.description').load("readme.html", function(){
-    setTimeout(function() {
+    $(".nano").nanoScroller();
+    $("#main").find("img").load(function() {
         $(".nano").nanoScroller();
-    }, 100);
+    });
   });
 
 
