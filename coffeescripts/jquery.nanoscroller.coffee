@@ -401,7 +401,7 @@
                       "same"
       @previousPosition = currentPosition
 
-      @$el.trigger 'update', { position: currentPosition, direction: direction} unless direction == "sameclear"
+      @$el.trigger 'update', { position: currentPosition, direction: direction} unless direction == "same"
 
       if not @iOSNativeScrolling
         @maxSliderTop = @paneHeight - @sliderHeight
