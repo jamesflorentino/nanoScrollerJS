@@ -335,6 +335,8 @@
       @$content.attr 'tabindex', @options.tabIndex or 0
       @content = @$content[0]
 
+      @previousPosition = 0
+
       if @options.iOSNativeScrolling && @el.style.WebkitOverflowScrolling?
         do @nativeScrolling
       else
@@ -388,6 +390,19 @@
       @maxScrollTop = content.scrollHeight - content.clientHeight
       @prevScrollTop = @contentScrollTop or 0
       @contentScrollTop = content.scrollTop
+
+      currentPosition = @contentScrollTop / @maxScrollTop
+      direction = if currentPosition > @previousPosition 
+                    "down"
+                  else 
+                    if currentPosition < @previousPosition 
+                      "up" 
+                    else 
+                      "same"
+      @previousPosition = currentPosition
+
+      @$el.trigger 'update', { position: currentPosition, direction: direction} unless direction == "sameclear"
+
       if not @iOSNativeScrolling
         @maxSliderTop = @paneHeight - @sliderHeight
         # `sliderTop = scrollTop / maxScrollTop * maxSliderTop
