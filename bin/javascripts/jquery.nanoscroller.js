@@ -341,6 +341,7 @@
       this.$content = this.$el.children("." + options.contentClass);
       this.$content.attr('tabindex', this.options.tabIndex || 0);
       this.content = this.$content[0];
+      this.previousPosition = 0;
       if (this.options.iOSNativeScrolling && (this.el.style.WebkitOverflowScrolling != null)) {
         this.nativeScrolling();
       } else {
@@ -403,11 +404,20 @@
      */
 
     NanoScroll.prototype.updateScrollValues = function() {
-      var content;
+      var content, currentPosition, direction;
       content = this.content;
       this.maxScrollTop = content.scrollHeight - content.clientHeight;
       this.prevScrollTop = this.contentScrollTop || 0;
       this.contentScrollTop = content.scrollTop;
+      currentPosition = this.contentScrollTop / this.maxScrollTop;
+      direction = currentPosition > this.previousPosition ? "down" : currentPosition < this.previousPosition ? "up" : "same";
+      this.previousPosition = currentPosition;
+      if (direction !== "same") {
+        this.$el.trigger('update', {
+          position: currentPosition,
+          direction: direction
+        });
+      }
       if (!this.iOSNativeScrolling) {
         this.maxSliderTop = this.paneHeight - this.sliderHeight;
         this.sliderTop = this.maxScrollTop === 0 ? 0 : this.contentScrollTop * this.maxSliderTop / this.maxScrollTop;
