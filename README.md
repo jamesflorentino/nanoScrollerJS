@@ -138,6 +138,16 @@ $(".nano").debounce("scrollend", function() {
 
 Same as the `'scrollend'` event, but it is triggered every time the user has scrolled to the top of the content element.
 
+#### 'update'
+
+Same as the `'scrolltop'` and `'scrollend'` events, but it's triggered every time the user scrolls. It also carries a JavaScript object with the current position, the maximum height and the direction (`up` or `down`).
+
+```js
+$(".nano").on("update", function(event, values){ 
+    console.debug( values );
+});
+```
+
 ### Plugin Options
 
 There are a few options that you can change when running nanoScroller, e.g. `$(".nano").nanoScroller({ paneClass: 'myclass' });`

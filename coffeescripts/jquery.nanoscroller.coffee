@@ -391,17 +391,16 @@
       @prevScrollTop = @contentScrollTop or 0
       @contentScrollTop = content.scrollTop
 
-      currentPosition = @contentScrollTop / @maxScrollTop
-      direction = if currentPosition > @previousPosition 
+      direction = if @contentScrollTop > @previousPosition 
                     "down"
                   else 
-                    if currentPosition < @previousPosition 
+                    if @contentScrollTop < @previousPosition 
                       "up" 
                     else 
                       "same"
-      @previousPosition = currentPosition
+      @previousPosition = @contentScrollTop
 
-      @$el.trigger 'update', { position: currentPosition, direction: direction} unless direction == "same"
+      @$el.trigger 'update', { position: @contentScrollTop, maximum: @maxScrollTop, direction: direction} unless direction == "same"
 
       if not @iOSNativeScrolling
         @maxSliderTop = @paneHeight - @sliderHeight
