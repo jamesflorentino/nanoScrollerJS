@@ -404,17 +404,17 @@
      */
 
     NanoScroll.prototype.updateScrollValues = function() {
-      var content, currentPosition, direction;
+      var content, direction;
       content = this.content;
       this.maxScrollTop = content.scrollHeight - content.clientHeight;
       this.prevScrollTop = this.contentScrollTop || 0;
       this.contentScrollTop = content.scrollTop;
-      currentPosition = this.contentScrollTop / this.maxScrollTop;
-      direction = currentPosition > this.previousPosition ? "down" : currentPosition < this.previousPosition ? "up" : "same";
-      this.previousPosition = currentPosition;
+      direction = this.contentScrollTop > this.previousPosition ? "down" : this.contentScrollTop < this.previousPosition ? "up" : "same";
+      this.previousPosition = this.contentScrollTop;
       if (direction !== "same") {
         this.$el.trigger('update', {
-          position: currentPosition,
+          position: this.contentScrollTop,
+          maximum: this.maxScrollTop,
           direction: direction
         });
       }
