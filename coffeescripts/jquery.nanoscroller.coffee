@@ -660,6 +660,7 @@
 
       # allow the pane element to stay visible
       @pane.css
+        display: (if @options.alwaysVisible then 'block' else this.pane.css("display"))
         opacity: (if @options.alwaysVisible then 1 else '')
         visibility: (if @options.alwaysVisible then 'visible' else '')
 
