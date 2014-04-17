@@ -708,6 +708,7 @@
         this.slider.show();
       }
       this.pane.css({
+        display: (this.options.alwaysVisible ? 'block' : this.pane.css("display")),
         opacity: (this.options.alwaysVisible ? 1 : ''),
         visibility: (this.options.alwaysVisible ? 'visible' : '')
       });
