@@ -3,7 +3,7 @@
 * Copyright (c) 2014 James Florentino; Licensed MIT */
 (function($, window, document) {
   "use strict";
-  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor;
+  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor, flashTimeoutId;
   defaults = {
 
     /**
@@ -290,6 +290,15 @@
   hasTransform = transform !== false;
 
   /**
+    @property flashTimeoutId
+    @type Number
+    @static
+    @default null
+    @private
+  */
+  flashTimeoutId = new Number();
+
+  /**
     Returns browser's native scrollbar width
     @method getBrowserScrollbarWidth
     @return {Number} the scrollbar width in pixels
@@ -366,6 +375,22 @@
       if (!this.isActive) {
         return;
       }
+
+      /**
+       Fix issue prevent scroll current nanoScroller when parent nanoScroller has preventPageScrolling
+      */
+      var currentNano = $(e.delegateTarget).closest('[has-nano-scroller=true]').get(0),
+          targetNano = $(e.target).closest('[has-nano-scroller=true]').get(0);
+
+      if (currentNano != targetNano) {
+        if (direction == DOWN && targetNano.clientHeight + targetNano.scrollTop != targetNano.scrollHeight) {
+          return;
+        }
+        if (direction == UP && targetNano.scrollTop != 0) {
+          return;
+        }
+      }
+
       if (e.type === DOMSCROLL) {
         if (direction === DOWN && e.originalEvent.detail > 0 || direction === UP && e.originalEvent.detail < 0) {
           e.preventDefault();
@@ -606,6 +631,7 @@
       options = this.options;
       paneClass = options.paneClass, sliderClass = options.sliderClass, contentClass = options.contentClass;
       if (!this.$el.find("." + paneClass).length && !this.$el.find("." + sliderClass).length) {
+        this.$content.attr('has-nano-scroller', true);
         this.$el.append("<div class=\"" + paneClass + "\"><div class=\"" + sliderClass + "\" /></div>");
       }
       this.pane = this.$el.children("." + paneClass);
@@ -873,7 +899,8 @@
       }
       this.reset();
       this.pane.addClass('flashed');
-      setTimeout((function(_this) {
+      clearTimeout(flashTimeoutId);
+      flashTimeoutId = setTimeout((function(_this) {
         return function() {
           _this.pane.removeClass('flashed');
         };
