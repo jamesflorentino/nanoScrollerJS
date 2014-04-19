@@ -3,7 +3,7 @@
 * Copyright (c) 2014 James Florentino; Licensed MIT */
 (function($, window, document) {
   "use strict";
-  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor;
+  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor, flashTimeoutId;
   defaults = {
 
     /**
@@ -288,6 +288,15 @@
   };
   transform = _prefixStyle('transform');
   hasTransform = transform !== false;
+
+  /**
+    @property flashTimeoutId
+    @type Number
+    @static
+    @default null
+    @private
+  */
+  flashTimeoutId = new Number();
 
   /**
     Returns browser's native scrollbar width
@@ -880,7 +889,8 @@
       }
       this.reset();
       this.pane.addClass('flashed');
-      setTimeout((function(_this) {
+      clearTimeout(flashTimeoutId);
+      flashTimeoutId = setTimeout((function(_this) {
         return function() {
           _this.pane.removeClass('flashed');
         };
