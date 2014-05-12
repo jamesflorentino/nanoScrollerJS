@@ -602,10 +602,10 @@
      */
 
     NanoScroll.prototype.generate = function() {
-      var contentClass, cssRule, currentPadding, options, paneClass, sliderClass;
+      var contentClass, cssRule, currentPadding, options, pane, paneClass, sliderClass;
       options = this.options;
       paneClass = options.paneClass, sliderClass = options.sliderClass, contentClass = options.contentClass;
-      if (!this.$el.find("." + paneClass).length && !this.$el.find("." + sliderClass).length) {
+      if (!(pane = this.$el.children("." + paneClass)).length && !pane.children("." + sliderClass).length) {
         this.$el.append("<div class=\"" + paneClass + "\"><div class=\"" + sliderClass + "\" /></div>");
       }
       this.pane = this.$el.children("." + paneClass);

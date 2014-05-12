@@ -554,7 +554,7 @@
       # http://msdn.microsoft.com/en-us/library/windows/desktop/bb787527(v=vs.85).aspx#parts_of_scroll_bar
       options = @options
       {paneClass, sliderClass, contentClass} = options
-      if not @$el.find(".#{paneClass}").length and not @$el.find(".#{sliderClass}").length
+      if not (pane = @$el.children(".#{paneClass}")).length and not pane.children(".#{sliderClass}").length
         @$el.append """<div class="#{paneClass}"><div class="#{sliderClass}" /></div>"""
 
       # pane is the name for the actual scrollbar.
