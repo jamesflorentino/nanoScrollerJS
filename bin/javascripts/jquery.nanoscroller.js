@@ -371,9 +371,9 @@
      */
 
     NanoScroll.prototype.preventScrolling = function(e, direction) {
-      // if (!this.isActive) {
-      //   return;
-      // }
+      if (!this.isActive) {
+        return;
+      }
 
       /**
        Fix issue prevent scroll current nanoScroller when parent nanoScroller has preventPageScrolling
