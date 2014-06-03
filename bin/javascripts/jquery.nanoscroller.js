@@ -36,7 +36,7 @@
       @type Boolean
       @default false
      */
-    iOSNativeScrolling: false,
+    iOSNativeScrolling: true,
 
     /**
       a setting to prevent the rest of the page being
@@ -45,7 +45,7 @@
       @type Boolean
       @default false
      */
-    preventPageScrolling: false,
+    preventPageScrolling: true,
 
     /**
       a setting to disable binding to the resize event.
@@ -371,9 +371,9 @@
      */
 
     NanoScroll.prototype.preventScrolling = function(e, direction) {
-      if (!this.isActive) {
-        return;
-      }
+      // if (!this.isActive) {
+      //   return;
+      // }
 
       /**
        Fix issue prevent scroll current nanoScroller when parent nanoScroller has preventPageScrolling
@@ -534,6 +534,12 @@
             }
             if (e == null) {
               return;
+            }
+            if (_this.contentScrollTop == 0 &&
+                _this.contentScrollTop == _this.maxScrollTop) {
+              if (_this.options.preventPageScrolling) {
+                e.preventDefault();
+              }
             }
             if (_this.contentScrollTop >= _this.maxScrollTop) {
               if (_this.options.preventPageScrolling) {
