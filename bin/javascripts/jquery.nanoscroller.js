@@ -1,9 +1,14 @@
 /*! nanoScrollerJS - v0.8.0 - 2014
 * http://jamesflorentino.github.com/nanoScrollerJS/
 * Copyright (c) 2014 James Florentino; Licensed MIT */
+var jQuery = require('jquery');
+
+/*! nanoScrollerJS - v0.8.0 - 2014
+* http://jamesflorentino.github.com/nanoScrollerJS/
+* Copyright (c) 2014 James Florentino; Licensed MIT */
 (function($, window, document) {
   "use strict";
-  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor, flashTimeoutId;
+  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, STANDING_STILL, DRAG, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor, flashTimeoutId;
   defaults = {
 
     /**
@@ -210,6 +215,15 @@
   DOWN = 'down';
 
   /**
+    @property STANDING_STILL
+    @type String
+    @static
+    @final
+    @private
+   */
+  STANDING_STILL = 'standing still';
+
+  /**
     @property WHEEL
     @type String
     @static
@@ -371,7 +385,7 @@
      */
 
     NanoScroll.prototype.preventScrolling = function(e, direction) {
-      if (!this.isActive) {
+      if (!this.isActive && direction !== STANDING_STILL) {
         return;
       }
 
@@ -390,6 +404,10 @@
         }
       }
 
+      if (currentNano == targetNano && direction == STANDING_STILL) {
+        e.preventDefault();
+      }
+
       if (e.type === DOMSCROLL) {
         if (direction === DOWN && e.originalEvent.detail > 0 || direction === UP && e.originalEvent.detail < 0) {
           e.preventDefault();
@@ -398,7 +416,8 @@
         if (!e.originalEvent || !e.originalEvent.wheelDelta) {
           return;
         }
-        if (direction === DOWN && e.originalEvent.wheelDelta < 0 || direction === UP && e.originalEvent.wheelDelta > 0) {
+        if (direction === DOWN && e.originalEvent.wheelDelta < 0 ||
+            direction === UP && e.originalEvent.wheelDelta > 0) {
           e.preventDefault();
         }
       }
@@ -538,7 +557,7 @@
             if (_this.contentScrollTop == 0 &&
                 _this.contentScrollTop == _this.maxScrollTop) {
               if (_this.options.preventPageScrolling) {
-                e.preventDefault();
+                _this.preventScrolling(e, STANDING_STILL);
               }
             }
             if (_this.contentScrollTop >= _this.maxScrollTop) {
