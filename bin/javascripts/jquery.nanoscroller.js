@@ -469,6 +469,9 @@
           return function(e) {
             _this.isBeingDragged = true;
             _this.offsetY = e.pageY - _this.slider.offset().top;
+            if (!_this.slider.is(e.target)) {
+              _this.offsetY = 0;
+            }
             _this.pane.addClass('active');
             _this.doc.bind(MOUSEMOVE, _this.events[DRAG]).bind(MOUSEUP, _this.events[UP]);
             return false;
@@ -476,7 +479,7 @@
         })(this),
         drag: (function(_this) {
           return function(e) {
-            _this.sliderY = e.pageY - _this.$el.offset().top - _this.offsetY;
+            _this.sliderY = e.pageY - _this.$el.offset().top - _this.paneTop - (_this.offsetY || _this.sliderHeight * 0.5);
             _this.scroll();
             if (_this.contentScrollTop >= _this.maxScrollTop && _this.prevScrollTop !== _this.maxScrollTop) {
               _this.$el.trigger('scrollend');
@@ -695,6 +698,7 @@
       this.paneHeight = paneHeight;
       this.paneOuterHeight = paneOuterHeight;
       this.sliderHeight = sliderHeight;
+      this.paneTop = paneTop;
       this.slider.height(sliderHeight);
       this.events.scroll();
       this.pane.show();

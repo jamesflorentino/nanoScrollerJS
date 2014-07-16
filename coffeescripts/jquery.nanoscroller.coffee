@@ -441,6 +441,7 @@
         down: (e) =>
           @isBeingDragged  = true
           @offsetY = e.pageY - @slider.offset().top
+          @offsetY = 0 unless @slider.is e.target
           @pane.addClass 'active'
           @doc
             .bind(MOUSEMOVE, @events[DRAG])
@@ -448,7 +449,7 @@
           false
 
         drag: (e) =>
-          @sliderY = e.pageY - @$el.offset().top - @offsetY
+          @sliderY = e.pageY - @$el.offset().top - @paneTop - (@offsetY or @sliderHeight * 0.5)
           do @scroll
           if @contentScrollTop >= @maxScrollTop and @prevScrollTop isnt @maxScrollTop
             @$el.trigger 'scrollend'
@@ -640,6 +641,7 @@
       @paneHeight = paneHeight
       @paneOuterHeight = paneOuterHeight
       @sliderHeight = sliderHeight
+      @paneTop = paneTop
 
       # set the values to the gadget
       @slider.height sliderHeight
