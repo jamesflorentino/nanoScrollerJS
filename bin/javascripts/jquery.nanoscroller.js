@@ -443,14 +443,15 @@
         };
       }
       if (rAF) {
-        if (!this.scrollRAF) {
-          this.scrollRAF = rAF((function(_this) {
-            return function() {
-              _this.scrollRAF = null;
-              _this.slider.css(cssValue);
-            };
-          })(this));
+        if (cAF && this.scrollRAF) {
+          cAF(this.scrollRAF);
         }
+        this.scrollRAF = rAF((function(_this) {
+          return function() {
+            _this.scrollRAF = null;
+            return _this.slider.css(cssValue);
+          };
+        })(this));
       } else {
         this.slider.css(cssValue);
       }
