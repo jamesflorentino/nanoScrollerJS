@@ -686,7 +686,7 @@
       return unless @isActive
       @sliderY = Math.max 0, @sliderY
       @sliderY = Math.min @maxSliderTop, @sliderY
-      @$content.scrollTop (@paneHeight - @contentHeight + BROWSER_SCROLLBAR_WIDTH) * @sliderY / @maxSliderTop * -1
+      @$content.scrollTop @maxScrollTop * @sliderY / @maxSliderTop
       if not @iOSNativeScrolling
         do @updateScrollValues
         do @setOnScrollStyles
