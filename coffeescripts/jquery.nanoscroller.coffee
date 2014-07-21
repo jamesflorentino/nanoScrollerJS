@@ -422,11 +422,13 @@
         cssValue = top: @sliderTop
 
       if rAF
-        if not @scrollRAF
-          @scrollRAF = rAF =>
-            @scrollRAF = null
-            @slider.css cssValue
-            return
+        if @scrollRAF
+          cAF(@scrollRAF)
+
+        @scrollRAF = rAF =>
+          @scrollRAF = null
+          @slider.css cssValue
+          return
       else
         @slider.css cssValue
       return
