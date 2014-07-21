@@ -135,6 +135,22 @@
   MOUSEDOWN = 'mousedown'
 
   ###*
+    @property MOUSEENTER
+    @type String
+    @final
+    @private
+  ###
+  MOUSEENTER = 'mouseenter'
+
+  ###*
+    @property MOUSELEAVE
+    @type String
+    @final
+    @private
+  ###
+  MOUSELEAVE = 'mouseleave'
+
+  ###*
     @property MOUSEMOVE
     @type String
     @static
@@ -176,6 +192,24 @@
     @private
   ###
   DRAG = 'drag'
+
+  ###*
+    @property ENTER
+    @type String
+    @static
+    @final
+    @private
+  ###
+  ENTER = 'enter'
+
+  ###*
+    @property LEAVE
+    @type String
+    @static
+    @final
+    @private
+  ###
+  LEAVE = 'leave'
 
   ###*
     @property UP
@@ -331,6 +365,7 @@
       @$el = $ @el
       @doc = $ @options.documentContext or document
       @win = $ @options.windowContext or window
+      @body= @doc.find 'body'
       @$content = @$el.children(".#{options.contentClass}")
       @$content.attr 'tabindex', @options.tabIndex or 0
       @content = @$content[0]
@@ -445,6 +480,9 @@
           @doc
             .bind(MOUSEMOVE, @events[DRAG])
             .bind(MOUSEUP, @events[UP])
+
+          @body.bind(MOUSELEAVE, @events[LEAVE])
+
           false
 
         drag: (e) =>
@@ -462,6 +500,9 @@
           @doc
             .unbind(MOUSEMOVE, @events[DRAG])
             .unbind(MOUSEUP, @events[UP])
+
+          @body.unbind(MOUSELEAVE, @events[LEAVE])
+
           false
 
         resize: (e) =>
@@ -503,6 +544,21 @@
           @sliderY += -delta / 3 if delta
           do @scroll
           false
+
+        leave: (e) =>
+          return unless @isBeingDragged
+
+          @wasDragging = true
+          @events[UP] arguments...
+
+          @body.bind MOUSEENTER, @events[ENTER]
+
+        enter: (e) =>
+          return unless @wasDragging
+          @body.unbind MOUSEENTER, @events[ENTER]
+
+          @wasDragging = false
+          @events[DOWN] arguments... if (e.buttons or e.which) is 1
 
       return
 
