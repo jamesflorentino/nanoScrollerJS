@@ -3,7 +3,7 @@
 * Copyright (c) 2014 James Florentino; Licensed MIT */
 (function($, window, document) {
   "use strict";
-  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, ENTER, KEYDOWN, KEYUP, LEAVE, MOUSEDOWN, MOUSEENTER, MOUSELEAVE, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor;
+  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, ENTER, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEENTER, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor;
   defaults = {
 
     /**
@@ -139,14 +139,6 @@
   MOUSEENTER = 'mouseenter';
 
   /**
-    @property MOUSELEAVE
-    @type String
-    @final
-    @private
-   */
-  MOUSELEAVE = 'mouseleave';
-
-  /**
     @property MOUSEMOVE
     @type String
     @static
@@ -197,15 +189,6 @@
     @private
    */
   ENTER = 'enter';
-
-  /**
-    @property LEAVE
-    @type String
-    @static
-    @final
-    @private
-   */
-  LEAVE = 'leave';
 
   /**
     @property UP
@@ -510,7 +493,7 @@
             }
             _this.pane.addClass('active');
             _this.doc.bind(MOUSEMOVE, _this.events[DRAG]).bind(MOUSEUP, _this.events[UP]);
-            _this.body.bind(MOUSELEAVE, _this.events[LEAVE]);
+            _this.body.bind(MOUSEENTER, _this.events[ENTER]);
             return false;
           };
         })(this),
@@ -531,7 +514,7 @@
             _this.isBeingDragged = false;
             _this.pane.removeClass('active');
             _this.doc.unbind(MOUSEMOVE, _this.events[DRAG]).unbind(MOUSEUP, _this.events[UP]);
-            _this.body.unbind(MOUSELEAVE, _this.events[LEAVE]);
+            _this.body.unbind(MOUSEENTER, _this.events[ENTER]);
             return false;
           };
         })(this),
@@ -592,27 +575,14 @@
             return false;
           };
         })(this),
-        leave: (function(_this) {
+        enter: (function(_this) {
           return function(e) {
             var _ref;
             if (!_this.isBeingDragged) {
               return;
             }
-            _this.wasDragging = true;
-            (_ref = _this.events)[UP].apply(_ref, arguments);
-            return _this.body.bind(MOUSEENTER, _this.events[ENTER]);
-          };
-        })(this),
-        enter: (function(_this) {
-          return function(e) {
-            var _ref;
-            if (!_this.wasDragging) {
-              return;
-            }
-            _this.body.unbind(MOUSEENTER, _this.events[ENTER]);
-            _this.wasDragging = false;
-            if ((e.buttons || e.which) === 1) {
-              return (_ref = _this.events)[DOWN].apply(_ref, arguments);
+            if ((e.buttons || e.which) !== 1) {
+              return (_ref = _this.events)[UP].apply(_ref, arguments);
             }
           };
         })(this)

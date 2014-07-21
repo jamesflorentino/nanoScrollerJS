@@ -143,14 +143,6 @@
   MOUSEENTER = 'mouseenter'
 
   ###*
-    @property MOUSELEAVE
-    @type String
-    @final
-    @private
-  ###
-  MOUSELEAVE = 'mouseleave'
-
-  ###*
     @property MOUSEMOVE
     @type String
     @static
@@ -201,15 +193,6 @@
     @private
   ###
   ENTER = 'enter'
-
-  ###*
-    @property LEAVE
-    @type String
-    @static
-    @final
-    @private
-  ###
-  LEAVE = 'leave'
 
   ###*
     @property UP
@@ -481,8 +464,7 @@
             .bind(MOUSEMOVE, @events[DRAG])
             .bind(MOUSEUP, @events[UP])
 
-          @body.bind(MOUSELEAVE, @events[LEAVE])
-
+          @body.bind(MOUSEENTER, @events[ENTER])
           false
 
         drag: (e) =>
@@ -501,8 +483,7 @@
             .unbind(MOUSEMOVE, @events[DRAG])
             .unbind(MOUSEUP, @events[UP])
 
-          @body.unbind(MOUSELEAVE, @events[LEAVE])
-
+          @body.unbind(MOUSEENTER, @events[ENTER])
           false
 
         resize: (e) =>
@@ -545,20 +526,9 @@
           do @scroll
           false
 
-        leave: (e) =>
-          return unless @isBeingDragged
-
-          @wasDragging = true
-          @events[UP] arguments...
-
-          @body.bind MOUSEENTER, @events[ENTER]
-
         enter: (e) =>
-          return unless @wasDragging
-          @body.unbind MOUSEENTER, @events[ENTER]
-
-          @wasDragging = false
-          @events[DOWN] arguments... if (e.buttons or e.which) is 1
+          return unless @isBeingDragged
+          @events[UP] arguments... if (e.buttons or e.which) isnt 1
 
       return
 
