@@ -135,6 +135,14 @@
   MOUSEDOWN = 'mousedown'
 
   ###*
+    @property MOUSEENTER
+    @type String
+    @final
+    @private
+  ###
+  MOUSEENTER = 'mouseenter'
+
+  ###*
     @property MOUSEMOVE
     @type String
     @static
@@ -176,6 +184,15 @@
     @private
   ###
   DRAG = 'drag'
+
+  ###*
+    @property ENTER
+    @type String
+    @static
+    @final
+    @private
+  ###
+  ENTER = 'enter'
 
   ###*
     @property UP
@@ -331,6 +348,7 @@
       @$el = $ @el
       @doc = $ @options.documentContext or document
       @win = $ @options.windowContext or window
+      @body= @doc.find 'body'
       @$content = @$el.children(".#{options.contentClass}")
       @$content.attr 'tabindex', @options.tabIndex or 0
       @content = @$content[0]
@@ -422,11 +440,10 @@
         cssValue = top: @sliderTop
 
       if rAF
-        if not @scrollRAF
-          @scrollRAF = rAF =>
-            @scrollRAF = null
-            @slider.css cssValue
-            return
+        cAF(@scrollRAF) if cAF and @scrollRAF
+        @scrollRAF = rAF =>
+          @scrollRAF = null
+          @slider.css cssValue
       else
         @slider.css cssValue
       return
@@ -441,14 +458,17 @@
         down: (e) =>
           @isBeingDragged  = true
           @offsetY = e.pageY - @slider.offset().top
+          @offsetY = 0 unless @slider.is e.target
           @pane.addClass 'active'
           @doc
             .bind(MOUSEMOVE, @events[DRAG])
             .bind(MOUSEUP, @events[UP])
+
+          @body.bind(MOUSEENTER, @events[ENTER])
           false
 
         drag: (e) =>
-          @sliderY = e.pageY - @$el.offset().top - @offsetY
+          @sliderY = e.pageY - @$el.offset().top - @paneTop - (@offsetY or @sliderHeight * 0.5)
           do @scroll
           if @contentScrollTop >= @maxScrollTop and @prevScrollTop isnt @maxScrollTop
             @$el.trigger 'scrollend'
@@ -462,6 +482,8 @@
           @doc
             .unbind(MOUSEMOVE, @events[DRAG])
             .unbind(MOUSEUP, @events[UP])
+
+          @body.unbind(MOUSEENTER, @events[ENTER])
           false
 
         resize: (e) =>
@@ -503,6 +525,10 @@
           @sliderY += -delta / 3 if delta
           do @scroll
           false
+
+        enter: (e) =>
+          return unless @isBeingDragged
+          @events[UP] arguments... if (e.buttons or e.which) isnt 1
 
       return
 
@@ -640,6 +666,7 @@
       @paneHeight = paneHeight
       @paneOuterHeight = paneOuterHeight
       @sliderHeight = sliderHeight
+      @paneTop = paneTop
 
       # set the values to the gadget
       @slider.height sliderHeight
@@ -685,7 +712,7 @@
       return unless @isActive
       @sliderY = Math.max 0, @sliderY
       @sliderY = Math.min @maxSliderTop, @sliderY
-      @$content.scrollTop (@paneHeight - @contentHeight + BROWSER_SCROLLBAR_WIDTH) * @sliderY / @maxSliderTop * -1
+      @$content.scrollTop @maxScrollTop * @sliderY / @maxSliderTop
       if not @iOSNativeScrolling
         do @updateScrollValues
         do @setOnScrollStyles
