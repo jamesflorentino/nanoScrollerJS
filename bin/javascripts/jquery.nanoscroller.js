@@ -646,7 +646,7 @@
       this.pane = this.$el.children("." + paneClass);
       this.slider = this.pane.find("." + sliderClass);
       if (BROWSER_SCROLLBAR_WIDTH === 0 && isFFWithBuggyScrollbar()) {
-        currentPadding = window.getComputedStyle(this.content, null).getPropertyValue('padding-right').replace(/\D+/g, '');
+        currentPadding = window.getComputedStyle(this.content, null).getPropertyValue('padding-right').replace(/[^0-9.]+/g, '');
         cssRule = {
           right: -14,
           paddingRight: +currentPadding + 14

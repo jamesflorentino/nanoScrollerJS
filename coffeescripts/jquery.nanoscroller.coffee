@@ -590,7 +590,7 @@
       @slider = @pane.find ".#{sliderClass}"
 
       if BROWSER_SCROLLBAR_WIDTH is 0 and do isFFWithBuggyScrollbar
-        currentPadding = window.getComputedStyle(@content,null).getPropertyValue('padding-right').replace(/\D+/g, '')
+        currentPadding = window.getComputedStyle(@content,null).getPropertyValue('padding-right').replace(/[^0-9.]+/g, '')
         cssRule =
           right: -14
           paddingRight: +currentPadding + 14
