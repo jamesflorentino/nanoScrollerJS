@@ -28,6 +28,7 @@ $contentClass: "nano-content";
 
         &::-webkit-scrollbar {
             visibility: hidden;
+            width: 0;
         }
     }
 
