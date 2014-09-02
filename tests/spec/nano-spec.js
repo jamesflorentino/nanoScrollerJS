@@ -1,5 +1,5 @@
 (function() {
-  describe("nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)", function() {
+  describe("nanoScroller (with CSS: 'width: 200px, height 200px' set to .nano)", function() {
     var $content, $nano, $nestedNano, $pane, $slider, height, spyScrollend, spyScrolltop;
     $nano = null;
     $nestedNano = null;
@@ -18,12 +18,12 @@
       });
       describe("content element", function() {
         beforeEach(function() {
-          return $content = $nano.find('.content');
+          return $content = $nano.find('.nano-content');
         });
         it("should exist", function() {
           expect($content).toExist();
           expect($content.length).toBeTruthy();
-          return expect($nano).toContain("div.content");
+          return expect($nano).toContain("div.nano-content");
         });
         it("should have tabindex attribute set", function() {
           return expect($content).toHaveAttr('tabindex');
@@ -34,12 +34,12 @@
       });
       describe("pane element", function() {
         beforeEach(function() {
-          return $pane = $nano.find('.pane');
+          return $pane = $nano.find('.nano-pane');
         });
         it("should exist", function() {
           expect($pane).toExist();
           expect($pane.length).toBeTruthy();
-          return expect($nano).toContain("div.pane");
+          return expect($nano).toContain("div.nano-pane");
         });
         return it("should have a height of 200px", function() {
           return expect($pane.height()).toEqual(200);
@@ -47,12 +47,12 @@
       });
       describe("slider element", function() {
         beforeEach(function() {
-          return $slider = $nano.find('.slider');
+          return $slider = $nano.find('.nano-slider');
         });
         it("should exist", function() {
           expect($slider).toExist();
           expect($slider.length).toBeTruthy();
-          return expect($nano).toContain("div.slider");
+          return expect($nano).toContain("div.nano-slider");
         });
         return it("should have style attribute set", function() {
           return expect($slider).toHaveAttr('style');
@@ -67,9 +67,9 @@
           $nano.nanoScroller({
             scroll: 'top'
           });
-          return $slider = $nano.find('.slider');
+          return $slider = $nano.find('.nano-slider');
         });
-        it("should have set .slider CSS 'top' value to 0px", function() {
+        it("should have set .nano-slider CSS 'top' value to 0px", function() {
           return expect($slider).toHaveCss({
             top: '0px'
           });
@@ -84,10 +84,10 @@
           $nano.nanoScroller({
             scroll: 'bottom'
           });
-          $slider = $nano.find('.slider');
-          return height = $nano.find('.content').height() - $slider.height();
+          $slider = $nano.find('.nano-slider');
+          return height = $nano.find('.nano-content').height() - $slider.height();
         });
-        it("should have set .slider CSS 'top' value to (content height - slider height)", function() {
+        it("should have set .nano-slider CSS 'top' value to (content height - slider height)", function() {
           return expect($slider).toHaveCss({
             top: height + 'px'
           });
@@ -101,9 +101,9 @@
           $nano.nanoScroller({
             stop: true
           });
-          return $pane = $nano.find('.pane');
+          return $pane = $nano.find('.nano-pane');
         });
-        return it("should have hidden .pane with 'display: none'", function() {
+        return it("should have hidden .nano-pane with 'display: none'", function() {
           return expect($pane.css('display')).toEqual('none');
         });
       });
@@ -112,9 +112,9 @@
           $nano.nanoScroller({
             flash: true
           });
-          return $pane = $nano.find('.pane');
+          return $pane = $nano.find('.nano-pane');
         });
-        return it("should have added CSS class .flashed to .pane", function() {
+        return it("should have added CSS class .flashed to .nano-pane", function() {
           return expect($pane).toHaveClass('flashed');
         });
       });
@@ -123,7 +123,7 @@
           $nano.nanoScroller({
             sliderMinHeight: 120
           });
-          return $slider = $nano.find('.slider');
+          return $slider = $nano.find('.nano-slider');
         });
         return it("should have set slider height to at least 120px", function() {
           return expect($slider.height()).toBeGreaterThan(119);
@@ -134,7 +134,7 @@
           $nano.nanoScroller({
             sliderMaxHeight: 21
           });
-          return $slider = $nano.find('.slider');
+          return $slider = $nano.find('.nano-slider');
         });
         return it("should not have set slider height to more than 21px", function() {
           return expect($slider.height()).toBeLessThan(22);
@@ -146,7 +146,7 @@
             sliderMinHeight: 120,
             sliderMaxHeight: 120
           });
-          return $slider = $nano.find('.slider');
+          return $slider = $nano.find('.nano-slider');
         });
         return it("should have set slider height to 120px", function() {
           expect($slider).toHaveCss({
@@ -164,12 +164,12 @@
       });
       describe("content element", function() {
         beforeEach(function() {
-          return $content = $nano.find('.content');
+          return $content = $nano.find('.nano-content');
         });
         it("should exist", function() {
           expect($content).toExist();
           expect($content.length).toBeTruthy();
-          return expect($nano).toContain("div.content");
+          return expect($nano).toContain("div.nano-content");
         });
         it("should have tabindex attribute set", function() {
           return expect($content).toHaveAttr('tabindex');
@@ -180,12 +180,12 @@
       });
       describe("pane element", function() {
         beforeEach(function() {
-          return $pane = $nano.find('.pane');
+          return $pane = $nano.find('.nano-pane');
         });
         it("should exist", function() {
           expect($pane).toExist();
           expect($pane.length).toBeTruthy();
-          return expect($nano).toContain("div.pane");
+          return expect($nano).toContain("div.nano-pane");
         });
         it("should have a height of 200px", function() {
           return expect($pane.height()).toEqual(200);
@@ -196,12 +196,12 @@
       });
       describe("slider element", function() {
         beforeEach(function() {
-          return $slider = $nano.find('.slider');
+          return $slider = $nano.find('.nano-slider');
         });
         it("should exist", function() {
           expect($slider).toExist();
           expect($slider.length).toBeTruthy();
-          return expect($nano).toContain("div.slider");
+          return expect($nano).toContain("div.nano-slider");
         });
         return it("should have style attribute set", function() {
           return expect($slider).toHaveAttr('style');
@@ -227,10 +227,10 @@
           $nano.nanoScroller({
             scroll: 'bottom'
           });
-          $slider = $nano.find('.slider');
-          return height = $nano.find('.content').height() - $slider.height();
+          $slider = $nano.find('.nano-slider');
+          return height = $nano.find('.nano-content').height() - $slider.height();
         });
-        it("should not have set .slider CSS 'top' value to (content height - slider height)", function() {
+        it("should not have set .nano-slider CSS 'top' value to (content height - slider height)", function() {
           return expect($slider).not.toHaveCss({
             top: height + 'px'
           });
@@ -244,9 +244,9 @@
           $nano.nanoScroller({
             stop: true
           });
-          return $pane = $nano.find('.pane');
+          return $pane = $nano.find('.nano-pane');
         });
-        return it("should have hidden .pane with 'display: none'", function() {
+        return it("should have hidden .nano-pane with 'display: none'", function() {
           return expect($pane.css('display')).toEqual('none');
         });
       });
@@ -255,9 +255,9 @@
           $nano.nanoScroller({
             flash: true
           });
-          return $pane = $nano.find('.pane');
+          return $pane = $nano.find('.nano-pane');
         });
-        return it("should not have added CSS class .flashed to .pane", function() {
+        return it("should not have added CSS class .flashed to .nano-pane", function() {
           return expect($pane).not.toHaveClass('flashed');
         });
       });
@@ -266,7 +266,7 @@
           $nano.nanoScroller({
             sliderMinHeight: 120
           });
-          return $slider = $nano.find('.slider');
+          return $slider = $nano.find('.nano-slider');
         });
         return it("should have set slider height to at least 120px", function() {
           return expect($slider.height()).toBeGreaterThan(119);
@@ -277,7 +277,7 @@
           $nano.nanoScroller({
             sliderMaxHeight: 21
           });
-          return $slider = $nano.find('.slider');
+          return $slider = $nano.find('.nano-slider');
         });
         return it("should not have set slider height to more than 21px", function() {
           return expect($slider.height()).toBeLessThan(22);
@@ -289,7 +289,7 @@
             sliderMinHeight: 120,
             sliderMaxHeight: 120
           });
-          return $slider = $nano.find('.slider');
+          return $slider = $nano.find('.nano-slider');
         });
         return it("should have set slider height to 120px", function() {
           expect($slider).toHaveCss({
@@ -303,8 +303,8 @@
       beforeEach(function() {
         loadFixtures('nano-content.html');
         $nano = $("#nano");
-        $content = $nano.find('.content');
-        $content.append('<div id="nestednano" class="nano" style="width:200px;height:200px"><div class="content" /></div>');
+        $content = $nano.find('.nano-content');
+        $content.append('<div id="nestednano" class="nano" style="width:200px;height:200px"><div class="nano-content" /></div>');
         $nestedNano = $('#nestednano');
         $nestedNano.nanoScroller();
         return $nano.nanoScroller();
@@ -314,7 +314,7 @@
         $nano.nanoScroller({
           scrollTop: 100
         });
-        $nestedSlider = $nestedNano.find('.slider');
+        $nestedSlider = $nestedNano.find('.nano-slider');
         return expect($nestedSlider.css('top')).toEqual('0px');
       });
     });

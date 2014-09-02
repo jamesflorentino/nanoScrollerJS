@@ -1,4 +1,4 @@
-describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)", ->
+describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .nano)", ->
   $nano = null
   $nestedNano = null
   $content = null
@@ -17,11 +17,11 @@ describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
 
     describe "content element", ->
       beforeEach ->
-        $content = $nano.find('.content')
+        $content = $nano.find('.nano-content')
       it "should exist", ->
         expect($content).toExist()
         expect($content.length).toBeTruthy()
-        expect($nano).toContain("div.content")
+        expect($nano).toContain("div.nano-content")
       it "should have tabindex attribute set", ->
         expect($content).toHaveAttr('tabindex')
       it "should have a height of 200px", ->
@@ -29,21 +29,21 @@ describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
 
     describe "pane element", ->
       beforeEach ->
-        $pane = $nano.find('.pane')
+        $pane = $nano.find('.nano-pane')
       it "should exist", ->
         expect($pane).toExist()
         expect($pane.length).toBeTruthy()
-        expect($nano).toContain("div.pane")
+        expect($nano).toContain("div.nano-pane")
       it "should have a height of 200px", ->
         expect($pane.height()).toEqual(200)
 
     describe "slider element", ->
       beforeEach ->
-        $slider = $nano.find('.slider')
+        $slider = $nano.find('.nano-slider')
       it "should exist", ->
         expect($slider).toExist()
         expect($slider.length).toBeTruthy()
-        expect($nano).toContain("div.slider")
+        expect($nano).toContain("div.nano-slider")
       it "should have style attribute set", ->
         expect($slider).toHaveAttr('style')
 
@@ -52,8 +52,8 @@ describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
         spyScrolltop = spyOnEvent($nano, 'scrolltop')
         $nano.nanoScroller({ scroll: 'bottom' })
         $nano.nanoScroller({ scroll: 'top' })
-        $slider = $nano.find('.slider')
-      it "should have set .slider CSS 'top' value to 0px", ->
+        $slider = $nano.find('.nano-slider')
+      it "should have set .nano-slider CSS 'top' value to 0px", ->
         expect($slider).toHaveCss({ top: '0px' })
       it "should have triggered the 'scrolltop' event", ->
         expect('scrolltop').toHaveBeenTriggeredOn($nano)
@@ -62,9 +62,9 @@ describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
       beforeEach ->
         spyScrollend = spyOnEvent($nano, 'scrollend')
         $nano.nanoScroller({ scroll: 'bottom' })
-        $slider = $nano.find('.slider')
-        height = $nano.find('.content').height() - $slider.height()
-      it "should have set .slider CSS 'top' value to (content height - slider height)", ->
+        $slider = $nano.find('.nano-slider')
+        height = $nano.find('.nano-content').height() - $slider.height()
+      it "should have set .nano-slider CSS 'top' value to (content height - slider height)", ->
         expect($slider).toHaveCss({ top: height + 'px' })
       it "should have triggered the 'scrollend' event", ->
         expect('scrollend').toHaveBeenTriggeredOn($nano)
@@ -72,35 +72,35 @@ describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
     describe "calling $('.nano').nanoScroller({ stop: true })", ->
       beforeEach ->
         $nano.nanoScroller({ stop: true })
-        $pane = $nano.find('.pane')
-      it "should have hidden .pane with 'display: none'", ->
+        $pane = $nano.find('.nano-pane')
+      it "should have hidden .nano-pane with 'display: none'", ->
         expect($pane.css('display')).toEqual('none')
 
     describe "calling $('.nano').nanoScroller({ flash: true })", ->
       beforeEach ->
         $nano.nanoScroller({ flash: true })
-        $pane = $nano.find('.pane')
-      it "should have added CSS class .flashed to .pane", ->
+        $pane = $nano.find('.nano-pane')
+      it "should have added CSS class .flashed to .nano-pane", ->
         expect($pane).toHaveClass('flashed')
 
     describe "calling $('.nano').nanoScroller({ sliderMinHeight: 120 })", ->
       beforeEach ->
         $nano.nanoScroller({ sliderMinHeight: 120 })
-        $slider = $nano.find('.slider')
+        $slider = $nano.find('.nano-slider')
       it "should have set slider height to at least 120px", ->
         expect($slider.height()).toBeGreaterThan(119)
 
     describe "calling $('.nano').nanoScroller({ sliderMaxHeight: 21 })", ->
       beforeEach ->
         $nano.nanoScroller({ sliderMaxHeight: 21 })
-        $slider = $nano.find('.slider')
+        $slider = $nano.find('.nano-slider')
       it "should not have set slider height to more than 21px", ->
         expect($slider.height()).toBeLessThan(22)
 
     describe "calling $('.nano').nanoScroller({ sliderMinHeight: 120, sliderMaxHeight: 120 })", ->
       beforeEach ->
         $nano.nanoScroller({ sliderMinHeight: 120, sliderMaxHeight: 120 })
-        $slider = $nano.find('.slider')
+        $slider = $nano.find('.nano-slider')
       it "should have set slider height to 120px", ->
         expect($slider).toHaveCss({ height: '120px' })
         expect($slider.height()).toBe(120)
@@ -113,11 +113,11 @@ describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
 
     describe "content element", ->
       beforeEach ->
-        $content = $nano.find('.content')
+        $content = $nano.find('.nano-content')
       it "should exist", ->
         expect($content).toExist()
         expect($content.length).toBeTruthy()
-        expect($nano).toContain("div.content")
+        expect($nano).toContain("div.nano-content")
       it "should have tabindex attribute set", ->
         expect($content).toHaveAttr('tabindex')
       it "should have a height of 200px", ->
@@ -125,11 +125,11 @@ describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
 
     describe "pane element", ->
       beforeEach ->
-        $pane = $nano.find('.pane')
+        $pane = $nano.find('.nano-pane')
       it "should exist", ->
         expect($pane).toExist()
         expect($pane.length).toBeTruthy()
-        expect($nano).toContain("div.pane")
+        expect($nano).toContain("div.nano-pane")
       it "should have a height of 200px", ->
         expect($pane.height()).toEqual(200)
       it "should be hidden with 'display: none'", ->
@@ -137,11 +137,11 @@ describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
 
     describe "slider element", ->
       beforeEach ->
-        $slider = $nano.find('.slider')
+        $slider = $nano.find('.nano-slider')
       it "should exist", ->
         expect($slider).toExist()
         expect($slider.length).toBeTruthy()
-        expect($nano).toContain("div.slider")
+        expect($nano).toContain("div.nano-slider")
       it "should have style attribute set", ->
         expect($slider).toHaveAttr('style')
 
@@ -157,9 +157,9 @@ describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
       beforeEach ->
         spyScrollend = spyOnEvent($nano, 'scrollend')
         $nano.nanoScroller({ scroll: 'bottom' })
-        $slider = $nano.find('.slider')
-        height = $nano.find('.content').height() - $slider.height()
-      it "should not have set .slider CSS 'top' value to (content height - slider height)", ->
+        $slider = $nano.find('.nano-slider')
+        height = $nano.find('.nano-content').height() - $slider.height()
+      it "should not have set .nano-slider CSS 'top' value to (content height - slider height)", ->
         expect($slider).not.toHaveCss({ top: height + 'px' })
       it "should not have triggered the 'scrollend' event", ->
         expect('scrollend').not.toHaveBeenTriggeredOn($nano)
@@ -167,35 +167,35 @@ describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
     describe "calling $('.nano').nanoScroller({ stop: true })", ->
       beforeEach ->
         $nano.nanoScroller({ stop: true })
-        $pane = $nano.find('.pane')
-      it "should have hidden .pane with 'display: none'", ->
+        $pane = $nano.find('.nano-pane')
+      it "should have hidden .nano-pane with 'display: none'", ->
         expect($pane.css('display')).toEqual('none')
 
     describe "calling $('.nano').nanoScroller({ flash: true })", ->
       beforeEach ->
         $nano.nanoScroller({ flash: true })
-        $pane = $nano.find('.pane')
-      it "should not have added CSS class .flashed to .pane", ->
+        $pane = $nano.find('.nano-pane')
+      it "should not have added CSS class .flashed to .nano-pane", ->
         expect($pane).not.toHaveClass('flashed')
 
     describe "calling $('.nano').nanoScroller({ sliderMinHeight: 120 })", ->
       beforeEach ->
         $nano.nanoScroller({ sliderMinHeight: 120 })
-        $slider = $nano.find('.slider')
+        $slider = $nano.find('.nano-slider')
       it "should have set slider height to at least 120px", ->
         expect($slider.height()).toBeGreaterThan(119)
 
     describe "calling $('.nano').nanoScroller({ sliderMaxHeight: 21 })", ->
       beforeEach ->
         $nano.nanoScroller({ sliderMaxHeight: 21 })
-        $slider = $nano.find('.slider')
+        $slider = $nano.find('.nano-slider')
       it "should not have set slider height to more than 21px", ->
         expect($slider.height()).toBeLessThan(22)
 
     describe "calling $('.nano').nanoScroller({ sliderMinHeight: 120, sliderMaxHeight: 120 })", ->
       beforeEach ->
         $nano.nanoScroller({ sliderMinHeight: 120, sliderMaxHeight: 120 })
-        $slider = $nano.find('.slider')
+        $slider = $nano.find('.nano-slider')
       it "should have set slider height to 120px", ->
         expect($slider).toHaveCss({ height: '120px' })
         expect($slider.height()).toBe(120)
@@ -204,15 +204,15 @@ describe "nanoScroller (with CSS: 'width: 200px, height 200px' set to .content)"
     beforeEach ->
       loadFixtures('nano-content.html')
       $nano = $("#nano")
-      $content = $nano.find('.content')
-      $content.append('<div id="nestednano" class="nano" style="width:200px;height:200px"><div class="content" /></div>')
+      $content = $nano.find('.nano-content')
+      $content.append('<div id="nestednano" class="nano" style="width:200px;height:200px"><div class="nano-content" /></div>')
       $nestedNano = $('#nestednano')
       $nestedNano.nanoScroller()
       $nano.nanoScroller()
 
     it "should not modify the slider element of its child", ->
       $nano.nanoScroller({ scrollTop: 100 })
-      $nestedSlider = $nestedNano.find('.slider')
+      $nestedSlider = $nestedNano.find('.nano-slider')
       expect($nestedSlider.css('top')).toEqual('0px')
 
   describe "extending the constructor", ->
