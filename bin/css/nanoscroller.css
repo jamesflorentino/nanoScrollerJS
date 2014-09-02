@@ -22,7 +22,6 @@
 }
 .has-scrollbar > .nano-content::-webkit-scrollbar {
   visibility: visible;
-  width: 0;
 }
 .nano > .nano-pane {
   background : rgba(0,0,0,.25);
