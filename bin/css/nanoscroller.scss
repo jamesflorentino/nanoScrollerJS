@@ -27,7 +27,7 @@ $contentClass: "nano-content";
         }
 
         &::-webkit-scrollbar {
-            visibility: hidden;
+            display: none;
         }
     }
 
@@ -61,7 +61,7 @@ $contentClass: "nano-content";
 }
 
 .has-scrollbar > .#{$contentClass}::-webkit-scrollbar {
-    visibility: visible;
+    display: block;
 }
 
 .#{$paneClass} {

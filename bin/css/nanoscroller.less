@@ -24,7 +24,7 @@
       outline: thin dotted;
     }
     &::-webkit-scrollbar {
-      visibility: hidden;
+      display: none;
     }
   }
   > .@{paneClass} {
@@ -65,5 +65,5 @@
 }
 
 .has-scrollbar > .@{contentClass}::-webkit-scrollbar {
-  visibility: visible;
+  display: block;
 }
