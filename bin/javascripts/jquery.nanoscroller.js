@@ -3,7 +3,7 @@
 * Copyright (c) 2014 James Florentino; Licensed MIT */
 (function($, window, document) {
   "use strict";
-  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, ENTER, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEENTER, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor;
+  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, ENTER, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEENTER, MOUSELEAVE, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor;
   defaults = {
 
     /**
@@ -163,6 +163,15 @@
     @private
    */
   MOUSEUP = 'mouseup';
+
+  /**
+    @property MOUSELEAVE
+    @type String
+    @static
+    @final
+    @private
+   */
+  MOUSELEAVE = 'mouseleave';
 
   /**
     @property RESIZE
@@ -506,6 +515,11 @@
             } else if (_this.contentScrollTop === 0 && _this.prevScrollTop !== 0) {
               _this.$el.trigger('scrolltop');
             }
+            _this.pane.on({
+              'mouseleave': function() {
+                return _this.events.up();
+              }
+            });
             return false;
           };
         })(this),
