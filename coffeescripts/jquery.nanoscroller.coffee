@@ -10,6 +10,14 @@
 
   defaults =
     ###*
+      a classname for the root scrollbar element.
+      @property rootClass
+      @type String
+      @default 'nano'
+    ###
+    rootClass: 'nano'
+
+    ###*
       a classname for the pane element.
       @property paneClass
       @type String
@@ -315,16 +323,24 @@
     @static
     @private
   ###
-  getBrowserScrollbarWidth = ->
+  getBrowserScrollbarWidth = (options) ->
     outer = document.createElement 'div'
+    inner = document.createElement 'div'
+
     outerStyle = outer.style
     outerStyle.position = 'absolute'
     outerStyle.width = '100px'
     outerStyle.height = '100px'
-    outerStyle.overflow = SCROLL
     outerStyle.top = '-9999px'
+
+    outer.className = options.rootClass
+    inner.className = options.contentClass
+
+    outer.appendChild inner
     document.body.appendChild outer
-    scrollbarWidth = outer.offsetWidth - outer.clientWidth
+
+    scrollbarWidth = inner.offsetWidth - inner.clientWidth
+
     document.body.removeChild outer
     scrollbarWidth
 
@@ -344,7 +360,7 @@
   ###
   class NanoScroll
     constructor: (@el, @options) ->
-      BROWSER_SCROLLBAR_WIDTH or= do getBrowserScrollbarWidth
+      BROWSER_SCROLLBAR_WIDTH or= getBrowserScrollbarWidth(@options)
       @$el = $ @el
       @doc = $ @options.documentContext or document
       @win = $ @options.windowContext or window
