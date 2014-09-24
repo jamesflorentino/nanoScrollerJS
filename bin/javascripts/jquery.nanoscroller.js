@@ -7,6 +7,14 @@
   defaults = {
 
     /**
+      a classname for the root scrollbar element.
+      @property rootClass
+      @type String
+      @default 'nano'
+     */
+    rootClass: 'nano',
+
+    /**
       a classname for the pane element.
       @property paneClass
       @type String
@@ -313,17 +321,20 @@
     @static
     @private
    */
-  getBrowserScrollbarWidth = function() {
-    var outer, outerStyle, scrollbarWidth;
+  getBrowserScrollbarWidth = function(options) {
+    var inner, outer, outerStyle, scrollbarWidth;
     outer = document.createElement('div');
+    inner = document.createElement('div');
     outerStyle = outer.style;
     outerStyle.position = 'absolute';
     outerStyle.width = '100px';
     outerStyle.height = '100px';
-    outerStyle.overflow = SCROLL;
     outerStyle.top = '-9999px';
+    outer.className = options.rootClass;
+    inner.className = options.contentClass;
+    outer.appendChild(inner);
     document.body.appendChild(outer);
-    scrollbarWidth = outer.offsetWidth - outer.clientWidth;
+    scrollbarWidth = inner.offsetWidth - inner.clientWidth;
     document.body.removeChild(outer);
     return scrollbarWidth;
   };
@@ -351,7 +362,7 @@
     function NanoScroll(el, options) {
       this.el = el;
       this.options = options;
-      BROWSER_SCROLLBAR_WIDTH || (BROWSER_SCROLLBAR_WIDTH = getBrowserScrollbarWidth());
+      BROWSER_SCROLLBAR_WIDTH || (BROWSER_SCROLLBAR_WIDTH = getBrowserScrollbarWidth(this.options));
       this.$el = $(this.el);
       this.doc = $(this.options.documentContext || document);
       this.win = $(this.options.windowContext || window);
