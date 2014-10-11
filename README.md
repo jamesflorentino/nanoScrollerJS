@@ -35,9 +35,9 @@ You should specify a width and a height to your container, and apply some custom
 
 ```css
 .nano { background: #bba; width: 500px; height: 500px; }
-.nano .nano-content { padding: 10px; }
-.nano .nano-pane   { background: #888; }
-.nano .nano-slider { background: #111; }
+.nano > .nano-content { padding: 10px; }
+.nano > .nano-pane   { background: #888; }
+.nano > .nano-pane > .nano-slider { background: #111; }
 ```
 
 ### 3. JavaScript
