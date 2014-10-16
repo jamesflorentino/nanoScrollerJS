@@ -832,17 +832,17 @@
           $(".nano").nanoScroller({ scrollTo: $('#a_node') });
      */
 
-    NanoScroll.prototype.scrollTo = function(node, animDuration) {
+    NanoScroll.prototype.scrollTo = function(options) {
       var duration;
       if (!this.isActive) {
         return;
       }
-      if (animDuration != null) {
-        duration = animDuration;
+      if (options[1] != null) {
+        duration = parseInt(options[1], 10);
       } else {
         duration = 0;
       }
-      this.scrollTop(this.$el.find(node).get(0).offsetTop, duration);
+      this.scrollTop(this.$el.find(node[0]).get(0).offsetTop, duration);
       return this;
     };
 

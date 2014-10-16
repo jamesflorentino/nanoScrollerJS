@@ -754,10 +754,10 @@
       @example
           $(".nano").nanoScroller({ scrollTo: $('#a_node') });
     ###
-    scrollTo: (node, animDuration) ->
+    scrollTo: (options) ->
       return unless @isActive
-      if animDuration? then duration = animDuration else duration = 0
-      @scrollTop @$el.find(node).get(0).offsetTop, duration
+      if options[1]? then duration = parseInt(options[1], 10) else duration = 0
+      @scrollTop @$el.find(node[0]).get(0).offsetTop, duration
       this
 
     ###*
