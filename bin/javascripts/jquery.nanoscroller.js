@@ -811,11 +811,17 @@
           $(".nano").nanoScroller({ scrollTop: value });
      */
 
-    NanoScroll.prototype.scrollTop = function(offsetY) {
+    NanoScroll.prototype.scrollTop = function(offsetY, animDuration) {
+      var duration, _ref;
       if (!this.isActive) {
         return;
       }
-      this.$content.scrollTop(+offsetY).trigger(MOUSEWHEEL);
+      duration = (_ref = animDuration != null) != null ? _ref : {
+        animDuration: 0
+      };
+      this.$content.animate({
+        scrollTop: +offsetY
+      }, duration).trigger(MOUSEWHEEL);
       this.stop().restore();
       return this;
     };
