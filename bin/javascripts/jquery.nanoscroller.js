@@ -816,6 +816,7 @@
       if (!this.isActive) {
         return;
       }
+      debugger;
       duration = (_ref = animDuration != null) != null ? _ref : {
         animDuration: 0
       };
