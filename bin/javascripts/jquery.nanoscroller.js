@@ -812,12 +812,12 @@
      */
 
     NanoScroll.prototype.scrollTop = function(offsetY, animDuration) {
-      var duration, _ref;
+      var duration;
       if (!this.isActive) {
         return;
       }
       debugger;
-      duration = (_ref = animDuration != null) != null ? _ref : {
+      duration = animDuration != null ? animDuration : {
         animDuration: 0
       };
       this.$content.animate({
