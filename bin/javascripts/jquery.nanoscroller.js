@@ -811,15 +811,9 @@
           $(".nano").nanoScroller({ scrollTop: value });
      */
 
-    NanoScroll.prototype.scrollTop = function(offsetY, animDuration) {
-      var duration;
+    NanoScroll.prototype.scrollTop = function(offsetY, duration) {
       if (!this.isActive) {
         return;
-      }
-      if (animDuration != null) {
-        duration = animDuration;
-      } else {
-        duration = 0;
       }
       this.$content.animate({
         scrollTop: +offsetY
@@ -838,11 +832,17 @@
           $(".nano").nanoScroller({ scrollTo: $('#a_node') });
      */
 
-    NanoScroll.prototype.scrollTo = function(node) {
+    NanoScroll.prototype.scrollTo = function(node, animDuration) {
+      var duration;
       if (!this.isActive) {
         return;
       }
-      this.scrollTop(this.$el.find(node).get(0).offsetTop);
+      if (animDuration != null) {
+        duration = animDuration;
+      } else {
+        duration = 0;
+      }
+      this.scrollTop(this.$el.find(node).get(0).offsetTop, duration);
       return this;
     };
 

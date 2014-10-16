@@ -740,9 +740,8 @@
       @example
           $(".nano").nanoScroller({ scrollTop: value });
     ###
-    scrollTop: (offsetY, animDuration) ->
+    scrollTop: (offsetY, duration) ->
       return unless @isActive
-      if animDuration? then duration = animDuration else duration = 0
       @$content.animate({scrollTop: +offsetY}, duration).trigger(MOUSEWHEEL) # Update scrollbar position by triggering one of the scroll events
       @stop().restore()
       this
@@ -755,9 +754,10 @@
       @example
           $(".nano").nanoScroller({ scrollTo: $('#a_node') });
     ###
-    scrollTo: (node) ->
+    scrollTo: (node, animDuration) ->
       return unless @isActive
-      @scrollTop @$el.find(node).get(0).offsetTop
+      if animDuration? then duration = animDuration else duration = 0
+      @scrollTop @$el.find(node).get(0).offsetTop, duration
       this
 
     ###*
