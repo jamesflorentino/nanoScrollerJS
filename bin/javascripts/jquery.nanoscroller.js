@@ -842,7 +842,7 @@
       } else {
         duration = 0;
       }
-      this.scrollTop(this.$el.find(node[0]).get(0).offsetTop, duration);
+      this.scrollTop(this.$el.find(options[0]).get(0).offsetTop, duration);
       return this;
     };
 

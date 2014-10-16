@@ -757,7 +757,7 @@
     scrollTo: (options) ->
       return unless @isActive
       if options[1]? then duration = parseInt(options[1], 10) else duration = 0
-      @scrollTop @$el.find(node[0]).get(0).offsetTop, duration
+      @scrollTop @$el.find(options[0]).get(0).offsetTop, duration
       this
 
     ###*
