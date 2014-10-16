@@ -742,8 +742,7 @@
     ###
     scrollTop: (offsetY, animDuration) ->
       return unless @isActive
-      debugger
-      duration = animDuration ? animDuration : 0
+      if animDuration? then duration = animDuration else duration = 0
       @$content.animate({scrollTop: +offsetY}, duration).trigger(MOUSEWHEEL) # Update scrollbar position by triggering one of the scroll events
       @stop().restore()
       this

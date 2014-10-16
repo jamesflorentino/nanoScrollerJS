@@ -816,10 +816,11 @@
       if (!this.isActive) {
         return;
       }
-      debugger;
-      duration = animDuration != null ? animDuration : {
-        animDuration: 0
-      };
+      if (animDuration != null) {
+        duration = animDuration;
+      } else {
+        duration = 0;
+      }
       this.$content.animate({
         scrollTop: +offsetY
       }, duration).trigger(MOUSEWHEEL);
