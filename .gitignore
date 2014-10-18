@@ -41,3 +41,6 @@ build/.sizecache.json
 node_modules
 bower_components
 .grunt
+
+*.iml
+.idea/
