@@ -3,7 +3,17 @@
 #  @author James Florentino
 #  @contributor Krister Kari
 
-(($, window, document) ->
+((factory) ->
+  if typeof define is 'function' and define.amd
+    # AMD
+    define [
+      'jquery'
+    ], ($) ->
+      factory($, window, document)
+  else
+    # Browser globals
+    factory(jQuery, window, document)
+) ($, window, document) ->
   "use strict"
 
   # Default settings
@@ -409,12 +419,12 @@
       @prevScrollTop = @contentScrollTop or 0
       @contentScrollTop = content.scrollTop
 
-      direction = if @contentScrollTop > @previousPosition 
+      direction = if @contentScrollTop > @previousPosition
                     "down"
-                  else 
-                    if @contentScrollTop < @previousPosition 
-                      "up" 
-                    else 
+                  else
+                    if @contentScrollTop < @previousPosition
+                      "up"
+                    else
                       "same"
       @previousPosition = @contentScrollTop
 
@@ -835,5 +845,3 @@
 
   $.fn.nanoScroller.Constructor = NanoScroll
   return
-
-)(jQuery, window, document)
