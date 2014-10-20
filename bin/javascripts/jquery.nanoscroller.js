@@ -672,7 +672,7 @@
     NanoScroll.prototype.restore = function() {
       this.stopped = false;
       if (!this.iOSNativeScrolling) {
-        this.pane.css(opacity, 1);
+        this.pane.css('opacity', 1);
       }
       this.addEvents();
     };
@@ -733,7 +733,7 @@
       this.paneTop = paneTop;
       this.slider.height(sliderHeight);
       this.events.scroll();
-      this.pane.css(opacity, 1);
+      this.pane.css('opacity', 1);
       this.isActive = true;
       if ((content.scrollHeight === content.clientHeight) || (this.pane.outerHeight(true) >= content.scrollHeight && contentStyleOverflowY !== SCROLL)) {
         this.pane.css('opacity', 0);
