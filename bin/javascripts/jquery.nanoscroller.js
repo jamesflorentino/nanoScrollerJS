@@ -672,7 +672,7 @@
     NanoScroll.prototype.restore = function() {
       this.stopped = false;
       if (!this.iOSNativeScrolling) {
-        this.pane.fadeOut(0).show().fadeIn(300);
+        this.pane.show();
       }
       this.addEvents();
     };
@@ -733,15 +733,15 @@
       this.paneTop = paneTop;
       this.slider.height(sliderHeight);
       this.events.scroll();
-      this.pane.fadeOut(0).show().fadeIn(300);
+      this.pane.show();
       this.isActive = true;
       if ((content.scrollHeight === content.clientHeight) || (this.pane.outerHeight(true) >= content.scrollHeight && contentStyleOverflowY !== SCROLL)) {
-        this.pane.fadeOut(300).hide();
+        this.pane.hide();
         this.isActive = false;
       } else if (this.el.clientHeight === content.scrollHeight && contentStyleOverflowY === SCROLL) {
-        this.slider.fadeOut(300).hide();
+        this.slider.hide();
       } else {
-        this.slider.fadeOut(0).show().fadeIn(300);
+        this.slider.show();
       }
       this.pane.css({
         opacity: (this.options.alwaysVisible ? 1 : ''),
