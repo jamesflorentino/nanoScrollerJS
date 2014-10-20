@@ -608,7 +608,7 @@
     ###
     restore: ->
       @stopped = false
-      @pane.show().css 'opacity',1 if not @iOSNativeScrolling
+      do @pane.show if not @iOSNativeScrolling
       do @addEvents
       return
 
@@ -674,11 +674,11 @@
       # scroll sets the position of the @slider
       do @events.scroll
 
-      @pane.show().css 'opacity',1
+      @pane.fadeIn(200)
       @isActive = true
       if (content.scrollHeight is content.clientHeight) or (
           @pane.outerHeight(true) >= content.scrollHeight and contentStyleOverflowY isnt SCROLL)
-        @pane.hide().css 'opacity',0
+        @pane.stop().fadeOut(200)
         @isActive = false
       else if @el.clientHeight is content.scrollHeight and contentStyleOverflowY is SCROLL
         do @slider.hide
@@ -774,7 +774,7 @@
         @scrollRAF = null
       @stopped = true
       do @removeEvents
-      @pane.hide().css 'opacity',0 if not @iOSNativeScrolling
+      do @pane.hide if not @iOSNativeScrolling
       this
 
     ###*
