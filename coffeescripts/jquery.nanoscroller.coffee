@@ -608,7 +608,7 @@
     ###
     restore: ->
       @stopped = false
-      do @pane.show if not @iOSNativeScrolling
+      @pane.fadeOut(0).show().fadeIn(300) if not @iOSNativeScrolling
       do @addEvents
       return
 

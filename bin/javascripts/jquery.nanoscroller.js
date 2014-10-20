@@ -672,7 +672,7 @@
     NanoScroll.prototype.restore = function() {
       this.stopped = false;
       if (!this.iOSNativeScrolling) {
-        this.pane.show();
+        this.pane.fadeOut(0).show().fadeIn(300);
       }
       this.addEvents();
     };
