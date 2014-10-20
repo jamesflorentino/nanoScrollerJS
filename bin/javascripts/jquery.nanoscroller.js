@@ -672,7 +672,7 @@
     NanoScroll.prototype.restore = function() {
       this.stopped = false;
       if (!this.iOSNativeScrolling) {
-        this.pane.css('opacity', 1);
+        this.pane.fadeIn(200);
       }
       this.addEvents();
     };
@@ -733,10 +733,10 @@
       this.paneTop = paneTop;
       this.slider.height(sliderHeight);
       this.events.scroll();
-      this.pane.css('opacity', 1);
+      this.pane.fadeIn(200);
       this.isActive = true;
       if ((content.scrollHeight === content.clientHeight) || (this.pane.outerHeight(true) >= content.scrollHeight && contentStyleOverflowY !== SCROLL)) {
-        this.pane.css('opacity', 0);
+        this.pane.fadeOut(200);
         this.isActive = false;
       } else if (this.el.clientHeight === content.scrollHeight && contentStyleOverflowY === SCROLL) {
         this.slider.hide();
@@ -864,7 +864,7 @@
       this.stopped = true;
       this.removeEvents();
       if (!this.iOSNativeScrolling) {
-        this.pane.css('opacity', 0);
+        this.pane.fadeOut(200);
       }
       return this;
     };
