@@ -674,16 +674,16 @@
       # scroll sets the position of the @slider
       do @events.scroll
 
-      do $(@pane).fadeIn(300)
+      do @pane.fadeIn 300
       @isActive = true
       if (content.scrollHeight is content.clientHeight) or (
           @pane.outerHeight(true) >= content.scrollHeight and contentStyleOverflowY isnt SCROLL)
-        do $(@pane).fadeOut(300)
+        do @pane.fadeOut 300
         @isActive = false
       else if @el.clientHeight is content.scrollHeight and contentStyleOverflowY is SCROLL
-        do $(@slider).fadeOut(300)
+        do @slider.fadeOut 300
       else
-        do $(@slider).fadeIn(300)
+        do @slider.fadeIn 300
 
       # allow the pane element to stay visible
       @pane.css
