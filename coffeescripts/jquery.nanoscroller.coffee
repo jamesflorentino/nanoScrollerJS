@@ -608,7 +608,7 @@
     ###
     restore: ->
       @stopped = false
-      do @pane.show if not @iOSNativeScrolling
+      @pane.removeClass('disabled').addClass('enabled') if not @iOSNativeScrolling
       do @addEvents
       return
 
@@ -674,11 +674,11 @@
       # scroll sets the position of the @slider
       do @events.scroll
 
-      do @pane.show
+      @pane.removeClass('disabled').addClass('enabled')
       @isActive = true
       if (content.scrollHeight is content.clientHeight) or (
           @pane.outerHeight(true) >= content.scrollHeight and contentStyleOverflowY isnt SCROLL)
-        do @pane.hide
+        @pane.removeClass('enabled').addClass('disabled')
         @isActive = false
       else if @el.clientHeight is content.scrollHeight and contentStyleOverflowY is SCROLL
         do @slider.hide
@@ -774,7 +774,7 @@
         @scrollRAF = null
       @stopped = true
       do @removeEvents
-      do @pane.hide if not @iOSNativeScrolling
+      @pane.removeClass('enabled').addClass('disabled') if not @iOSNativeScrolling
       this
 
     ###*

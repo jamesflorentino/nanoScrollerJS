@@ -672,7 +672,7 @@
     NanoScroll.prototype.restore = function() {
       this.stopped = false;
       if (!this.iOSNativeScrolling) {
-        this.pane.show();
+        this.pane.removeClass('disabled').addClass('enabled');
       }
       this.addEvents();
     };
@@ -733,10 +733,10 @@
       this.paneTop = paneTop;
       this.slider.height(sliderHeight);
       this.events.scroll();
-      this.pane.show();
+      this.pane.removeClass('disabled').addClass('enabled');
       this.isActive = true;
       if ((content.scrollHeight === content.clientHeight) || (this.pane.outerHeight(true) >= content.scrollHeight && contentStyleOverflowY !== SCROLL)) {
-        this.pane.hide();
+        this.pane.removeClass('enabled').addClass('disabled');
         this.isActive = false;
       } else if (this.el.clientHeight === content.scrollHeight && contentStyleOverflowY === SCROLL) {
         this.slider.hide();
@@ -864,7 +864,7 @@
       this.stopped = true;
       this.removeEvents();
       if (!this.iOSNativeScrolling) {
-        this.pane.hide();
+        this.pane.removeClass('enabled').addClass('disabled');
       }
       return this;
     };
