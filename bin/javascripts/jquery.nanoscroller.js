@@ -733,15 +733,15 @@
       this.paneTop = paneTop;
       this.slider.height(sliderHeight);
       this.events.scroll();
-      this.pane.show();
+      $(this.pane).fadeIn(300)();
       this.isActive = true;
       if ((content.scrollHeight === content.clientHeight) || (this.pane.outerHeight(true) >= content.scrollHeight && contentStyleOverflowY !== SCROLL)) {
-        this.pane.hide();
+        $(this.pane).fadeOut(300)();
         this.isActive = false;
       } else if (this.el.clientHeight === content.scrollHeight && contentStyleOverflowY === SCROLL) {
-        this.slider.hide();
+        $(this.slider).fadeOut(300)();
       } else {
-        this.slider.show();
+        $(this.slider).fadeIn(300)();
       }
       this.pane.css({
         opacity: (this.options.alwaysVisible ? 1 : ''),
