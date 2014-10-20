@@ -674,16 +674,16 @@
       # scroll sets the position of the @slider
       do @events.scroll
 
-      @pane.fadeIn(300)
+      @pane.fadeOut(0).show().fadeIn(300)
       @isActive = true
       if (content.scrollHeight is content.clientHeight) or (
           @pane.outerHeight(true) >= content.scrollHeight and contentStyleOverflowY isnt SCROLL)
-        @pane.fadeOut(300)
+        @pane.fadeOut(300).hide()
         @isActive = false
       else if @el.clientHeight is content.scrollHeight and contentStyleOverflowY is SCROLL
-        @slider.fadeOut(300)
+        @slider.fadeOut(300).hide()
       else
-        @slider.fadeIn(300)
+        @slider.fadeOut(0).show().fadeIn(300)
 
       # allow the pane element to stay visible
       @pane.css
