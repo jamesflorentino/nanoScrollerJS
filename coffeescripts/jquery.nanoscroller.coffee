@@ -742,7 +742,7 @@
     ###
     scrollTop: (options) ->
       return unless @isActive
-      @$content.stop().animate({scrollTop: +options[0]}, options[1]).trigger(MOUSEWHEEL) # Update scrollbar position by triggering one of the scroll events
+      @$content.stop(true, false).animate({scrollTop: +options[0]}, options[1]).trigger(MOUSEWHEEL) # Update scrollbar position by triggering one of the scroll events
       @stop().restore()
       this
 
