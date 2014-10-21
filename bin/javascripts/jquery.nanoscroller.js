@@ -815,7 +815,7 @@
       if (!this.isActive) {
         return;
       }
-      this.$content.animate({
+      this.$content.stop().animate({
         scrollTop: +options[0]
       }, options[1]).trigger(MOUSEWHEEL);
       this.stop().restore();
