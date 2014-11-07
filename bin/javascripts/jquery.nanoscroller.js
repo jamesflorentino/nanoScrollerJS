@@ -422,7 +422,6 @@
      */
 
     NanoScroll.prototype.updateScrollValues = function() {
-      debugger;
       var content, direction;
       content = this.content;
       this.maxScrollTop = content.scrollHeight - content.clientHeight;
@@ -534,7 +533,6 @@
         })(this),
         scroll: (function(_this) {
           return function(e) {
-            console.log(_this.contentScrollTop, _this.maxScrollTop);
             _this.updateScrollValues();
             if (_this.isBeingDragged) {
               return;
