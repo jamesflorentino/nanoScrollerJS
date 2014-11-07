@@ -533,6 +533,7 @@
         })(this),
         scroll: (function(_this) {
           return function(e) {
+            console.log(_this.contentScrollTop);
             _this.updateScrollValues();
             if (_this.isBeingDragged) {
               return;
@@ -815,7 +816,7 @@
       if (!this.isActive) {
         return;
       }
-      this.$content.stop().animate({
+      this.$content.stop(true, false).animate({
         scrollTop: +options[0]
       }, options[1]).trigger(MOUSEWHEEL);
       this.stop().restore();

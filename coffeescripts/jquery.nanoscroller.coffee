@@ -497,6 +497,7 @@
           false
 
         scroll: (e) =>
+          console.log @contentScrollTop
           do @updateScrollValues
           # Don't operate if there is a dragging mechanism going on.
           # This is invoked when a user presses and moves the slider or pane
