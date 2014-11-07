@@ -533,7 +533,7 @@
         })(this),
         scroll: (function(_this) {
           return function(e) {
-            console.log(_this.contentScrollTop);
+            console.log(_this.contentScrollTop, _this.maxScrollTop);
             _this.updateScrollValues();
             if (_this.isBeingDragged) {
               return;
