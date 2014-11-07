@@ -402,6 +402,7 @@
       @private
     ###
     updateScrollValues: ->
+      debugger
       content = @content
       # Formula/ratio
       # `scrollTop / maxScrollTop = sliderTop / maxSliderTop`
