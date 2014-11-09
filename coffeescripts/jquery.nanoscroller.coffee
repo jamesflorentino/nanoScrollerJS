@@ -417,7 +417,8 @@
       # `scrollTop / maxScrollTop = sliderTop / maxSliderTop`
       @maxScrollTop = content.scrollHeight - content.clientHeight
       @prevScrollTop = @contentScrollTop or 0
-      @contentScrollTop = content.scrollTop
+      #Browser sometimes rounds down
+      @contentScrollTop = content.scrollTop + 1
 
       direction = if @contentScrollTop > @previousPosition
                     "down"
