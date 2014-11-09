@@ -434,7 +434,7 @@
       content = this.content;
       this.maxScrollTop = content.scrollHeight - content.clientHeight;
       this.prevScrollTop = this.contentScrollTop || 0;
-      this.contentScrollTop = content.scrollTop;
+      this.contentScrollTop = content.scrollTop + 1;
       direction = this.contentScrollTop > this.previousPosition ? "down" : this.contentScrollTop < this.previousPosition ? "up" : "same";
       this.previousPosition = this.contentScrollTop;
       if (direction !== "same") {
@@ -509,7 +509,7 @@
           return function(e) {
             _this.sliderY = e.pageY - _this.$el.offset().top - _this.paneTop - (_this.offsetY || _this.sliderHeight * 0.5);
             _this.scroll();
-            if (_this.contentScrollTop >= _this.maxScrollTop && _this.prevScrollTop !== _this.maxScrollTop) {
+            if (_this.contentScrollTop >= _this.maxScrollTop && _this.prevScrollTop !== _this.maxScrollTop && _this.prevScrollTop - 1 !== _this.maxScrollTop) {
               _this.$el.trigger('scrollend');
             } else if (_this.contentScrollTop === 0 && _this.prevScrollTop !== 0) {
               _this.$el.trigger('scrolltop');
@@ -556,7 +556,7 @@
               if (_this.options.preventPageScrolling) {
                 _this.preventScrolling(e, DOWN);
               }
-              if (_this.prevScrollTop !== _this.maxScrollTop) {
+              if (_this.prevScrollTop !== _this.maxScrollTop && _this.prevScrollTop - 1 !== _this.maxScrollTop) {
                 _this.$el.trigger('scrollend');
               }
             } else if (_this.contentScrollTop === 0) {
