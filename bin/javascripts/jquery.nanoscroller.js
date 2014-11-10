@@ -769,6 +769,7 @@
      */
 
     NanoScroll.prototype.scroll = function() {
+      debugger;
       if (!this.isActive) {
         return;
       }
