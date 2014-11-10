@@ -716,6 +716,7 @@
       paneTop = parseInt(this.pane.css('top'), 10);
       paneBottom = parseInt(this.pane.css('bottom'), 10);
       paneOuterHeight = paneHeight + paneTop + paneBottom;
+      debugger;
       sliderHeight = Math.round(paneOuterHeight - content.scrollHeight - content.height);
       if (sliderHeight < this.options.sliderMinHeight) {
         sliderHeight = this.options.sliderMinHeight;
