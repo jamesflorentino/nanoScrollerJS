@@ -709,7 +709,6 @@
           $(".nano").nanoScroller({ scroll: 'top' });
     ###
     scroll: ->
-      debugger
       return unless @isActive
       @sliderY = Math.max 0, @sliderY
       @sliderY = Math.min @maxSliderTop, @sliderY
