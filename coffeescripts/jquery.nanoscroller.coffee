@@ -477,7 +477,6 @@
           false
 
         up: (e) =>
-          console.log 'up triggered'
           @isBeingDragged = false
           @pane.removeClass 'active'
           @doc

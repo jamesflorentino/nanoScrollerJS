@@ -511,7 +511,6 @@
         })(this),
         up: (function(_this) {
           return function(e) {
-            console.log('up triggered');
             _this.isBeingDragged = false;
             _this.pane.removeClass('active');
             _this.doc.unbind(MOUSEMOVE, _this.events[DRAG]).unbind(MOUSEUP, _this.events[UP]);
