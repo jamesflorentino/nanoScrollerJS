@@ -359,7 +359,7 @@
       @doc = $ @options.documentContext or document
       @win = $ @options.windowContext or window
       @body= @doc.find 'body'
-      @$content = @$el.children(".#{options.contentClass}")
+      @$content = @$el.children(".#{@options.contentClass}")
       @$content.attr 'tabindex', @options.tabIndex or 0
       @content = @$content[0]
 
