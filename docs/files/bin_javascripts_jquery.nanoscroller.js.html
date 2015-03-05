@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.8.4</em>
+            <em>API Docs for: 0.8.5</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -86,10 +86,18 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
-/*! nanoScrollerJS - v0.8.4 - 2014
+/*! nanoScrollerJS - v0.8.5 - 2015
 * http://jamesflorentino.github.com/nanoScrollerJS/
-* Copyright (c) 2014 James Florentino; Licensed MIT */
-(function($, window, document) {
+* Copyright (c) 2015 James Florentino; Licensed MIT */
+(function(factory) {
+  if (typeof define === &#x27;function&#x27; &amp;&amp; define.amd) {
+    return define([&#x27;jquery&#x27;], function($) {
+      return factory($, window, document);
+    });
+  } else {
+    return factory(jQuery, window, document);
+  }
+})(function($, window, document) {
   &quot;use strict&quot;;
   var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, ENTER, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEENTER, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor;
   defaults = {
@@ -444,7 +452,7 @@
       this.doc = $(this.options.documentContext || document);
       this.win = $(this.options.windowContext || window);
       this.body = this.doc.find(&#x27;body&#x27;);
-      this.$content = this.$el.children(&quot;.&quot; + options.contentClass);
+      this.$content = this.$el.children(&quot;.&quot; + this.options.contentClass);
       this.$content.attr(&#x27;tabindex&#x27;, this.options.tabIndex || 0);
       this.content = this.$content[0];
       this.previousPosition = 0;
@@ -1049,7 +1057,7 @@
     });
   };
   $.fn.nanoScroller.Constructor = NanoScroll;
-})(jQuery, window, document);
+});
 
 //# sourceMappingURL=jquery.nanoscroller.js.map
 

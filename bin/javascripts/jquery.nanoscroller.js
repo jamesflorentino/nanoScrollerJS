@@ -1,6 +1,6 @@
-/*! nanoScrollerJS - v0.8.4 - 2014
+/*! nanoScrollerJS - v0.8.5 - 2015
 * http://jamesflorentino.github.com/nanoScrollerJS/
-* Copyright (c) 2014 James Florentino; Licensed MIT */
+* Copyright (c) 2015 James Florentino; Licensed MIT */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     return define(['jquery'], function($) {
@@ -364,7 +364,7 @@
       this.doc = $(this.options.documentContext || document);
       this.win = $(this.options.windowContext || window);
       this.body = this.doc.find('body');
-      this.$content = this.$el.children("." + options.contentClass);
+      this.$content = this.$el.children("." + this.options.contentClass);
       this.$content.attr('tabindex', this.options.tabIndex || 0);
       this.content = this.$content[0];
       this.previousPosition = 0;
