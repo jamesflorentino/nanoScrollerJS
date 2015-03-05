@@ -417,7 +417,8 @@
       # `scrollTop / maxScrollTop = sliderTop / maxSliderTop`
       @maxScrollTop = content.scrollHeight - content.clientHeight
       @prevScrollTop = @contentScrollTop or 0
-      @contentScrollTop = content.scrollTop
+      #Browser sometimes rounds down
+      @contentScrollTop = content.scrollTop + 1
 
       direction = if @contentScrollTop > @previousPosition
                     "down"
@@ -480,7 +481,7 @@
         drag: (e) =>
           @sliderY = e.pageY - @$el.offset().top - @paneTop - (@offsetY or @sliderHeight * 0.5)
           do @scroll
-          if @contentScrollTop >= @maxScrollTop and @prevScrollTop isnt @maxScrollTop
+          if @contentScrollTop >= @maxScrollTop and @prevScrollTop isnt @maxScrollTop and @prevScrollTop-1 isnt @maxScrollTop
             @$el.trigger 'scrollend'
           else if @contentScrollTop is 0 and @prevScrollTop isnt 0
             @$el.trigger 'scrolltop'
@@ -523,7 +524,7 @@
           # we dispatch an event.
           if @contentScrollTop >= @maxScrollTop
             @preventScrolling(e, DOWN) if @options.preventPageScrolling
-            @$el.trigger 'scrollend' if @prevScrollTop isnt @maxScrollTop
+            @$el.trigger 'scrollend' if @prevScrollTop isnt @maxScrollTop and @prevScrollTop-1 isnt @maxScrollTop
           else if @contentScrollTop is 0
             @preventScrolling(e, UP) if @options.preventPageScrolling
             @$el.trigger 'scrolltop' if @prevScrollTop isnt 0
