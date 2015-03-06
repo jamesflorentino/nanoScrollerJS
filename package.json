@@ -13,7 +13,7 @@
   "shim": {
     "javascripts/jquery.nanoscroller": [
       "jquery",
-      "./css/nanoscroller.css!"
+      "../css/nanoscroller.css!"
     ]
   },
   "engines": {
