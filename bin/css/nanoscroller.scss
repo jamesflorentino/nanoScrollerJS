@@ -2,10 +2,10 @@
 // nanoScrollerJS (Sass)
 // --------------------------------------------------
 /** initial setup **/
-$nanoClass: "nano";
-$paneClass: "nano-pane";
-$sliderClass: "nano-slider";
-$contentClass: "nano-content";
+$nanoClass: "nano" !default;
+$paneClass: "nano-pane" !default;
+$sliderClass: "nano-slider" !default;
+$contentClass: "nano-content" !default;
 
 .#{$nanoClass} {
     width: 100%;
