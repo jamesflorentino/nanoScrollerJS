@@ -661,7 +661,7 @@
       paneOuterHeight = paneHeight + paneTop + paneBottom
 
       # set the slider's height
-      sliderHeight = Math.round paneOuterHeight / contentHeight * paneOuterHeight
+      sliderHeight = Math.round paneOuterHeight / contentHeight * paneHeight
       if sliderHeight < @options.sliderMinHeight
         sliderHeight = @options.sliderMinHeight # set min height
       else if @options.sliderMaxHeight? and sliderHeight > @options.sliderMaxHeight
