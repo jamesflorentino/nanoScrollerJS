@@ -10,6 +10,9 @@
       'jquery'
     ], ($) ->
       factory($, window, document)
+  else if typeof exports is 'object'
+    # Node/CommonJS
+    module.exports = factory(require('jquery'), window, document)
   else
     # Browser globals
     factory(jQuery, window, document)
