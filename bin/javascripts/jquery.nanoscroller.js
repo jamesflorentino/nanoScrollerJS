@@ -6,6 +6,8 @@
     return define(['jquery'], function($) {
       return factory($, window, document);
     });
+  } else if (typeof exports === 'object') {
+    return module.exports = factory(require('jquery'), window, document);
   } else {
     return factory(jQuery, window, document);
   }
@@ -724,7 +726,7 @@
       paneTop = parseInt(this.pane.css('top'), 10);
       paneBottom = parseInt(this.pane.css('bottom'), 10);
       paneOuterHeight = paneHeight + paneTop + paneBottom;
-      sliderHeight = Math.round(paneOuterHeight / contentHeight * paneOuterHeight);
+      sliderHeight = Math.round(paneOuterHeight / contentHeight * paneHeight);
       if (sliderHeight < this.options.sliderMinHeight) {
         sliderHeight = this.options.sliderMinHeight;
       } else if ((this.options.sliderMaxHeight != null) && sliderHeight > this.options.sliderMaxHeight) {
