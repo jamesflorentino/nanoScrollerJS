@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.8.5</em>
+            <em>API Docs for: 0.8.6</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -86,7 +86,7 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
-/*! nanoScrollerJS - v0.8.5 - 2015
+/*! nanoScrollerJS - v0.8.6 - 2015
 * http://jamesflorentino.github.com/nanoScrollerJS/
 * Copyright (c) 2015 James Florentino; Licensed MIT */
 (function(factory) {
@@ -94,6 +94,8 @@
     return define([&#x27;jquery&#x27;], function($) {
       return factory($, window, document);
     });
+  } else if (typeof exports === &#x27;object&#x27;) {
+    return module.exports = factory(require(&#x27;jquery&#x27;), window, document);
   } else {
     return factory(jQuery, window, document);
   }
@@ -812,7 +814,7 @@
       paneTop = parseInt(this.pane.css(&#x27;top&#x27;), 10);
       paneBottom = parseInt(this.pane.css(&#x27;bottom&#x27;), 10);
       paneOuterHeight = paneHeight + paneTop + paneBottom;
-      sliderHeight = Math.round(paneOuterHeight / contentHeight * paneOuterHeight);
+      sliderHeight = Math.round(paneOuterHeight / contentHeight * paneHeight);
       if (sliderHeight &lt; this.options.sliderMinHeight) {
         sliderHeight = this.options.sliderMinHeight;
       } else if ((this.options.sliderMaxHeight != null) &amp;&amp; sliderHeight &gt; this.options.sliderMaxHeight) {
