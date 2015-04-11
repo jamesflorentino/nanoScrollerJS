@@ -1,36 +1,57 @@
 {
   "name": "nanoscroller",
-  "version": "0.0.0-ignored",
-  "main": "javascripts/jquery.nanoscroller.js",
-  "format": "global",
-  "directories": {
-    "lib": "bin"
+  "description": "A jQuery plugin that offers a simplistic way of implementing Lion OS scrollbars.",
+  "version": "0.8.5",
+  "author": "James Florentino <jamesflorentino@gmail.com> (http://blog.jamesflorentino.com/)",
+  "bugs": {
+    "url": "https://github.com/jamesflorentino/nanoScrollerJS/issues"
   },
+  "contributors": [
+    "Krister Kari (http://krister.fi/)"
+  ],
   "dependencies": {
-    "jquery": "^2.1.3",
-    "css": "*"
+    "css": "*",
+    "jquery": ">=1.6"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-coffee": "~0.12.0",
+    "grunt-contrib-concat": "~0.5.0",
+    "grunt-contrib-connect": "~0.8.0",
+    "grunt-contrib-csslint": "~0.3.1",
+    "grunt-contrib-jasmine": "~0.8.0",
+    "grunt-contrib-uglify": "~0.6.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-yuidoc": "~0.5.2",
+    "grunt-shell": "~1.1.1",
+    "grunt-sizediff": "~1.0.1",
+    "marked": "~0.3.2"
+  },
+  "directories": {
+    "doc": "docs",
+    "lib": "bin",
+    "test": "tests"
+  },
+  "format": "amd",
+  "homepage": "https://github.com/jamesflorentino/nanoScrollerJS",
+  "keywords": [
+    "ecosystem:jquery",
+    "jquery-plugin",
+    "scrollbar"
+  ],
+  "license": "MIT",
+  "main": "javascripts/jquery.nanoscroller.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jamesflorentino/nanoScrollerJS.git"
+  },
+  "scripts": {
+    "test": "grunt test"
   },
   "shim": {
     "javascripts/jquery.nanoscroller": [
       "jquery",
       "../css/nanoscroller.css!"
     ]
-  },
-  "engines": {
-    "node": ">= 0.8.0"
-  },
-  "devDependencies": {
-    "grunt-contrib-concat": "~0.5.0",
-    "grunt-contrib-uglify": "~0.6.0",
-    "grunt-contrib-watch": "~0.6.1",
-    "grunt": "~0.4.5",
-    "grunt-sizediff": "~1.0.1",
-    "grunt-contrib-coffee": "~0.12.0",
-    "grunt-shell": "~1.1.1",
-    "grunt-contrib-yuidoc": "~0.5.2",
-    "marked": "~0.3.2",
-    "grunt-contrib-jasmine": "~0.8.0",
-    "grunt-contrib-csslint": "~0.3.1",
-    "grunt-contrib-connect": "~0.8.0"
   }
 }
