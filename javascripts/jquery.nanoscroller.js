@@ -1,7 +1,17 @@
-/*! nanoScrollerJS - v0.8.1 - 2014
+/*! nanoScrollerJS - v0.8.6 - 2015
 * http://jamesflorentino.github.com/nanoScrollerJS/
-* Copyright (c) 2014 James Florentino; Licensed MIT */
-(function($, window, document) {
+* Copyright (c) 2015 James Florentino; Licensed MIT */
+(function(factory) {
+  if (typeof define === 'function' && define.amd) {
+    return define(['jquery'], function($) {
+      return factory($, window, document);
+    });
+  } else if (typeof exports === 'object') {
+    return module.exports = factory(require('jquery'), window, document);
+  } else {
+    return factory(jQuery, window, document);
+  }
+})(function($, window, document) {
   "use strict";
   var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, ENTER, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEENTER, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor;
   defaults = {
@@ -356,7 +366,7 @@
       this.doc = $(this.options.documentContext || document);
       this.win = $(this.options.windowContext || window);
       this.body = this.doc.find('body');
-      this.$content = this.$el.children("." + options.contentClass);
+      this.$content = this.$el.children("." + this.options.contentClass);
       this.$content.attr('tabindex', this.options.tabIndex || 0);
       this.content = this.$content[0];
       this.previousPosition = 0;
@@ -716,7 +726,7 @@
       paneTop = parseInt(this.pane.css('top'), 10);
       paneBottom = parseInt(this.pane.css('bottom'), 10);
       paneOuterHeight = paneHeight + paneTop + paneBottom;
-      sliderHeight = Math.round(paneOuterHeight / contentHeight * paneOuterHeight);
+      sliderHeight = Math.round(paneOuterHeight / contentHeight * paneHeight);
       if (sliderHeight < this.options.sliderMinHeight) {
         sliderHeight = this.options.sliderMinHeight;
       } else if ((this.options.sliderMaxHeight != null) && sliderHeight > this.options.sliderMaxHeight) {
@@ -961,6 +971,6 @@
     });
   };
   $.fn.nanoScroller.Constructor = NanoScroll;
-})(jQuery, window, document);
+});
 
 //# sourceMappingURL=jquery.nanoscroller.js.map
