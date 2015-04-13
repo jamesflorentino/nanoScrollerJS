@@ -1,4 +1,4 @@
-# nanoScroller.js
+# nanoScroller.js [![NPM version][npm-image]][npm-url]
 [nanoScroller.js](https://github.com/jamesflorentino/nanoScrollerJS) is a jQuery plugin that offers a simple way of implementing Mac OS X Lion-styled scrollbars for your website.
 It uses minimal HTML markup being `.nano > .nano-content`. The other scrollbar div elements `.pane > .nano-slider` are added during run time to prevent clutter in templating. The latest version utilizes native scrolling and works with the iPad, iPhone, and some Android Tablets.
 
@@ -143,7 +143,7 @@ Same as the `'scrollend'` event, but it is triggered every time the user has scr
 Same as the `'scrolltop'` and `'scrollend'` events, but it's triggered every time the user scrolls. It also carries a JavaScript object with the current position, the maximum height and the direction (`up` or `down`).
 
 ```js
-$(".nano").on("update", function(event, values){ 
+$(".nano").on("update", function(event, values){
     console.debug( values );
 });
 ```
@@ -362,3 +362,6 @@ Other people who have contributed code:
 ### Credits
 - Initially written by [James Florentino](http://jamesflorentino.com) in [CoffeeScript](http://coffeescript.org)
 - Released under [MIT License](http://www.opensource.org/licenses/mit-license.php)
+
+[npm-url]: https://npmjs.org/package/nanoscroller
+[npm-image]: http://img.shields.io/npm/v/nanoscroller.svg
