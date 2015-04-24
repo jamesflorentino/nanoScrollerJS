@@ -47,6 +47,30 @@
     contentClass: 'nano-content'
 
     ###*
+      a classname for enabled mode
+      @property enabledClass
+      @type String
+      @default 'has-scrollbar'
+    ###
+    enabledClass: 'has-scrollbar'
+
+    ###*
+      a classname for flashed mode
+      @property flashedClass
+      @type String
+      @default 'flashed'
+    ###
+    flashedClass: 'flashed'
+
+    ###*
+      a classname for active mode
+      @property activeClass
+      @type String
+      @default 'active'
+    ###
+    activeClass: 'active'
+
+    ###*
       a setting to enable native scrolling in iOS devices.
       @property iOSNativeScrolling
       @type Boolean
@@ -472,7 +496,7 @@
           @isBeingDragged  = true
           @offsetY = e.pageY - @slider.offset().top
           @offsetY = 0 unless @slider.is e.target
-          @pane.addClass 'active'
+          @pane.addClass @options.activeClass
           @doc
             .bind(MOUSEMOVE, @events[DRAG])
             .bind(MOUSEUP, @events[UP])
@@ -491,7 +515,7 @@
 
         up: (e) =>
           @isBeingDragged = false
-          @pane.removeClass 'active'
+          @pane.removeClass @options.activeClass
           @doc
             .unbind(MOUSEMOVE, @events[DRAG])
             .unbind(MOUSEUP, @events[UP])
@@ -609,7 +633,7 @@
           paddingRight: +currentPadding + 14
       else if BROWSER_SCROLLBAR_WIDTH
         cssRule = right: -BROWSER_SCROLLBAR_WIDTH
-        @$el.addClass 'has-scrollbar'
+        @$el.addClass options.enabledClass
 
       @$content.css cssRule if cssRule?
 
@@ -801,8 +825,8 @@
       do @pane.remove if not @iOSNativeScrolling and @pane.length
       @$content.height '' if BROWSER_IS_IE7
       @$content.removeAttr 'tabindex'
-      if @$el.hasClass('has-scrollbar')
-        @$el.removeClass('has-scrollbar')
+      if @$el.hasClass(@options.enabledClass)
+        @$el.removeClass(@options.enabledClass)
         @$content.css right: ''
       this
 
@@ -818,9 +842,9 @@
       return if @iOSNativeScrolling
       return unless @isActive
       do @reset
-      @pane.addClass 'flashed'
+      @pane.addClass @options.flashedClass
       setTimeout =>
-        @pane.removeClass 'flashed'
+        @pane.removeClass @options.flashedClass
         return
       , @options.flashDelay
       this

@@ -41,6 +41,30 @@
     contentClass: 'nano-content',
 
     /**
+      a classname for enabled mode
+      @property enabledClass
+      @type String
+      @default 'has-scrollbar'
+     */
+    enabledClass: 'has-scrollbar',
+
+    /**
+      a classname for flashed mode
+      @property flashedClass
+      @type String
+      @default 'flashed'
+     */
+    flashedClass: 'flashed',
+
+    /**
+      a classname for active mode
+      @property activeClass
+      @type String
+      @default 'active'
+     */
+    activeClass: 'active',
+
+    /**
       a setting to enable native scrolling in iOS devices.
       @property iOSNativeScrolling
       @type Boolean
@@ -501,7 +525,7 @@
             if (!_this.slider.is(e.target)) {
               _this.offsetY = 0;
             }
-            _this.pane.addClass('active');
+            _this.pane.addClass(_this.options.activeClass);
             _this.doc.bind(MOUSEMOVE, _this.events[DRAG]).bind(MOUSEUP, _this.events[UP]);
             _this.body.bind(MOUSEENTER, _this.events[ENTER]);
             return false;
@@ -522,7 +546,7 @@
         up: (function(_this) {
           return function(e) {
             _this.isBeingDragged = false;
-            _this.pane.removeClass('active');
+            _this.pane.removeClass(_this.options.activeClass);
             _this.doc.unbind(MOUSEMOVE, _this.events[DRAG]).unbind(MOUSEUP, _this.events[UP]);
             _this.body.unbind(MOUSEENTER, _this.events[ENTER]);
             return false;
@@ -665,7 +689,7 @@
         cssRule = {
           right: -BROWSER_SCROLLBAR_WIDTH
         };
-        this.$el.addClass('has-scrollbar');
+        this.$el.addClass(options.enabledClass);
       }
       if (cssRule != null) {
         this.$content.css(cssRule);
@@ -891,8 +915,8 @@
         this.$content.height('');
       }
       this.$content.removeAttr('tabindex');
-      if (this.$el.hasClass('has-scrollbar')) {
-        this.$el.removeClass('has-scrollbar');
+      if (this.$el.hasClass(this.options.enabledClass)) {
+        this.$el.removeClass(this.options.enabledClass);
         this.$content.css({
           right: ''
         });
@@ -918,10 +942,10 @@
         return;
       }
       this.reset();
-      this.pane.addClass('flashed');
+      this.pane.addClass(this.options.flashedClass);
       setTimeout((function(_this) {
         return function() {
-          _this.pane.removeClass('flashed');
+          _this.pane.removeClass(_this.options.flashedClass);
         };
       })(this), this.options.flashDelay);
       return this;
