@@ -254,6 +254,36 @@ __Default:__ 'nano-content'
 $(".nano").nanoScroller({ contentClass: 'sliderContent' });
 ```
 
+#### enabledClass
+
+A classname for scrollbar enabled mode. If you change this setting, you also have to change it in the plugin's CSS file.
+
+__Default:__ 'has-scrollbar'
+
+```js
+$(".nano").nanoScroller({ enabledClass: '__enabled' });
+```
+
+#### flashedClass
+
+A classname for scrollbar flashed mode. If you change this setting, you also have to change it in the plugin's CSS file.
+
+__Default:__ 'flashed'
+
+```js
+$(".nano").nanoScroller({ flashedClass: '__flashed' });
+```
+
+#### activeClass
+
+A classname for scrollbar active mode. If you change this setting, you also have to change it in the plugin's CSS file.
+
+__Default:__ 'active'
+
+```js
+$(".nano").nanoScroller({ activeClass: '__active' });
+```
+
 #### tabIndex
 
 Set the tab order of the scrollable content. Set to -1 to skip over the scrollable content when tabbing.
