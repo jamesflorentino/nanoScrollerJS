@@ -42,6 +42,10 @@
   "license": "MIT",
   "main": "bin/javascripts/jquery.nanoscroller.js",
   "style": "bin/css/nanoscroller.css",
+  "files": [
+    "bin/css/nanoscroller.css",
+    "bin/javascripts/jquery.nanoscroller.js"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/jamesflorentino/nanoScrollerJS.git"
