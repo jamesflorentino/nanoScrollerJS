@@ -40,7 +40,8 @@
     "scrollbar"
   ],
   "license": "MIT",
-  "main": "javascripts/jquery.nanoscroller.js",
+  "main": "bin/javascripts/jquery.nanoscroller.js",
+  "style": "bin/css/nanoscroller.css",
   "repository": {
     "type": "git",
     "url": "https://github.com/jamesflorentino/nanoScrollerJS.git"
