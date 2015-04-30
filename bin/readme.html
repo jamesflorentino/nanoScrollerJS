@@ -1,4 +1,4 @@
-<h1 id="nanoscroller-js">nanoScroller.js</h1>
+<h1 id="nanoscroller-js-npm-version-npm-image-npm-url-">nanoScroller.js <a href="https://npmjs.org/package/nanoscroller"><img src="http://img.shields.io/npm/v/nanoscroller.svg" alt="NPM version"></a></h1>
 <p><a href="https://github.com/jamesflorentino/nanoScrollerJS">nanoScroller.js</a> is a jQuery plugin that offers a simple way of implementing Mac OS X Lion-styled scrollbars for your website.
 It uses minimal HTML markup being <code>.nano &gt; .nano-content</code>. The other scrollbar div elements <code>.pane &gt; .nano-slider</code> are added during run time to prevent clutter in templating. The latest version utilizes native scrolling and works with the iPad, iPhone, and some Android Tablets.</p>
 <h3 id="downloads">Downloads</h3>
@@ -78,7 +78,7 @@ It uses minimal HTML markup being <code>.nano &gt; .nano-content</code>. The oth
 <p>Same as the <code>&#39;scrollend&#39;</code> event, but it is triggered every time the user has scrolled to the top of the content element.</p>
 <h4 id="-update-">&#39;update&#39;</h4>
 <p>Same as the <code>&#39;scrolltop&#39;</code> and <code>&#39;scrollend&#39;</code> events, but it&#39;s triggered every time the user scrolls. It also carries a JavaScript object with the current position, the maximum height and the direction (<code>up</code> or <code>down</code>).</p>
-<pre><code class="lang-js">$(&quot;.nano&quot;).on(&quot;update&quot;, function(event, values){ 
+<pre><code class="lang-js">$(&quot;.nano&quot;).on(&quot;update&quot;, function(event, values){
     console.debug( values );
 });
 </code></pre>
