@@ -801,6 +801,7 @@
       do @pane.remove if not @iOSNativeScrolling and @pane.length
       @$content.height '' if BROWSER_IS_IE7
       @$content.removeAttr 'tabindex'
+      @$el.height("")
       if @$el.hasClass('has-scrollbar')
         @$el.removeClass('has-scrollbar')
         @$content.css right: ''
@@ -827,9 +828,11 @@
 
   $.fn.nanoScroller = (settings) ->
     @each ->
+      newScroller = false
       if not scrollbar = @nanoscroller
         options = $.extend {}, defaults, settings
         @nanoscroller = scrollbar = new NanoScroll this, options
+        newScroller = true
 
       # scrollbar settings
       if settings and typeof settings is "object"
@@ -844,7 +847,10 @@
         return do scrollbar.destroy if settings.destroy
         return do scrollbar.flash if settings.flash
 
-      do scrollbar.reset
+        if !newScroller
+          return do scrollbar.reset
+
+      return this
 
   $.fn.nanoScroller.Constructor = NanoScroll
   return
