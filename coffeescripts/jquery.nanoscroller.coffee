@@ -156,6 +156,14 @@
   MOUSEENTER = 'mouseenter'
 
   ###*
+    @property MOUSELEAVE
+    @type String
+    @final
+    @private
+  ###
+  MOUSELEAVE = 'mouseleave'
+
+  ###*
     @property MOUSEMOVE
     @type String
     @static
@@ -206,6 +214,15 @@
     @private
   ###
   ENTER = 'enter'
+
+  ###*
+    @property HOVER
+    @type String
+    @static
+    @final
+    @private
+  ###
+  HOVER = 'hover'
 
   ###*
     @property UP
@@ -543,6 +560,9 @@
           return unless @isBeingDragged
           @events[UP] arguments... if (e.buttons or e.which) isnt 1
 
+        hover: (e) =>
+          @$el.toggleClass('hover')
+
       return
 
     ###*
@@ -564,6 +584,7 @@
           .bind("#{MOUSEWHEEL} #{DOMSCROLL}", events[WHEEL])
       @$content
         .bind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", events[SCROLL])
+        .bind("#{MOUSEENTER} #{MOUSELEAVE}", events[HOVER])
       return
 
     ###*
@@ -580,6 +601,7 @@
         do @pane.unbind
       @$content
         .unbind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", events[SCROLL])
+        .unbind("#{MOUSEENTER} #{MOUSELEAVE}", events[HOVER])
       return
 
     ###*

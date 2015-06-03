@@ -13,7 +13,7 @@
   }
 })(function($, window, document) {
   "use strict";
-  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, ENTER, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEENTER, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor;
+  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, ENTER, HOVER, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEENTER, MOUSELEAVE, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor;
   defaults = {
 
     /**
@@ -149,6 +149,14 @@
   MOUSEENTER = 'mouseenter';
 
   /**
+    @property MOUSELEAVE
+    @type String
+    @final
+    @private
+   */
+  MOUSELEAVE = 'mouseleave';
+
+  /**
     @property MOUSEMOVE
     @type String
     @static
@@ -199,6 +207,15 @@
     @private
    */
   ENTER = 'enter';
+
+  /**
+    @property HOVER
+    @type String
+    @static
+    @final
+    @private
+   */
+  HOVER = 'hover';
 
   /**
     @property UP
@@ -595,6 +612,11 @@
               return (_ref = _this.events)[UP].apply(_ref, arguments);
             }
           };
+        })(this),
+        hover: (function(_this) {
+          return function(e) {
+            return _this.$el.toggleClass('hover');
+          };
         })(this)
       };
     };
@@ -617,7 +639,7 @@
         this.slider.bind(MOUSEDOWN, events[DOWN]);
         this.pane.bind(MOUSEDOWN, events[PANEDOWN]).bind("" + MOUSEWHEEL + " " + DOMSCROLL, events[WHEEL]);
       }
-      this.$content.bind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]);
+      this.$content.bind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]).bind("" + MOUSEENTER + " " + MOUSELEAVE, events[HOVER]);
     };
 
 
@@ -635,7 +657,7 @@
         this.slider.unbind();
         this.pane.unbind();
       }
-      this.$content.unbind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]);
+      this.$content.unbind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]).unbind("" + MOUSEENTER + " " + MOUSELEAVE, events[HOVER]);
     };
 
 
