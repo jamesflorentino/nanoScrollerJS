@@ -460,7 +460,7 @@
       if not @iOSNativeScrolling
         @maxSliderTop = @paneHeight - @sliderHeight
         # `sliderTop = scrollTop / maxScrollTop * maxSliderTop
-        @sliderTop = if @maxScrollTop <= 0 then 0 else @contentScrollTop * @maxSliderTop / @maxScrollTop
+        @sliderTop = if @maxScrollTop is 0 then @maxScrollTop else Math.max @contentScrollTop * @maxSliderTop / @maxScrollTop, 0
       return
 
     ###*
