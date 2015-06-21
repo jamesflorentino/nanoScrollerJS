@@ -13,7 +13,7 @@
   }
 })(function($, window, document) {
   "use strict";
-  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, ENTER, HOVER, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEENTER, MOUSELEAVE, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor;
+  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, ENTER, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEENTER, MOUSELEAVE, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor;
   defaults = {
 
     /**
@@ -231,15 +231,6 @@
     @private
    */
   ENTER = 'enter';
-
-  /**
-    @property HOVER
-    @type String
-    @static
-    @final
-    @private
-   */
-  HOVER = 'hover';
 
   /**
     @property UP
@@ -637,9 +628,14 @@
             }
           };
         })(this),
-        hover: (function(_this) {
+        mouseenter: (function(_this) {
           return function(e) {
-            return _this.$el.toggleClass('hover');
+            return _this.$el.addClass('hover');
+          };
+        })(this),
+        mouseleave: (function(_this) {
+          return function(e) {
+            return _this.$el.removeClass('hover');
           };
         })(this)
       };
@@ -663,7 +659,7 @@
         this.slider.bind(MOUSEDOWN, events[DOWN]);
         this.pane.bind(MOUSEDOWN, events[PANEDOWN]).bind("" + MOUSEWHEEL + " " + DOMSCROLL, events[WHEEL]);
       }
-      this.$content.bind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]).bind("" + MOUSEENTER + " " + MOUSELEAVE, events[HOVER]);
+      this.$content.bind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]).bind(MOUSEENTER, events[MOUSEENTER]).bind(MOUSELEAVE, events[MOUSELEAVE]);
     };
 
 
@@ -681,7 +677,7 @@
         this.slider.unbind();
         this.pane.unbind();
       }
-      this.$content.unbind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]).unbind("" + MOUSEENTER + " " + MOUSELEAVE, events[HOVER]);
+      this.$content.unbind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]).unbind(MOUSEENTER, events[MOUSEENTER]).unbind(MOUSELEAVE, events[MOUSELEAVE]);
     };
 
 

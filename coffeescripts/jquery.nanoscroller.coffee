@@ -240,15 +240,6 @@
   ENTER = 'enter'
 
   ###*
-    @property HOVER
-    @type String
-    @static
-    @final
-    @private
-  ###
-  HOVER = 'hover'
-
-  ###*
     @property UP
     @type String
     @static
@@ -584,8 +575,11 @@
           return unless @isBeingDragged
           @events[UP] arguments... if (e.buttons or e.which) isnt 1
 
-        hover: (e) =>
-          @$el.toggleClass('hover')
+        mouseenter: (e) =>
+          @$el.addClass('hover')
+
+        mouseleave: (e) =>
+          @$el.removeClass('hover')
 
       return
 
@@ -608,7 +602,8 @@
           .bind("#{MOUSEWHEEL} #{DOMSCROLL}", events[WHEEL])
       @$content
         .bind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", events[SCROLL])
-        .bind("#{MOUSEENTER} #{MOUSELEAVE}", events[HOVER])
+        .bind(MOUSEENTER, events[MOUSEENTER])
+        .bind(MOUSELEAVE, events[MOUSELEAVE])
       return
 
     ###*
@@ -625,7 +620,8 @@
         do @pane.unbind
       @$content
         .unbind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", events[SCROLL])
-        .unbind("#{MOUSEENTER} #{MOUSELEAVE}", events[HOVER])
+        .unbind(MOUSEENTER, events[MOUSEENTER])
+        .unbind(MOUSELEAVE, events[MOUSELEAVE])
       return
 
     ###*
