@@ -448,6 +448,10 @@
     ###
     updateScrollValues: ->
       content = @content
+
+      # Prevent horizontal scrolling
+      content.scrollLeft = 0
+
       # Formula/ratio
       # `scrollTop / maxScrollTop = sliderTop / maxSliderTop`
       @maxScrollTop = content.scrollHeight - content.clientHeight
