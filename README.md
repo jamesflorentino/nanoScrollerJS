@@ -8,6 +8,9 @@ It uses minimal HTML markup being `.nano > .nano-content`. The other scrollbar d
 - [Development version](https://raw.github.com/jamesflorentino/nanoScrollerJS/master/bin/javascripts/jquery.nanoscroller.js)
 - [Default stylesheet](https://raw.github.com/jamesflorentino/nanoScrollerJS/master/bin/css/nanoscroller.css)
 
+RawGit CDN (minified version):
+
+    //cdn.rawgit.com/jamesflorentino/nanoScrollerJS/eb24845f516630b88e51fb865f4a05b81ca95985/bin/javascripts/jquery.nanoscroller.min.js
 
 To start using, you need three basic things:
 
