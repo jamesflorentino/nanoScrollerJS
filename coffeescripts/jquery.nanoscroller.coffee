@@ -657,6 +657,7 @@
           $(".nano").nanoScroller();
     ###
     reset: ->
+      options = @options
       if @iOSNativeScrolling
         @contentHeight = @content.scrollHeight
         return
@@ -717,10 +718,12 @@
           @pane.outerHeight(true) >= content.scrollHeight and contentStyleOverflowY isnt SCROLL)
         do @pane.hide
         @isActive = false
+        @$el.removeClass options.enabledClass
       else if @el.clientHeight is content.scrollHeight and contentStyleOverflowY is SCROLL
         do @slider.hide
       else
         do @slider.show
+        @$el.addClass options.enabledClass
 
       # allow the pane element to stay visible
       @pane.css
