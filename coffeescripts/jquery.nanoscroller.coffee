@@ -180,6 +180,14 @@
   MOUSEENTER = 'mouseenter'
 
   ###*
+    @property MOUSELEAVE
+    @type String
+    @final
+    @private
+  ###
+  MOUSELEAVE = 'mouseleave'
+
+  ###*
     @property MOUSEMOVE
     @type String
     @static
@@ -440,6 +448,10 @@
     ###
     updateScrollValues: ->
       content = @content
+
+      # Prevent horizontal scrolling
+      content.scrollLeft = 0
+
       # Formula/ratio
       # `scrollTop / maxScrollTop = sliderTop / maxSliderTop`
       @maxScrollTop = content.scrollHeight - content.clientHeight
@@ -567,6 +579,12 @@
           return unless @isBeingDragged
           @events[UP] arguments... if (e.buttons or e.which) isnt 1
 
+        mouseenter: (e) =>
+          @$el.addClass('hover')
+
+        mouseleave: (e) =>
+          @$el.removeClass('hover')
+
       return
 
     ###*
@@ -588,6 +606,8 @@
           .bind("#{MOUSEWHEEL} #{DOMSCROLL}", events[WHEEL])
       @$content
         .bind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", events[SCROLL])
+        .bind(MOUSEENTER, events[MOUSEENTER])
+        .bind(MOUSELEAVE, events[MOUSELEAVE])
       return
 
     ###*
@@ -604,6 +624,8 @@
         do @pane.unbind
       @$content
         .unbind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", events[SCROLL])
+        .unbind(MOUSEENTER, events[MOUSEENTER])
+        .unbind(MOUSELEAVE, events[MOUSELEAVE])
       return
 
     ###*
@@ -632,7 +654,6 @@
           right: -14
           paddingRight: +currentPadding + 14
       else if BROWSER_SCROLLBAR_WIDTH
-        cssRule = right: -BROWSER_SCROLLBAR_WIDTH
         @$el.addClass options.enabledClass
 
       @$content.css cssRule if cssRule?

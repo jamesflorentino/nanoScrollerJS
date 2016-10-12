@@ -1,6 +1,6 @@
-/*! nanoScrollerJS - v0.8.7 - 2015
+/*! nanoScrollerJS - v0.8.7 - 2016
 * http://jamesflorentino.github.com/nanoScrollerJS/
-* Copyright (c) 2015 James Florentino; Licensed MIT */
+* Copyright (c) 2016 James Florentino; Licensed MIT */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     return define(['jquery'], function($) {
@@ -13,7 +13,7 @@
   }
 })(function($, window, document) {
   "use strict";
-  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, ENTER, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEENTER, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor;
+  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, ENTER, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEENTER, MOUSELEAVE, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor;
   defaults = {
 
     /**
@@ -171,6 +171,14 @@
     @private
    */
   MOUSEENTER = 'mouseenter';
+
+  /**
+    @property MOUSELEAVE
+    @type String
+    @final
+    @private
+   */
+  MOUSELEAVE = 'mouseleave';
 
   /**
     @property MOUSEMOVE
@@ -458,6 +466,7 @@
     NanoScroll.prototype.updateScrollValues = function() {
       var content, direction;
       content = this.content;
+      content.scrollLeft = 0;
       this.maxScrollTop = content.scrollHeight - content.clientHeight;
       this.prevScrollTop = this.contentScrollTop || 0;
       this.contentScrollTop = content.scrollTop;
@@ -619,6 +628,16 @@
               return (_ref = _this.events)[UP].apply(_ref, arguments);
             }
           };
+        })(this),
+        mouseenter: (function(_this) {
+          return function(e) {
+            return _this.$el.addClass('hover');
+          };
+        })(this),
+        mouseleave: (function(_this) {
+          return function(e) {
+            return _this.$el.removeClass('hover');
+          };
         })(this)
       };
     };
@@ -641,7 +660,7 @@
         this.slider.bind(MOUSEDOWN, events[DOWN]);
         this.pane.bind(MOUSEDOWN, events[PANEDOWN]).bind("" + MOUSEWHEEL + " " + DOMSCROLL, events[WHEEL]);
       }
-      this.$content.bind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]);
+      this.$content.bind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]).bind(MOUSEENTER, events[MOUSEENTER]).bind(MOUSELEAVE, events[MOUSELEAVE]);
     };
 
 
@@ -659,7 +678,7 @@
         this.slider.unbind();
         this.pane.unbind();
       }
-      this.$content.unbind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]);
+      this.$content.unbind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]).unbind(MOUSEENTER, events[MOUSEENTER]).unbind(MOUSELEAVE, events[MOUSELEAVE]);
     };
 
 
@@ -686,9 +705,6 @@
           paddingRight: +currentPadding + 14
         };
       } else if (BROWSER_SCROLLBAR_WIDTH) {
-        cssRule = {
-          right: -BROWSER_SCROLLBAR_WIDTH
-        };
         this.$el.addClass(options.enabledClass);
       }
       if (cssRule != null) {
