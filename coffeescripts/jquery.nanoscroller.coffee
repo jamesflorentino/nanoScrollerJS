@@ -654,7 +654,6 @@
           right: -14
           paddingRight: +currentPadding + 14
       else if BROWSER_SCROLLBAR_WIDTH
-        cssRule = right: -BROWSER_SCROLLBAR_WIDTH
         @$el.addClass options.enabledClass
 
       @$content.css cssRule if cssRule?

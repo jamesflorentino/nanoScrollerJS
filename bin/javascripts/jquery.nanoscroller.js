@@ -1,6 +1,6 @@
-/*! nanoScrollerJS - v0.8.7 - 2015
+/*! nanoScrollerJS - v0.8.7 - 2016
 * http://jamesflorentino.github.com/nanoScrollerJS/
-* Copyright (c) 2015 James Florentino; Licensed MIT */
+* Copyright (c) 2016 James Florentino; Licensed MIT */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     return define(['jquery'], function($) {
@@ -705,9 +705,6 @@
           paddingRight: +currentPadding + 14
         };
       } else if (BROWSER_SCROLLBAR_WIDTH) {
-        cssRule = {
-          right: -BROWSER_SCROLLBAR_WIDTH
-        };
         this.$el.addClass(options.enabledClass);
       }
       if (cssRule != null) {
