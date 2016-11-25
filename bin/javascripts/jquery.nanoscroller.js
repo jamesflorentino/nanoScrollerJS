@@ -631,17 +631,19 @@
      */
 
     NanoScroll.prototype.addEvents = function() {
-      var events;
+      var events,
+          $doc = $(document);
       this.removeEvents();
       events = this.events;
       if (!this.options.disableResize) {
-        this.win.bind(RESIZE, events[RESIZE]);
+        $doc.on(RESIZE, this.win, events[RESIZE]);
       }
       if (!this.iOSNativeScrolling) {
-        this.slider.bind(MOUSEDOWN, events[DOWN]);
-        this.pane.bind(MOUSEDOWN, events[PANEDOWN]).bind("" + MOUSEWHEEL + " " + DOMSCROLL, events[WHEEL]);
+        $doc.on(MOUSEDOWN, this.slider, events[DOWN]);
+        $doc.on(MOUSEDOWN, this.pane, events[PANEDOWN])
+            .on("" + MOUSEWHEEL + " " + DOMSCROLL, this.pane, events[WHEEL]);
       }
-      this.$content.bind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]);
+      $doc.on("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, this.$content, events[SCROLL]);
     };
 
 
