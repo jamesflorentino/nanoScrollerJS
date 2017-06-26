@@ -498,10 +498,10 @@
           @offsetY = 0 unless @slider.is e.target
           @pane.addClass @options.activeClass
           @doc
-            .bind(MOUSEMOVE, @events[DRAG])
-            .bind(MOUSEUP, @events[UP])
+            .on(MOUSEMOVE, @events[DRAG])
+            .on(MOUSEUP, @events[UP])
 
-          @body.bind(MOUSEENTER, @events[ENTER])
+          @body.on(MOUSEENTER, @events[ENTER])
           false
 
         drag: (e) =>
@@ -517,10 +517,10 @@
           @isBeingDragged = false
           @pane.removeClass @options.activeClass
           @doc
-            .unbind(MOUSEMOVE, @events[DRAG])
-            .unbind(MOUSEUP, @events[UP])
+            .off(MOUSEMOVE, @events[DRAG])
+            .off(MOUSEUP, @events[UP])
 
-          @body.unbind(MOUSEENTER, @events[ENTER])
+          @body.off(MOUSEENTER, @events[ENTER])
           false
 
         resize: (e) =>
@@ -584,10 +584,10 @@
         @slider
           .bind MOUSEDOWN, events[DOWN]
         @pane
-          .bind(MOUSEDOWN, events[PANEDOWN])
-          .bind("#{MOUSEWHEEL} #{DOMSCROLL}", events[WHEEL])
+          .on(MOUSEDOWN, events[PANEDOWN])
+          .on("#{MOUSEWHEEL} #{DOMSCROLL}", events[WHEEL])
       @$content
-        .bind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", events[SCROLL])
+        .on("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", events[SCROLL])
       return
 
     ###*
@@ -598,12 +598,12 @@
     removeEvents: ->
       events = @events
       @win
-        .unbind(RESIZE, events[RESIZE])
+        .off(RESIZE, events[RESIZE])
       if not @iOSNativeScrolling
         do @slider.unbind
         do @pane.unbind
       @$content
-        .unbind("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", events[SCROLL])
+        .off("#{SCROLL} #{MOUSEWHEEL} #{DOMSCROLL} #{TOUCHMOVE}", events[SCROLL])
       return
 
     ###*
