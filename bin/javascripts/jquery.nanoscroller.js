@@ -458,6 +458,7 @@
     NanoScroll.prototype.updateScrollValues = function() {
       var content, direction;
       content = this.content;
+      content.scrollLeft = 0;
       this.maxScrollTop = content.scrollHeight - content.clientHeight;
       this.prevScrollTop = this.contentScrollTop || 0;
       this.contentScrollTop = content.scrollTop;
