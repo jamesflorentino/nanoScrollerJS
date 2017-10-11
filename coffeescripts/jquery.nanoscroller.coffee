@@ -511,6 +511,9 @@
             @$el.trigger 'scrollend'
           else if @contentScrollTop is 0 and @prevScrollTop isnt 0
             @$el.trigger 'scrolltop'
+            
+            @pane.on 'mouseleave': => @events.up()
+            
           false
 
         up: (e) =>
