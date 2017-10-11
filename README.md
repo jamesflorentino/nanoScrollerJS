@@ -1,3 +1,8 @@
+# This project is not maintained
+
+This project is not currently actively maintained. If you need an up-to-date scrollbar plugin, try OverlayScrollbars instead:
+https://github.com/KingSora/OverlayScrollbars
+
 # nanoScroller.js [![NPM version][npm-image]][npm-url]
 [nanoScroller.js](https://github.com/jamesflorentino/nanoScrollerJS) is a jQuery plugin that offers a simple way of implementing Mac OS X Lion-styled scrollbars for your website.
 It uses minimal HTML markup being `.nano > .nano-content`. The other scrollbar div elements `.pane > .nano-slider` are added during run time to prevent clutter in templating. The latest version utilizes native scrolling and works with the iPad, iPhone, and some Android Tablets.
