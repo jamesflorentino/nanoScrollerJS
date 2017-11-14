@@ -1,6 +1,7 @@
 {
   "name": "nanoscroller",
   "version": "0.0.0-ignored",
+  "main": "./bin/javascripts/jquery.nanoscroller.js",
   "engines": {
     "node": ">= 0.8.0"
   },
