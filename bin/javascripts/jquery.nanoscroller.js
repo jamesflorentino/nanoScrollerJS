@@ -877,6 +877,7 @@
       Scroll to an element
       @method scrollTo
       @param node {Node} A node to scroll to.
+      @param duration {Number} Number for duration.
       @chainable
       @example
           $(".nano").nanoScroller({ animateTo: {target: $('#a_node'), duration: number });
