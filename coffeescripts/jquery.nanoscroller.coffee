@@ -875,7 +875,7 @@
         return scrollbar.scrollBottom settings.scrollBottom if settings.scrollBottom?
         return scrollbar.scrollTop settings.scrollTop if settings.scrollTop?
         return scrollbar.scrollTo settings.scrollTo if settings.scrollTo
-        return scrollbar.animateTo settings.animateTo.target settings.animateTo.duration if settings.animateTo
+        return scrollbar.animateTo settings.animateTo.target, settings.animateTo.duration if settings.animateTo
         return scrollbar.scrollBottom 0 if settings.scroll is 'bottom'
         return scrollbar.scrollTop 0 if settings.scroll is 'top'
         return scrollbar.scrollTo settings.scroll if settings.scroll and settings.scroll instanceof $
