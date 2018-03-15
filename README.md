@@ -91,8 +91,11 @@ To scroll to an element with animation:
 
 ```js
 $(".nano").nanoScroller({ 
-    target: $('#a_node'),
-    duration: Number
+    animateTo: {
+        target: $('#a_node'),
+        duration: Number // Optional,
+        complete: Function // Optional
+    }
 });
 ```
 

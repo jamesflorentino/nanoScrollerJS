@@ -878,19 +878,21 @@
       @method scrollTo
       @param node {Node} A node to scroll to.
       @param duration {Number} Number for duration.
+      @param complete {Function} Callback for complete scroll.
       @chainable
       @example
           $(".nano").nanoScroller({ animateTo: {target: $('#a_node'), duration: number });
      */
 
-    NanoScroll.prototype.animateTo = function(node, duration) {
+    NanoScroll.prototype.animateTo = function(node, duration, complete) {
       if (!this.isActive) {
         return;
       }
       this.$content.animate({
         scrollTop: this.$el.find(node).get(0).offsetTop
-      }, duration != null ? duration : {
-        duration: 'slow'
+      }, {
+        duration: duration || 'slow',
+        complete: complete || null
       }).trigger(MOUSEWHEEL);
       return this;
     };
@@ -996,7 +998,7 @@
           return scrollbar.scrollTo(settings.scrollTo);
         }
         if (settings.animateTo) {
-          return scrollbar.animateTo(settings.animateTo.target, settings.animateTo.duration);
+          return scrollbar.animateTo(settings.animateTo.target, settings.animateTo.duration, settings.animateTo.complete);
         }
         if (settings.scroll === 'bottom') {
           return scrollbar.scrollBottom(0);
