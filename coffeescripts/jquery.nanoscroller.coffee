@@ -798,7 +798,20 @@
       return unless @isActive
       @scrollTop @$el.find(node).get(0).offsetTop
       this
-
+    ###*
+      Scroll to an element
+      @method scrollTo
+      @param node {Node} A node to scroll to.
+      @param duration {Number} Number for duration.
+      @param complete {Function} Callback for complete scroll.
+      @chainable
+      @example
+          $(".nano").nanoScroller({ animateTo: {target: $('#a_node'), duration: number });
+    ###
+    animateTo: (node, duration, complete) ->
+      return unless @isActive
+      @$content.animate({scrollTop: @$el.find(node).get(0).offsetTop}, {duration: duration || 'slow', complete: complete || null}).trigger(MOUSEWHEEL)
+      this
     ###*
       To stop the operation.
       This option will tell the plugin to disable all event bindings and hide the gadget scrollbar from the UI.
@@ -864,6 +877,7 @@
         return scrollbar.scrollBottom settings.scrollBottom if settings.scrollBottom?
         return scrollbar.scrollTop settings.scrollTop if settings.scrollTop?
         return scrollbar.scrollTo settings.scrollTo if settings.scrollTo
+        return scrollbar.animateTo settings.animateTo.target, settings.animateTo.duration, settings.animateTo.complete if settings.animateTo
         return scrollbar.scrollBottom 0 if settings.scroll is 'bottom'
         return scrollbar.scrollTop 0 if settings.scroll is 'top'
         return scrollbar.scrollTo settings.scroll if settings.scroll and settings.scroll instanceof $

@@ -1,6 +1,3 @@
-/*! nanoScrollerJS - v0.8.7 - 2015
-* http://jamesflorentino.github.com/nanoScrollerJS/
-* Copyright (c) 2015 James Florentino; Licensed MIT */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     return define(['jquery'], function($) {
@@ -526,8 +523,8 @@
               _this.offsetY = 0;
             }
             _this.pane.addClass(_this.options.activeClass);
-            _this.doc.bind(MOUSEMOVE, _this.events[DRAG]).bind(MOUSEUP, _this.events[UP]);
-            _this.body.bind(MOUSEENTER, _this.events[ENTER]);
+            _this.doc.on(MOUSEMOVE, _this.events[DRAG]).on(MOUSEUP, _this.events[UP]);
+            _this.body.on(MOUSEENTER, _this.events[ENTER]);
             return false;
           };
         })(this),
@@ -547,8 +544,8 @@
           return function(e) {
             _this.isBeingDragged = false;
             _this.pane.removeClass(_this.options.activeClass);
-            _this.doc.unbind(MOUSEMOVE, _this.events[DRAG]).unbind(MOUSEUP, _this.events[UP]);
-            _this.body.unbind(MOUSEENTER, _this.events[ENTER]);
+            _this.doc.off(MOUSEMOVE, _this.events[DRAG]).off(MOUSEUP, _this.events[UP]);
+            _this.body.off(MOUSEENTER, _this.events[ENTER]);
             return false;
           };
         })(this),
@@ -639,9 +636,9 @@
       }
       if (!this.iOSNativeScrolling) {
         this.slider.bind(MOUSEDOWN, events[DOWN]);
-        this.pane.bind(MOUSEDOWN, events[PANEDOWN]).bind("" + MOUSEWHEEL + " " + DOMSCROLL, events[WHEEL]);
+        this.pane.on(MOUSEDOWN, events[PANEDOWN]).on("" + MOUSEWHEEL + " " + DOMSCROLL, events[WHEEL]);
       }
-      this.$content.bind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]);
+      this.$content.on("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]);
     };
 
 
@@ -654,12 +651,12 @@
     NanoScroll.prototype.removeEvents = function() {
       var events;
       events = this.events;
-      this.win.unbind(RESIZE, events[RESIZE]);
+      this.win.off(RESIZE, events[RESIZE]);
       if (!this.iOSNativeScrolling) {
         this.slider.unbind();
         this.pane.unbind();
       }
-      this.$content.unbind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]);
+      this.$content.off("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]);
     };
 
 
@@ -721,7 +718,8 @@
      */
 
     NanoScroll.prototype.reset = function() {
-      var content, contentHeight, contentPosition, contentStyle, contentStyleOverflowY, paneBottom, paneHeight, paneOuterHeight, paneTop, parentMaxHeight, right, sliderHeight;
+      var content, contentHeight, contentPosition, contentStyle, contentStyleOverflowY, options, paneBottom, paneHeight, paneOuterHeight, paneTop, parentMaxHeight, right, sliderHeight;
+      options = this.options;
       if (this.iOSNativeScrolling) {
         this.contentHeight = this.content.scrollHeight;
         return;
@@ -772,10 +770,12 @@
       if ((content.scrollHeight === content.clientHeight) || (this.pane.outerHeight(true) >= content.scrollHeight && contentStyleOverflowY !== SCROLL)) {
         this.pane.hide();
         this.isActive = false;
+        this.$el.removeClass(options.enabledClass);
       } else if (this.el.clientHeight === content.scrollHeight && contentStyleOverflowY === SCROLL) {
         this.slider.hide();
       } else {
         this.slider.show();
+        this.$el.addClass(options.enabledClass);
       }
       this.pane.css({
         opacity: (this.options.alwaysVisible ? 1 : ''),
@@ -869,6 +869,31 @@
         return;
       }
       this.scrollTop(this.$el.find(node).get(0).offsetTop);
+      return this;
+    };
+
+
+    /**
+      Scroll to an element
+      @method scrollTo
+      @param node {Node} A node to scroll to.
+      @param duration {Number} Number for duration.
+      @param complete {Function} Callback for complete scroll.
+      @chainable
+      @example
+          $(".nano").nanoScroller({ animateTo: {target: $('#a_node'), duration: number });
+     */
+
+    NanoScroll.prototype.animateTo = function(node, duration, complete) {
+      if (!this.isActive) {
+        return;
+      }
+      this.$content.animate({
+        scrollTop: this.$el.find(node).get(0).offsetTop
+      }, {
+        duration: duration || 'slow',
+        complete: complete || null
+      }).trigger(MOUSEWHEEL);
       return this;
     };
 
@@ -971,6 +996,9 @@
         }
         if (settings.scrollTo) {
           return scrollbar.scrollTo(settings.scrollTo);
+        }
+        if (settings.animateTo) {
+          return scrollbar.animateTo(settings.animateTo.target, settings.animateTo.duration, settings.animateTo.complete);
         }
         if (settings.scroll === 'bottom') {
           return scrollbar.scrollBottom(0);
