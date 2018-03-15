@@ -87,6 +87,15 @@ To scroll to an element:
 $(".nano").nanoScroller({ scrollTo: $('#a_node') });
 ```
 
+To scroll to an element with animation:
+
+```js
+$(".nano").nanoScroller({ 
+    target: $('#a_node'),
+    duration: Number
+});
+```
+
 #### stop:
 
 To stop the operation. This option will tell the plugin to disable all event bindings and hide the gadget scrollbar from the UI.
